@@ -23,18 +23,18 @@ public class LivingEntityMeta extends EntityMeta {
 
 
     public float getHealth() {
-        return super.metadata.getIndex(offset(1), 1F);
+        return super.metadata.getIndex(offset(OFFSET,1), 1F);
     }
 
 
     public int getPotionEffectColor() {
         isVersionNewer(ServerVersion.V_1_9);
-        return super.metadata.getIndex(offset(2), 0);
+        return super.metadata.getIndex(offset(OFFSET,2), 0);
     }
 
     public void setPotionEffectColor(int value) {
         isVersionNewer(ServerVersion.V_1_9);
-        super.metadata.setIndex(offset(2), EntityDataTypes.INT, value);
+        super.metadata.setIndex(offset(OFFSET,2), EntityDataTypes.INT, value);
     }
 
     public void setPotionEffectColor(int red, int green, int blue) {
@@ -44,26 +44,26 @@ public class LivingEntityMeta extends EntityMeta {
 
     public boolean isPotionEffectAmbient() {
         isVersionNewer(ServerVersion.V_1_9);
-        return super.metadata.getIndex(offset(3), false);
+        return super.metadata.getIndex(offset(OFFSET,3), false);
     }
 
     public void setPotionEffectAmbient(boolean value) {
         isVersionNewer(ServerVersion.V_1_9);
-        super.metadata.setIndex(offset(3), EntityDataTypes.BOOLEAN, value);
+        super.metadata.setIndex(offset(OFFSET,3), EntityDataTypes.BOOLEAN, value);
     }
 
     public int getArrowCount() {
         isVersionNewer(ServerVersion.V_1_9);
-        return super.metadata.getIndex(offset(4), 0);
+        return super.metadata.getIndex(offset(OFFSET,4), 0);
     }
 
     public void setArrowCount(int value) {
         isVersionNewer(ServerVersion.V_1_9);
-        super.metadata.setIndex(offset(4), EntityDataTypes.INT, value);
+        super.metadata.setIndex(offset(OFFSET,4), EntityDataTypes.INT, value);
     }
 
     public void setHealth(float value) {
-        super.metadata.setIndex(offset(1), EntityDataTypes.FLOAT, value);
+        super.metadata.setIndex(offset(OFFSET,1), EntityDataTypes.FLOAT, value);
     }
 
     public HumanoidArm getActiveHand() {
@@ -88,22 +88,22 @@ public class LivingEntityMeta extends EntityMeta {
 
     public Optional<Vector3i> getBedPosition() {
         isVersionNewer(ServerVersion.V_1_14);
-        return super.metadata.getIndex(offset(6), Optional.empty());
+        return super.metadata.getIndex(offset(OFFSET,6), Optional.empty());
     }
 
     public void setBedPosition(Vector3i value) {
         isVersionNewer(ServerVersion.V_1_14);
-        super.metadata.setIndex(offset(6), EntityDataTypes.OPTIONAL_BLOCK_POSITION, value == null ? Optional.empty() : Optional.of(value));
+        super.metadata.setIndex(offset(OFFSET,6), EntityDataTypes.OPTIONAL_BLOCK_POSITION, value == null ? Optional.empty() : Optional.of(value));
     }
 
     public int getBeeStingerCount() {
         isVersionNewer(ServerVersion.V_1_15);
-        return super.metadata.getIndex(offset(5), 0);
+        return super.metadata.getIndex(offset(OFFSET,5), 0);
     }
 
     public void setBeeStingerCount(int value) {
         isVersionNewer(ServerVersion.V_1_15);
-        super.metadata.setIndex(offset(5), EntityDataTypes.INT, value);
+        super.metadata.setIndex(offset(OFFSET,5), EntityDataTypes.INT, value);
     }
 
     public boolean isHandActive() {

@@ -24,43 +24,43 @@ public class TurtleMeta extends AgeableMeta {
     }
 
     public boolean hasEgg() {
-        return super.metadata.getIndex(offset(1), false);
+        return super.metadata.getIndex(offset(OFFSET,1), false);
     }
 
     public void setHasEgg(boolean value) {
-        super.metadata.setIndex(offset(1), EntityDataTypes.BOOLEAN, value);
+        super.metadata.setIndex(offset(OFFSET,1), EntityDataTypes.BOOLEAN, value);
     }
 
     public boolean isLayingEgg() {
-        return super.metadata.getIndex(offset(2), false);
+        return super.metadata.getIndex(offset(OFFSET,2), false);
     }
 
     public void setLayingEgg(boolean value) {
-        super.metadata.setIndex(offset(2), EntityDataTypes.BOOLEAN, value);
+        super.metadata.setIndex(offset(OFFSET,2), EntityDataTypes.BOOLEAN, value);
     }
 
     public  Vector3i getTravelPosition() {
-        return super.metadata.getIndex(offset(3), Vector3i.zero());
+        return super.metadata.getIndex(offset(OFFSET,3), Vector3i.zero());
     }
 
     public void setTravelPosition(Vector3i value) {
-        super.metadata.setIndex(offset(3), EntityDataTypes.BLOCK_POSITION, value);
+        super.metadata.setIndex(offset(OFFSET,3), EntityDataTypes.BLOCK_POSITION, value);
     }
 
     public boolean isGoingHome() {
-        return super.metadata.getIndex(offset(4), false);
+        return super.metadata.getIndex(offset(OFFSET,4), false);
     }
 
     public void setGoingHome(boolean value) {
-        super.metadata.setIndex(offset(4), EntityDataTypes.BOOLEAN, value);
+        super.metadata.setIndex(offset(OFFSET,4), EntityDataTypes.BOOLEAN, value);
     }
 
     public boolean isTravelling() {
-        return super.metadata.getIndex(offset(5), false);
+        return super.metadata.getIndex(offset(OFFSET,5), false);
     }
 
     public void setTravelling(boolean value) {
-        super.metadata.setIndex(offset(4), EntityDataTypes.BOOLEAN, value);
+        super.metadata.setIndex(offset(OFFSET,4), EntityDataTypes.BOOLEAN, value);
     }
 
 }

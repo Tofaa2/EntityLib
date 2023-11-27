@@ -42,11 +42,11 @@ public class BeeMeta extends AgeableMeta {
     }
 
     public int getAngerTicks() {
-        return super.metadata.getIndex(offset(1), 0);
+        return super.metadata.getIndex(offset(OFFSET,1), 0);
     }
 
     public void setAngerTicks(int value) {
-        super.metadata.setIndex(offset(1), EntityDataTypes.INT, value);
+        super.metadata.setIndex(offset(OFFSET,1), EntityDataTypes.INT, value);
     }
 
 }

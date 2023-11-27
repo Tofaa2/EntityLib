@@ -24,11 +24,11 @@ public class PigMeta extends AgeableMeta {
 
     public int getTimeToBoost() {
         isVersionNewer(ServerVersion.V_1_16);
-        return super.metadata.getIndex(offset(1), 0);
+        return super.metadata.getIndex(offset(OFFSET,1), 0);
     }
 
     public void setTimeToBoost(int value) {
         isVersionNewer(ServerVersion.V_1_16);
-        super.metadata.setIndex(offset(1), EntityDataTypes.INT, value);
+        super.metadata.setIndex(offset(OFFSET,1), EntityDataTypes.INT, value);
     }
 }

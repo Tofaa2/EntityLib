@@ -21,11 +21,11 @@ public class ThrownTridentMeta extends BaseArrowMeta{
     }
 
     public boolean isHasEnchantmentGlint() {
-        return super.metadata.getIndex(offset(1), false);
+        return super.metadata.getIndex(offset(OFFSET,1), false);
     }
 
     public void setHasEnchantmentGlint(boolean value) {
-        super.metadata.setIndex(offset(1), EntityDataTypes.BOOLEAN, value);
+        super.metadata.setIndex(offset(OFFSET,1), EntityDataTypes.BOOLEAN, value);
     }
 
 }

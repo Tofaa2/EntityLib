@@ -37,12 +37,12 @@ public class BaseArrowMeta extends EntityMeta {
 
     public int getPierceLevel() {
         isVersionNewer(ServerVersion.V_1_14);
-        return super.metadata.getIndex(offset(1), 0);
+        return super.metadata.getIndex(offset(OFFSET,1), 0);
     }
 
     public void setPierceLevel(int value) {
         isVersionNewer(ServerVersion.V_1_14);
-        super.metadata.setIndex(offset(1), EntityDataTypes.INT, value);
+        super.metadata.setIndex(offset(OFFSET,1), EntityDataTypes.INT, value);
     }
 
 }

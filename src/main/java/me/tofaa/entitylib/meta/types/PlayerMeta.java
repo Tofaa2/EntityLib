@@ -34,115 +34,115 @@ public class PlayerMeta extends LivingEntityMeta {
     }
 
     public int getScore() {
-        return super.metadata.getIndex(EntityMeta.offset(1), 0);
+        return super.metadata.getIndex(offset(OFFSET,1), 0);
     }
 
     public void setScore(int value) {
-        super.metadata.setIndex(EntityMeta.offset(1), EntityDataTypes.INT, value);
+        super.metadata.setIndex(offset(OFFSET,1), EntityDataTypes.INT, value);
     }
 
     public boolean isCapeEnabled() {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        return getMaskBit(EntityMeta.offset(2), CAPE_BIT);
+        isVersionNewer(ServerVersion.V_1_9);
+        return getMaskBit(offset(OFFSET,2), CAPE_BIT);
     }
 
     public void setCapeEnabled(boolean value) {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        setMaskBit(EntityMeta.offset(2), CAPE_BIT, value);
+        isVersionNewer(ServerVersion.V_1_9);
+        setMaskBit(offset(OFFSET,2), CAPE_BIT, value);
     }
 
     public boolean isJacketEnabled() {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        return getMaskBit(EntityMeta.offset(2), JACKET_BIT);
+        isVersionNewer(ServerVersion.V_1_9);
+        return getMaskBit(offset(OFFSET,2), JACKET_BIT);
     }
 
     public void setJacketEnabled(boolean value) {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        setMaskBit(EntityMeta.offset(2), JACKET_BIT, value);
+        isVersionNewer(ServerVersion.V_1_9);
+        setMaskBit(offset(OFFSET,2), JACKET_BIT, value);
     }
 
     public boolean isLeftSleeveEnabled() {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        return getMaskBit(EntityMeta.offset(2), LEFT_SLEEVE_BIT);
+        isVersionNewer(ServerVersion.V_1_9);
+        return getMaskBit(offset(OFFSET,2), LEFT_SLEEVE_BIT);
     }
 
     public void setLeftSleeveEnabled(boolean value) {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        setMaskBit(EntityMeta.offset(2), LEFT_SLEEVE_BIT, value);
+        isVersionNewer(ServerVersion.V_1_9);
+        setMaskBit(offset(OFFSET,2), LEFT_SLEEVE_BIT, value);
     }
 
     public boolean isRightSleeveEnabled() {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        return getMaskBit(EntityMeta.offset(2), RIGHT_SLEEVE_BIT);
+        isVersionNewer(ServerVersion.V_1_9);
+        return getMaskBit(offset(OFFSET,2), RIGHT_SLEEVE_BIT);
     }
 
     public void setRightSleeveEnabled(boolean value) {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        setMaskBit(EntityMeta.offset(2), RIGHT_SLEEVE_BIT, value);
+        isVersionNewer(ServerVersion.V_1_9);
+        setMaskBit(offset(OFFSET,2), RIGHT_SLEEVE_BIT, value);
     }
 
     public boolean isLeftLegEnabled() {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        return getMaskBit(EntityMeta.offset(2), LEFT_LEG_BIT);
+        isVersionNewer(ServerVersion.V_1_9);
+        return getMaskBit(offset(OFFSET,2), LEFT_LEG_BIT);
     }
 
     public void setLeftLegEnabled(boolean value) {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        setMaskBit(EntityMeta.offset(2), LEFT_LEG_BIT, value);
+        isVersionNewer(ServerVersion.V_1_9);
+        setMaskBit(offset(OFFSET,2), LEFT_LEG_BIT, value);
     }
 
     public boolean isRightLegEnabled() {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        return getMaskBit(EntityMeta.offset(2), RIGHT_LEG_BIT);
+        isVersionNewer(ServerVersion.V_1_9);
+        return getMaskBit(offset(OFFSET,2), RIGHT_LEG_BIT);
     }
 
     public void setRightLegEnabled(boolean value) {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        setMaskBit(EntityMeta.offset(2), RIGHT_LEG_BIT, value);
+        isVersionNewer(ServerVersion.V_1_9);
+        setMaskBit(offset(OFFSET,2), RIGHT_LEG_BIT, value);
     }
 
     public boolean isHatEnabled() {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        return getMaskBit(EntityMeta.offset(2), HAT_BIT);
+        isVersionNewer(ServerVersion.V_1_9);
+        return getMaskBit(offset(OFFSET,2), HAT_BIT);
     }
 
     public void setHatEnabled(boolean value) {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_9);
-        setMaskBit(EntityMeta.offset(2), HAT_BIT, value);
+        isVersionNewer(ServerVersion.V_1_9);
+        setMaskBit(offset(OFFSET,2), HAT_BIT, value);
     }
 
     public boolean isRightHandMain() {
         if (EntityLib.getPacketEvents().getServerManager().getVersion().isOlderThan(ServerVersion.V_1_9)) {
             return true;
         }
-        return super.metadata.getIndex(EntityMeta.offset(3), (byte) 1) == (byte) 1;
+        return super.metadata.getIndex(offset(OFFSET,3), (byte) 1) == (byte) 1;
     }
 
     public void setRightHandMain(boolean value) {
         if (EntityLib.getPacketEvents().getServerManager().getVersion().isOlderThan(ServerVersion.V_1_9)) {
             return;
         }
-        super.metadata.setIndex(EntityMeta.offset(3), EntityDataTypes.BYTE, (byte) (value ? 1 : 0));
+        super.metadata.setIndex(offset(OFFSET,3), EntityDataTypes.BYTE, (byte) (value ? 1 : 0));
     }
 
     public @Nullable NBTCompound getLeftShoulderData() {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_11);
-        return super.metadata.getIndex(EntityMeta.offset(4), null);
+        isVersionNewer(ServerVersion.V_1_11);
+        return super.metadata.getIndex(offset(OFFSET,4), null);
     }
 
     public void setLeftShoulderData(@Nullable NBTCompound value) {
         if (value == null) value = new NBTCompound();
-        super.metadata.setIndex(EntityMeta.offset(4), EntityDataTypes.NBT, value);
+        super.metadata.setIndex(offset(OFFSET,4), EntityDataTypes.NBT, value);
     }
 
     public @Nullable NBTCompound getRightShoulderData() {
-        EntityMeta.isVersionNewer(ServerVersion.V_1_11);
-        return super.metadata.getIndex(EntityMeta.offset(5), null);
+        isVersionNewer(ServerVersion.V_1_11);
+        return super.metadata.getIndex(offset(OFFSET,5), null);
     }
 
     public void setRightShoulderData(@Nullable NBTCompound value) {
         if (value == null) value = new NBTCompound();
-        super.metadata.setIndex(EntityMeta.offset(5), EntityDataTypes.NBT, value);
+        super.metadata.setIndex(offset(OFFSET,5), EntityDataTypes.NBT, value);
     }
 
 }

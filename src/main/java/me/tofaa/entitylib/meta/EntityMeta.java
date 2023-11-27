@@ -119,19 +119,19 @@ public class EntityMeta {
     }
 
     public boolean isHasNoGravity() {
-        return this.metadata.getIndex(offset(5), true);
+        return this.metadata.getIndex(offset(OFFSET, 5), true);
     }
 
     public void setHasNoGravity(boolean value) {
-        this.metadata.setIndex(offset(5), EntityDataTypes.BOOLEAN, value);
+        this.metadata.setIndex(offset(OFFSET, 5), EntityDataTypes.BOOLEAN, value);
     }
 
     public EntityPose getPose() {
-        return this.metadata.getIndex(offset(6), EntityPose.STANDING);
+        return this.metadata.getIndex(offset(OFFSET, 6), EntityPose.STANDING);
     }
 
     public void setPose(EntityPose value) {
-        this.metadata.setIndex(offset(6), EntityDataTypes.ENTITY_POSE, value);
+        this.metadata.setIndex(offset(OFFSET, 6), EntityDataTypes.ENTITY_POSE, value);
     }
 
     public WrapperPlayServerEntityMetadata createPacket() {
@@ -157,8 +157,14 @@ public class EntityMeta {
         }
     }
 
-    protected static byte offset(int amount) {
-        return (byte) (OFFSET + amount);
+    /**
+     * Annoying java 8 not letting me do OFFSET + amount in the method call so this is a workaround
+     * @param value the value to offset
+     * @param amount the amount to offset by
+     * @return the offset value
+     */
+    protected static byte offset(byte value, int amount) {
+        return (byte) (value + amount);
     }
 
     protected byte getMask(byte index) {
