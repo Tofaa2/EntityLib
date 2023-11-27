@@ -2,7 +2,9 @@ package me.tofaa.entitylib.meta;
 
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.manager.server.VersionComparison;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityMetadataProvider;
 import com.github.retrooper.packetevents.protocol.entity.pose.EntityPose;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import me.tofaa.entitylib.EntityLib;
@@ -10,7 +12,9 @@ import me.tofaa.entitylib.exception.InvalidVersionException;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 
-public class EntityMeta {
+import java.util.List;
+
+public class EntityMeta implements EntityMetadataProvider {
 
     public static final byte OFFSET = 0;
     public static final byte MAX_OFFSET = OFFSET + 8;
@@ -193,4 +197,8 @@ public class EntityMeta {
         setMask((byte)index, mask);
     }
 
+    @Override
+    public List<EntityData> entityData() {
+        return metadata.getEntries();
+    }
 }

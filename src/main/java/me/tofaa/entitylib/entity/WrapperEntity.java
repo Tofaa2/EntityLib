@@ -5,9 +5,9 @@ import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerDestroyEntities;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityRotation;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityTeleport;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
-import me.tofaa.entitylib.EntityIdProvider;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.EntityMeta;
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +28,7 @@ public class WrapperEntity {
     private final Set<UUID> viewers = new HashSet<>();
 
     private Location location;
+    private boolean onGround;
     private boolean spawned;
 
     public WrapperEntity(@NotNull UUID uuid, EntityType entityType, EntityMeta meta) {
@@ -57,6 +58,21 @@ public class WrapperEntity {
         return true;
     }
 
+    public void rotateHead(float yaw, float pitch) {
+        sendPacketToViewers(
+                new WrapperPlayServerEntityRotation(entityId, yaw, pitch, onGround)
+        );
+    }
+
+
+    private static double distance(Location to, Location from) {
+        double x = to.getX() - from.getX();
+        double y = to.getY() - from.getY();
+        double z = to.getZ() - from.getZ();
+        return Math.sqrt(x * x + y * y + z * z);
+    }
+
+
     public void remove() {
         if (!spawned) return;
         spawned = false;
@@ -65,6 +81,7 @@ public class WrapperEntity {
 
     public void teleport(Location location, boolean onGround) {
         this.location = location;
+        this.onGround = onGround;
         sendPacketToViewers(
                 new WrapperPlayServerEntityTeleport(entityId, location, onGround)
         );

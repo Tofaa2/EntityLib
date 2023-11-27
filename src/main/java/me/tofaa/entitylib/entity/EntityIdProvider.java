@@ -1,4 +1,4 @@
-package me.tofaa.entitylib;
+package me.tofaa.entitylib.entity;
 
 
 import java.util.concurrent.atomic.AtomicInteger;
