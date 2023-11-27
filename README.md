@@ -1,11 +1,23 @@
 # EntityLib
 EntityLib is a PacketEvents addon that provides an abstraction over raw entity data and packets to make it easier to work with entities as a whole.
 
+```groovy
+//https://jitpack.io/#Tofaa2/EntityLib/
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.Tofaa2:EntityLib:<release-tag-here>'
+}
+```
+
 
 ## Features
 - Full EntityMeta support
 - Creation of WrapperEntities
 - Keeping track of entities.
+
 
 
 ## Usage
