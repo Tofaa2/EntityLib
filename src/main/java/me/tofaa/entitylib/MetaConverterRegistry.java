@@ -42,6 +42,8 @@ final class MetaConverterRegistry {
         put(STRIDER, StriderMeta::new);
         put(FOX, FoxMeta::new);
         put(FROG, FrogMeta::new);
+        put(GOAT, GoatMeta::new);
+        put(HOGLIN, HoglinMeta::new);
     }
 
     private void put(EntityType entityType, BiFunction<Integer, Metadata, EntityMeta> function) {
