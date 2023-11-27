@@ -1,0 +1,9 @@
+name: EntityLibPlugin
+version: 1.0.0
+depend:
+  - packetevents
+main: me.tofaa.entitylib.EntityLibPlugin
+commands:
+  testapi:
+    description: Test PEEntityMeta API
+    usage: /<command>

@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'java-library'
+}
+
+allprojects {
+
+    apply plugin: 'java'
+
+    group = 'me.tofaa.entitylib'
+    version = '1.0-SNAPSHOT'
+
+    java.sourceCompatibility = JavaVersion.VERSION_1_8
+    java.targetCompatibility = JavaVersion.VERSION_1_8
+
+    repositories {
+        mavenCentral()
+        maven {
+            url = 'https://jitpack.io/'
+        }
+        maven {
+            name = 'papermc'
+            url = 'https://repo.papermc.io/repository/maven-public/'
+        }
+        maven {
+            name = 'codemc-repo'
+            url = 'https://repo.codemc.io/repository/maven-releases/'
+        }
+        maven {
+            url = "https://oss.sonatype.org/content/groups/public/"
+        }
+        maven { url = "https://repo.codemc.org/repository/maven-public/" }
+    }
+
+}
+
+
+dependencies {
+    compileOnly("com.github.retrooper.packetevents:spigot:2.0.2")
+}
+
