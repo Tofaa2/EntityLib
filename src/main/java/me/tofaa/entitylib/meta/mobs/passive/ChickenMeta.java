@@ -1,4 +1,4 @@
-package me.tofaa.entitylib.meta.mobs;
+package me.tofaa.entitylib.meta.mobs.passive;
 
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.types.AgeableMeta;

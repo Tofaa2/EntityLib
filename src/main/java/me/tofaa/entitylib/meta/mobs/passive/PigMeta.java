@@ -1,4 +1,4 @@
-package me.tofaa.entitylib.meta.mobs;
+package me.tofaa.entitylib.meta.mobs.passive;
 
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;

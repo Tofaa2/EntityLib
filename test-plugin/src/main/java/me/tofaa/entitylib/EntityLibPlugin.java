@@ -11,6 +11,7 @@ public final class EntityLibPlugin extends JavaPlugin {
     public void onEnable() {
         EntityLib.init(PacketEvents.getAPI());
         getCommand("testapi").setExecutor(new TestCommand());
+        getCommand("testentity").setExecutor(new TestEntityCommand());
         instance = this;
     }
 }

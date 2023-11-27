@@ -7,3 +7,7 @@ commands:
   testapi:
     description: Test PEEntityMeta API
     usage: /<command>
+
+  testentity:
+    description: Test PEEntity API
+    usage: /<command>

@@ -1,3 +1,4 @@
 rootProject.name = 'EntityLib'
 include 'test-plugin'
+include 'wrapper-entity'
 
