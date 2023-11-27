@@ -100,6 +100,14 @@ class Example {
 
 ```
 
+### TODO:
+Once this list is complete, i will release a stable version of the library.
+- [ ] Implement checks for each EntityMeta to make sure the version specific data is correct.
+- [ ] Verify all the EntityMeta packets are working correctly.
+- [ ] WrapperEntities must seamlessly send packet updates to viewers, currently they are not.
+- [ ] Add support for more actions using WrapperEntities.
+- [ ] More javadocs.
+
 ### Credits
 - PacketEvents for providing the API and retrooper being a cool guy in general
 - Minestom certain mappings were taken from Minestom cause i have not slept in 4 days and it was faster
