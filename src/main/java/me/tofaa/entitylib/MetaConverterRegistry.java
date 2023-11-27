@@ -4,6 +4,13 @@ import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.mobs.*;
+import me.tofaa.entitylib.meta.mobs.DonkeyMeta;
+import me.tofaa.entitylib.meta.mobs.cuboid.MagmaCubeMeta;
+import me.tofaa.entitylib.meta.mobs.cuboid.SlimeMeta;
+import me.tofaa.entitylib.meta.mobs.horse.*;
+import me.tofaa.entitylib.meta.mobs.tameable.CatMeta;
+import me.tofaa.entitylib.meta.mobs.tameable.ParrotMeta;
+import me.tofaa.entitylib.meta.mobs.tameable.WolfMeta;
 import me.tofaa.entitylib.meta.projectile.SmallFireballMeta;
 import me.tofaa.entitylib.meta.projectile.ThrownEggMeta;
 import me.tofaa.entitylib.meta.projectile.ThrownExpBottleMeta;
@@ -44,6 +51,17 @@ final class MetaConverterRegistry {
         put(FROG, FrogMeta::new);
         put(GOAT, GoatMeta::new);
         put(HOGLIN, HoglinMeta::new);
+        put(CAT, CatMeta::new);
+        put(PARROT, ParrotMeta::new);
+        put(WOLF, WolfMeta::new);
+        put(DONKEY, DonkeyMeta::new);
+        put(HORSE, HorseMeta::new);
+        put(LLAMA, LlamaMeta::new);
+        put(MULE, MuleMeta::new);
+        put(SKELETON_HORSE, SkeletonHorseMeta::new);
+        put(ZOMBIE_HORSE, ZombieHorseMeta::new);
+        put(SLIME, SlimeMeta::new);
+        put(MAGMA_CUBE, MagmaCubeMeta::new);
     }
 
     private void put(EntityType entityType, BiFunction<Integer, Metadata, EntityMeta> function) {
