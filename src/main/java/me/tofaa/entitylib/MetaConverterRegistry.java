@@ -30,6 +30,7 @@ import me.tofaa.entitylib.meta.mobs.villager.VillagerMeta;
 import me.tofaa.entitylib.meta.mobs.villager.WanderingTraderMeta;
 import me.tofaa.entitylib.meta.projectile.*;
 import me.tofaa.entitylib.meta.types.PlayerMeta;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -159,8 +160,8 @@ final class MetaConverterRegistry {
         return (Class<T>) metaClasses.get(entityType);
     }
 
-    public @Nullable BiFunction<Integer, Metadata, EntityMeta> get(EntityType entityType) {
-        return converters.get(entityType);
+    public @NotNull BiFunction<Integer, Metadata, EntityMeta> get(EntityType entityType) {
+        return converters.getOrDefault(entityType, EntityMeta::new);
     }
 
 }

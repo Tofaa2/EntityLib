@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/test-plugin" />
+            <option value="$PROJECT_DIR$/wrapper-entity" />
           </set>
         </option>
       </GradleProjectSettings>

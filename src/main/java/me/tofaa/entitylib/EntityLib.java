@@ -104,9 +104,6 @@ public final class EntityLib {
         checkInit();
         Metadata m = new Metadata(entityId);
         BiFunction<Integer, Metadata, EntityMeta> function = metaRegistry.get(entityType);
-        if (function == null) {
-            throw new IllegalArgumentException("No meta converter for entity type " + entityType);
-        }
         EntityMeta meta =  function.apply(entityId, m);
         metadata.put(entityId, meta);
         return meta;
