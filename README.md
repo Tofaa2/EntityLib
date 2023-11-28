@@ -88,7 +88,7 @@ class Example {
         // You can also set it to a custom provider if needed
         WrapperEntity.ID_PROVIDER = new EntityIdProvider() {
             @Override
-            public int getEntityId() {
+            public int provide() {
                 return 0;
             }
         };
