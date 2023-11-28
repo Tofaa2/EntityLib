@@ -12,10 +12,7 @@ import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.EntityMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class WrapperEntity {
 
@@ -64,12 +61,8 @@ public class WrapperEntity {
         );
     }
 
-
-    private static double distance(Location to, Location from) {
-        double x = to.getX() - from.getX();
-        double y = to.getY() - from.getY();
-        double z = to.getZ() - from.getZ();
-        return Math.sqrt(x * x + y * y + z * z);
+    public @NotNull Collection<UUID> getViewers() {
+        return Collections.unmodifiableCollection(viewers);
     }
 
 
@@ -93,8 +86,7 @@ public class WrapperEntity {
 
     public void sendPacketToViewers(PacketWrapper<?> packet) {
         viewers.forEach(uuid -> {
-            Object user = EntityLib.getPacketEvents().getProtocolManager().getChannel(uuid);
-            EntityLib.getPacketEvents().getProtocolManager().sendPacket(user, packet);
+            EntityLib.sendPacket(uuid, packet);
         });
     }
 

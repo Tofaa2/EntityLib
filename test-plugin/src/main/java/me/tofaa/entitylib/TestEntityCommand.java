@@ -3,12 +3,14 @@ package me.tofaa.entitylib;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import me.tofaa.entitylib.entity.WrapperEntity;
+import me.tofaa.entitylib.meta.EntityMeta;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.UUID;
 
 public class TestEntityCommand implements CommandExecutor {
@@ -26,17 +28,16 @@ public class TestEntityCommand implements CommandExecutor {
                 player.sendMessage("idk");
                 return false;
             }
-        }
-
-        if (entity.hasSpawned()) {
-            entity.remove();
-            player.sendMessage("removed");
-        }
-        else {
             entity.addViewer(player.getUniqueId());
             entity.spawn(fromBukkit(player.getLocation()));
-            player.sendMessage("spawned");
         }
+
+        EntityMeta meta = entity.getMeta();
+        meta.setOnFire(!meta.isOnFire());
+        meta.setHasGlowingEffect(!meta.hasGlowingEffect());
+        player.sendMessage("on fire: " + meta.isOnFire());
+        player.sendMessage("glowing: " + meta.hasGlowingEffect());
+        player.sendMessage("viewers: " + entity.getViewers());
 
         return false;
     }
