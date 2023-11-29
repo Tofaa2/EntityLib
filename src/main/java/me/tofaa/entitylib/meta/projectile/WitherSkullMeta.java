@@ -1,4 +1,4 @@
-package me.tofaa.entitylib.meta.mobs.other;
+package me.tofaa.entitylib.meta.projectile;
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import me.tofaa.entitylib.meta.EntityMeta;

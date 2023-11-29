@@ -138,6 +138,14 @@ public class EntityMeta implements EntityMetadataProvider {
         this.metadata.setIndex(offset(OFFSET, 6), EntityDataTypes.ENTITY_POSE, value);
     }
 
+    public int getTicksFrozenInPowderedSnow() {
+        return this.metadata.getIndex(offset(OFFSET, 7), 0);
+    }
+
+    public void setTicksFrozenInPowderedSnow(int value) {
+        this.metadata.setIndex(offset(OFFSET, 7), EntityDataTypes.INT, value);
+    }
+
     public WrapperPlayServerEntityMetadata createPacket() {
         return metadata.createPacket();
     }

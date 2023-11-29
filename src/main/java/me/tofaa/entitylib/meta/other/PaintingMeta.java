@@ -1,4 +1,4 @@
-package me.tofaa.entitylib.meta.mobs.other;
+package me.tofaa.entitylib.meta.other;
 
 import com.github.retrooper.packetevents.protocol.world.Direction;
 import me.tofaa.entitylib.meta.EntityMeta;

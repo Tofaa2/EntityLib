@@ -21,6 +21,16 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 
+/**
+ * Base API class for EntityLib, contains all the methods to interact with the library.
+ * <p>
+ *     Initialization should be done before PacketEvents. After PE is initialized, call {@link EntityLib#init(PacketEventsAPI)} to initialize EntityLib.
+ *     <br>
+ *     To enable entity interactions, call {@link EntityLib#enableEntityInteractions()}. these will help you interact with a {@link WrapperEntity} object.
+ *     <br>
+ *     By default, EntityLib does not persistently store data, this is planned for a future feature but for now you must store your own data if you want it to persist after restart.
+ * <p>
+ */
 public final class EntityLib {
 
     private EntityLib() {}

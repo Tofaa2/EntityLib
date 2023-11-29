@@ -1,4 +1,4 @@
-package me.tofaa.entitylib.meta.mobs.other;
+package me.tofaa.entitylib.meta.projectile;
 
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;

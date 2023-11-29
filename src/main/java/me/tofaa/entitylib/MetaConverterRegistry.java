@@ -1,6 +1,7 @@
 package me.tofaa.entitylib;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+import com.sun.org.apache.bcel.internal.generic.PUTFIELD;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.mobs.*;
@@ -22,16 +23,15 @@ import me.tofaa.entitylib.meta.mobs.monster.zombie.*;
 import me.tofaa.entitylib.meta.mobs.passive.*;
 import me.tofaa.entitylib.meta.mobs.water.*;
 import me.tofaa.entitylib.meta.mobs.minecart.*;
-import me.tofaa.entitylib.meta.mobs.other.*;
 import me.tofaa.entitylib.meta.mobs.tameable.CatMeta;
 import me.tofaa.entitylib.meta.mobs.tameable.ParrotMeta;
 import me.tofaa.entitylib.meta.mobs.tameable.WolfMeta;
 import me.tofaa.entitylib.meta.mobs.villager.VillagerMeta;
 import me.tofaa.entitylib.meta.mobs.villager.WanderingTraderMeta;
+import me.tofaa.entitylib.meta.other.*;
 import me.tofaa.entitylib.meta.projectile.*;
 import me.tofaa.entitylib.meta.types.PlayerMeta;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +45,10 @@ final class MetaConverterRegistry {
     private final Map<EntityType, Class<? extends EntityMeta>> metaClasses = new HashMap<>();
 
     MetaConverterRegistry() {
+        put(INTERACTION, InteractionMeta.class, InteractionMeta::new);
+        put(BLOCK_DISPLAY, BlockDisplayMeta.class, BlockDisplayMeta::new);
+        put(ITEM_DISPLAY, ItemDisplayMeta.class, ItemDisplayMeta::new);
+        put(TEXT_DISPLAY, TextDisplayMeta.class, TextDisplayMeta::new);
         put(AREA_EFFECT_CLOUD, AreaEffectCloudMeta.class, AreaEffectCloudMeta::new);
         put(ARMOR_STAND, ArmorStandMeta.class, ArmorStandMeta::new);
         put(BOAT, BoatMeta.class, BoatMeta::new);
