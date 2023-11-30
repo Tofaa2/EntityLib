@@ -45,6 +45,7 @@ final class MetaConverterRegistry {
     private final Map<EntityType, Class<? extends EntityMeta>> metaClasses = new HashMap<>();
 
     MetaConverterRegistry() {
+        put(SNIFFER, SnifferMeta.class, SnifferMeta::new);
         put(INTERACTION, InteractionMeta.class, InteractionMeta::new);
         put(BLOCK_DISPLAY, BlockDisplayMeta.class, BlockDisplayMeta::new);
         put(ITEM_DISPLAY, ItemDisplayMeta.class, ItemDisplayMeta::new);
