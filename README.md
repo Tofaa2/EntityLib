@@ -108,6 +108,8 @@ Once this list is complete, i will release a stable version of the library.
 - [ ] Add support for more actions using WrapperEntities.
 - [ ] More javadocs.
 - [ ] Make ObjectData actually useful.
+- [ ] Multi-version support
+- [ ] Make class names match the protocol specified names.
 
 ### Credits
 - PacketEvents for providing the API and retrooper being a cool guy in general
