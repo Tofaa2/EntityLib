@@ -4,10 +4,7 @@ import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerDestroyEntities;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityRotation;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityTeleport;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
+import com.github.retrooper.packetevents.wrapper.play.server.*;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.EntityMeta;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +20,6 @@ public class WrapperEntity {
     private final Optional<UUID> uuid;
     private final EntityMeta meta;
     private final Set<UUID> viewers = new HashSet<>();
-
     private Location location;
     private boolean onGround;
     private boolean spawned;
@@ -61,8 +57,8 @@ public class WrapperEntity {
         );
     }
 
-    public @NotNull Collection<UUID> getViewers() {
-        return Collections.unmodifiableCollection(viewers);
+    public void rotateHead(Location location) {
+        rotateHead(location.getYaw(), location.getPitch());
     }
 
 
@@ -78,6 +74,10 @@ public class WrapperEntity {
         sendPacketToViewers(
                 new WrapperPlayServerEntityTeleport(entityId, location, onGround)
         );
+    }
+
+    public @NotNull Collection<UUID> getViewers() {
+        return Collections.unmodifiableCollection(viewers);
     }
 
     public void teleport(Location location) {

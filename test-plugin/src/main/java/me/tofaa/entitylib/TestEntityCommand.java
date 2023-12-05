@@ -2,12 +2,16 @@ package me.tofaa.entitylib;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.world.Location;
+import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import me.tofaa.entitylib.entity.WrapperEntity;
+import me.tofaa.entitylib.entity.WrapperLivingEntity;
 import me.tofaa.entitylib.meta.EntityMeta;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -15,7 +19,7 @@ import java.util.UUID;
 
 public class TestEntityCommand implements CommandExecutor {
 
-    private WrapperEntity entity;
+    private WrapperLivingEntity entity;
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -23,7 +27,7 @@ public class TestEntityCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (entity == null) {
-            entity = EntityLib.createEntity(UUID.randomUUID(), EntityTypes.PIG);
+            entity = (WrapperLivingEntity) EntityLib.createEntity(UUID.randomUUID(), EntityTypes.ZOMBIE);
             if (entity == null) {
                 player.sendMessage("idk");
                 return false;
@@ -31,7 +35,10 @@ public class TestEntityCommand implements CommandExecutor {
             entity.addViewer(player.getUniqueId());
             entity.spawn(fromBukkit(player.getLocation()));
         }
-
+        ItemStack held = player.getInventory().getItemInMainHand();
+        if (held != null && held.getType() != Material.AIR) {
+            entity.getEquipment().setBoots(SpigotConversionUtil.fromBukkitItemStack(held));
+        }
         EntityMeta meta = entity.getMeta();
         meta.setOnFire(!meta.isOnFire());
         meta.setHasGlowingEffect(!meta.hasGlowingEffect());

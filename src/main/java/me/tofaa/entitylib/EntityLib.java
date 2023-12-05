@@ -3,6 +3,7 @@ package me.tofaa.entitylib;
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import com.github.retrooper.packetevents.event.PacketListenerAbstract;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
+import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.protocol.packettype.PacketTypeCommon;
@@ -10,8 +11,11 @@ import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientInteractEntity;
 import me.tofaa.entitylib.entity.EntityInteractionProcessor;
 import me.tofaa.entitylib.entity.WrapperEntity;
+import me.tofaa.entitylib.entity.WrapperLivingEntity;
+import me.tofaa.entitylib.exception.InvalidVersionException;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;
+import me.tofaa.entitylib.meta.types.LivingEntityMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -87,7 +91,13 @@ public final class EntityLib {
         int id = WrapperEntity.ID_PROVIDER.provide();
         EntityMeta meta = createMeta(id, entityType);
         if (meta == null) return null;
-        WrapperEntity entity = new WrapperEntity(uuid, entityType, meta);
+        WrapperEntity entity;
+        if (meta instanceof LivingEntityMeta) {
+            entity = new WrapperLivingEntity(uuid, entityType, meta);
+        }
+        else {
+            entity = new WrapperEntity(uuid, entityType, meta);
+        }
         entities.put(uuid, entity);
         entitiesById.put(id, entity);
         return entity;
@@ -143,6 +153,12 @@ public final class EntityLib {
 
     public static void setInteractionProcessor(EntityInteractionProcessor interactionProcessor) {
         EntityLib.interactionProcessor = interactionProcessor;
+    }
+
+    public static void verifyVersion(ServerVersion supported, String msg) {
+        if (packetEvents.getServerManager().getVersion().isOlderThan(supported)) {
+            throw new InvalidVersionException(msg);
+        }
     }
 
     private static void checkInit() {
