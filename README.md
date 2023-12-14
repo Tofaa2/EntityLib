@@ -53,7 +53,7 @@ class Example {
 ### Creating a WrapperEntity
 
 ```java
-import javax.xml.stream.Location;
+import com.github.retrooper.packetevents.protocol.world.Location;
 
 class Example {
 
