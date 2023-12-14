@@ -33,10 +33,10 @@ public class TestEntityCommand implements CommandExecutor {
                 return false;
             }
             entity.addViewer(player.getUniqueId());
-            entity.spawn(fromBukkit(player.getLocation()));
+            entity.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
         }
         ItemStack held = player.getInventory().getItemInMainHand();
-        if (held != null && held.getType() != Material.AIR) {
+        if (held != null && !held.getType().isAir()) {
             entity.getEquipment().setBoots(SpigotConversionUtil.fromBukkitItemStack(held));
         }
         EntityMeta meta = entity.getMeta();
@@ -47,10 +47,6 @@ public class TestEntityCommand implements CommandExecutor {
         player.sendMessage("viewers: " + entity.getViewers());
 
         return false;
-    }
-
-    public static Location fromBukkit(org.bukkit.Location location) {
-        return new Location(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
     }
 
 }

@@ -6,6 +6,7 @@ import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityMetadataProvider;
 import com.github.retrooper.packetevents.protocol.entity.pose.EntityPose;
+import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.exception.InvalidVersionException;
@@ -200,9 +201,14 @@ public class EntityMeta implements EntityMetadataProvider {
         if (value) {
             mask |= bit;
         } else {
-            mask &= ~bit;
+            mask &= (byte) ~bit;
         }
         setMask((byte)index, mask);
+    }
+
+    @Override
+    public List<EntityData> entityData(ClientVersion clientVersion) {
+        return metadata.getEntries(); // TODO: Atm this is useless cause of the way the api works. Might change in the future
     }
 
     @Override

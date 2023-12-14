@@ -1,7 +1,6 @@
 package me.tofaa.entitylib;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
-import com.sun.org.apache.bcel.internal.generic.PUTFIELD;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.mobs.*;
@@ -39,6 +38,7 @@ import java.util.function.BiFunction;
 
 import static com.github.retrooper.packetevents.protocol.entity.type.EntityTypes.*;
 
+@SuppressWarnings("unchecked")
 final class MetaConverterRegistry {
 
     private final Map<EntityType, BiFunction<Integer, Metadata, EntityMeta>> converters = new HashMap<>();

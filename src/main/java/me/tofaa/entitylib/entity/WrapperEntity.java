@@ -61,7 +61,6 @@ public class WrapperEntity {
         rotateHead(location.getYaw(), location.getPitch());
     }
 
-
     public void remove() {
         if (!spawned) return;
         spawned = false;
@@ -85,9 +84,7 @@ public class WrapperEntity {
     }
 
     public void sendPacketToViewers(PacketWrapper<?> packet) {
-        viewers.forEach(uuid -> {
-            EntityLib.sendPacket(uuid, packet);
-        });
+        viewers.forEach(uuid -> EntityLib.sendPacket(uuid, packet));
     }
 
     public boolean addViewer(UUID uuid) {
