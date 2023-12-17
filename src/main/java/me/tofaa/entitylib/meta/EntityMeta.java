@@ -77,12 +77,25 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     public Component getCustomName() {
-        return this.metadata.getIndex((byte) 2, null);
+        return this.metadata.getIndex(offset(OFFSET, 2), null);
+    }
+
+    public void setCustomName(Component value) {
+        this.metadata.setIndex(offset(OFFSET, 2), EntityDataTypes.COMPONENT, GsonComponentSerializer.gson().serialize(value));
+    }
+
+    public boolean isCustomNameVisible() {
+        return this.metadata.getIndex(offset(OFFSET, 3), false);
+    }
+
+    public void setCustomNameVisible(boolean value) {
+        this.metadata.setIndex(offset(OFFSET, 3), EntityDataTypes.BOOLEAN, value);
     }
 
     public boolean hasGlowingEffect() {
         return getMaskBit(OFFSET, HAS_GLOWING_EFFECT_BIT);
     }
+
     public boolean isSwimming() {
         return getMaskBit(OFFSET, SWIMMING_BIT);
     }
@@ -101,18 +114,6 @@ public class EntityMeta implements EntityMetadataProvider {
 
     public void setFlyingWithElytra(boolean value) {
         setMaskBit(OFFSET, FLYING_WITH_ELYTRA_BIT, value);
-    }
-
-    public void setCustomName(Component value) {
-        this.metadata.setIndex((byte) 2, EntityDataTypes.COMPONENT, GsonComponentSerializer.gson().serialize(value));
-    }
-
-    public boolean isCustomNameVisible() {
-        return this.metadata.getIndex((byte) 3, false);
-    }
-
-    public void setCustomNameVisible(boolean value) {
-        this.metadata.setIndex((byte) 3, EntityDataTypes.BOOLEAN, value);
     }
 
     public boolean isSilent() {

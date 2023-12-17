@@ -31,6 +31,11 @@ public class WrapperEntity {
         this.meta = meta;
     }
 
+    public void refresh() {
+        if (!spawned) return;
+        sendPacketToViewers(meta.createPacket());
+    }
+
     public boolean spawn(Location location) {
         if (spawned) return false;
         this.location = location;
@@ -48,6 +53,7 @@ public class WrapperEntity {
                         Optional.empty()
                 )
         );
+        sendPacketToViewers(meta.createPacket());
         return true;
     }
 
@@ -104,6 +110,7 @@ public class WrapperEntity {
                 Optional.empty()
         );
         EntityLib.sendPacket(uuid, packet);
+        EntityLib.sendPacket(uuid, meta.createPacket());
         return true;
     }
 
