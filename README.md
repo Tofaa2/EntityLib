@@ -107,7 +107,7 @@ Once this list is complete, i will release a stable version of the library.
 - [ ] WrapperEntities must seamlessly send packet updates to viewers, currently they are not.
 - [ ] Add support for more actions using WrapperEntities.
 - [ ] More javadocs.
-- [ ] Make ObjectData actually useful.
+- [x] Make ObjectData actually useful.
 - [ ] Multi-version support
 - [ ] Make class names match the protocol specified names.
 
