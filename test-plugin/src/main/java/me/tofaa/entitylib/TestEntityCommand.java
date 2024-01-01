@@ -25,7 +25,7 @@ public class TestEntityCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player)) return false;
+        if (!(sender instanceof Player )) return false;
         Player player = (Player) sender;
         if (entity == null) {
             entity = (WrapperLivingEntity) EntityLib.createEntity(UUID.randomUUID(), EntityTypes.ZOMBIE);
@@ -37,7 +37,7 @@ public class TestEntityCommand implements CommandExecutor {
             entity.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
         }
         ItemStack held = player.getInventory().getItemInMainHand();
-        if (held != null && !held.getType().isAir()) {
+        if (!held.getType().isAir()) {
             entity.getEquipment().setBoots(SpigotConversionUtil.fromBukkitItemStack(held));
         }
         EntityMeta meta = entity.getMeta();
@@ -50,17 +50,7 @@ public class TestEntityCommand implements CommandExecutor {
         player.sendMessage("on fire: " + meta.isOnFire());
         player.sendMessage("glowing: " + meta.hasGlowingEffect());
 
-
-        WrapperEntity e = EntityLib.createEntity(UUID.randomUUID(), EntityTypes.ARMOR_STAND);
-        int entityId = e.getEntityId(); // You can set the entityId provider to change this, WrapperEntity#ID_PROVIDER
-        if (e == null) {
-            throw new RuntimeException("Error creating entity meta"); // Only happens if the entity meta is null/invalid.
-        }
-        ArmorStandMeta m = (ArmorStandMeta) e.getMeta();
-        m.setInvisible(true);
-        e.spawn(new Location(1, 2, 3, 4, 5));
-        e.addViewer(player.getUniqueId());
-
+        entity.refresh();
         return false;
     }
 

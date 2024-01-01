@@ -4,6 +4,7 @@ import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.player.InteractionHand;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientInteractEntity;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerCloseWindow;
 import me.tofaa.entitylib.entity.EntityInteractionProcessor;
 import me.tofaa.entitylib.entity.WrapperEntity;
 import org.bukkit.plugin.java.JavaPlugin;

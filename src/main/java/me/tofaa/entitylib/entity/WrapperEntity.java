@@ -7,6 +7,7 @@ import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.*;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.EntityMeta;
+import me.tofaa.entitylib.meta.types.ObjectData;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -40,6 +41,11 @@ public class WrapperEntity {
         if (spawned) return false;
         this.location = location;
         this.spawned = true;
+
+        int data = 0;
+        if (meta instanceof ObjectData) {
+            data = ((ObjectData) meta).getObjectData();
+        }
         sendPacketToViewers(
                 new WrapperPlayServerSpawnEntity(
                         entityId,
@@ -49,7 +55,7 @@ public class WrapperEntity {
                         location.getPitch(),
                         location.getYaw(),
                         location.getYaw(),
-                        0,
+                        data,
                         Optional.empty()
                 )
         );
@@ -91,6 +97,12 @@ public class WrapperEntity {
 
     public void sendPacketToViewers(PacketWrapper<?> packet) {
         viewers.forEach(uuid -> EntityLib.sendPacket(uuid, packet));
+    }
+
+    public void sendPacketsToViewers(PacketWrapper<?>... wrappers) {
+        for (PacketWrapper<?> wrapper : wrappers) {
+            sendPacketToViewers(wrapper);
+        }
     }
 
     public boolean addViewer(UUID uuid) {

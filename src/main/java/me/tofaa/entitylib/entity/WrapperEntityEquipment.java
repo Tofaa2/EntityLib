@@ -109,6 +109,7 @@ public class WrapperEntityEquipment {
         );
     }
 
+
     public void refresh() {
         this.entity.sendPacketToViewers(createPacket());
     }
