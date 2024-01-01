@@ -3,6 +3,8 @@ package me.tofaa.entitylib.entity;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.protocol.world.Location;
+import com.github.retrooper.packetevents.util.Vector3d;
+import com.github.retrooper.packetevents.util.Vector3f;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.*;
 import me.tofaa.entitylib.EntityLib;
@@ -24,6 +26,7 @@ public class WrapperEntity {
     private Location location;
     private boolean onGround;
     private boolean spawned;
+    private Vector3d velocity = Vector3d.zero();
 
     public WrapperEntity(@NotNull UUID uuid, EntityType entityType, EntityMeta meta) {
         this.uuid = Optional.of(uuid);
@@ -43,8 +46,23 @@ public class WrapperEntity {
         this.spawned = true;
 
         int data = 0;
+        Optional<Vector3d> velocity;
+        double veloX = 0, veloY = 0, veloZ = 0;
         if (meta instanceof ObjectData) {
-            data = ((ObjectData) meta).getObjectData();
+            ObjectData od = (ObjectData) meta;
+
+            data = od.getObjectData();
+            if (od.requiresVelocityPacketAtSpawn()) {
+                final WrapperPlayServerEntityVelocity veloPacket = getVelocityPacket();
+                veloX = veloPacket.getVelocity().getX();
+                veloY = veloPacket.getVelocity().getY();
+                veloZ = veloPacket.getVelocity().getZ();
+            }
+        }
+        if (veloX == 0 && veloY == 0 && veloZ == 0) {
+            velocity = Optional.empty();
+        } else {
+            velocity = Optional.of(new Vector3d(veloX, veloY, veloZ));
         }
         sendPacketToViewers(
                 new WrapperPlayServerSpawnEntity(
@@ -56,7 +74,7 @@ public class WrapperEntity {
                         location.getYaw(),
                         location.getYaw(),
                         data,
-                        Optional.empty()
+                        velocity
                 )
         );
         sendPacketToViewers(meta.createPacket());
@@ -159,6 +177,19 @@ public class WrapperEntity {
 
     public boolean hasSpawned() {
         return spawned;
+    }
+
+    public Vector3d getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Vector3d velocity) {
+        this.velocity = velocity;
+    }
+
+    private WrapperPlayServerEntityVelocity getVelocityPacket() {
+        Vector3d velocity = this.velocity.multiply(8000.0f / 20.0f);
+        return new WrapperPlayServerEntityVelocity(entityId, velocity);
     }
 
 }
