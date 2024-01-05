@@ -9,8 +9,17 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/pathfinding" />
             <option value="$PROJECT_DIR$/test-plugin" />
-            <option value="$PROJECT_DIR$/wrapper-entity" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/pathfinding" />
+        <option name="gradleJvm" value="17" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/pathfinding" />
           </set>
         </option>
       </GradleProjectSettings>

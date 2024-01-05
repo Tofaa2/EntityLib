@@ -6,6 +6,8 @@ import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
+import com.github.retrooper.packetevents.protocol.player.InteractionHand;
+import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientInteractEntity;
 import me.tofaa.entitylib.entity.EntityInteractionProcessor;
@@ -15,6 +17,7 @@ import me.tofaa.entitylib.exception.InvalidVersionException;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.types.LivingEntityMeta;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,6 +48,14 @@ public final class EntityLib {
     private static PacketEventsAPI<?> packetEvents;
     private static MetaConverterRegistry metaRegistry;
 
+    /**
+     * Initialize EntityLib.
+     * <p>
+     *     This method should be called after PacketEvents is initialized.
+     *     Loads the internal metadata converter registry and sets the library usable
+     * </p>
+     * @param packetEvents PacketEventsAPI instance
+     */
     public static void init(@NotNull PacketEventsAPI<?> packetEvents) {
         if (initialized) {
             throw new IllegalStateException("EntityLib is already initialized");
@@ -58,6 +69,16 @@ public final class EntityLib {
         metaRegistry = new MetaConverterRegistry();
     }
 
+    /**
+     * Enable entity interactions.
+     * <p>
+     *     Enables entity interactions to be handled by EntityLib, rather than the developer.
+     *     <br>
+     *     This will register a PacketEvents listener for {@link PacketType.Play.Client#INTERACT_ENTITY} and call {@link EntityInteractionProcessor#process(WrapperEntity, WrapperPlayClientInteractEntity.InteractAction, InteractionHand, User)}.
+     *     <br>
+     *     To set the interaction processor, call {@link EntityLib#setInteractionProcessor(EntityInteractionProcessor)}.
+     * </p>
+     */
     public static void enableEntityInteractions() {
         checkInit();
         packetEvents.getEventManager().registerListener(new PacketListenerAbstract() {
@@ -75,16 +96,35 @@ public final class EntityLib {
         });
     }
 
+    /**
+     * @param entityId the entity id
+     * @return the entity with the given id, or null if an entity with that id does not exist
+     */
     public static @Nullable WrapperEntity getEntity(int entityId) {
         checkInit();
         return entitiesById.get(entityId);
     }
 
+    /**
+     * @param uuid the entity uuid
+     * @return the entity with the given uuid, or null if an entity with that uuid does not exist
+     */
     public static @Nullable WrapperEntity getEntity(UUID uuid) {
         checkInit();
         return entities.get(uuid);
     }
 
+
+    /**
+     * Creates a new WrapperEntity with the given UUID and EntityType.
+     * This method will automatically create a new EntityMeta for the entity and keeps track of it internally.
+     * To get the entity, use {@link EntityLib#getEntity(UUID)} or {@link EntityLib#getEntity(int)}.
+     * <p>
+     * In theoretically impossible cases, this method may return null.
+     * @param uuid the entity uuid
+     * @param entityType the entity type
+     * @return the created entity, or null if the entity could not be created
+     */
     public static @Nullable WrapperEntity createEntity(UUID uuid, EntityType entityType) {
         checkInit();
         int id = WrapperEntity.ID_PROVIDER.provide();
@@ -102,11 +142,21 @@ public final class EntityLib {
         return entity;
     }
 
+    /**
+     * @param entityId the entity id
+     * @return the metadata of the entity with the given id. If the entity does not exist, this method will return null.
+     */
     public static @Nullable EntityMeta getMeta(int entityId) {
         checkInit();
         return metadata.get(entityId);
     }
 
+    /**
+     * @param entityId the entity id
+     * @param metaClass the metadata class to cast to
+     * @return the metadata of the entity with the given id, cast to the given class. If the entity does not exist, this method will return null.
+     * @param <T> the metadata class
+     */
     public static <T extends EntityMeta> @Nullable T getMeta(int entityId, Class<T> metaClass) {
         checkInit();
         EntityMeta meta = metadata.get(entityId);
@@ -119,6 +169,12 @@ public final class EntityLib {
         return null;
     }
 
+    /**
+     * Creates a new EntityMeta for the given entity id and type, these are stored internally and can be retrieved using {@link EntityLib#getMeta(int)}.
+     * @param entityId the entity id
+     * @param entityType the entity type
+     * @return the created EntityMeta
+     */
     public static EntityMeta createMeta(int entityId, EntityType entityType) {
         checkInit();
         Metadata m = new Metadata(entityId);
@@ -128,36 +184,66 @@ public final class EntityLib {
         return meta;
     }
 
+    /**
+     * Creates a new EntityMeta for an entity, these are stored internally and can be retrieved using {@link EntityLib#getMeta(int)}.
+     * @param entity the entity
+     * @return the created EntityMeta
+     */
     public static EntityMeta createMeta(WrapperEntity entity) {
         return createMeta(entity.getEntityId(), entity.getEntityType());
     }
 
+    /**
+     * @param entityType the entity type
+     * @return the metadata class of the given entity type
+     * @param <T> gets the appropriate metadata class for the given entity type
+     */
     public static <T extends EntityMeta> Class<T> getMetaClassOf(EntityType entityType) {
         return metaRegistry.getMetaClass(entityType);
     }
 
+    /**
+     * @return the packet events api instance that was used to initialize EntityLib
+     */
     public static PacketEventsAPI<?> getPacketEvents() {
         checkInit();
         return packetEvents;
     }
 
-    public static void sendPacket(UUID user, PacketWrapper<?> wrapper) {
-        checkInit();
-        packetEvents.getProtocolManager().sendPacket(packetEvents.getProtocolManager().getChannel(user), wrapper);
-    }
-
+    /**
+     * @return the specified interaction processor, or null if none is specified
+     */
     public static @Nullable EntityInteractionProcessor getInteractionProcessor() {
         return interactionProcessor;
     }
 
+    /**
+     * Sets the interaction processor to the given one.
+     * @param interactionProcessor the interaction processor
+     */
     public static void setInteractionProcessor(EntityInteractionProcessor interactionProcessor) {
         EntityLib.interactionProcessor = interactionProcessor;
     }
 
+    /**
+     * Another internal method to verify the server version is supported. Safe to use externally as its purpose is simple and to avoid code duplication
+     */
+    @ApiStatus.Internal
     public static void verifyVersion(ServerVersion supported, String msg) {
         if (packetEvents.getServerManager().getVersion().isOlderThan(supported)) {
             throw new InvalidVersionException(msg);
         }
+    }
+
+    /**
+     * A primarily internal method to send a packet wrapper to a User from the users UUID. This is useful for methods in {@link WrapperEntity}. Safe to use externally as its purpose is simple and to avoid code duplication
+     * @param user the user uuid
+     * @param wrapper  the packet wrapper
+     */
+    @ApiStatus.Internal
+    public static void sendPacket(UUID user, PacketWrapper<?> wrapper) {
+        checkInit();
+        packetEvents.getProtocolManager().sendPacket(packetEvents.getProtocolManager().getChannel(user), wrapper);
     }
 
     private static void checkInit() {
