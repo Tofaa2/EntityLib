@@ -15,9 +15,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 public class WrapperEntity {
-
-    public static EntityIdProvider ID_PROVIDER = EntityIdProvider.simple();
-
     private final EntityType entityType;
     private final int entityId;
     private final Optional<UUID> uuid;
@@ -28,11 +25,11 @@ public class WrapperEntity {
     private boolean spawned;
     private Vector3d velocity = Vector3d.zero();
 
-    public WrapperEntity(@NotNull UUID uuid, EntityType entityType, EntityMeta meta) {
+    public WrapperEntity(int entityId, @NotNull UUID uuid, EntityType entityType, EntityMeta meta) {
         this.uuid = Optional.of(uuid);
         this.entityType = entityType;
-        this.entityId = ID_PROVIDER.provide();
         this.meta = meta;
+        this.entityId = entityId;
     }
 
     public void refresh() {

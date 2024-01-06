@@ -10,6 +10,7 @@ import com.github.retrooper.packetevents.protocol.player.InteractionHand;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientInteractEntity;
+import me.tofaa.entitylib.entity.EntityIdProvider;
 import me.tofaa.entitylib.entity.EntityInteractionProcessor;
 import me.tofaa.entitylib.entity.WrapperEntity;
 import me.tofaa.entitylib.entity.WrapperLivingEntity;
@@ -47,6 +48,7 @@ public final class EntityLib {
     private static boolean initialized = false;
     private static PacketEventsAPI<?> packetEvents;
     private static MetaConverterRegistry metaRegistry;
+    private static EntityIdProvider entityIdProvider = EntityIdProvider.simple();
 
     /**
      * Initialize EntityLib.
@@ -125,21 +127,26 @@ public final class EntityLib {
      * @param entityType the entity type
      * @return the created entity, or null if the entity could not be created
      */
-    public static @Nullable WrapperEntity createEntity(UUID uuid, EntityType entityType) {
+    public static @Nullable WrapperEntity createEntity(int entityId, UUID uuid, EntityType entityType) {
         checkInit();
-        int id = WrapperEntity.ID_PROVIDER.provide();
-        EntityMeta meta = createMeta(id, entityType);
+        if (entities.containsKey(uuid)) throw new RuntimeException("An entity with that uuid already exists");
+        if (entitiesById.containsKey(entityId)) throw new RuntimeException("An entity with that id already exists");
+        EntityMeta meta = createMeta(entityId, entityType);
         if (meta == null) return null;
         WrapperEntity entity;
         if (meta instanceof LivingEntityMeta) {
-            entity = new WrapperLivingEntity(uuid, entityType, meta);
+            entity = new WrapperLivingEntity(entityId, uuid, entityType, meta);
         }
         else {
-            entity = new WrapperEntity(uuid, entityType, meta);
+            entity = new WrapperEntity(entityId, uuid, entityType, meta);
         }
         entities.put(uuid, entity);
-        entitiesById.put(id, entity);
+        entitiesById.put(entityId, entity);
         return entity;
+    }
+
+    public static @Nullable WrapperEntity createEntity(@NotNull UUID uuid, EntityType entityType) {
+        return createEntity(entityIdProvider.provide(), uuid, entityType);
     }
 
     /**
@@ -223,6 +230,21 @@ public final class EntityLib {
      */
     public static void setInteractionProcessor(EntityInteractionProcessor interactionProcessor) {
         EntityLib.interactionProcessor = interactionProcessor;
+    }
+
+    /**
+     * @return the entity id provider
+     */
+    public static EntityIdProvider getEntityIdProvider() {
+        return entityIdProvider;
+    }
+
+    /**
+     * Sets the entity id provider to the given one.
+     * @param entityIdProvider the entity id provider. The default implementation can be found at {@link EntityIdProvider#simple()}
+     */
+    public static void setEntityIdProvider(EntityIdProvider entityIdProvider) {
+        EntityLib.entityIdProvider = entityIdProvider;
     }
 
     /**

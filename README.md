@@ -61,7 +61,7 @@ class Example {
         PacketEventsAPI api = ;// create PacketEventsAPI instance
         EntityLib.init(api); // If failed, it will throw an exception.
 
-        WrapperEntity entity = EntityLib.createEntity(UUID, EntityType);
+        WrapperEntity entity = EntityLib.createEntity(UUID, EntityType); 
         // You can keep track of the entity yourself or store its entityId or uuid and fetch it using EntityLib#getEntity
 
         // Handling entity interactions if needed
@@ -84,16 +84,9 @@ class Example {
         entity.rotateHead(float yaw, float pitch); // Rotates the head of the entity
         entity.teleport(Location); // Teleports the entity to the given location.
         
-        // If the entityId provider for WrapperEntities is not working for you or needs changing, you can get it from WrapperEntity#ID_PROVIDER
-        // You can also set it to a custom provider if needed
-        WrapperEntity.ID_PROVIDER = new EntityIdProvider() {
-            @Override
-            public int provide() {
-                return 0;
-            }
-        };
-        
-        // You can also create the EntityLib default provider by calling EntityIdProvider.simple();
+        // If the entityId provider for WrapperEntities is not working for you or needs changing, you can get it from EntityLib#getEntityIdProvider()
+        // You can also set it to a custom provider if needed by calling EntityLib#setEntityIdProvider(EntityIdProvider)
+        int randomEntityId = EntityLib.getEntityIdProvider().provide();
     }
 
 }

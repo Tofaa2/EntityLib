@@ -10,8 +10,8 @@ public class WrapperLivingEntity extends WrapperEntity{
 
     private final WrapperEntityEquipment equipment;
 
-    public WrapperLivingEntity(@NotNull UUID uuid, EntityType entityType, EntityMeta meta) {
-        super(uuid, entityType, meta);
+    public WrapperLivingEntity(int entityId, @NotNull UUID uuid, EntityType entityType, EntityMeta meta) {
+        super(entityId, uuid, entityType, meta);
         this.equipment = new WrapperEntityEquipment(this);
     }
 
