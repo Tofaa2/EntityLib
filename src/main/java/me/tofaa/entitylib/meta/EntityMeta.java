@@ -81,7 +81,7 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     public void setCustomName(Component value) {
-        this.metadata.setIndex(offset(OFFSET, 2), EntityDataTypes.COMPONENT, GsonComponentSerializer.gson().serialize(value));
+        this.metadata.setIndex(offset(OFFSET, 2), EntityDataTypes.ADV_COMPONENT, value);
     }
 
     public boolean isCustomNameVisible() {
