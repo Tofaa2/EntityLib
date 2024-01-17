@@ -1,10 +1,9 @@
-package me.tofaa.entitylib.meta.other;
+package me.tofaa.entitylib.meta.display;
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.types.DisplayMeta;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 
 public class TextDisplayMeta extends DisplayMeta {
 
@@ -26,8 +25,8 @@ public class TextDisplayMeta extends DisplayMeta {
         return metadata.getIndex(OFFSET, Component.empty());
     }
 
-    public void setComponent(Component component) {
-        metadata.setIndex(OFFSET, EntityDataTypes.COMPONENT, GsonComponentSerializer.gson().serialize(component));
+    public void setText(Component component) {
+        metadata.setIndex(OFFSET, EntityDataTypes.ADV_COMPONENT, component);
     }
 
     public int getLineWidth() {

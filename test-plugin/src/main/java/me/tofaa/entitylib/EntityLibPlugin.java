@@ -21,6 +21,7 @@ public final class EntityLibPlugin extends JavaPlugin {
         EntityLib.setInteractionProcessor((entity, action, hand, user) -> user.sendMessage("Hello World"));
         getCommand("testapi").setExecutor(new TestCommand());
         getCommand("testentity").setExecutor(new TestEntityCommand());
+        getCommand("testdisplay").setExecutor(new TestDisplayCommand());
         instance = this;
     }
 }

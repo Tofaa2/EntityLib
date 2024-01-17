@@ -11,3 +11,6 @@ commands:
   testentity:
     description: Test PEEntity API
     usage: /<command>
+  testdisplay:
+    description: Test PEDisplay API
+    usage: /<command>

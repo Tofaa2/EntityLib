@@ -1,5 +1,6 @@
 package me.tofaa.entitylib.meta.types;
 
+import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.util.Quaternion4f;
 import com.github.retrooper.packetevents.util.Vector3f;
@@ -9,10 +10,11 @@ import me.tofaa.entitylib.meta.Metadata;
 public class DisplayMeta extends EntityMeta {
 
     public static final byte OFFSET = EntityMeta.MAX_OFFSET;
-    public static final byte MAX_OFFSET = OFFSET + 13;
+    public static final byte MAX_OFFSET = OFFSET + 14;
 
     public DisplayMeta(int entityId, Metadata metadata) {
         super(entityId, metadata);
+        isVersionNewer(ServerVersion.V_1_19_3);
     }
 
     public int getInterpolationDelay() {

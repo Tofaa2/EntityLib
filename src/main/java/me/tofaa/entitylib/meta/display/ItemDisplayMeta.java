@@ -1,4 +1,4 @@
-package me.tofaa.entitylib.meta.other;
+package me.tofaa.entitylib.meta.display;
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import me.tofaa.entitylib.meta.Metadata;
@@ -8,7 +8,6 @@ public class ItemDisplayMeta extends DisplayMeta {
 
     public static final byte OFFSET = DisplayMeta.MAX_OFFSET;
     public static final byte MAX_OFFSET = OFFSET + 1;
-
 
     public ItemDisplayMeta(int entityId, Metadata metadata) {
         super(entityId, metadata);

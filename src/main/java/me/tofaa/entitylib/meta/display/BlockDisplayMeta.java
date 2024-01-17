@@ -1,4 +1,4 @@
-package me.tofaa.entitylib.meta.other;
+package me.tofaa.entitylib.meta.display;
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import me.tofaa.entitylib.meta.Metadata;
