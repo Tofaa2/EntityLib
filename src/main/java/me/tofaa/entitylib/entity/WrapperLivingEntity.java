@@ -1,6 +1,9 @@
 package me.tofaa.entitylib.entity;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+import com.github.retrooper.packetevents.util.Vector3d;
+import com.github.retrooper.packetevents.util.Vector3f;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityStatus;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.types.LivingEntityMeta;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +20,16 @@ public class WrapperLivingEntity extends WrapperEntity{
         this.equipment = new WrapperEntityEquipment(this);
     }
 
+
+    public void kill() {
+        sendStatus((byte) 3);
+        setHealth(0);
+        this.velocity = Vector3d.zero();
+    }
+
+    public void sendStatus(byte status) {
+        sendPacketsToViewers(new WrapperPlayServerEntityStatus(getEntityId(), status));
+    }
 
     public float getHealth() {
         return getMeta().getHealth();

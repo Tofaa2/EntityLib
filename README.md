@@ -1,5 +1,6 @@
 # EntityLib
 EntityLib is a PacketEvents addon that provides an abstraction over raw entity data and packets to make it easier to work with entities as a whole.
+Currently EntityLib is only stable for 1.18+, but it will support all versions that PacketEvents supports in the future.
 ```groovy
 //https://jitpack.io/#Tofaa2/EntityLib/
 repositories {
@@ -99,7 +100,7 @@ Once this list is complete, i will release a stable version of the library.
 - [ ] Add support for more actions using WrapperEntities.
 - [ ] More javadocs.
 - [x] Make ObjectData actually useful.
-- [ ] Multi-version support
+- [ ] Multi-version support, currently only 1.18+ is stable.
 - [ ] Make class names match the protocol specified names.
 
 ### Credits

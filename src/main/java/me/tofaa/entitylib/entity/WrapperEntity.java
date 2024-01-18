@@ -24,7 +24,7 @@ public class WrapperEntity implements Tickable {
     private Location location;
     private boolean onGround;
     private boolean spawned;
-    private Vector3d velocity = Vector3d.zero();
+    protected Vector3d velocity = Vector3d.zero();
 
     public WrapperEntity(int entityId, @NotNull UUID uuid, EntityType entityType, EntityMeta meta) {
         this.uuid = Optional.of(uuid);
