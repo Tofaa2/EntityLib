@@ -27,8 +27,6 @@ For more realistic examples, please take a look at the `test-plugin` module. It 
 ### Using the EntityMeta api
 
 ```java
-import java.sql.Wrapper;
-
 class Example {
 
     public static void main(String[] args) {
