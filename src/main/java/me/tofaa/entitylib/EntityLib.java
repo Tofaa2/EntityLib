@@ -127,12 +127,11 @@ public final class EntityLib {
      * @param entityType the entity type
      * @return the created entity, or null if the entity could not be created
      */
-    public static @Nullable WrapperEntity createEntity(int entityId, UUID uuid, EntityType entityType) {
+    public static @NotNull WrapperEntity createEntity(int entityId, UUID uuid, EntityType entityType) {
         checkInit();
         if (entities.containsKey(uuid)) throw new RuntimeException("An entity with that uuid already exists");
         if (entitiesById.containsKey(entityId)) throw new RuntimeException("An entity with that id already exists");
         EntityMeta meta = createMeta(entityId, entityType);
-        if (meta == null) return null;
         WrapperEntity entity;
         if (meta instanceof LivingEntityMeta) {
             entity = new WrapperLivingEntity(entityId, uuid, entityType, meta);
@@ -145,7 +144,7 @@ public final class EntityLib {
         return entity;
     }
 
-    public static @Nullable WrapperEntity createEntity(@NotNull UUID uuid, EntityType entityType) {
+    public static @NotNull WrapperEntity createEntity(@NotNull UUID uuid, EntityType entityType) {
         return createEntity(entityIdProvider.provide(), uuid, entityType);
     }
 
@@ -182,11 +181,11 @@ public final class EntityLib {
      * @param entityType the entity type
      * @return the created EntityMeta
      */
-    public static EntityMeta createMeta(int entityId, EntityType entityType) {
+    public static @NotNull EntityMeta createMeta(int entityId, EntityType entityType) {
         checkInit();
         Metadata m = new Metadata(entityId);
         BiFunction<Integer, Metadata, EntityMeta> function = metaRegistry.get(entityType);
-        EntityMeta meta =  function.apply(entityId, m);
+        EntityMeta meta = function.apply(entityId, m);
         metadata.put(entityId, meta);
         return meta;
     }

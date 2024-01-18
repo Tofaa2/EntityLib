@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/TestDisplayCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/MetaConverterRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/MetaConverterRegistry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/other/BlockDisplayMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/display/BlockDisplayMeta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/other/ItemDisplayMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/display/ItemDisplayMeta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/other/TextDisplayMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/display/TextDisplayMeta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/types/DisplayMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/types/DisplayMeta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/EntityLibPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/EntityLibPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/TestDisplayCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/TestDisplayCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +208,7 @@
       <workItem from="1704485939274" duration="2440000" />
       <workItem from="1704502790346" duration="6191000" />
       <workItem from="1705192736239" duration="496000" />
-      <workItem from="1705534524814" duration="1048000" />
+      <workItem from="1705534524814" duration="1694000" />
     </task>
     <servers />
   </component>
