@@ -14,3 +14,6 @@ commands:
   testdisplay:
     description: Test PEDisplay API
     usage: /<command>
+  spawnclickablefrog:
+    description: Spawn a clickable frog
+    usage: /<command>

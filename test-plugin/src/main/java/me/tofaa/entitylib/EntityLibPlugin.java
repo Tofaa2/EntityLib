@@ -22,6 +22,7 @@ public final class EntityLibPlugin extends JavaPlugin {
         getCommand("testapi").setExecutor(new TestCommand());
         getCommand("testentity").setExecutor(new TestEntityCommand());
         getCommand("testdisplay").setExecutor(new TestDisplayCommand());
+        getCommand("spawnclickablefrog").setExecutor(new SpawnClickableFrogCommand());
         instance = this;
     }
 }

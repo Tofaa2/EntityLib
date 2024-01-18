@@ -5,8 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/Tickable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/TickingContainer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/entity/WrapperEntityCreature.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/entity/WrapperExperienceOrbEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/entity/ai/AIGroup.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/entity/ai/GoalSelector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/entity/ai/TargetSelector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/world/WrapperWorld.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/SpawnClickableFrogCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/TestDisplayCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/TestDisplayCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/EntityLib.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/EntityLib.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/entity/WrapperEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/entity/WrapperEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/entity/WrapperLivingEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/entity/WrapperLivingEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/EntityLibPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/EntityLibPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +90,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "corretto-1.8",
+    "jdk.selected.JAVA_MODULE": "corretto-17",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Github/EntityLib",
     "node.js.detected.package.eslint": "true",
@@ -208,7 +221,7 @@
       <workItem from="1704485939274" duration="2440000" />
       <workItem from="1704502790346" duration="6191000" />
       <workItem from="1705192736239" duration="496000" />
-      <workItem from="1705534524814" duration="1694000" />
+      <workItem from="1705534524814" duration="8652000" />
     </task>
     <servers />
   </component>

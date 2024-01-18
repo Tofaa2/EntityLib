@@ -4,17 +4,18 @@ import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.util.Vector3d;
-import com.github.retrooper.packetevents.util.Vector3f;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.*;
 import me.tofaa.entitylib.EntityLib;
+import me.tofaa.entitylib.Tickable;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.types.ObjectData;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.*;
 
-public class WrapperEntity {
+public class WrapperEntity implements Tickable {
     private final EntityType entityType;
     private final int entityId;
     private final Optional<UUID> uuid;
@@ -78,6 +79,15 @@ public class WrapperEntity {
         return true;
     }
 
+    public boolean hasNoGravity() {
+        return meta.isHasNoGravity();
+    }
+
+    public void setHasNoGravity(boolean hasNoGravity) {
+        meta.setHasNoGravity(hasNoGravity);
+        refresh();
+    }
+
     public void rotateHead(float yaw, float pitch) {
         sendPacketToViewers(
                 new WrapperPlayServerEntityRotation(entityId, yaw, pitch, onGround)
@@ -86,6 +96,14 @@ public class WrapperEntity {
 
     public void rotateHead(Location location) {
         rotateHead(location.getYaw(), location.getPitch());
+    }
+
+    public void rotateHead(WrapperEntity entity) {
+        rotateHead(entity.getLocation());
+    }
+
+    public Location getLocation() {
+        return new Location(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
     }
 
     public void remove() {
@@ -176,12 +194,47 @@ public class WrapperEntity {
         return spawned;
     }
 
+    public boolean hasVelocity() {
+        if (isOnGround()) {
+            // if the entity is on the ground and only "moves" downwards, it does not have a velocity.
+            return Double.compare(velocity.x, 0) != 0 || Double.compare(velocity.z, 0) != 0 || velocity.y > 0;
+        } else {
+            // The entity does not have velocity if the velocity is zero
+            return !velocity.equals(Vector3d.zero());
+        }
+    }
+
+    public boolean isOnGround() {
+        return onGround;
+    }
+
     public Vector3d getVelocity() {
         return velocity;
     }
 
     public void setVelocity(Vector3d velocity) {
         this.velocity = velocity;
+        sendPacketToViewers(getVelocityPacket());
+    }
+
+    public double getX() {
+        return location.getX();
+    }
+
+    public double getY() {
+        return location.getY();
+    }
+
+    public double getZ() {
+        return location.getZ();
+    }
+
+    public float getYaw() {
+        return location.getYaw();
+    }
+
+    public float getPitch() {
+        return location.getPitch();
     }
 
     private WrapperPlayServerEntityVelocity getVelocityPacket() {
@@ -189,4 +242,8 @@ public class WrapperEntity {
         return new WrapperPlayServerEntityVelocity(entityId, velocity);
     }
 
+    @Override
+    public void update(long time) {
+
+    }
 }

@@ -5,15 +5,13 @@ import com.github.retrooper.packetevents.event.PacketListenerAbstract;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.protocol.player.InteractionHand;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientInteractEntity;
-import me.tofaa.entitylib.entity.EntityIdProvider;
-import me.tofaa.entitylib.entity.EntityInteractionProcessor;
-import me.tofaa.entitylib.entity.WrapperEntity;
-import me.tofaa.entitylib.entity.WrapperLivingEntity;
+import me.tofaa.entitylib.entity.*;
 import me.tofaa.entitylib.exception.InvalidVersionException;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;
@@ -116,6 +114,28 @@ public final class EntityLib {
         return entities.get(uuid);
     }
 
+    /**
+     * Registers a custom entity to EntityLib. This exists to allow developers to extend {@link WrapperEntity} and its subclasses simply and define their own logic.
+     * <p>
+     *     This method DOES NOT create a new entity, it simply registers the entity to EntityLib.
+     *     To construct a {@link WrapperEntity} you need to call {@link EntityLib#createMeta(int, EntityType)} and pass the created metadata to the constructor of the entity.
+     *     <br>
+     *     This method will throw a RuntimeException if an entity with the given uuid or id already exists.
+     *     <br>
+     *     The entity is not modified in any way, simply stored internally for it to be accessible thru {@link EntityLib#getEntity(UUID)} and {@link EntityLib#getEntity(int)}.
+     *     </p>
+     * @param entity the entity to register
+     * @return the same entity passed.
+     * @param <T> instance of WrapperEntity, used to infer its type.
+     */
+    public static @NotNull <T extends WrapperEntity> T register(@NotNull T entity) {
+        checkInit();
+        if (entities.containsKey(entity.getUuid())) throw new RuntimeException("An entity with that uuid already exists");
+        if (entitiesById.containsKey(entity.getEntityId())) throw new RuntimeException("An entity with that id already exists");
+        entities.put(entity.getUuid(), entity);
+        entitiesById.put(entity.getEntityId(), entity);
+        return entity;
+    }
 
     /**
      * Creates a new WrapperEntity with the given UUID and EntityType.
@@ -136,6 +156,9 @@ public final class EntityLib {
         if (meta instanceof LivingEntityMeta) {
             entity = new WrapperLivingEntity(entityId, uuid, entityType, meta);
         }
+        else if (entityType == EntityTypes.EXPERIENCE_ORB) {
+            entity = new WrapperExperienceOrbEntity(entityId, uuid, entityType, meta);
+        }
         else {
             entity = new WrapperEntity(entityId, uuid, entityType, meta);
         }
@@ -146,6 +169,24 @@ public final class EntityLib {
 
     public static @NotNull WrapperEntity createEntity(@NotNull UUID uuid, EntityType entityType) {
         return createEntity(entityIdProvider.provide(), uuid, entityType);
+    }
+
+    public static @NotNull WrapperEntityCreature createEntityCreature(int entityId, @NotNull UUID uuid, @NotNull EntityType entityType) {
+        checkInit();
+        if (entities.containsKey(uuid)) throw new RuntimeException("An entity with that uuid already exists");
+        if (entitiesById.containsKey(entityId)) throw new RuntimeException("An entity with that id already exists");
+        EntityMeta meta = createMeta(entityId, entityType);
+        if (!(meta instanceof LivingEntityMeta)) {
+            throw new RuntimeException("Entity type " + entityType + " is not a living entity, EntityCreature requires a living entity");
+        }
+        WrapperEntityCreature entity = new WrapperEntityCreature(entityId, uuid, entityType, meta);
+        entities.put(uuid, entity);
+        entitiesById.put(entityId, entity);
+        return entity;
+    }
+
+    public static @NotNull WrapperEntityCreature createEntityCreature(@NotNull UUID uuid, @NotNull EntityType entityType) {
+        return createEntityCreature(entityIdProvider.provide(), uuid, entityType);
     }
 
     /**
