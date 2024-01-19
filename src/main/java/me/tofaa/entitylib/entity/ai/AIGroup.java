@@ -64,6 +64,12 @@ public class AIGroup implements Tickable {
         if (currentGoalSelector != null) {
             currentGoalSelector.tick(time);
         }
+        tick(time);
+    }
+
+    @Override
+    public void tick(long time) {
+
     }
 
 }

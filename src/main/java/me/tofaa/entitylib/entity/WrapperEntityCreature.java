@@ -32,6 +32,12 @@ public class WrapperEntityCreature extends WrapperLivingEntity {
     }
 
     @Override
+    public void update(long time) {
+        super.update(time);
+        aiGroups.forEach(aiGroup -> aiGroup.update(time));
+    }
+
+    @Override
     public void kill() {
         super.kill();
     }

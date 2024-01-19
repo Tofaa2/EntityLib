@@ -242,6 +242,11 @@ public class WrapperEntity implements Tickable {
 
     @Override
     public void update(long time) {
+        tick(time);
+    }
+
+    @Override
+    public void tick(long time) {
 
     }
 }
