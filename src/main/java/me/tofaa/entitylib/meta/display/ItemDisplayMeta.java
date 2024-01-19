@@ -1,6 +1,7 @@
 package me.tofaa.entitylib.meta.display;
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
+import com.github.retrooper.packetevents.protocol.item.ItemStack;
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.types.DisplayMeta;
 
@@ -13,12 +14,20 @@ public class ItemDisplayMeta extends DisplayMeta {
         super(entityId, metadata);
     }
 
+    public ItemStack getItem() {
+        return super.metadata.getIndex(OFFSET, ItemStack.EMPTY);
+    }
+
+    public void setItem(ItemStack itemStack) {
+        super.metadata.setIndex(OFFSET, EntityDataTypes.ITEMSTACK, itemStack);
+    }
+
     public DisplayType getDisplayType() {
-        return DisplayType.VALUES[super.metadata.getIndex(OFFSET, 0)];
+        return DisplayType.VALUES[super.metadata.getIndex(offset(OFFSET, 1), 0)];
     }
 
     public void setDisplayType(DisplayType displayType) {
-        super.metadata.setIndex(OFFSET, EntityDataTypes.BYTE, (byte) displayType.ordinal());
+        super.metadata.setIndex(offset(OFFSET, 1), EntityDataTypes.BYTE, (byte) displayType.ordinal());
     }
 
     public enum DisplayType {

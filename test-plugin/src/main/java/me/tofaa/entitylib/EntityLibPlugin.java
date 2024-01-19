@@ -19,9 +19,13 @@ public final class EntityLibPlugin extends JavaPlugin {
         EntityLib.init(PacketEvents.getAPI());
         EntityLib.enableEntityInteractions();
         EntityLib.setInteractionProcessor((entity, action, hand, user) -> user.sendMessage("Hello World"));
+
+        TestDisplayCommand testDisplayCommand = new TestDisplayCommand();
+        getCommand("testdisplay").setExecutor(testDisplayCommand);
+        getCommand("testdisplay").setTabCompleter(testDisplayCommand);
+
         getCommand("testapi").setExecutor(new TestCommand());
         getCommand("testentity").setExecutor(new TestEntityCommand());
-        getCommand("testdisplay").setExecutor(new TestDisplayCommand());
         getCommand("spawnclickablefrog").setExecutor(new SpawnClickableFrogCommand());
         instance = this;
     }
