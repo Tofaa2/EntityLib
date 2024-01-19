@@ -10,7 +10,7 @@ import me.tofaa.entitylib.meta.Metadata;
 public class DisplayMeta extends EntityMeta {
 
     public static final byte OFFSET = EntityMeta.MAX_OFFSET;
-    public static final byte MAX_OFFSET = OFFSET + 14;
+    public static final byte MAX_OFFSET = OFFSET + 15;
 
     public DisplayMeta(int entityId, Metadata metadata) {
         super(entityId, metadata);

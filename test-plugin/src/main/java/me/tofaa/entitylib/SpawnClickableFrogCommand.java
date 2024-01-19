@@ -26,7 +26,7 @@ public class SpawnClickableFrogCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         Player player = (Player) commandSender;
-        WrapperEntity e = EntityLib.createEntity(UUID.randomUUID(), EntityTypes.FROG);
+        WrapperEntity e = EntityLib.createEntity(UUID.randomUUID(), EntityTypes.TEXT_DISPLAY);
         FrogMeta meta = (FrogMeta) e.getMeta();
         meta.setHasGlowingEffect(true);
         meta.setCustomNameVisible(true);

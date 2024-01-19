@@ -42,13 +42,11 @@ public class WrapperEntity implements Tickable {
         if (spawned) return false;
         this.location = location;
         this.spawned = true;
-
         int data = 0;
         Optional<Vector3d> velocity;
         double veloX = 0, veloY = 0, veloZ = 0;
         if (meta instanceof ObjectData) {
             ObjectData od = (ObjectData) meta;
-
             data = od.getObjectData();
             if (od.requiresVelocityPacketAtSpawn()) {
                 final WrapperPlayServerEntityVelocity veloPacket = getVelocityPacket();
