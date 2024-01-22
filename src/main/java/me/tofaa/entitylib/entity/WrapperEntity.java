@@ -23,10 +23,8 @@ public class WrapperEntity implements Tickable {
     private boolean onGround;
     private boolean spawned;
     protected Vector3d velocity = Vector3d.zero();
-
     private int riding = -1;
     private Set<Integer> passengers = new HashSet<>();
-
 
     public WrapperEntity(int entityId, @NotNull UUID uuid, EntityType entityType, EntityMeta meta) {
         this.uuid = Optional.of(uuid);

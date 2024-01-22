@@ -104,6 +104,7 @@ Once this list is complete, i will release a stable version of the library.
 - [x] Make ObjectData actually useful.
 - [ ] Multi-version support, currently only 1.18+ is stable.
 - [ ] Make class names match the protocol specified names.
+- [ ] Ideally, refactor the API to use a custom world that stores the entities, rather than one big map. This way we can access other data aswell from the world. This also requires me writing some other platform implementations by default.
 
 ### Credits
 - PacketEvents for providing the API and retrooper being a cool guy in general
