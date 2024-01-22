@@ -28,15 +28,19 @@ public class TestCommand implements CommandExecutor {
                 return true;
             }
         }
-
-        base = EntityLib.createEntity(UUID.randomUUID(), EntityTypes.SHEEP);
-        passenger = EntityLib.createEntity(UUID.randomUUID(), EntityTypes.SKELETON);
+        else {
+            base = EntityLib.createEntity(UUID.randomUUID(), EntityTypes.SHEEP);
+            passenger = EntityLib.createEntity(UUID.randomUUID(), EntityTypes.SKELETON);
+        }
 
         Location location = SpigotConversionUtil.fromBukkitLocation(player.getLocation());
         Location pass = new Location(location.getX() + 1, location.getY(), location.getZ(), location.getYaw(), location.getPitch());
 
+        base.addViewer(player.getUniqueId());
+        passenger.addViewer(player.getUniqueId());
         base.spawn(location);
         passenger.spawn(pass);
+        base.addPassenger(passenger);
         player.sendMessage("Spawned");
 
         return true;
