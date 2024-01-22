@@ -95,6 +95,7 @@ public class WrapperEntity implements Tickable {
         WrapperEntity e = EntityLib.getEntity(passenger);
         if (e != null) {
             e.riding = -1;
+            e.teleport(e.getLocation());
         }
     }
 
