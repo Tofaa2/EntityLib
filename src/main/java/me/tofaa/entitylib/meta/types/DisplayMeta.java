@@ -132,59 +132,115 @@ public class DisplayMeta extends EntityMeta {
 
     //(blockLight << 4 | skyLight << 20)
     public int getBrightnessOverride() {
-        return super.metadata.getIndex(offset(OFFSET, 8), -1);
+        byte offset = offset(OFFSET, 8);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 7);
+        }
+        return super.metadata.getIndex(offset, -1);
     }
 
     public void setBrightnessOverride(int value) {
-        super.metadata.setIndex(offset(OFFSET, 8), EntityDataTypes.INT, value);
+        byte offset = offset(OFFSET, 8);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 7);
+        }
+        super.metadata.setIndex(offset, EntityDataTypes.INT, value);
     }
 
     public float getViewRange() {
-        return super.metadata.getIndex(offset(OFFSET, 9), 1.0f);
+        byte offset = offset(OFFSET, 9);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 8);
+        }
+        return super.metadata.getIndex(offset, 1.0f);
     }
 
     public void setViewRange(float value) {
-        super.metadata.setIndex(offset(OFFSET, 9), EntityDataTypes.FLOAT, value);
+        byte offset = offset(OFFSET, 9);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 8);
+        }
+        super.metadata.setIndex(offset, EntityDataTypes.FLOAT, value);
     }
 
     public float getShadowRadius() {
-        return super.metadata.getIndex(offset(OFFSET, 10), 0.0f);
+        byte offset = offset(OFFSET, 10);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 9);
+        }
+        return super.metadata.getIndex(offset, 0.0f);
     }
 
     public void setShadowRadius(float value) {
-        super.metadata.setIndex(offset(OFFSET, 10), EntityDataTypes.FLOAT, value);
+        byte offset = offset(OFFSET, 10);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 9);
+        }
+        super.metadata.setIndex(offset, EntityDataTypes.FLOAT, value);
     }
 
     public float getShadowStrength() {
-        return super.metadata.getIndex(offset(OFFSET, 11), 1.0f);
+        byte offset = offset(OFFSET, 11);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 10);
+        }
+        return super.metadata.getIndex(offset, 1.0f);
     }
 
     public void setShadowStrength(float value) {
-        super.metadata.setIndex(offset(OFFSET, 11), EntityDataTypes.FLOAT, value);
+        byte offset = offset(OFFSET, 11);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 10);
+        }
+        super.metadata.setIndex(offset, EntityDataTypes.FLOAT, value);
     }
 
     public float getWidth() {
-        return super.metadata.getIndex(offset(OFFSET, 12), 0.0f);
+        byte offset = offset(OFFSET, 12);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 11);
+        }
+        return super.metadata.getIndex(offset, 0.0f);
     }
 
     public void setWidth(float value) {
-        super.metadata.setIndex(offset(OFFSET, 12), EntityDataTypes.FLOAT, value);
+        byte offset = offset(OFFSET, 12);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 11);
+        }
+        super.metadata.setIndex(offset, EntityDataTypes.FLOAT, value);
     }
 
     public float getHeight() {
-        return super.metadata.getIndex(offset(OFFSET, 13), 0.0f);
+        byte offset = offset(OFFSET, 13);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 12);
+        }
+        return super.metadata.getIndex(offset, 0.0f);
     }
 
     public void setHeight(float value) {
-        super.metadata.setIndex(offset(OFFSET, 13), EntityDataTypes.FLOAT, value);
+        byte offset = offset(OFFSET, 13);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 12);
+        }
+        super.metadata.setIndex(offset, EntityDataTypes.FLOAT, value);
     }
 
     public int getGlowColorOverride() {
-        return super.metadata.getIndex(offset(OFFSET, 14), -1);
+        byte offset = offset(OFFSET, 14);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 13);
+        }
+        return super.metadata.getIndex(offset, -1);
     }
 
     public void setGlowColorOverride(int value) {
-        super.metadata.setIndex(offset(OFFSET, 14), EntityDataTypes.INT, value);
+        byte offset = offset(OFFSET, 14);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 13);
+        }
+        super.metadata.setIndex(offset, EntityDataTypes.INT, value);
     }
 
     public enum BillboardConstraints {
