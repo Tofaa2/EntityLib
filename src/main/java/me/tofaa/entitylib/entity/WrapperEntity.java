@@ -11,8 +11,6 @@ import me.tofaa.entitylib.Tickable;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.types.ObjectData;
 import org.jetbrains.annotations.NotNull;
-
-import java.awt.*;
 import java.util.*;
 
 public class WrapperEntity implements Tickable {
@@ -26,6 +24,10 @@ public class WrapperEntity implements Tickable {
     private boolean spawned;
     protected Vector3d velocity = Vector3d.zero();
 
+    private int riding = -1;
+    private Set<Integer> passengers = new HashSet<>();
+
+
     public WrapperEntity(int entityId, @NotNull UUID uuid, EntityType entityType, EntityMeta meta) {
         this.uuid = Optional.of(uuid);
         this.entityType = entityType;
@@ -36,6 +38,121 @@ public class WrapperEntity implements Tickable {
     public void refresh() {
         if (!spawned) return;
         sendPacketToViewers(meta.createPacket());
+    }
+
+    /**
+     * Adds a passenger to the entity. The passenger will be visible to all viewers of the entity.
+     * @param passenger the entity id of the passenger
+     */
+    public void addPassenger(int passenger) {
+        if (passengers.contains(passenger)) {
+            throw new IllegalArgumentException("Passenger already exists");
+        }
+        passengers.add(passenger);
+        sendPacketToViewers(createPassengerPacket());
+        WrapperEntity e = EntityLib.getEntity(passenger);
+        if (e != null) {
+            e.riding = this.entityId;
+        }
+    }
+
+    /**
+     * Adds multiple passengers to the entity. The passengers will be visible to all viewers of the entity.
+     * @param passengers the entity ids of the passengers
+     */
+    public void addPassengers(int... passengers) {
+        for (int passenger : passengers) {
+            addPassenger(passenger);
+        }
+    }
+
+    /**
+     * Adds a passenger to the entity. The passenger will be visible to all viewers of the entity.
+     * @param passenger the wrapper entity passenger
+     */
+    public void addPassenger(WrapperEntity passenger) {
+        addPassenger(passenger.getEntityId());
+    }
+
+    /**
+     * Adds multiple passengers to the entity. The passengers will be visible to all viewers of the entity.
+     * @param passengers the wrapper entity passengers
+     */
+    public void addPassengers(WrapperEntity... passengers) {
+        for (WrapperEntity passenger : passengers) {
+            addPassenger(passenger);
+        }
+    }
+
+    /**
+     * Removes a passenger from the entity. The passenger will be removed from the view of all viewers of the entity.
+     * @param passenger the entity id of the passenger
+     */
+    public void removePassenger(int passenger) {
+        if (!passengers.contains(passenger)) {
+            throw new IllegalArgumentException("Passenger does not exist");
+        }
+        passengers.remove(passenger);
+        sendPacketToViewers(createPassengerPacket());
+        WrapperEntity e = EntityLib.getEntity(passenger);
+        if (e != null) {
+            e.riding = -1;
+        }
+    }
+
+    /**
+     * Removes multiple passengers from the entity. The passengers will be removed from the view of all viewers of the entity.
+     * @param passengers the entity ids of the passengers
+     */
+    public void removePassengers(int... passengers) {
+        for (int passenger : passengers) {
+            removePassenger(passenger);
+        }
+    }
+
+    /**
+     * Removes a passenger from the entity. The passenger will be removed from the view of all viewers of the entity.
+     * @param passenger the wrapper entity passenger
+     */
+    public void removePassenger(WrapperEntity passenger) {
+        removePassenger(passenger.getEntityId());
+    }
+
+    /**
+     * Removes multiple passengers from the entity. The passengers will be removed from the view of all viewers of the entity.
+     * @param passengers the wrapper entity passengers
+     */
+    public void removePassengers(WrapperEntity... passengers) {
+        for (WrapperEntity passenger : passengers) {
+            removePassenger(passenger);
+        }
+    }
+
+    /**
+     * @return true if the entity has passengers, false otherwise
+     */
+    public boolean isRiding() {
+        return riding != -1;
+    }
+
+    /**
+     * Clears all passengers from the entity. The passengers will be removed from the view of all viewers of the entity.
+     */
+    public void clearPassengers() {
+        if (passengers.isEmpty()) return;
+        passengers.clear();
+        sendPacketToViewers(createPassengerPacket());
+    }
+
+    /**
+     * @return the entity id of the entity that the entity is riding, -1 if the entity is not riding
+     */
+    public int getRidingId() {
+        return riding;
+    }
+
+    protected WrapperPlayServerSetPassengers createPassengerPacket() {
+        return new WrapperPlayServerSetPassengers(entityId, passengers.stream().mapToInt(i -> i).toArray());
     }
 
     public boolean spawn(Location location) {
@@ -100,7 +217,17 @@ public class WrapperEntity implements Tickable {
         rotateHead(entity.getLocation());
     }
 
+    /**
+     * Desyncs if the entity is riding some other entity. TODO: fix. This is a temporary solution.
+     * @return the location of the entity
+     */
     public Location getLocation() {
+        if (isRiding()) {
+            WrapperEntity riding = EntityLib.getEntity(this.riding);
+            assert riding != null;
+            return riding.getLocation();
+        }
+
         return new Location(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
     }
 

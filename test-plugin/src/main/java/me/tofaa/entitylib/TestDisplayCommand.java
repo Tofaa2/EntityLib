@@ -3,6 +3,8 @@ package me.tofaa.entitylib;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.item.ItemStack;
 import com.github.retrooper.packetevents.protocol.item.type.ItemTypes;
+import com.github.retrooper.packetevents.protocol.world.Location;
+import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.util.Vector3f;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import me.tofaa.entitylib.entity.WrapperEntity;
@@ -51,11 +53,11 @@ public class TestDisplayCommand implements CommandExecutor, TabCompleter {
         WrapperEntity e = EntityLib.createEntity(UUID.randomUUID(), EntityTypes.BLOCK_DISPLAY);
         BlockDisplayMeta meta = (BlockDisplayMeta) e.getMeta();
         meta.setHasGlowingEffect(true);
-        meta.setBlockId(Material.AMETHYST_BLOCK.getId());
+        meta.setBlockId(SpigotConversionUtil.fromBukkitBlockData(Material.ACACIA_LOG.createBlockData()).getGlobalId());
         meta.setBillboardConstraints(DisplayMeta.BillboardConstraints.CENTER);
         meta.setScale(new Vector3f(2, 2, 2));
         e.addViewer(player.getUniqueId());
-        e.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
+        e.spawn(fromPlayer(player));
     }
 
     private void text(Player player) {
@@ -66,7 +68,7 @@ public class TestDisplayCommand implements CommandExecutor, TabCompleter {
         meta.setBillboardConstraints(DisplayMeta.BillboardConstraints.CENTER);
         meta.setScale(new Vector3f(2, 2, 2));
         e.addViewer(player.getUniqueId());
-        e.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
+        e.spawn(fromPlayer(player));
     }
 
     private void item(Player player) {
@@ -77,7 +79,11 @@ public class TestDisplayCommand implements CommandExecutor, TabCompleter {
                 .type(ItemTypes.ACACIA_BOAT).build()
         );
         e.addViewer(player.getUniqueId());
-        e.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
+        e.spawn(fromPlayer(player));
+    }
+
+    private static Location fromPlayer(Player player) {
+        return new Location(player.getLocation().getX(), player.getLocation().getY() + 2, player.getLocation().getZ(), 0f, 0f);
     }
 
     @Nullable
