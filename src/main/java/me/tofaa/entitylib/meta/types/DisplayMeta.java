@@ -1,6 +1,7 @@
 package me.tofaa.entitylib.meta.types;
 
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
+import com.github.retrooper.packetevents.manager.server.VersionComparison;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.util.Quaternion4f;
 import com.github.retrooper.packetevents.util.Vector3f;
@@ -10,7 +11,15 @@ import me.tofaa.entitylib.meta.Metadata;
 public class DisplayMeta extends EntityMeta {
 
     public static final byte OFFSET = EntityMeta.MAX_OFFSET;
-    public static final byte MAX_OFFSET = OFFSET + 15;
+    public static final byte MAX_OFFSET;
+    static {
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.NEWER_THAN_OR_EQUALS)) {
+            MAX_OFFSET =  OFFSET + 15;
+        }
+        else {
+            MAX_OFFSET = OFFSET + 14;
+        }
+    }
 
     public DisplayMeta(int entityId, Metadata metadata) {
         super(entityId, metadata);
@@ -42,43 +51,83 @@ public class DisplayMeta extends EntityMeta {
     }
 
     public Vector3f getTranslation() {
-        return super.metadata.getIndex(offset(OFFSET, 3), Vector3f.zero());
+        byte offset = offset(OFFSET, 3);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 2);
+        }
+        return super.metadata.getIndex(offset, Vector3f.zero());
     }
 
     public void setTranslation(Vector3f value) {
-        super.metadata.setIndex(offset(OFFSET, 3), EntityDataTypes.VECTOR3F, value);
+        byte offset = offset(OFFSET, 3);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 2);
+        }
+        super.metadata.setIndex(offset, EntityDataTypes.VECTOR3F, value);
     }
 
     public Vector3f getScale() {
-        return super.metadata.getIndex(offset(OFFSET, 4), new Vector3f(1.0f, 1.0f, 1.0f));
+        byte offset = offset(OFFSET, 4);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 3);
+        }
+        return super.metadata.getIndex(offset, new Vector3f(1.0f, 1.0f, 1.0f));
     }
 
     public void setScale(Vector3f value) {
-        super.metadata.setIndex(offset(OFFSET, 4), EntityDataTypes.VECTOR3F, value);
+        byte offset = offset(OFFSET, 4);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 3);
+        }
+        super.metadata.setIndex(offset, EntityDataTypes.VECTOR3F, value);
     }
 
     public Quaternion4f getLeftRotation() {
-        return super.metadata.getIndex(offset(OFFSET, 5), new Quaternion4f(0.0f, 0.0f, 0.0f, 1.0f));
+        byte offset = offset(OFFSET, 5);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 4);
+        }
+        return super.metadata.getIndex(offset, new Quaternion4f(0.0f, 0.0f, 0.0f, 1.0f));
     }
 
     public void setLeftRotation(Quaternion4f value) {
-        super.metadata.setIndex(offset(OFFSET, 5), EntityDataTypes.QUATERNION, value);
+        byte offset = offset(OFFSET, 5);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 4);
+        }
+        super.metadata.setIndex(offset, EntityDataTypes.QUATERNION, value);
     }
 
     public Quaternion4f getRightRotation() {
-        return super.metadata.getIndex(offset(OFFSET, 6), new Quaternion4f(0.0f, 0.0f, 0.0f, 1.0f));
+        byte offset = offset(OFFSET, 6);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 5);
+        }
+        return super.metadata.getIndex(offset, new Quaternion4f(0.0f, 0.0f, 0.0f, 1.0f));
     }
 
     public void setRightRotation(Quaternion4f value) {
-        super.metadata.setIndex(offset(OFFSET, 6), EntityDataTypes.QUATERNION, value);
+        byte offset = offset(OFFSET, 6);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 5);
+        }
+        super.metadata.setIndex(offset, EntityDataTypes.QUATERNION, value);
     }
 
     public BillboardConstraints getBillboardConstraints() {
-        return BillboardConstraints.VALUES[super.metadata.getIndex(offset(OFFSET, 7), (byte) 0)];
+        byte offset = offset(OFFSET, 7);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 6);
+        }
+        return BillboardConstraints.VALUES[super.metadata.getIndex(offset, (byte) 0)];
     }
 
     public void setBillboardConstraints(BillboardConstraints value) {
-        super.metadata.setIndex(offset(OFFSET, 7), EntityDataTypes.BYTE, (byte) value.ordinal());
+        byte offset = offset(OFFSET, 7);
+        if (isVersion(ServerVersion.V_1_20_2, VersionComparison.OLDER_THAN)) {
+            offset = offset(OFFSET, 6);
+        }
+        super.metadata.setIndex(offset, EntityDataTypes.BYTE, (byte) value.ordinal());
     }
 
     //(blockLight << 4 | skyLight << 20)

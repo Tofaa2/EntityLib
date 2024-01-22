@@ -152,13 +152,6 @@ public class EntityMeta implements EntityMetadataProvider {
         return metadata.createPacket();
     }
 
-
-    protected static void isVersion(ServerVersion version) {
-        if (!EntityLib.getPacketEvents().getServerManager().getVersion().is(VersionComparison.EQUALS, version)) {
-            throw new InvalidVersionException("This method is only available for " + version.name() + " and above.");
-        }
-    }
-
     protected static void isVersionOlder(ServerVersion version) {
         if (!EntityLib.getPacketEvents().getServerManager().getVersion().is(VersionComparison.OLDER_THAN, version)) {
             throw new InvalidVersionException("This method is only available for versions older than " + version.name() + ".");
@@ -169,6 +162,14 @@ public class EntityMeta implements EntityMetadataProvider {
         if (!EntityLib.getPacketEvents().getServerManager().getVersion().is(VersionComparison.NEWER_THAN, version)) {
             throw new InvalidVersionException("This method is only available for versions newer than " + version.name() + ".");
         }
+    }
+
+    protected static boolean isVersion(ServerVersion version, VersionComparison comparison) {
+        return EntityLib.getPacketEvents().getServerManager().getVersion().is(comparison, version);
+    }
+
+    protected static boolean isVersion(ServerVersion version) {
+        return EntityLib.getPacketEvents().getServerManager().getVersion().is(VersionComparison.EQUALS, version);
     }
 
     /**

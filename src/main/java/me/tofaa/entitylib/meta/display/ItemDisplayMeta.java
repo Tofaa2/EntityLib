@@ -8,7 +8,7 @@ import me.tofaa.entitylib.meta.types.DisplayMeta;
 public class ItemDisplayMeta extends DisplayMeta {
 
     public static final byte OFFSET = DisplayMeta.MAX_OFFSET;
-    public static final byte MAX_OFFSET = OFFSET + 1;
+    public static final byte MAX_OFFSET = offset(OFFSET, 1);
 
     public ItemDisplayMeta(int entityId, Metadata metadata) {
         super(entityId, metadata);

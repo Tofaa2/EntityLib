@@ -66,6 +66,7 @@ public class TestDisplayCommand implements CommandExecutor, TabCompleter {
         meta.setHasGlowingEffect(true);
         meta.setText(Component.text("Hello World!"));
         meta.setBillboardConstraints(DisplayMeta.BillboardConstraints.CENTER);
+        meta.setTranslation(new Vector3f(4.0f, 0.0f, 0.0f));
         meta.setScale(new Vector3f(2, 2, 2));
         e.addViewer(player.getUniqueId());
         e.spawn(fromPlayer(player));

@@ -40,7 +40,7 @@ public class TestCommand implements CommandExecutor {
         passenger.addViewer(player.getUniqueId());
         base.spawn(location);
         passenger.spawn(pass);
-        base.addPassenger(passenger);
+        base.addPassenger(player.getEntityId());
         player.sendMessage("Spawned");
 
         return true;

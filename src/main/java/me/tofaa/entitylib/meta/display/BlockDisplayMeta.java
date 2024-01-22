@@ -7,7 +7,7 @@ import me.tofaa.entitylib.meta.types.DisplayMeta;
 public class BlockDisplayMeta extends DisplayMeta {
 
     public static final byte OFFSET = DisplayMeta.MAX_OFFSET;
-    public static final byte MAX_OFFSET = OFFSET + 1;
+    public static final byte MAX_OFFSET = offset(OFFSET, 1);
 
     public BlockDisplayMeta(int entityId, Metadata metadata) {
         super(entityId, metadata);

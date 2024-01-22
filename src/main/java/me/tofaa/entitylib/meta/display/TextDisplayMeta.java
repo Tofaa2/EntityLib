@@ -8,7 +8,7 @@ import net.kyori.adventure.text.Component;
 public class TextDisplayMeta extends DisplayMeta {
 
     public static final byte OFFSET = DisplayMeta.MAX_OFFSET;
-    public static final byte MAX_OFFSET = OFFSET + 5;
+    public static final byte MAX_OFFSET = offset(OFFSET, 5);
 
     private static final byte SHADOW = 1;
     private static final byte SEE_THROUGH = 2;
