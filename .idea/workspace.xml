@@ -5,16 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/EntityLibPlatform.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/WrapperWorld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/EntityMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/EntityMeta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/display/BlockDisplayMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/display/BlockDisplayMeta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/display/ItemDisplayMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/display/ItemDisplayMeta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/display/TextDisplayMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/display/TextDisplayMeta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/types/DisplayMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/types/DisplayMeta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/TestCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/TestCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/TestDisplayCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/TestDisplayCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +79,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "feat/platform-api",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "corretto-17",
     "kotlin-language-version-configured": "true",
@@ -238,7 +233,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/types/DisplayMeta.java</url>
           <line>153</line>
-          <properties class="me.tofaa.entitylib.meta.types.DisplayMeta" method="setShadowRadius">
+          <properties class="me.tofaa.entitylib.meta.types.DisplayMeta">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
