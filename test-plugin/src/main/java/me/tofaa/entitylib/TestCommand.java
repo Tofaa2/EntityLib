@@ -22,21 +22,21 @@ public class TestCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (base != null) {
-            base.removePassenger(passenger);
-            player.sendMessage("Removed");
-            return true;
+            if (base.hasPassenger(passenger)) {
+                base.removePassenger(passenger);
+                player.sendMessage("Removed");
+                return true;
+            }
         }
 
         base = EntityLib.createEntity(UUID.randomUUID(), EntityTypes.SHEEP);
         passenger = EntityLib.createEntity(UUID.randomUUID(), EntityTypes.SKELETON);
 
         Location location = SpigotConversionUtil.fromBukkitLocation(player.getLocation());
-        Location pass = location.clone();
-        pass.setPosition(location.getPosition().add(1, 0, 1));
+        Location pass = new Location(location.getX() + 1, location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+
         base.spawn(location);
         passenger.spawn(pass);
-        base.addPassenger(passenger);
-
         player.sendMessage("Spawned");
 
         return true;

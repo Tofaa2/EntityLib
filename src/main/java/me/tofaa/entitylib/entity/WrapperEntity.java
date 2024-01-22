@@ -100,6 +100,22 @@ public class WrapperEntity implements Tickable {
     }
 
     /**
+     * @param passenger the entity id of the passenger
+     * @return true if the entity has the passenger, false otherwise
+     */
+    public boolean hasPassenger(int passenger) {
+        return passengers.contains(passenger);
+    }
+
+    /**
+     * @param passenger the passenger wrapper entity
+     * @return true if the entity has the passenger, false otherwise
+     */
+    public boolean hasPassenger(WrapperEntity passenger) {
+        return hasPassenger(passenger.getEntityId());
+    }
+
+    /**
      * Removes multiple passengers from the entity. The passengers will be removed from the view of all viewers of the entity.
      * @param passengers the entity ids of the passengers
      */
