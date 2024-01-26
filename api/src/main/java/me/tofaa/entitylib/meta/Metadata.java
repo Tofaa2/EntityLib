@@ -4,7 +4,6 @@ import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.entity.WrapperEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,15 +32,6 @@ public class Metadata {
     public <T> void setIndex(byte index, @NotNull EntityDataType<T> dataType, T value) {
         EntityData data = new EntityData(index, dataType, value);
         this.metadataMap.put(index, data);
-        WrapperEntity e = EntityLib.getEntity(entityId);
-        if (e != null && e.hasSpawned()) {
-            e.sendPacketToViewers(
-                    new WrapperPlayServerEntityMetadata(
-                            entityId,
-                            getEntries()
-                    )
-            );
-        }
     }
 
     @NotNull List<EntityData> getEntries() {
