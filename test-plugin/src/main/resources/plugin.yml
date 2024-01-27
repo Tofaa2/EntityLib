@@ -2,7 +2,7 @@ name: EntityLibPlugin
 version: 1.0.0
 depend:
   - packetevents
-main: me.tofaa.entitylib.EntityLibPlugin
+main: me.tofaa.testentitylib.TestEntityLibPlugin
 api-version: "1.19"
 commands:
   testapi:

@@ -1,7 +1,15 @@
 package me.tofaa.entitylib;
 
+import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+import com.github.retrooper.packetevents.protocol.world.Dimension;
+import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
-import com.github.retrooper.packetevents.resources.ResourceLocation;
+import me.tofaa.entitylib.wrapper.WrapperEntity;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Collection;
+import java.util.UUID;
 
 /**
  * Represents a platform specific world.
@@ -11,9 +19,42 @@ import com.github.retrooper.packetevents.resources.ResourceLocation;
  */
 public interface WorldWrapper<W> {
 
-    ResourceLocation getPacketEventsWorld();
+    @NotNull <T extends WrapperEntity> T spawnEntity(@NotNull Class<T> wrapperClass, @NotNull EntityType entityType, @NotNull Location location);
 
+    @NotNull WrapperEntity spawnEntity(@NotNull EntityType entityType, @NotNull Location location);
+
+    @NotNull <T extends WrapperEntity> T spawnEntity(@NotNull T entity, @NotNull Location location);
+
+    @NotNull <T extends WrapperEntity> T cloneEntity(@NotNull Object platformEntity, @NotNull Location location);
+
+    @NotNull Collection<WrapperEntity> getEntities();
+
+    @Nullable WrapperEntity getEntity(int id);
+
+    @Nullable WrapperEntity getEntity(@NotNull UUID uuid);
+
+
+    /**
+     * Gets the block at the specified coordinates. Depending on the platforms implementation, this method may be slow.
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @param z The z coordinate.
+     * @return The packetevents WrappedBlockState at the specified coordinates.
+     */
     WrappedBlockState getBlock(int x, int y, int z);
 
-    W getHandle();
+    /**
+     * @return the packetevents Dimension of the world.
+     */
+    @NotNull Dimension getDimension();
+
+    /**
+     * @return the world's UUID.
+     */
+    @NotNull UUID getUuid();
+
+    /**
+     * @return the platform specific World.
+     */
+    @NotNull W getHandle();
 }

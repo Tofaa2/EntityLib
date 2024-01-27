@@ -1,61 +1,35 @@
 package me.tofaa.entitylib.spigot;
 
 import me.tofaa.entitylib.APISettings;
+import me.tofaa.entitylib.EntityIdProvider;
 import me.tofaa.entitylib.EntityLibAPI;
 import me.tofaa.entitylib.Platform;
-import me.tofaa.entitylib.event.EntityLibEvent;
-import me.tofaa.entitylib.tick.TickContainer;
-import org.bukkit.Bukkit;
+import me.tofaa.entitylib.common.AbstractPlatform;
+import me.tofaa.entitylib.event.EventBus;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Collection;
-import java.util.function.Consumer;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SpigotEntityLibPlatform implements Platform<JavaPlugin> {
+public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
 
-    private final JavaPlugin plugin;
     private SpigotEntityLibAPI api;
-    private Logger logger;
-
     public SpigotEntityLibPlatform(@NotNull JavaPlugin plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     @Override
     public void setupApi(@NotNull APISettings settings) {
-        this.logger = settings.shouldUsePlatformLogger() ? plugin.getLogger() : Logger.getLogger("EntityLib");
+        super.setupApi(settings);
+        this.logger = settings.shouldUsePlatformLogger() ? handle.getLogger() : Logger.getLogger("EntityLib");
         this.api = new SpigotEntityLibAPI(this, settings);
         this.api.onLoad();
         this.api.onEnable();
     }
 
-    @Override
-    public @NotNull Logger getLogger() {
-        return logger;
-    }
 
     @Override
-    public void sendEvent(EntityLibEvent event) {
-
-    }
-
-    @Override
-    public <T extends EntityLibEvent> void registerListener(Class<T> eventClass, Consumer<T> handle) {
-
-    }
-
-    @Override
-    public EntityLibAPI getAPI() {
+    public EntityLibAPI<?, ?> getAPI() {
         return api;
-    }
-
-    @Override
-    public @NotNull JavaPlugin getHandle() {
-        return plugin;
     }
 
     @Override

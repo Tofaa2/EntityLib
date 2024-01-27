@@ -9,6 +9,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/api" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/platforms" />
+            <option value="$PROJECT_DIR$/platforms/spigot" />
             <option value="$PROJECT_DIR$/test-plugin" />
           </set>
         </option>

@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'java-library'
 }
 
 group = 'me.tofaa.entitylib'
@@ -10,6 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":api"))
-    implementation('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
+    api(project(":common"))
+    compileOnly('com.github.retrooper.packetevents:spigot:2.0.2')
+    compileOnly('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
 }

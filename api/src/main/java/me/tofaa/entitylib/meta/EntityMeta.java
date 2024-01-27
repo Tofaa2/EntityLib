@@ -6,15 +6,45 @@ import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityMetadataProvider;
 import com.github.retrooper.packetevents.protocol.entity.pose.EntityPose;
+import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.extras.InvalidVersionException;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class EntityMeta implements EntityMetadataProvider {
+
+    private static final MetaConverterRegistry registry = new MetaConverterRegistry();
+    private static final Map<Integer, EntityMeta> metaMap = new ConcurrentHashMap<>();
+
+    public static @NotNull BiFunction<Integer, Metadata, EntityMeta> getConverter(EntityType entityType) {
+        return registry.get(entityType);
+    }
+
+    public static @NotNull Class<? extends EntityMeta> getMetaClass(EntityType entityType) {
+        return registry.getMetaClass(entityType);
+    }
+
+    public static @NotNull EntityMeta createMeta(int entityId, EntityType entityType) {
+        Metadata metadata = new Metadata(entityId);
+        BiFunction<Integer, Metadata, EntityMeta> converter = getConverter(entityType);
+        EntityMeta entityMeta = converter.apply(entityId, metadata);
+        metaMap.put(entityId, entityMeta);
+        return entityMeta;
+    }
+
+    public static @Nullable EntityMeta getMeta(int entityId) {
+        return metaMap.get(entityId);
+    }
 
     public static final byte OFFSET = 0;
     public static final byte MAX_OFFSET = OFFSET + 8;

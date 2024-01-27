@@ -1,10 +1,12 @@
 package me.tofaa.entitylib;
 
+import java.io.IOException;
+import java.util.logging.Level;
+
 public final class EntityLib {
 
     private EntityLib() {}
 
-    private static String version = "1.2.0-SNAPSHOT";
     private static Platform platform;
     private static EntityLibAPI api;
 
@@ -12,6 +14,20 @@ public final class EntityLib {
         EntityLib.platform = platform;
         platform.setupApi(settings);
         api = platform.getAPI();
+        if (api.getSettings().shouldCheckForUpdate()) {
+            try {
+                if (api.getSettings().isDebugMode()) {
+                    platform.getLogger().log(Level.CONFIG, "Checking for updates...");
+                }
+                if (api.getSettings().requiresUpdate()) {
+                    platform.getLogger().log(Level.WARNING, "You are using an outdated version of EntityLib. Please take a look at the Github releases page.");
+                }
+
+            }
+            catch (IOException e) {
+                platform.getLogger().log(Level.WARNING, e, () -> "EntityLib failed to check for updates.");
+            }
+        }
     }
 
     public static EntityLibAPI<?, ?> getApi() {
@@ -23,6 +39,6 @@ public final class EntityLib {
     }
 
     public static String getVersion() {
-        return version;
+        return "1.2.0-SNAPSHOT";
     }
 }

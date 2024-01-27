@@ -12,11 +12,13 @@ import java.net.URL;
 
 public final class APISettings {
 
+    private final PacketEventsAPI<?> packetEvents;
     private boolean debugMode = false;
     private boolean checkForUpdates = false;
     private boolean tickTickables = false;
-    private PacketEventsAPI<?> packetEvents;
     private boolean platformLogger = false;
+    private boolean useAsyncEvents = false;
+    private boolean defaultCommands = false;
 
     public APISettings(PacketEventsAPI<?> packetEvents) {
         this.packetEvents = packetEvents;
@@ -42,16 +44,6 @@ public final class APISettings {
         return this;
     }
 
-    public @NotNull APISettings usePlatformLogger(boolean platformLogger) {
-        this.platformLogger = platformLogger;
-        return this;
-    }
-
-    public @NotNull APISettings debugMode(boolean debugMode) {
-        this.debugMode = debugMode;
-        return this;
-    }
-
     public @NotNull APISettings checkForUpdates() {
         this.checkForUpdates = true;
         return this;
@@ -67,14 +59,18 @@ public final class APISettings {
         return this;
     }
 
-    public @NotNull APISettings checkForUpdates(boolean checkForUpdates) {
-        this.checkForUpdates = checkForUpdates;
+    public @NotNull APISettings registerDefaultCommands() {
+        this.defaultCommands = true;
         return this;
     }
 
-    public @NotNull APISettings tickTickables(boolean tickTickables) {
-        this.tickTickables = tickTickables;
+    public @NotNull APISettings useAsyncEvents() {
+        this.useAsyncEvents = true;
         return this;
+    }
+
+    public boolean shouldRegisterDefaultCommands() {
+        return defaultCommands;
     }
 
     public boolean isDebugMode() {
@@ -95,6 +91,10 @@ public final class APISettings {
 
     public boolean shouldUsePlatformLogger() {
         return platformLogger;
+    }
+
+    public boolean shouldUseAsyncEvents() {
+        return useAsyncEvents;
     }
 
 }

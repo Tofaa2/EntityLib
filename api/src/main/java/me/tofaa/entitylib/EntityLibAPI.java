@@ -5,6 +5,7 @@ import me.tofaa.entitylib.tick.TickContainer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * Represents the API for EntityLib.
@@ -14,21 +15,28 @@ import java.util.Collection;
  */
 public interface EntityLibAPI<W, T> {
 
+
+
+    /**
+     * @return The {@link PacketEventsAPI} that EntityLib uses.
+     */
     PacketEventsAPI<?> getPacketEvents();
 
     void onLoad();
 
     void onEnable();
 
-    @NotNull APISettings getSettings();
-
+    /**
+     * Creates a wrapped world for the platform specific world.
+     * @param world The platform specific world handle.
+     * @return A wrapped world.
+     */
+    @NotNull WorldWrapper<W> wrapWorld(W world);
 
     /**
-     * If a platform supports ticking
-     * this method should be responsible for setting up the {@link me.tofaa.entitylib.tick.TickContainer}'s.
+     * @return The {@link APISettings} for the API.
      */
-    void setupTickingContainers();
-
+    @NotNull APISettings getSettings();
 
     /**
      * @return An unmodifiable collection of TickContainers.

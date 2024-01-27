@@ -5,20 +5,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLib.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLibAPI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/Platform.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/WorldWrapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EntityLibEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/UserReceiveMetaUpdateEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/extras/InvalidVersionException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/EntityMeta.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/Metadata.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/tick/TickContainer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityIdProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityUuidProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventBus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventBusAsync.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventBusSync.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/extras/VersionChecker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/MetaConverterRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/UsedVersion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/VersionCompatCheck.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/display/AbstractDisplayMeta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/display/BlockDisplayMeta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/display/ItemDisplayMeta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/display/TextDisplayMeta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntityEquipment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperLivingEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractEntityLibAPI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractPlatform.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractWorldWrapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotWorld.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestEntityLibPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/Metadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/Metadata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/APISettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/APISettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLib.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLib.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLibAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLibAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/Platform.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/Platform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/WorldWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/WorldWrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EntityLibEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EntityLibEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/UserReceiveMetaUpdateEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/UserReceiveMetaUpdateEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/EntityMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/EntityMeta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/spigot/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntityLibAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntityLibAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntityLibPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntityLibPlatform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/EntityLibPlugin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/SpawnClickableFrogCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/TestCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/TestDisplayCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/entitylib/TestEntityCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,40 +110,64 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Gradle.Build EntityLib.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [runServer].executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/platform-api&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Github/EntityLib&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Gradle.Build EntityLib.executor": "Run",
+    "Gradle.EntityLib [dependencies].executor": "Run",
+    "Gradle.EntityLib:test-plugin [runServer].executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "feat/platform-api",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "corretto-17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Github/EntityLib/api/src/main/java/me/tofaa/entitylib/meta",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Github\EntityLib\api\src\main\java\me\tofaa\entitylib\meta" />
       <recent name="D:\Github\EntityLib\test-plugin" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.EntityLib:test-plugin [runServer]">
+  <component name="RunManager" selected="Gradle.EntityLib [dependencies]">
+    <configuration name="EntityLib [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="EntityLib:test-plugin [runServer]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -183,6 +236,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.EntityLib [dependencies]" />
         <item itemvalue="Gradle.EntityLib:test-plugin [runServer]" />
         <item itemvalue="Gradle.PE-EntityMeta [compileTestJava]" />
         <item itemvalue="Gradle.EntityLib:test-plugin [shadowJar]" />
@@ -232,7 +286,8 @@
       <workItem from="1705984769972" duration="76000" />
       <workItem from="1706183895216" duration="664000" />
       <workItem from="1706187926445" duration="4339000" />
-      <workItem from="1706248178234" duration="1973000" />
+      <workItem from="1706248178234" duration="17096000" />
+      <workItem from="1706284605696" duration="11691000" />
     </task>
     <servers />
   </component>
