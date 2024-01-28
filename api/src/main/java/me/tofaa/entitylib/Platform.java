@@ -1,10 +1,8 @@
 package me.tofaa.entitylib;
 
-import me.tofaa.entitylib.event.EntityLibEvent;
 import me.tofaa.entitylib.event.EventBus;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 /**
@@ -45,7 +43,7 @@ public interface Platform<P> {
 
     /**
      * Gets the event bus for the platform.
-     * WARNING: If you have {@link APISettings#shouldUseAsyncEvents()} set to true, cast this to {@link EventBus.Async} when handling cancelled events.
+     * WARNING: If you have {@link APIConfig#shouldUseAsyncEvents()} set to true, cast this to {@link EventBus.Async} when handling cancelled events.
      * @return
      */
     @NotNull EventBus getEventBus();
@@ -54,7 +52,7 @@ public interface Platform<P> {
      * Sets up the API for the platform. This method should be called automatically by the platform. Don't call it yourself.
      * @param settings
      */
-    void setupApi(@NotNull APISettings settings);
+    void setupApi(@NotNull APIConfig settings);
 
     /**
      * @return The API instance.

@@ -1,11 +1,8 @@
 package me.tofaa.entitylib.spigot;
 
-import com.github.retrooper.packetevents.PacketEventsAPI;
-import me.tofaa.entitylib.APISettings;
-import me.tofaa.entitylib.EntityLibAPI;
+import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.WorldWrapper;
 import me.tofaa.entitylib.common.AbstractEntityLibAPI;
-import me.tofaa.entitylib.event.EventBus;
 import me.tofaa.entitylib.tick.TickContainer;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -13,16 +10,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.UUID;
 import java.util.logging.Level;
 
 public class SpigotEntityLibAPI extends AbstractEntityLibAPI<JavaPlugin, World, BukkitTask> {
 
 
-    SpigotEntityLibAPI(SpigotEntityLibPlatform platform, APISettings settings) {
+    SpigotEntityLibAPI(SpigotEntityLibPlatform platform, APIConfig settings) {
         super(platform, settings);
     }
 

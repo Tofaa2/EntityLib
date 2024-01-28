@@ -1,6 +1,6 @@
 package me.tofaa.entitylib.common;
 
-import me.tofaa.entitylib.APISettings;
+import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityIdProvider;
 import me.tofaa.entitylib.EntityUuidProvider;
 import me.tofaa.entitylib.Platform;
@@ -26,7 +26,7 @@ public abstract class AbstractPlatform<P> implements Platform<P> {
 
 
     @Override
-    public void setupApi(@NotNull APISettings settings) {
+    public void setupApi(@NotNull APIConfig settings) {
         this.eventBus = EventBus.newBus(settings.shouldUseAsyncEvents());
         this.entityIdProvider = new EntityIdProvider.DefaultEntityIdProvider();
         this.entityUuidProvider = new EntityUuidProvider.DefaultEntityUuidProvider();

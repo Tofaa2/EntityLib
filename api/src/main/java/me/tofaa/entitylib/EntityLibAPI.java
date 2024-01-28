@@ -5,7 +5,6 @@ import me.tofaa.entitylib.tick.TickContainer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.UUID;
 
 /**
  * Represents the API for EntityLib.
@@ -34,9 +33,9 @@ public interface EntityLibAPI<W, T> {
     @NotNull WorldWrapper<W> wrapWorld(W world);
 
     /**
-     * @return The {@link APISettings} for the API.
+     * @return The {@link APIConfig} for the API.
      */
-    @NotNull APISettings getSettings();
+    @NotNull APIConfig getSettings();
 
     /**
      * @return An unmodifiable collection of TickContainers.

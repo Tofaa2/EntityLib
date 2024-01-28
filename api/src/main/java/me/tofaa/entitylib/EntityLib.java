@@ -10,7 +10,7 @@ public final class EntityLib {
     private static Platform platform;
     private static EntityLibAPI api;
 
-    public static void init(Platform<?> platform, APISettings settings) {
+    public static void init(Platform<?> platform, APIConfig settings) {
         EntityLib.platform = platform;
         platform.setupApi(settings);
         api = platform.getAPI();

@@ -1,7 +1,7 @@
 package me.tofaa.entitylib.common;
 
 import com.github.retrooper.packetevents.PacketEventsAPI;
-import me.tofaa.entitylib.APISettings;
+import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLibAPI;
 import me.tofaa.entitylib.Platform;
 import me.tofaa.entitylib.tick.TickContainer;
@@ -15,10 +15,10 @@ public abstract class AbstractEntityLibAPI<P, W, T> implements EntityLibAPI<W, T
 
     protected final Platform<P> platform;
     protected final PacketEventsAPI<?> packetEvents;
-    protected final APISettings settings;
+    protected final APIConfig settings;
     protected final Collection<TickContainer<?, T>> tickContainers;
 
-    protected AbstractEntityLibAPI(Platform<P> platform, APISettings settings) {
+    protected AbstractEntityLibAPI(Platform<P> platform, APIConfig settings) {
         this.platform = platform;
         this.packetEvents = settings.getPacketEvents();
         this.settings = settings;
@@ -27,7 +27,7 @@ public abstract class AbstractEntityLibAPI<P, W, T> implements EntityLibAPI<W, T
 
     @NotNull
     @Override
-    public APISettings getSettings() {
+    public APIConfig getSettings() {
         return settings;
     }
 

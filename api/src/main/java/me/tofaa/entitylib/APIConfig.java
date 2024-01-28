@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-public final class APISettings {
+public final class APIConfig {
 
     private final PacketEventsAPI<?> packetEvents;
     private boolean debugMode = false;
@@ -20,7 +20,7 @@ public final class APISettings {
     private boolean useAsyncEvents = false;
     private boolean defaultCommands = false;
 
-    public APISettings(PacketEventsAPI<?> packetEvents) {
+    public APIConfig(PacketEventsAPI<?> packetEvents) {
         this.packetEvents = packetEvents;
     }
 
@@ -39,32 +39,32 @@ public final class APISettings {
         return !version.equalsIgnoreCase(latest);
     }
 
-    public @NotNull APISettings usePlatformLogger() {
+    public @NotNull APIConfig usePlatformLogger() {
         this.platformLogger = true;
         return this;
     }
 
-    public @NotNull APISettings checkForUpdates() {
+    public @NotNull APIConfig checkForUpdates() {
         this.checkForUpdates = true;
         return this;
     }
 
-    public @NotNull APISettings tickTickables() {
+    public @NotNull APIConfig tickTickables() {
         this.tickTickables = true;
         return this;
     }
 
-    public @NotNull APISettings debugMode() {
+    public @NotNull APIConfig debugMode() {
         this.debugMode = true;
         return this;
     }
 
-    public @NotNull APISettings registerDefaultCommands() {
+    public @NotNull APIConfig registerDefaultCommands() {
         this.defaultCommands = true;
         return this;
     }
 
-    public @NotNull APISettings useAsyncEvents() {
+    public @NotNull APIConfig useAsyncEvents() {
         this.useAsyncEvents = true;
         return this;
     }
