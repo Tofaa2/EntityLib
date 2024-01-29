@@ -37,8 +37,7 @@ public abstract class AbstractWorldWrapper<W> implements WorldWrapper<W> {
 
     @Override
     public <T extends WrapperEntity> @NotNull T spawnEntity(@NotNull T entity, @NotNull Location location) {
-        entity.teleport(location);
-        entity.spawn();
+        entity.spawn(this, location);
         entities.put(entity.getUuid(), entity);
         entitiesById.put(entity.getEntityId(), entity);
         return entity;
