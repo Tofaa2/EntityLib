@@ -35,6 +35,8 @@ public interface WorldWrapper<W> {
     @Nullable WrapperEntity getEntity(@NotNull UUID uuid);
 
 
+    void removeEntity(WrapperEntity entity);
+
     /**
      * Gets the block at the specified coordinates. Depending on the platforms implementation, this method may be slow.
      * @param x The x coordinate.

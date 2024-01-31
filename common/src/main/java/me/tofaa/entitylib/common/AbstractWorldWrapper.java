@@ -44,6 +44,13 @@ public abstract class AbstractWorldWrapper<W> implements WorldWrapper<W> {
     }
 
     @Override
+    public void removeEntity(WrapperEntity entity) {
+        entity.despawn();
+        this.entities.remove(entity.getUuid());
+        this.entitiesById.remove(entity.getEntityId());
+    }
+
+    @Override
     public <T extends WrapperEntity> @NotNull T spawnEntity(Class<T> wrapperClass, @NotNull EntityType entityType, @NotNull Location location) {
         UUID uuid = EntityLib.getPlatform().getEntityUuidProvider().provide(entityType);
         while (entities.containsKey(uuid)) {

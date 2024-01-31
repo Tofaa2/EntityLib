@@ -281,7 +281,7 @@ public final class EntityLib {
 
     /**
      * Sets the entity id provider to the given one.
-     * @param entityIdProvider the entity id provider. The default implementation can be found at {@link EntityIdProvider#simple()}
+     * @param entityIdProvider the entity id provider. The default implementation can be found at {@link me.tofaa.entitylib.entity.EntityIdProvider#simple()}
      */
     public static void setEntityIdProvider(EntityIdProvider entityIdProvider) {
         EntityLib.entityIdProvider = entityIdProvider;

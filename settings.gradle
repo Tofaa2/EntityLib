@@ -4,4 +4,5 @@ include 'api'
 include 'platforms:spigot'
 findProject(':platforms:spigot')?.name = 'spigot'
 include 'common'
+include 'code-gen'
 

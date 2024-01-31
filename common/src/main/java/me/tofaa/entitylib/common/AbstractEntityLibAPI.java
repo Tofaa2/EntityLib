@@ -1,7 +1,9 @@
 package me.tofaa.entitylib.common;
 
+import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import me.tofaa.entitylib.APIConfig;
+import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.EntityLibAPI;
 import me.tofaa.entitylib.Platform;
 import me.tofaa.entitylib.tick.TickContainer;

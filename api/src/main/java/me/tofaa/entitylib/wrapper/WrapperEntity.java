@@ -42,6 +42,7 @@ public class WrapperEntity implements Tickable {
         this.entityType = entityType;
         this.entityMeta = entityMeta;
         this.ticking = true;
+        this.viewers = new HashSet<>();
     }
 
     public boolean spawn(WorldWrapper<?> world, Location location) {
@@ -84,15 +85,23 @@ public class WrapperEntity implements Tickable {
         return true;
     }
 
+    public void remove() {
+        world.removeEntity(this);
+    }
+
     public void despawn() {
         if (!spawned) return;
         spawned = false;
         sendPacketToViewers(new WrapperPlayServerDestroyEntities(entityId));
     }
 
-    public void teleport(WorldWrapper<?> world, @NotNull Location location) {
+    public void teleport(WorldWrapper<?> world, @NotNull Location location, boolean onGround) {
+        if (!spawned) {
+            return;
+        }
         this.location = location;
         this.world = world;
+        this.onGround = onGround;
         sendPacketToViewers(
                 new WrapperPlayServerEntityTeleport(
                         entityId,
@@ -102,6 +111,10 @@ public class WrapperEntity implements Tickable {
                         onGround
                 )
         );
+    }
+
+    public void teleport(WorldWrapper<?> world, @NotNull Location location) {
+        teleport(world, location, onGround);
     }
 
     public boolean addViewer(UUID uuid) {
@@ -129,11 +142,47 @@ public class WrapperEntity implements Tickable {
         addViewer(user.getUUID());
     }
 
+    /**
+     * Adds a viewer silently into the viewers set. The viewer will not receive any packets or be informed of this addition
+     * @param uuid the uuid of the user to add
+     */
+    public void addViewerSilently(UUID uuid) {
+        viewers.add(uuid);
+    }
+
+    /**
+     * Adds a viewer silently into the viewers set. The viewer will not receive any packets or be informed of this addition
+     * @param user the user to add
+     */
+    public void addViewerSilently(User user) {
+        addViewerSilently(user.getUUID());
+    }
+
     public void removeViewer(UUID uuid) {
         if (!viewers.remove(uuid)) {
             return;
         }
         sendPacket(uuid, new WrapperPlayServerDestroyEntities(entityId));
+    }
+
+    public void removeViewer(User user) {
+        removeViewer(user.getUUID());
+    }
+
+    /**
+     * removes a viewer silently into the viewers set. The viewer will not receive any packets or be informed of this removal
+     * @param uuid of the user to remove
+     */
+    public void removeViewerSilently(UUID uuid) {
+        viewers.remove(uuid);
+    }
+
+    /**
+     * removes a viewer silently into the viewers set. The viewer will not receive any packets or be informed of this removal
+     * @param user the user to remove
+     */
+    public void removeViewerSilently(User user) {
+        removeViewerSilently(user.getUUID());
     }
 
     public boolean isOnGround() {
@@ -345,7 +394,7 @@ public class WrapperEntity implements Tickable {
         WrapperEntity e = world.getEntity(passenger);
         if (e != null) {
             e.riding = -1;
-            e.teleport(world, e.preRidingLocation);
+            e.teleport(world, e.preRidingLocation, e.onGround);
         }
     }
 
