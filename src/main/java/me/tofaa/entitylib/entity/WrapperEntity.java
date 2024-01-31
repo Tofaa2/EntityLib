@@ -303,6 +303,22 @@ public class WrapperEntity implements Tickable {
         addViewer(user.getUUID());
     }
 
+    public void addViewerSilently(UUID viewer) {
+        viewers.add(viewer);
+    }
+
+    public void addViewerSilently(User user) {
+        viewers.add(user.getUUID());
+    }
+
+    public void removeViewerSilently(UUID uuid) {
+        viewers.remove(uuid);
+    }
+
+    public void removeViewerSilently(User user) {
+        viewers.remove(user.getUUID());
+    }
+    
     public void removeViewer(UUID uuid) {
         if (!viewers.remove(uuid)) {
             return;
