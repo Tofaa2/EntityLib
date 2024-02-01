@@ -8,6 +8,7 @@ import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.EntityLibAPI;
 import me.tofaa.entitylib.WorldWrapper;
+import me.tofaa.entitylib.meta.mobs.passive.ChickenMeta;
 import me.tofaa.entitylib.spigot.SpigotEntityLibPlatform;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.bukkit.World;
@@ -24,7 +25,6 @@ public class TestEntityLibPlugin extends JavaPlugin implements Listener {
     private EntityLibAPI<World, BukkitTask> api;
     private WrapperEntity e;
     private WorldWrapper<World> world;
-
 
     @Override
     public void onEnable() {
@@ -49,7 +49,9 @@ public class TestEntityLibPlugin extends JavaPlugin implements Listener {
         }
         world = api.wrapWorld(player.getWorld());
         e = world.spawnEntity(EntityTypes.CHICKEN, SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
-
+        ChickenMeta meta = (ChickenMeta) e.getEntityMeta();
+        meta.setBaby(!meta.isBaby());
+        meta.setHasGlowingEffect(!meta.hasGlowingEffect());
     }
 
 }

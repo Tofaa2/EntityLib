@@ -5,14 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/MetadataClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/VersionCheck.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/MetaOffset.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/TypeHolder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code-gen/src/main/resources/offset-calculator.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityUuidProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityUuidProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/CompatibilityIndex.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/EntityMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/EntityMeta.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code-gen/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/code-gen/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/MetaClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/MetaClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/MetaMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/MetaMethod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/MetaClass.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/MetaMethod.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/MetadataClass.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-gen/src/main/resources/EntityMeta.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,6 +280,7 @@
       <workItem from="1706601592145" duration="1670000" />
       <workItem from="1706614921404" duration="10508000" />
       <workItem from="1706696719616" duration="4783000" />
+      <workItem from="1706784821835" duration="5673000" />
     </task>
     <servers />
   </component>

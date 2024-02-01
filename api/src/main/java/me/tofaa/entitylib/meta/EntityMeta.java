@@ -97,30 +97,6 @@ public class EntityMeta implements EntityMetadataProvider {
         setMaskBit(OFFSET, INVISIBLE_BIT, value);
     }
 
-    public short getAirTicks() {
-        return this.metadata.getIndex((byte) 1, (short) 300);
-    }
-
-    public void setAirTicks(short value) {
-        this.metadata.setIndex((byte) 1, EntityDataTypes.SHORT, value);
-    }
-
-    public Component getCustomName() {
-        return this.metadata.getIndex(offset(OFFSET, 2), null);
-    }
-
-    public void setCustomName(Component value) {
-        this.metadata.setIndex(offset(OFFSET, 2), EntityDataTypes.ADV_COMPONENT, value);
-    }
-
-    public boolean isCustomNameVisible() {
-        return this.metadata.getIndex(offset(OFFSET, 3), false);
-    }
-
-    public void setCustomNameVisible(boolean value) {
-        this.metadata.setIndex(offset(OFFSET, 3), EntityDataTypes.BOOLEAN, value);
-    }
-
     public boolean hasGlowingEffect() {
         return getMaskBit(OFFSET, HAS_GLOWING_EFFECT_BIT);
     }
@@ -143,6 +119,30 @@ public class EntityMeta implements EntityMetadataProvider {
 
     public void setFlyingWithElytra(boolean value) {
         setMaskBit(OFFSET, FLYING_WITH_ELYTRA_BIT, value);
+    }
+
+    public short getAirTicks() {
+        return this.metadata.getIndex((byte) 1, (short) 300);
+    }
+
+    public void setAirTicks(short value) {
+        this.metadata.setIndex((byte) 1, EntityDataTypes.SHORT, value);
+    }
+
+    public Component getCustomName() {
+        return this.metadata.getIndex(offset(OFFSET, 2), null);
+    }
+
+    public void setCustomName(Component value) {
+        this.metadata.setIndex(offset(OFFSET, 2), EntityDataTypes.ADV_COMPONENT, value);
+    }
+
+    public boolean isCustomNameVisible() {
+        return this.metadata.getIndex(offset(OFFSET, 3), false);
+    }
+
+    public void setCustomNameVisible(boolean value) {
+        this.metadata.setIndex(offset(OFFSET, 3), EntityDataTypes.BOOLEAN, value);
     }
 
     public boolean isSilent() {

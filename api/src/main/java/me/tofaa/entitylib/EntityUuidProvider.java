@@ -16,6 +16,7 @@ public interface EntityUuidProvider {
         public @NotNull UUID provide(EntityType entityType) {
             return UUID.randomUUID();
         }
+
     }
 
 }

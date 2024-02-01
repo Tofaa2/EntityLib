@@ -1,0 +1,347 @@
+[
+  {
+    "class-name": "EntityMeta",
+    "offsets": [
+      {
+        "name": "airTicks",
+        "checks": [
+          {
+            "from": 47,
+            "to": 47,
+            "offset": 1
+          }
+        ]
+      },
+      {
+        "name": "customName",
+        "checks": [
+          {
+            "from": 765,
+            "to": 47,
+            "offset": 2
+          }
+        ]
+      },
+      {
+        "name": "customNameVisible",
+        "checks": [
+          {
+            "from": 765,
+            "to": 47,
+            "offset": 3
+          }
+        ]
+      },
+      {
+        "name": "silent",
+        "checks": [
+          {
+            "from": 765,
+            "to": 47,
+            "offset": 4
+          }
+        ]
+      },
+      {
+        "name": "hasNoGravity",
+        "checks": [
+          {
+            "from": 765,
+            "to": 47,
+            "offset": 5
+          }
+        ]
+      },
+      {
+        "name": "pose",
+        "checks": [
+          {
+            "from": 765,
+            "to": 47,
+            "offset": 6
+          }
+        ]
+      },
+      {
+        "name": "ticksFrozenInPowderedSnow",
+        "checks": [
+          {
+            "from": 765,
+            "to": 47,
+            "offset": 7
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "class-name": "AbstractDisplayMeta",
+    "offsets": [
+      {
+        "name": "interpolationDelay",
+        "checks": [
+          {
+            "from": 765,
+            "to": 762,
+            "offset": 8
+          }
+        ]
+      },
+      {
+        "name": "transformationDuration",
+        "checks": [
+          {
+            "from": 765,
+            "to": 762,
+            "offset": 9
+          }
+        ]
+      },
+      {
+        "name": "positionRotationInterpolationDuration",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 10
+          }
+        ]
+      },
+      {
+        "name": "translation",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 11
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 10
+          }
+        ]
+      },
+      {
+        "name": "scale",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 12
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 11
+          }
+        ]
+      },
+      {
+        "name": "leftRotation",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 13
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 12
+          }
+        ]
+      },
+      {
+        "name": "rightRotation",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 14
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 13
+          }
+        ]
+      },
+      {
+        "name": "billboardConstraints",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 15
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 14
+          }
+        ]
+      },
+      {
+        "name": "brightnessOverride",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 16
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 15
+          }
+        ]
+      },
+      {
+        "name": "viewRange",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 17
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 16
+          }
+        ]
+      },
+      {
+        "name": "shadowRadius",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 18
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 17
+          }
+        ]
+      },
+      {
+        "name": "shadowStrength",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 19
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 18
+          }
+        ]
+      },
+      {
+        "name": "width",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 20
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 19
+          }
+        ]
+      },
+      {
+        "name": "height",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 21
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 20
+          }
+        ]
+      },
+      {
+        "name": "glowColorOverride",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 22
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 21
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "class-name": "BlockDisplayMeta",
+    "offsets": [
+      {
+        "name": "blockId",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 23
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 22
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "class-name": "ItemDisplay",
+    "offsets": [
+      {
+        "name": "item",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 24
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 23
+          }
+        ]
+      },
+      {
+        "name": "displayType",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 25
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 24
+          }
+        ]
+      }
+    ]
+  }
+]
