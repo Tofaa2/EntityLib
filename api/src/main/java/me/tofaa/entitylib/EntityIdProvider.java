@@ -12,7 +12,7 @@ public interface EntityIdProvider {
 
     class DefaultEntityIdProvider implements EntityIdProvider {
 
-        private final AtomicInteger integer = new AtomicInteger();
+        private final AtomicInteger integer = new AtomicInteger(100000);
 
         @Override
         public int provide(@NotNull UUID entityUUID, @NotNull EntityType entityType) {

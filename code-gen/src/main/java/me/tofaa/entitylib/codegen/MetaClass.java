@@ -23,6 +23,10 @@ public record MetaClass(
         if (extendsClass != null) {
             String[] extendsSplit = extendsClass.split(":");
             builder.superclass(ClassName.get(extendsSplit[0], extendsSplit[1]));
+
+            builder.addField(int.class, "entityId");
+            builder.addField(ClassName.get("me.tofaa.entitylib.meta", "Metadata"), "metadata");
+
         }
         for (MetaMethod method : methods) {
             builder.addMethods(method.create());

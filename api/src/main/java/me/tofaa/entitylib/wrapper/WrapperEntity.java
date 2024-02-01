@@ -117,11 +117,14 @@ public class WrapperEntity implements Tickable {
         teleport(world, location, onGround);
     }
 
-    public boolean addViewer(UUID uuid) {
+    /**
+     * Adds a viewer to the viewers set. The viewer will receive all packets and be informed of this addition
+     * @param uuid the uuid of the user to add
+     */
+    public void addViewer(UUID uuid) {
         if (!viewers.add(uuid)) {
-            return false;
+            return;
         }
-        if (!spawned) return false;
         WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(
                 entityId,
                 Optional.of(this.uuid),
@@ -135,7 +138,6 @@ public class WrapperEntity implements Tickable {
         );
         sendPacket(uuid, packet);
         sendPacket(uuid, entityMeta.createPacket());
-        return true;
     }
 
     public void addViewer(User user) {

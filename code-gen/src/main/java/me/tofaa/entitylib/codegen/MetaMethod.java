@@ -1,32 +1,28 @@
 package me.tofaa.entitylib.codegen;
 
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeName;
 
 import javax.lang.model.element.Modifier;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public record MetaMethod(
         String name,
-        String returnType,
+        Type returnType,
         String defaultReturn,
         String dataType,
         List<VersionCheck> versionChecks
 ) {
 
     public List<MethodSpec> create() {
-        String[] nameSplit = name.split(":");
-        String[] returnSplit = returnType.split(":");
-        String namePackage = nameSplit[0];
-        String nameClass = nameSplit[1];
-        String returnPackage = returnSplit[0];
-        String returnClass = returnSplit[1];
 
-        String methodBasedName = nameClass.substring(0, 1).toUpperCase() + nameClass.substring(1);
+        String methodBasedName = name.substring(0, 1).toUpperCase() + name.substring(1);
 
         /* offset calculator first */
         MethodSpec.Builder calculator = MethodSpec.methodBuilder(
                 "calculate" + methodBasedName + "Offset")
+                .returns(byte.class)
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
                 .addParameter(int.class, "version");
         for (VersionCheck check : versionChecks) {
@@ -40,18 +36,22 @@ public record MetaMethod(
         String versionVariable = "byte offset = calculate" + methodBasedName + "Offset(EntityLib.getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion())";
 
         /* getter method spec. No params */
-        MethodSpec.Builder getter = MethodSpec.methodBuilder("get" + methodBasedName)
+        String getterName = "get";
+        if (returnType == TypeName.BOOLEAN) {
+            getterName = "is";
+        }
+        MethodSpec.Builder getter = MethodSpec.methodBuilder(getterName + methodBasedName)
                 .addModifiers(Modifier.PUBLIC)
-                .returns(ClassName.get(returnPackage, returnClass))
+                .returns(returnType)
                 .addStatement(versionVariable)
-                .addStatement("return metadata.getIndex(" + "offset," + defaultReturn);
+                .addStatement("return metadata.getIndex(" + "offset," + defaultReturn + ");");
 
         MethodSpec.Builder setter = MethodSpec.methodBuilder("set" + methodBasedName)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(void.class)
-                .addParameter(ClassName.get(returnPackage, returnClass), "value")
+                .addParameter(returnType, "value")
                 .addStatement(versionVariable)
-                .addStatement("metadata.setIndex(" + "offset, " + dataType + ", " + "value");
+                .addStatement("metadata.setIndex(" + "offset, " + dataType + ", " + "value" + ");");
 
         return List.of(
                 calculator.build(),
@@ -59,7 +59,5 @@ public record MetaMethod(
                 setter.build()
         );
     }
-
-    public record VersionCheck(int from, int to, byte offset) {}
 
 }
