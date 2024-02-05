@@ -45,6 +45,10 @@ public class WrapperEntity implements Tickable {
         this.viewers = new HashSet<>();
     }
 
+    public boolean spawn(Location location) {
+        return spawn(null, location);
+    }
+
     public boolean spawn(WorldWrapper<?> world, Location location) {
         if (spawned) return false;
         this.location = location;
@@ -117,6 +121,14 @@ public class WrapperEntity implements Tickable {
         teleport(world, location, onGround);
     }
 
+    public void teleport(@NotNull Location location, boolean onGround) {
+        teleport(null, location, onGround);
+    }
+
+    public void teleport(@NotNull Location location) {
+        teleport(null, location, onGround);
+    }
+
     /**
      * Adds a viewer to the viewers set. The viewer will receive all packets and be informed of this addition
      * @param uuid the uuid of the user to add
@@ -160,6 +172,10 @@ public class WrapperEntity implements Tickable {
         addViewerSilently(user.getUUID());
     }
 
+    /**
+     * Removes a viewer from the viewers set of this entity. The viewer will be informed of this removal and will no longer receive any packets
+     * @param UUID the uuid of the user to remove
+     */
     public void removeViewer(UUID uuid) {
         if (!viewers.remove(uuid)) {
             return;
@@ -167,6 +183,10 @@ public class WrapperEntity implements Tickable {
         sendPacket(uuid, new WrapperPlayServerDestroyEntities(entityId));
     }
 
+    /**
+     * Removes a viewer from the viewers set of this entity. The viewer will be informed of this removal and will no longer receive any packets
+     * @param user the user to remove
+     */
     public void removeViewer(User user) {
         removeViewer(user.getUUID());
     }

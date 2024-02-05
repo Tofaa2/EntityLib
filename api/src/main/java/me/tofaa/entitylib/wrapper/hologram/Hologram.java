@@ -22,7 +22,6 @@ public interface Hologram<W> {
         return new LegacyHologram<>(world, location, lines);
     }
 
-
     @NotNull Location getLocation();
 
     @NotNull WorldWrapper<W> getWorld();

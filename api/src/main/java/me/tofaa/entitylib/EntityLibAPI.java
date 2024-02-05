@@ -2,6 +2,7 @@ package me.tofaa.entitylib;
 
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import me.tofaa.entitylib.tick.TickContainer;
+import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -24,6 +25,7 @@ public interface EntityLibAPI<W, T> {
     void onLoad();
 
     void onEnable();
+
 
     /**
      * Creates a wrapped world for the platform specific world.
