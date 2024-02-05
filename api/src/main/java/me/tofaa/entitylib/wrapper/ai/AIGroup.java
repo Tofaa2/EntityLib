@@ -11,6 +11,7 @@ public class AIGroup implements Tickable {
 
     private final List<GoalSelector> goalSelectors = new GoalSelectorList(this);
     private GoalSelector currentGoalSelector;
+    private boolean ticking = true;
 
     public @NotNull Collection<GoalSelector> getGoalSelectors() {
         return goalSelectors;
@@ -34,6 +35,16 @@ public class AIGroup implements Tickable {
             throw new IllegalArgumentException("GoalSelector is not in this AIGroup");
         }
         currentGoalSelector = goalSelector;
+    }
+
+    @Override
+    public boolean isTicking() {
+        return ticking;
+    }
+
+    @Override
+    public void setTicking(boolean ticking) {
+        this.ticking = ticking;
     }
 
     @Override

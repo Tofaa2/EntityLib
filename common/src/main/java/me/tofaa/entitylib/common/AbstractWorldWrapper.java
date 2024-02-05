@@ -31,7 +31,7 @@ public abstract class AbstractWorldWrapper<W> implements WorldWrapper<W> {
         this.handle = handle;
         this.dimension = dimension;
         this.entities = new ConcurrentHashMap<>();
-        this.entitiesById = Collections.emptyMap();
+        this.entitiesById = new ConcurrentHashMap<>();
     }
 
 

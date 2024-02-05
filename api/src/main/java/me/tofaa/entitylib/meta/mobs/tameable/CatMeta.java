@@ -1,11 +1,10 @@
 package me.tofaa.entitylib.meta.mobs.tameable;
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
-import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import me.tofaa.entitylib.extras.DyeColor;
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.types.TameableMeta;
-import net.kyori.adventure.text.format.NamedTextColor;
+
 import org.jetbrains.annotations.NotNull;
 
 public class CatMeta extends TameableMeta {

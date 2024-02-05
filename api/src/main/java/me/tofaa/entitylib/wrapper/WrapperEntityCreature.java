@@ -32,7 +32,7 @@ public class WrapperEntityCreature extends WrapperLivingEntity {
     @Override
     public void tick(long time) {
         super.tick(time);
-        aiGroups.forEach(aiGroup -> aiGroup.update(time));
+        aiGroups.forEach(aiGroup -> aiGroup.tick(time));
     }
 
     /**

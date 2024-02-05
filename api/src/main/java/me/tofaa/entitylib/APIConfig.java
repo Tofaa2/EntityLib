@@ -3,6 +3,7 @@ package me.tofaa.entitylib;
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ public final class APIConfig {
         this.packetEvents = packetEvents;
     }
 
+    @Blocking
     public boolean requiresUpdate() throws IOException {
         if (!checkForUpdates) return false;
         String urlString = "https://api.github.com/repos/Tofaa2/EntityLib/releases/latest";

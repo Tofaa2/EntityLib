@@ -1,7 +1,6 @@
 package me.tofaa.testentitylib;
 
 import com.github.retrooper.packetevents.PacketEvents;
-import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import me.tofaa.entitylib.APIConfig;
@@ -43,15 +42,17 @@ public class TestEntityLibPlugin extends JavaPlugin implements Listener {
     @EventHandler
     public void onCrouch(PlayerToggleSneakEvent event) {
         Player player = event.getPlayer();
-        if (e != null) {
-            e.remove();
-            e = null;
+        if (e == null) {
+            world = api.wrapWorld(player.getWorld());
+            e = world.spawnEntity(EntityTypes.CHICKEN, SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
         }
         world = api.wrapWorld(player.getWorld());
         e = world.spawnEntity(EntityTypes.CHICKEN, SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
         ChickenMeta meta = (ChickenMeta) e.getEntityMeta();
         meta.setBaby(!meta.isBaby());
         meta.setHasGlowingEffect(!meta.hasGlowingEffect());
+
+        e.addViewer(player.getUniqueId());
     }
 
 }

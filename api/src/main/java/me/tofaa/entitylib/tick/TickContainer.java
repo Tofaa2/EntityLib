@@ -9,11 +9,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Represents a storage/container for {@link Tickable}s.
+ * Represents a storage/container for {@link Tickable}s. This class is extendable in case you want to provide custom logic and/or methods.
  * @param <T> The type of {@link Tickable} to store.
  * @param <H> If a platform enforces a specific method of ticking, this type represents the handler for that method.
  */
-public abstract class TickContainer<T extends Tickable, H> {
+public class TickContainer<T extends Tickable, H> {
 
     private final Set<T> tickables = new HashSet<>();
     private H handle;
