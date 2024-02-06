@@ -1,10 +1,12 @@
 package me.tofaa.entitylib.wrapper;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.player.*;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfo;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoRemove;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate;
+import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.EntityMeta;
 import net.kyori.adventure.text.Component;
 
@@ -17,8 +19,8 @@ public class WrapperPlayer extends WrapperLivingEntity {
     private Component displayName;
 
 
-    public WrapperPlayer(UserProfile profile,  int entityId, EntityType entityType, EntityMeta entityMeta) {
-        super(entityId, profile.getUUID(), entityType, entityMeta);
+    public WrapperPlayer(UserProfile profile, int entityId) {
+        super(entityId, profile.getUUID(), EntityTypes.PLAYER, EntityMeta.createMeta(entityId, EntityTypes.PLAYER));
         this.profile = profile;
     }
 

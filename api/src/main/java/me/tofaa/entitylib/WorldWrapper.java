@@ -1,11 +1,13 @@
 package me.tofaa.entitylib;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+import com.github.retrooper.packetevents.protocol.player.UserProfile;
 import com.github.retrooper.packetevents.protocol.world.Dimension;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
 import me.tofaa.entitylib.tick.TickContainer;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
+import me.tofaa.entitylib.wrapper.WrapperPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,6 +21,8 @@ import java.util.UUID;
  * @param <W> The platform specific World type.
  */
 public interface WorldWrapper<W> {
+
+    @NotNull WrapperPlayer spawnPlayer(UserProfile profile, Location location);
 
     @NotNull <T extends WrapperEntity> T spawnEntity(@NotNull Class<T> wrapperClass, @NotNull EntityType entityType, @NotNull Location location);
 

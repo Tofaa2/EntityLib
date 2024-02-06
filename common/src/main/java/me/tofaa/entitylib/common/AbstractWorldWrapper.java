@@ -1,6 +1,8 @@
 package me.tofaa.entitylib.common;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
+import com.github.retrooper.packetevents.protocol.player.UserProfile;
 import com.github.retrooper.packetevents.protocol.world.Dimension;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import me.tofaa.entitylib.EntityLib;
@@ -12,6 +14,7 @@ import me.tofaa.entitylib.meta.types.PlayerMeta;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import me.tofaa.entitylib.wrapper.WrapperExperienceOrbEntity;
 import me.tofaa.entitylib.wrapper.WrapperLivingEntity;
+import me.tofaa.entitylib.wrapper.WrapperPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,6 +40,22 @@ public abstract class AbstractWorldWrapper<W> implements WorldWrapper<W> {
         this.entitiesById = new ConcurrentHashMap<>();
     }
 
+    @Override
+    public @NotNull WrapperPlayer spawnPlayer(UserProfile profile, Location location) {
+        if (getEntity(profile.getUUID()) != null) {
+            throw new IllegalArgumentException("Entity with UUID " + profile.getUUID() + " already exists in this world.");
+        }
+
+        int id = EntityLib.getPlatform().getEntityIdProvider().provide(profile.getUUID(), EntityTypes.PLAYER);
+        while (entitiesById.containsKey(id)) {
+            id = EntityLib.getPlatform().getEntityIdProvider().provide(profile.getUUID(), EntityTypes.PLAYER);
+        }
+        WrapperPlayer player = new WrapperPlayer(profile, id);
+        player.spawn(this, location);
+        entities.put(player.getUuid(), player);
+        entitiesById.put(player.getEntityId(), player);
+        return player;
+    }
 
     @Override
     public <T extends WrapperEntity> @NotNull T spawnEntity(@NotNull T entity, @NotNull Location location) {
