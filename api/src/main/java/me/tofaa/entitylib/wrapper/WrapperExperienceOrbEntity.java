@@ -25,7 +25,9 @@ public class WrapperExperienceOrbEntity extends WrapperEntity {
      *     This is an attempt to mimmick the vanilla behavior.
      * </p>
      */
-    public void updateSliding() {
+    @Override
+    public void tick(long time) {
+        super.tick(time);
         if (hasNoGravity()) {
             setVelocity(getVelocity().add(0, -0.3f, 0));
         }

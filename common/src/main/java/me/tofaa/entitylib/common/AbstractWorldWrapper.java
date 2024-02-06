@@ -6,8 +6,11 @@ import com.github.retrooper.packetevents.protocol.world.Location;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.WorldWrapper;
 import me.tofaa.entitylib.meta.EntityMeta;
+import me.tofaa.entitylib.meta.projectile.ThrownExpBottleMeta;
 import me.tofaa.entitylib.meta.types.LivingEntityMeta;
+import me.tofaa.entitylib.meta.types.PlayerMeta;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
+import me.tofaa.entitylib.wrapper.WrapperExperienceOrbEntity;
 import me.tofaa.entitylib.wrapper.WrapperLivingEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -64,6 +67,9 @@ public abstract class AbstractWorldWrapper<W> implements WorldWrapper<W> {
         WrapperEntity e;
         if (meta instanceof LivingEntityMeta) {
             e = new WrapperLivingEntity(entityId, uuid, entityType, meta);
+        }
+        else if (meta instanceof ThrownExpBottleMeta) {
+            e = new WrapperExperienceOrbEntity(entityId, uuid, entityType, meta);
         }
         else {
             e = new WrapperEntity(entityId, uuid, entityType, meta);

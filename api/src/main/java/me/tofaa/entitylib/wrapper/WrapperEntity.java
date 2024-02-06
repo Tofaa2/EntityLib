@@ -28,12 +28,12 @@ public class WrapperEntity implements Tickable {
     private boolean ticking;
     private Location location;
     private Location preRidingLocation;
-    private Set<UUID> viewers;
+    private final Set<UUID> viewers;
     private boolean onGround;
     private boolean spawned;
     private Vector3d velocity;
     private int riding = -1;
-    private Set<Integer> passengers = new HashSet<>();
+    private final Set<Integer> passengers;
     private WorldWrapper<?> world;
 
     public WrapperEntity(int entityId, UUID uuid, EntityType entityType, EntityMeta entityMeta) {
@@ -43,10 +43,7 @@ public class WrapperEntity implements Tickable {
         this.entityMeta = entityMeta;
         this.ticking = true;
         this.viewers = new HashSet<>();
-    }
-
-    public boolean spawn(Location location) {
-        return spawn(null, location);
+        this.passengers = new HashSet<>();
     }
 
     public boolean spawn(WorldWrapper<?> world, Location location) {
@@ -122,10 +119,6 @@ public class WrapperEntity implements Tickable {
     }
 
     public void teleport(@NotNull Location location, boolean onGround) {
-        teleport(null, location, onGround);
-    }
-
-    public void teleport(@NotNull Location location) {
         teleport(null, location, onGround);
     }
 
