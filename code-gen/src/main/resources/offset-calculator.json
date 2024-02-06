@@ -6,7 +6,7 @@
         "name": "airTicks",
         "checks": [
           {
-            "from": 47,
+            "from": 765,
             "to": 47,
             "offset": 1
           }
@@ -74,6 +74,9 @@
       }
     ]
   },
+
+
+
   {
     "class-name": "AbstractDisplayMeta",
     "offsets": [
@@ -310,7 +313,7 @@
     ]
   },
   {
-    "class-name": "ItemDisplay",
+    "class-name": "ItemDisplayMeta",
     "offsets": [
       {
         "name": "item",
@@ -343,5 +346,236 @@
         ]
       }
     ]
+  },
+  {
+    "class-name": "TextDisplayMeta",
+    "offsets": [
+      {
+        "name": "text",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 26
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 25
+          }
+        ]
+      },
+      {
+        "name": "textColor",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 27
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 26
+          }
+        ]
+      },
+      {
+        "name": "textBackgroundColor",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 28
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 27
+          }
+        ]
+      },
+      {
+        "name": "textBackground",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 29
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 28
+          }
+        ]
+      },
+      {
+        "name": "textScale",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 30
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 29
+          }
+        ]
+      },
+      {
+        "name": "textAlignment",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 31
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 30
+          }
+        ]
+      },
+      {
+        "name": "lineWidth",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 32
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 31
+          }
+        ]
+      },
+      {
+        "name": "backgroundColor",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 33
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 32
+          }
+        ]
+      },
+      {
+          "name": "textOpacity",
+          "checks": [
+            {
+                "from": 765,
+                "to": 764,
+                "offset": 34
+            },
+            {
+                "from": 763,
+                "to": 762,
+                "offset": 33
+            }
+            ]
+      },
+      {
+        "name": "shadow",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 35
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 34
+          }
+        ]
+      },
+      {
+        "name": "seeThrough",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 36
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 35
+          }
+        ]
+      },
+        {
+            "name": "useDefaultBackground",
+            "checks": [
+            {
+                "from": 765,
+                "to": 764,
+                "offset": 37
+            },
+            {
+                "from": 763,
+                "to": 762,
+                "offset": 36
+            }
+            ]
+      },
+      {
+        "name": "allighnLeft",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 38
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 37
+          }
+        ]
+      },
+      {
+        "name": "allighnRight",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 39
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 38
+          }
+        ]
+      },
+      {
+        "name": "allighnCenter",
+        "checks": [
+          {
+            "from": 765,
+            "to": 764,
+            "offset": 40
+          },
+          {
+            "from": 763,
+            "to": 762,
+            "offset": 39
+          }
+        ]
+      }
+    ]
+
   }
 ]

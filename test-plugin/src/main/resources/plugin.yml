@@ -6,15 +6,5 @@ main: me.tofaa.testentitylib.TestEntityLibPlugin
 api-version: "1.19"
 commands:
   testapi:
-    description: Test PEEntityMeta API
-    usage: /<command>
-
-  testentity:
-    description: Test PEEntity API
-    usage: /<command>
-  testdisplay:
-    description: Test PEDisplay API
-    usage: /<command>
-  spawnclickablefrog:
-    description: Spawn a clickable frog
+    description: Test EntityLib API
     usage: /<command>

@@ -3,7 +3,9 @@ package me.tofaa.entitylib;
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import me.tofaa.entitylib.tick.TickContainer;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 
@@ -25,6 +27,26 @@ public interface EntityLibAPI<W, T> {
     void onLoad();
 
     void onEnable();
+
+    /**
+     * Attempts to search and find an entity across all wrapped worlds. This only works on EntityLib entities.
+     * @param entityId the entity id of the entity
+     * @return the entity if one is found, null otherwise.
+     */
+    @Nullable WrapperEntity findEntity(int entityId);
+
+    /**
+     * Mainly internal method to register the {@link WrapperEntity} to EntitLib cache, all {@link WorldWrapper}'s do this automatically
+     * @param entity
+     */
+    @ApiStatus.Internal
+    void globalRegisterEntity(@NotNull WrapperEntity entity);
+
+    /**
+     * Mainly internal method to unregister the {@link WrapperEntity} to EntitLib cache, all {@link WorldWrapper}'s do this automatically
+     * @param entity
+     */
+    void globalUnregisterEntity(@NotNull WrapperEntity entity);
 
 
     /**

@@ -331,7 +331,7 @@ public class WrapperEntity implements Tickable {
     }
 
     public boolean hasNoGravity() {
-        return entityMeta.isHasNoGravity();
+        return entityMeta.hasNoGravity();
     }
 
     public void setHasNoGravity(boolean hasNoGravity) {

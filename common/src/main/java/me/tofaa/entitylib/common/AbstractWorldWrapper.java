@@ -54,6 +54,7 @@ public abstract class AbstractWorldWrapper<W> implements WorldWrapper<W> {
         player.spawn(this, location);
         entities.put(player.getUuid(), player);
         entitiesById.put(player.getEntityId(), player);
+        EntityLib.getApi().globalRegisterEntity(player);
         return player;
     }
 
@@ -62,6 +63,7 @@ public abstract class AbstractWorldWrapper<W> implements WorldWrapper<W> {
         entity.spawn(this, location);
         entities.put(entity.getUuid(), entity);
         entitiesById.put(entity.getEntityId(), entity);
+        EntityLib.getApi().globalRegisterEntity(entity);
         return entity;
     }
 
@@ -70,6 +72,7 @@ public abstract class AbstractWorldWrapper<W> implements WorldWrapper<W> {
         entity.despawn();
         this.entities.remove(entity.getUuid());
         this.entitiesById.remove(entity.getEntityId());
+        EntityLib.getApi().globalUnregisterEntity(entity);
     }
 
     @Override

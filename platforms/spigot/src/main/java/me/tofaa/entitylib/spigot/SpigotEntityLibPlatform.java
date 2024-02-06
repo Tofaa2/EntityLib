@@ -25,7 +25,7 @@ public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
 
 
     @Override
-    public EntityLibAPI<?, ?> getAPI() {
+    public SpigotEntityLibAPI getAPI() {
         return api;
     }
 

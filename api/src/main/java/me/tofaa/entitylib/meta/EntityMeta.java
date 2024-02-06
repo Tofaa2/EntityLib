@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
-import java.util.function.Function;
+
+import static me.tofaa.entitylib.meta.MetaOffsetConverter.EntityMetaOffsets.*;
 
 public class EntityMeta implements EntityMetadataProvider {
 
@@ -63,6 +64,14 @@ public class EntityMeta implements EntityMetadataProvider {
     public EntityMeta(int entityId, Metadata metadata) {
         this.entityId = entityId;
         this.metadata = metadata;
+    }
+
+    public void setNotifyAboutChanges(boolean notifyAboutChanges) {
+        metadata.setNotifyAboutChanges(notifyAboutChanges);
+    }
+
+    public boolean isNotifyingChanges() {
+        return metadata.isNotifyingChanges();
     }
 
     public boolean isOnFire() {
@@ -122,59 +131,59 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     public short getAirTicks() {
-        return this.metadata.getIndex((byte) 1, (short) 300);
+        return this.metadata.getIndex(airTicksOffset(), (short) 300);
     }
 
     public void setAirTicks(short value) {
-        this.metadata.setIndex((byte) 1, EntityDataTypes.SHORT, value);
+        this.metadata.setIndex(airTicksOffset(), EntityDataTypes.SHORT, value);
     }
 
     public Component getCustomName() {
-        return this.metadata.getIndex(offset(OFFSET, 2), null);
+        return this.metadata.getIndex(customNameOffset(), null);
     }
 
     public void setCustomName(Component value) {
-        this.metadata.setIndex(offset(OFFSET, 2), EntityDataTypes.ADV_COMPONENT, value);
+        this.metadata.setIndex(customNameOffset(), EntityDataTypes.ADV_COMPONENT, value);
     }
 
     public boolean isCustomNameVisible() {
-        return this.metadata.getIndex(offset(OFFSET, 3), false);
+        return this.metadata.getIndex(customNameVisibleOffset(), false);
     }
 
     public void setCustomNameVisible(boolean value) {
-        this.metadata.setIndex(offset(OFFSET, 3), EntityDataTypes.BOOLEAN, value);
+        this.metadata.setIndex(customNameVisibleOffset(), EntityDataTypes.BOOLEAN, value);
     }
 
     public boolean isSilent() {
-        return this.metadata.getIndex((byte) 4, false);
+        return this.metadata.getIndex(silentOffset(), false);
     }
 
     public void setSilent(boolean value) {
-        this.metadata.setIndex((byte) 4, EntityDataTypes.BOOLEAN, value);
+        this.metadata.setIndex(silentOffset(), EntityDataTypes.BOOLEAN, value);
     }
 
-    public boolean isHasNoGravity() {
-        return this.metadata.getIndex(offset(OFFSET, 5), true);
+    public boolean hasNoGravity() {
+        return this.metadata.getIndex(hasNoGravityOffset(), true);
     }
 
     public void setHasNoGravity(boolean value) {
-        this.metadata.setIndex(offset(OFFSET, 5), EntityDataTypes.BOOLEAN, value);
+        this.metadata.setIndex(hasNoGravityOffset(), EntityDataTypes.BOOLEAN, value);
     }
 
     public EntityPose getPose() {
-        return this.metadata.getIndex(offset(OFFSET, 6), EntityPose.STANDING);
+        return this.metadata.getIndex(poseOffset(), EntityPose.STANDING);
     }
 
     public void setPose(EntityPose value) {
-        this.metadata.setIndex(offset(OFFSET, 6), EntityDataTypes.ENTITY_POSE, value);
+        this.metadata.setIndex(poseOffset(), EntityDataTypes.ENTITY_POSE, value);
     }
 
     public int getTicksFrozenInPowderedSnow() {
-        return this.metadata.getIndex(offset(OFFSET, 7), 0);
+        return this.metadata.getIndex(ticksFrozenInPowderedSnowOffset(), 0);
     }
 
     public void setTicksFrozenInPowderedSnow(int value) {
-        this.metadata.setIndex(offset(OFFSET, 7), EntityDataTypes.INT, value);
+        this.metadata.setIndex(ticksFrozenInPowderedSnowOffset(), EntityDataTypes.INT, value);
     }
 
     public WrapperPlayServerEntityMetadata createPacket() {

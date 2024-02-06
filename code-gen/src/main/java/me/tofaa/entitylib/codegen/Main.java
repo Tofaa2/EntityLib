@@ -44,6 +44,10 @@ public final class Main {
         for (TypeHolder type : types) {
             System.out.println("Generating type" + type.className());
 
+            TypeSpec.Builder typeBuilder = TypeSpec.classBuilder(type.className() + "Offsets")
+                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL, Modifier.STATIC)
+                    .addMethod(MethodSpec.constructorBuilder().addModifiers(Modifier.PRIVATE).build());
+
             for (MetaOffset offset : type.offsets()) {
 
                 MethodSpec.Builder method = MethodSpec.methodBuilder(offset.name() + "Offset")
@@ -58,9 +62,11 @@ public final class Main {
                     method.endControlFlow();
                 }
                 method.addStatement("throw new RuntimeException(\"Unknown protocol version for this method\")");
-                baseBuilder.addMethod(method.build());
+                typeBuilder.addMethod(method.build());
             }
+            baseBuilder.addType(typeBuilder.build());
         }
+
 
         TypeSpec base = baseBuilder.build();
         System.out.println("Writing to file");
