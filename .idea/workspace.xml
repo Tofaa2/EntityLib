@@ -6,18 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLibAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLibAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/EntityMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/EntityMeta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/MetaOffsetConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/MetaOffsetConverter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/Metadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/Metadata.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code-gen/src/main/resources/offset-calculator.json" beforeDir="false" afterPath="$PROJECT_DIR$/code-gen/src/main/resources/offset-calculator.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractEntityLibAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractEntityLibAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractWorldWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractWorldWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntityLibPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntityLibPlatform.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestEntityLibPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestEntityLibPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntityEquipment.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntityEquipment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -304,7 +295,9 @@
       <workItem from="1706858181164" duration="925000" />
       <workItem from="1707159905372" duration="3391000" />
       <workItem from="1707210065718" duration="4823000" />
-      <workItem from="1707219870641" duration="4868000" />
+      <workItem from="1707219870641" duration="5522000" />
+      <workItem from="1707300688189" duration="1512000" />
+      <workItem from="1707381529971" duration="921000" />
     </task>
     <servers />
   </component>

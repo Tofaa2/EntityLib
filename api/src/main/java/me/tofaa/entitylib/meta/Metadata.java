@@ -83,7 +83,7 @@ public class Metadata {
 
 
     public boolean isNotifyingChanges() {
-        return notifyChanges;
+        return notifyChanges; 
     }
 
     @NotNull List<EntityData> getEntries() {

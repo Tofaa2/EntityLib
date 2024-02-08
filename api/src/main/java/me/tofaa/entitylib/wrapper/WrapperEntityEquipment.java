@@ -19,7 +19,7 @@ public class WrapperEntityEquipment {
     private static final EquipmentSlot[] EQUIPMENT_SLOTS = EquipmentSlot.values();
 
     private final WrapperLivingEntity entity;
-
+    private boolean notifyChanges = true;
 
     // 0 = main hand, 1 = offhand, 2 = boots, 3 = leggings, 4 = chestplate, 5 = helmet
     private final ItemStack[] equipment = new ItemStack[6];
@@ -113,7 +113,19 @@ public class WrapperEntityEquipment {
 
 
     public void refresh() {
-        this.entity.sendPacketToViewers(createPacket());
+        if (notifyChanges) {
+            this.entity.sendPacketToViewers(createPacket());
+        }
     }
 
+    public boolean isNotifyingChanges() {
+        return notifyChanges;
+    }
+
+    public void setNotifyChanges(boolean notifyChanges) {
+        this.notifyChanges = notifyChanges;
+        if (notifyChanges) {
+            refresh();
+        }
+    }
 }
