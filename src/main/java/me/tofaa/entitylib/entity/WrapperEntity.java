@@ -12,19 +12,21 @@ import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.types.ObjectData;
 import org.jetbrains.annotations.NotNull;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class WrapperEntity implements Tickable {
     private final EntityType entityType;
     private final int entityId;
     private final Optional<UUID> uuid;
     private final EntityMeta meta;
-    private final Set<UUID> viewers = new HashSet<>();
+    private final Set<UUID> viewers = ConcurrentHashMap.newKeySet();
     private Location location;
     private boolean onGround;
     private boolean spawned;
     protected Vector3d velocity = Vector3d.zero();
     private int riding = -1;
-    private Set<Integer> passengers = new HashSet<>();
+    private Set<Integer> passengers = ConcurrentHashMap.newKeySet();
 
     public WrapperEntity(int entityId, @NotNull UUID uuid, EntityType entityType, EntityMeta meta) {
         this.uuid = Optional.of(uuid);
