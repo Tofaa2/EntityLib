@@ -106,6 +106,28 @@ public final class EntityLib {
     }
 
     /**
+     * Removes the entity completely from EntityLib and the platform.
+     * The viewer will no longer be able to see the entity.
+     */
+    public static boolean removeEntity(int entityId) {
+        checkInit();
+        WrapperEntity e = entitiesById.get(entityId);
+        if (e == null) return false;
+        entities.remove(e.getUuid());
+        entitiesById.remove(entityId);
+        e.remove();
+        return true;
+    }
+
+    /**
+     * Removes the entity completely from EntityLib and the platform.
+     * The viewer will no longer be able to see the entity.
+     */
+    public static boolean removeEntity(WrapperEntity entity) {
+        return removeEntity(entity.getEntityId());
+    }
+
+    /**
      * @param uuid the entity uuid
      * @return the entity with the given uuid, or null if an entity with that uuid does not exist
      */
