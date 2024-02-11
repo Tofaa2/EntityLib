@@ -35,6 +35,13 @@ public class WrapperEntity implements Tickable {
         this.entityId = entityId;
     }
 
+    /**
+        Internally sets the location of this entity. This does not inform any of the entities viewers about this change.
+    */
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     public void refresh() {
         if (!spawned) return;
         sendPacketToViewers(meta.createPacket());
