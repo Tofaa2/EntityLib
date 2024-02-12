@@ -327,7 +327,12 @@ public final class EntityLib {
     @ApiStatus.Internal
     public static void sendPacket(UUID user, PacketWrapper<?> wrapper) {
         checkInit();
-        packetEvents.getProtocolManager().sendPacket(packetEvents.getProtocolManager().getChannel(user), wrapper);
+        Object channel = packetEvents.getProtocolManager().getChannel(user);
+        if (channel == null) {
+            System.out.println("EntityLib could not send packet to user " + user);
+            return;
+        }
+        packetEvents.getProtocolManager().sendPacket(channel, wrapper);
     }
 
     private static void checkInit() {
