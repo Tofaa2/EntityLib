@@ -329,7 +329,10 @@ public final class EntityLib {
         checkInit();
         Object channel = packetEvents.getProtocolManager().getChannel(user);
         if (channel == null) {
-            System.out.println("EntityLib could not send packet to user " + user);
+            boolean b = Boolean.parseBoolean(System.getenv("entitylib_debug"));
+            if (b) {
+                System.out.println("EntityLib could not send packet to user " + user);            
+            }
             return;
         }
         packetEvents.getProtocolManager().sendPacket(channel, wrapper);
