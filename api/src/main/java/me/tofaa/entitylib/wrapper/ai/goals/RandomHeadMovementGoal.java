@@ -66,7 +66,7 @@ public class RandomHeadMovementGoal extends GoalSelector {
     @Override
     public void tick(long time) {
         --lookTime;
-        entity.teleport(entity.getWorld(), CoordinateUtil.withDirection(entity.getLocation(), lookDirection), entity.isOnGround());
+        entity.teleport(CoordinateUtil.withDirection(entity.getLocation(), lookDirection), entity.isOnGround());
     }
 
     @Override

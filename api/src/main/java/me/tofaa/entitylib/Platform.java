@@ -57,7 +57,7 @@ public interface Platform<P> {
     /**
      * @return The API instance.
      */
-    EntityLibAPI<?, ?> getAPI();
+    EntityLibAPI<?> getAPI();
 
     /**
      * @return the platforms name.
