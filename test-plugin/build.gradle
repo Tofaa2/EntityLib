@@ -27,7 +27,7 @@ repositories {
 dependencies {
     compileOnly('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
     compileOnly('com.github.retrooper.packetevents:spigot:2.0.2')
-    implementation(project(":platforms:spigot"))
+    implementation("com.github.Tofaa2.EntityLib:api:2.0.0-PRE")
 }
 
 tasks {

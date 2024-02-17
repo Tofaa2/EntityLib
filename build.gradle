@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'java-library'
+    id 'maven-publish'
 }
 
 allprojects {
@@ -12,9 +13,11 @@ allprojects {
                                        "net.kyori:adventure-nbt:${adventureVersion}"]
 
     apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
 
     group = 'me.tofaa.entitylib'
-    version = '1.0-SNAPSHOT'
+    version = '2.0-SNAPSHOT'
 
     java.sourceCompatibility = JavaVersion.VERSION_1_8
     java.targetCompatibility = JavaVersion.VERSION_1_8
@@ -38,6 +41,16 @@ allprojects {
         maven { url = "https://repo.codemc.org/repository/maven-public/" }
     }
 
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId = project.group // Group instance of your project
+                artifactId = "EntityLib"
+                version = project.version // Version instance of your project
+                from components.java
+            }
+        }
+    }
 }
 
 
