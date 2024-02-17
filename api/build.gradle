@@ -14,5 +14,5 @@ dependencies {
     api 'org.jetbrains:annotations:24.0.0'
 
     compileOnlyApi(adventureDependencies)
-    compileOnlyApi 'com.github.retrooper.packetevents:api:2.2.0'
+    compileOnlyApi 'com.github.retrooper.packetevents:api:2.2.1'
 }
