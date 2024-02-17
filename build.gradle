@@ -7,10 +7,10 @@ plugins {
 allprojects {
 
     project.ext.adventureVersion = '4.15.0'
-    project.ext.adventureDependencies=["net.kyori:adventure-api:${adventureVersion}",
-                                       "net.kyori:adventure-text-serializer-gson:${adventureVersion}",
-                                       "net.kyori:adventure-text-serializer-legacy:${adventureVersion}",
-                                       "net.kyori:adventure-nbt:${adventureVersion}"]
+    project.ext.adventureDependencies = ["net.kyori:adventure-api:${adventureVersion}",
+                                         "net.kyori:adventure-text-serializer-gson:${adventureVersion}",
+                                         "net.kyori:adventure-text-serializer-legacy:${adventureVersion}",
+                                         "net.kyori:adventure-nbt:${adventureVersion}"]
 
     apply plugin: 'java'
     apply plugin: 'java-library'
@@ -21,6 +21,11 @@ allprojects {
 
     java.sourceCompatibility = JavaVersion.VERSION_1_8
     java.targetCompatibility = JavaVersion.VERSION_1_8
+    java {
+        withSourcesJar()
+        withJavadocJar()
+    }
+
 
     repositories {
         mavenCentral()
@@ -43,10 +48,10 @@ allprojects {
 
     publishing {
         publications {
-            mavenJava(MavenPublication) {
-                groupId = project.group // Group instance of your project
-                artifactId = project.name
-                version = project.version // Version instance of your project
+            maven(MavenPublication) {
+                groupId project.group
+                artifactId project.name
+                version project.version
                 from components.java
             }
         }
