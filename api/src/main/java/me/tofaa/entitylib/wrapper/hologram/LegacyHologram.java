@@ -2,9 +2,7 @@ package me.tofaa.entitylib.wrapper.hologram;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.world.Location;
-import com.github.retrooper.packetevents.util.Vector3d;
 import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.WorldWrapper;
 import me.tofaa.entitylib.meta.other.ArmorStandMeta;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import net.kyori.adventure.text.Component;
@@ -17,19 +15,17 @@ import java.util.List;
 final class LegacyHologram<W> implements Hologram.Legacy<W> {
 
     private Location location;
-    private WorldWrapper<W> world;
     private List<WrapperEntity> lines = new ArrayList<>(3);
     private float lineOffset = -0.9875f;
     private float markerOffset = -0.40625f;
     private boolean marker;
 
-    LegacyHologram(@NotNull WorldWrapper<W> world, @NotNull Location location) {
-        this.world = world;
+    LegacyHologram(@NotNull Location location) {
         this.location = location;
     }
 
-    LegacyHologram(@NotNull WorldWrapper<W> world, @NotNull Location location, List<Component> lines) {
-        this(world, location);
+    LegacyHologram(@NotNull Location location, List<Component> lines) {
+        this(location);
         for (Component line : lines) {
             addLine(line);
         }
@@ -50,7 +46,7 @@ final class LegacyHologram<W> implements Hologram.Legacy<W> {
     @Override
     public void show() {
         for (WrapperEntity line : lines) {
-            line.spawn(world, location);
+            line.spawn(location);
         }
         teleport(location);
     }
@@ -66,7 +62,7 @@ final class LegacyHologram<W> implements Hologram.Legacy<W> {
     public void teleport(Location location) {
         this.location = location;
         // reversed order
-        for (int i = lines.size() -1; i >= 0; i--) {
+        for (int i = lines.size() - 1; i >= 0; i--) {
             WrapperEntity line = lines.get(i);
             double y;
             if (marker) {
@@ -77,7 +73,7 @@ final class LegacyHologram<W> implements Hologram.Legacy<W> {
             ArmorStandMeta meta = (ArmorStandMeta) line.getEntityMeta();
             meta.setMarker(marker);
             Location l = new Location(location.getX(), y, location.getZ(), location.getYaw(), location.getPitch());
-            line.teleport(world, l, false);
+            line.teleport(l, false);
         }
     }
 
@@ -91,7 +87,7 @@ final class LegacyHologram<W> implements Hologram.Legacy<W> {
 
     @Override
     public void setLine(int index, @Nullable Component line) {
-        WrapperEntity e = world.spawnEntity(EntityTypes.ARMOR_STAND, location);
+        WrapperEntity e = EntityLib.getApi().spawnEntity(EntityTypes.ARMOR_STAND, location);
         ArmorStandMeta meta = (ArmorStandMeta) e.getEntityMeta();
         meta.setCustomName(line);
         meta.setCustomNameVisible(true);
@@ -100,7 +96,7 @@ final class LegacyHologram<W> implements Hologram.Legacy<W> {
         meta.setSmall(true);
         meta.setMarker(marker);
         this.lines.set(index, e);
-        e.spawn(world, location);
+        e.spawn(location);
         teleport(location);
     }
 
@@ -133,8 +129,4 @@ final class LegacyHologram<W> implements Hologram.Legacy<W> {
         return location;
     }
 
-    @Override
-    public @NotNull WorldWrapper<W> getWorld() {
-        return world;
-    }
 }

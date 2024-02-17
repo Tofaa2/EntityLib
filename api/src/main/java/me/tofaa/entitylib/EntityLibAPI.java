@@ -1,23 +1,25 @@
 package me.tofaa.entitylib;
 
 import com.github.retrooper.packetevents.PacketEventsAPI;
+import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+import com.github.retrooper.packetevents.protocol.player.UserProfile;
+import com.github.retrooper.packetevents.protocol.world.Location;
 import me.tofaa.entitylib.tick.TickContainer;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
+import me.tofaa.entitylib.wrapper.WrapperPlayer;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * Represents the API for EntityLib.
  * Handles the loading, enabling, and disabling of the API. And handles platform specific creation of EntityLib content.
- * @param <W> The {@link WorldWrapper}'s param type for the platform specific World.
  * @param <T> The {@link TickContainer}'s param type for the platform specific TickContainer.
  */
-public interface EntityLibAPI<W, T> {
-
-
+public interface EntityLibAPI<T> {
 
     /**
      * @return The {@link PacketEventsAPI} that EntityLib uses.
@@ -28,33 +30,23 @@ public interface EntityLibAPI<W, T> {
 
     void onEnable();
 
-    /**
-     * Attempts to search and find an entity across all wrapped worlds. This only works on EntityLib entities.
-     * @param entityId the entity id of the entity
-     * @return the entity if one is found, null otherwise.
-     */
-    @Nullable WrapperEntity findEntity(int entityId);
+    @NotNull WrapperPlayer spawnPlayer(UserProfile profile, Location location);
 
-    /**
-     * Mainly internal method to register the {@link WrapperEntity} to EntitLib cache, all {@link WorldWrapper}'s do this automatically
-     * @param entity
-     */
-    @ApiStatus.Internal
-    void globalRegisterEntity(@NotNull WrapperEntity entity);
+    @NotNull <T extends WrapperEntity> T spawnEntity(@NotNull Class<T> wrapperClass, @NotNull EntityType entityType, @NotNull Location location);
 
-    /**
-     * Mainly internal method to unregister the {@link WrapperEntity} to EntitLib cache, all {@link WorldWrapper}'s do this automatically
-     * @param entity
-     */
-    void globalUnregisterEntity(@NotNull WrapperEntity entity);
+    @NotNull WrapperEntity spawnEntity(@NotNull EntityType entityType, @NotNull Location location);
 
+    @NotNull <T extends WrapperEntity> T spawnEntity(@NotNull T entity, @NotNull Location location);
 
-    /**
-     * Creates a wrapped world for the platform specific world.
-     * @param world The platform specific world handle.
-     * @return A wrapped world.
-     */
-    @NotNull WorldWrapper<W> wrapWorld(W world);
+    @NotNull <T extends WrapperEntity> T cloneEntity(@NotNull Object platformEntity, @NotNull Location location);
+
+    @Nullable WrapperEntity getEntity(int id);
+
+    @Nullable WrapperEntity getEntity(@NotNull UUID uuid);
+
+    void removeEntity(WrapperEntity entity);
+
+    @NotNull Collection<WrapperEntity> getAllEntities();
 
     /**
      * @return The {@link APIConfig} for the API.

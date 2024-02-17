@@ -2,21 +2,17 @@ package me.tofaa.entitylib.wrapper;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.player.User;
-import com.github.retrooper.packetevents.protocol.world.BoundingBox;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.*;
 import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.WorldWrapper;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.types.ObjectData;
 import me.tofaa.entitylib.tick.Tickable;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.*;
 
 public class WrapperEntity implements Tickable {
@@ -34,7 +30,6 @@ public class WrapperEntity implements Tickable {
     private Vector3d velocity;
     private int riding = -1;
     private final Set<Integer> passengers;
-    private WorldWrapper<?> world;
 
     public WrapperEntity(int entityId, UUID uuid, EntityType entityType, EntityMeta entityMeta) {
         this.entityId = entityId;
@@ -46,10 +41,9 @@ public class WrapperEntity implements Tickable {
         this.passengers = new HashSet<>();
     }
 
-    public boolean spawn(WorldWrapper<?> world, Location location) {
+    public boolean spawn(Location location) {
         if (spawned) return false;
         this.location = location;
-        this.world = world;
         this.spawned = true;
         int data = 0;
         Optional<Vector3d> velocity;
@@ -87,7 +81,7 @@ public class WrapperEntity implements Tickable {
     }
 
     public void remove() {
-        world.removeEntity(this);
+        EntityLib.getApi().removeEntity(this);
     }
 
     public void despawn() {
@@ -96,12 +90,11 @@ public class WrapperEntity implements Tickable {
         sendPacketToViewers(new WrapperPlayServerDestroyEntities(entityId));
     }
 
-    public void teleport(WorldWrapper<?> world, @NotNull Location location, boolean onGround) {
+    public void teleport(@NotNull Location location, boolean onGround) {
         if (!spawned) {
             return;
         }
         this.location = location;
-        this.world = world;
         this.onGround = onGround;
         sendPacketToViewers(
                 new WrapperPlayServerEntityTeleport(
@@ -114,12 +107,8 @@ public class WrapperEntity implements Tickable {
         );
     }
 
-    public void teleport(WorldWrapper<?> world, @NotNull Location location) {
-        teleport(world, location, onGround);
-    }
-
-    public void teleport(@NotNull Location location, boolean onGround) {
-        teleport(null, location, onGround);
+    public void teleport(@NotNull Location location) {
+        teleport(location, onGround);
     }
 
     /**
@@ -167,7 +156,7 @@ public class WrapperEntity implements Tickable {
 
     /**
      * Removes a viewer from the viewers set of this entity. The viewer will be informed of this removal and will no longer receive any packets
-     * @param UUID the uuid of the user to remove
+     * @param uuid the uuid of the user to remove
      */
     public void removeViewer(UUID uuid) {
         if (!viewers.remove(uuid)) {
@@ -258,10 +247,8 @@ public class WrapperEntity implements Tickable {
     }
 
     public WrapperEntity getRiding() {
-        return world.getEntity(riding);
+        return EntityLib.getApi().getEntity(riding);
     }
-
-
 
     protected WrapperPlayServerSetPassengers createPassengerPacket() {
         return new WrapperPlayServerSetPassengers(entityId, passengers.stream().mapToInt(i -> i).toArray());
@@ -357,7 +344,7 @@ public class WrapperEntity implements Tickable {
         }
         passengers.add(passenger);
         sendPacketToViewers(createPassengerPacket());
-        WrapperEntity e = world.getEntity(passenger);
+        WrapperEntity e = EntityLib.getApi().getEntity(passenger);
         if (e != null) {
             e.riding = this.entityId;
             e.preRidingLocation = e.location;
@@ -414,15 +401,11 @@ public class WrapperEntity implements Tickable {
         }
         passengers.remove(passenger);
         sendPacketToViewers(createPassengerPacket());
-        WrapperEntity e = world.getEntity(passenger);
+        WrapperEntity e = EntityLib.getApi().getEntity(passenger);
         if (e != null) {
             e.riding = -1;
-            e.teleport(world, e.preRidingLocation, e.onGround);
+            e.teleport(e.preRidingLocation, e.onGround);
         }
-    }
-
-    public WorldWrapper<?> getWorld() {
-        return world;
     }
 
     /**

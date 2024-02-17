@@ -2,9 +2,8 @@ package me.tofaa.entitylib.wrapper.hologram;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.world.Location;
-import me.tofaa.entitylib.WorldWrapper;
+import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.display.TextDisplayMeta;
-import me.tofaa.entitylib.meta.other.ArmorStandMeta;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
@@ -17,14 +16,13 @@ import java.util.function.Consumer;
 final class ModernHologram<W> implements Hologram.Modern<W> {
 
     private Location location;
-    private WorldWrapper<W> world;
     private List<WrapperEntity> lines = new ArrayList<>(3);
     private Consumer<TextDisplayMeta> modifier;
 
     @Override
     public void show() {
         for (WrapperEntity line : lines) {
-            line.spawn(world, location);
+            line.spawn(location);
         }
         teleport(location);
     }
@@ -41,7 +39,7 @@ final class ModernHologram<W> implements Hologram.Modern<W> {
         this.location = location;
         if (lines.isEmpty()) return;
         WrapperEntity first = lines.get(0);
-        first.teleport(world, location);
+        first.teleport(location);
         for (WrapperEntity e : lines) {
             if (e.getUuid().equals(first.getUuid())) continue;
             first.addPassenger(e);
@@ -58,14 +56,14 @@ final class ModernHologram<W> implements Hologram.Modern<W> {
 
     @Override
     public void setLine(int index, @Nullable Component line) {
-        WrapperEntity e = world.spawnEntity(EntityTypes.TEXT_DISPLAY, location);
+        WrapperEntity e = EntityLib.getApi().spawnEntity(EntityTypes.TEXT_DISPLAY, location);
         TextDisplayMeta meta = (TextDisplayMeta) e.getEntityMeta();
         meta.setInvisible(true);
         meta.setHasNoGravity(true);
         meta.setText(line);
         this.modifier.accept(meta);
         this.lines.set(index, e);
-        e.spawn(world, location);
+        e.spawn(location);
         teleport(location);
     }
 
@@ -83,11 +81,6 @@ final class ModernHologram<W> implements Hologram.Modern<W> {
     @Override
     public @NotNull Location getLocation() {
         return location;
-    }
-
-    @Override
-    public @NotNull WorldWrapper<W> getWorld() {
-        return world;
     }
 
 
