@@ -45,7 +45,7 @@ allprojects {
         publications {
             mavenJava(MavenPublication) {
                 groupId = project.group // Group instance of your project
-                artifactId = "EntityLib"
+                artifactId = project.name
                 version = project.version // Version instance of your project
                 from components.java
             }
