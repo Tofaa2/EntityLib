@@ -80,6 +80,10 @@ public class WrapperEntity implements Tickable {
         return true;
     }
 
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     public void remove() {
         EntityLib.getApi().removeEntity(this);
     }
