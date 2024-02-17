@@ -7,49 +7,38 @@ import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.sql.Wrapper;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @SuppressWarnings("unchecked")
 public class Metadata {
 
     private final int entityId;
-    private EntityData[] entries = new EntityData[0];
-    private volatile Map<Integer, EntityData> entryMap = null;
-    private volatile boolean notifyChanges = true;
+    private volatile boolean notifyAboutChanges = true;
     private final Map<Byte, EntityData> notNotifiedChanges = new HashMap<>();
+    private final Map<Byte, EntityData> metadataMap = new ConcurrentHashMap<>();
 
     public Metadata(int entityId) {
         this.entityId = entityId;
     }
 
     public <T> T getIndex(byte index, @Nullable T defaultValue) {
-        final EntityData[] entries = this.entries;
-        if (index < 0 || index >= entries.length) {
-            return defaultValue;
-        }
-        final EntityData entry = entries[index];
-        if (entry == null) return defaultValue;
-        if (entry.getValue() == null) return defaultValue;
-        return (T) entry.getValue();
+        EntityData value = this.metadataMap.get(index);
+        return value != null ? (T) value.getValue() : defaultValue;
     }
 
     public <T> void setIndex(byte index, @NotNull EntityDataType<T> dataType, T value) {
 
-        EntityData[] entries = this.entries;
-        if (index >= entries.length) {
-            final int newLength = Math.max(entries.length * 2, index + 1);
-            this.entries = entries = Arrays.copyOf(entries, newLength);
-        }
-
-        EntityData data = new EntityData(index, dataType, value);
-        entries[index] = data;
-        this.entryMap = null;
+        final EntityData entry = new EntityData(index, dataType, value);
+        this.metadataMap.put(index, entry);
 
         final WrapperEntity entity = EntityLib.getApi().getEntity(entityId);
         if (entity == null || entity.isSpawned()) return; // Not EntityLib entity then, the user must send the packet manually. OR not spawned.
-        if (!this.notifyChanges) {
+        if (!this.notifyAboutChanges) {
             synchronized (this.notNotifiedChanges) {
-                this.notNotifiedChanges.put(index, data);
+                this.notNotifiedChanges.put(index, entry);
             }
         }
         else {
@@ -57,32 +46,38 @@ public class Metadata {
         }
     }
 
-    public void setNotifyAboutChanges(boolean value) {
-        if (this.notifyChanges == value) {
+    public void setNotifyAboutChanges(boolean notifyAboutChanges) {
+        if (this.notifyAboutChanges == notifyAboutChanges) {
             return;
         }
-        if (!notifyChanges) {
-            return; // cache;
+
+        List<EntityData> entries = null;
+        synchronized (this.notNotifiedChanges) {
+            this.notifyAboutChanges = notifyAboutChanges;
+            if (notifyAboutChanges) {
+                entries = new ArrayList<>(this.notNotifiedChanges.values());
+                if (entries.isEmpty()) {
+                    return;
+                }
+                this.notNotifiedChanges.clear();
+            }
         }
         final WrapperEntity entity = EntityLib.getApi().getEntity(entityId);
-        if (entity == null || entity.isSpawned()) return;
-        Map<Byte, EntityData> entries;
-        synchronized (this.notNotifiedChanges) {
-            Map<Byte, EntityData> awaitingChanges = this.notNotifiedChanges;
-            if (awaitingChanges.isEmpty()) return;
-            entries = Collections.unmodifiableMap(awaitingChanges);
-            awaitingChanges.clear();
+        if (entries == null || entity == null || !entity.isSpawned()) {
+            return;
         }
-        entity.sendPacketsToViewers(new WrapperPlayServerEntityMetadata(entityId, new ArrayList<>(entries.values())));
+
+        WrapperPlayServerEntityMetadata packet = new WrapperPlayServerEntityMetadata(entityId, entries);
+        entity.sendPacketsToViewers(packet);
     }
 
 
     public boolean isNotifyingChanges() {
-        return notifyChanges; 
+        return notifyAboutChanges;
     }
 
     @NotNull List<EntityData> getEntries() {
-        return Collections.unmodifiableList(Arrays.asList(entries));
+        return Collections.unmodifiableList(new ArrayList<>(metadataMap.values()));
     }
 
     public WrapperPlayServerEntityMetadata createPacket() {
