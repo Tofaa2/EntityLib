@@ -27,11 +27,14 @@ repositories {
 dependencies {
     compileOnly('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
     compileOnly('com.github.retrooper.packetevents:spigot:2.0.2')
-    implementation project(':')
+    implementation(project(":platforms:spigot"))
 }
 
 tasks {
     runServer {
-        minecraftVersion("1.19.4")
+        minecraftVersion("1.20.4")
+        downloadPlugins {
+            modrinth("packetevents", "2.2.1")
+        }
     }
 }

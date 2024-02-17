@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/Metadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/Metadata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntityEquipment.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntityEquipment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +38,24 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="EntityLib" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="EntityLib" type="f1a62948:ProjectNode" />
+                <item name="test-plugin" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="EntityLib" type="f1a62948:ProjectNode" />
+                <item name="test-plugin" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="EntityLib" type="f1a62948:ProjectNode" />
+                <item name="test-plugin" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="run paper" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -70,34 +91,78 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
     &quot;Gradle.Build EntityLib.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib [dependencies].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib:code-gen [:code-gen:Main.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.EntityLib:test-plugin [runServer].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib:test-plugin [shadowJar].executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/platform-api&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Github/EntityLib&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Github/EntityLib/api/src/main/java/me/tofaa/entitylib/extras&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Github\EntityLib\api\src\main\java\me\tofaa\entitylib\extras" />
+      <recent name="D:\Github\EntityLib\api\src\main\java\me\tofaa\entitylib\meta" />
       <recent name="D:\Github\EntityLib\test-plugin" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.EntityLib:test-plugin [runServer]">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="me.tofaa.entitylib.codegen.Main" />
+      <module name="EntityLib.code-gen.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="me.tofaa.entitylib.codegen.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EntityLib [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="EntityLib:test-plugin [runServer]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -167,8 +232,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.EntityLib:test-plugin [runServer]" />
-        <item itemvalue="Gradle.PE-EntityMeta [compileTestJava]" />
         <item itemvalue="Gradle.EntityLib:test-plugin [shadowJar]" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Gradle.EntityLib [dependencies]" />
+        <item itemvalue="Gradle.PE-EntityMeta [compileTestJava]" />
       </list>
     </recent_temporary>
   </component>
@@ -211,8 +278,26 @@
       <workItem from="1705534524814" duration="15424000" />
       <workItem from="1705578156456" duration="78000" />
       <workItem from="1705636302508" duration="7111000" />
-      <workItem from="1705951390204" duration="4325000" />
-      <workItem from="1707678043163" duration="66000" />
+      <workItem from="1705951390204" duration="3936000" />
+      <workItem from="1705984769972" duration="76000" />
+      <workItem from="1706183895216" duration="664000" />
+      <workItem from="1706187926445" duration="4339000" />
+      <workItem from="1706248178234" duration="17096000" />
+      <workItem from="1706284605696" duration="11691000" />
+      <workItem from="1706371324325" duration="1187000" />
+      <workItem from="1706443875388" duration="4827000" />
+      <workItem from="1706513591682" duration="8659000" />
+      <workItem from="1706592660140" duration="89000" />
+      <workItem from="1706601592145" duration="1670000" />
+      <workItem from="1706614921404" duration="10508000" />
+      <workItem from="1706696719616" duration="4783000" />
+      <workItem from="1706784821835" duration="7882000" />
+      <workItem from="1706858181164" duration="925000" />
+      <workItem from="1707159905372" duration="3391000" />
+      <workItem from="1707210065718" duration="4823000" />
+      <workItem from="1707219870641" duration="5522000" />
+      <workItem from="1707300688189" duration="1512000" />
+      <workItem from="1707381529971" duration="921000" />
     </task>
     <servers />
   </component>
@@ -227,10 +312,15 @@
           <line>6787</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/hologram/LegacyHologram.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/types/DisplayMeta.java</url>
-          <line>173</line>
-          <properties class="me.tofaa.entitylib.meta.types.DisplayMeta" method="setShadowRadius">
+          <line>153</line>
+          <properties class="me.tofaa.entitylib.meta.types.DisplayMeta">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

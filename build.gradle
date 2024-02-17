@@ -5,6 +5,12 @@ plugins {
 
 allprojects {
 
+    project.ext.adventureVersion = '4.15.0'
+    project.ext.adventureDependencies=["net.kyori:adventure-api:${adventureVersion}",
+                                       "net.kyori:adventure-text-serializer-gson:${adventureVersion}",
+                                       "net.kyori:adventure-text-serializer-legacy:${adventureVersion}",
+                                       "net.kyori:adventure-nbt:${adventureVersion}"]
+
     apply plugin: 'java'
 
     group = 'me.tofaa.entitylib'
