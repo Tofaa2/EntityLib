@@ -190,12 +190,6 @@ public class EntityMeta implements EntityMetadataProvider {
         return metadata.createPacket();
     }
 
-    protected static void isVersionOlder(ServerVersion version) {
-        if (!EntityLib.getApi().getPacketEvents().getServerManager().getVersion().is(VersionComparison.OLDER_THAN, version)) {
-            throw new InvalidVersionException("This method is only available for versions older than " + version.name() + ".");
-        }
-    }
-
     protected static void isVersionNewer(ServerVersion version) {
         if (!EntityLib.getApi().getPacketEvents().getServerManager().getVersion().is(VersionComparison.NEWER_THAN, version)) {
             throw new InvalidVersionException("This method is only available for versions newer than " + version.name() + ".");
@@ -220,19 +214,19 @@ public class EntityMeta implements EntityMetadataProvider {
         return (byte) (value + amount);
     }
 
-    protected byte getMask(byte index) {
+    public byte getMask(byte index) {
         return this.metadata.getIndex(index, (byte) 0);
     }
 
-    protected void setMask(byte index, byte mask) {
+    public void setMask(byte index, byte mask) {
         this.metadata.setIndex(index, EntityDataTypes.BYTE, mask);
     }
 
-    protected boolean getMaskBit(byte index, byte bit) {
+    public boolean getMaskBit(byte index, byte bit) {
         return (getMask(index) & bit) == bit;
     }
 
-    protected void setMaskBit(int index, byte bit, boolean value) {
+    public void setMaskBit(int index, byte bit, boolean value) {
         byte mask = getMask((byte)index);
         boolean currentValue = (mask & bit) == bit;
         if (currentValue == value) {

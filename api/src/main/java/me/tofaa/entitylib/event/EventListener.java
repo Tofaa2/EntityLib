@@ -10,7 +10,7 @@ public interface EventListener<E extends EntityLibEvent> {
 
     void handle(@NotNull E event);
 
-    public static <T extends EntityLibEvent> EventListener<T> generateListener(Class<T> eventClass, Consumer<T> consumer) {
+    static <T extends EntityLibEvent> EventListener<T> generateListener(Class<T> eventClass, Consumer<T> consumer) {
         return new EventListener<T>() {
             @Override
             public @NotNull Class<T> getEventClass() {

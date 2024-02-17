@@ -1,9 +1,7 @@
 package me.tofaa.entitylib.common;
 
-import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import me.tofaa.entitylib.APIConfig;
-import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.EntityLibAPI;
 import me.tofaa.entitylib.Platform;
 import me.tofaa.entitylib.tick.TickContainer;
@@ -11,10 +9,7 @@ import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractEntityLibAPI<P, W, T> implements EntityLibAPI<W, T> {
