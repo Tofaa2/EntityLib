@@ -40,6 +40,42 @@ public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
         this.tickContainers = settings.shouldTickTickables() ? new HashSet<>() : Collections.emptyList();
     }
 
+    @Override
+    public <T1 extends WrapperEntity> @NotNull T1 createEntity(UUID uuid, int entityId, EntityType type) {
+        if (entities.containsKey(uuid)) {
+            throw new IllegalArgumentException("Entity with UUID " + uuid + " already exists in this world.");
+        }
+        if (entitiesById.containsKey(entityId)) {
+            throw new IllegalArgumentException("Entity with ID " + entityId + " already exists in this world.");
+        }
+        EntityMeta meta = EntityMeta.createMeta(entityId, type);
+        WrapperEntity e;
+        if (meta instanceof LivingEntityMeta) {
+            e = new WrapperLivingEntity(entityId, uuid, type, meta);
+        }
+        else if (meta instanceof ThrownExpBottleMeta) {
+            e = new WrapperExperienceOrbEntity(entityId, uuid, type, meta);
+        }
+        else {
+            e = new WrapperEntity(entityId, uuid, type, meta);
+        }
+        entities.put(uuid, e);
+        entitiesById.put(entityId, e);
+        return (T1) e;
+    }
+
+    @Override
+    public <T1 extends WrapperEntity> @NotNull T1 createEntity(EntityType type) {
+        UUID uuid = EntityLib.getPlatform().getEntityUuidProvider().provide(type);
+        while (entities.containsKey(uuid)) {
+            uuid = EntityLib.getPlatform().getEntityUuidProvider().provide(type);
+        }
+        int entityId = EntityLib.getPlatform().getEntityIdProvider().provide(uuid, type);
+        while (entitiesById.containsKey(entityId)) {
+            entityId = EntityLib.getPlatform().getEntityIdProvider().provide(uuid, type);
+        }
+        return createEntity(uuid, entityId, type);
+    }
 
     @Override
     public @NotNull WrapperPlayer spawnPlayer(UserProfile profile, Location location) {

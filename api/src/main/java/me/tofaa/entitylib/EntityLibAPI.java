@@ -30,6 +30,11 @@ public interface EntityLibAPI<T> {
 
     void onEnable();
 
+    @NotNull <T extends WrapperEntity> T createEntity(UUID uuid, int entityId, EntityType type);
+
+    @NotNull <T extends WrapperEntity> T createEntity(EntityType type);
+
+
     @NotNull WrapperPlayer spawnPlayer(UserProfile profile, Location location);
 
     @NotNull <T extends WrapperEntity> T spawnEntity(@NotNull Class<T> wrapperClass, @NotNull EntityType entityType, @NotNull Location location);
