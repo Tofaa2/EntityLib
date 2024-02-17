@@ -30,7 +30,7 @@ public final class EntityLib {
         }
     }
 
-    public static <W, T> EntityLibAPI<W, T> getApi() {
+    public static <T> EntityLibAPI<T> getApi() {
         return api;
     }
 

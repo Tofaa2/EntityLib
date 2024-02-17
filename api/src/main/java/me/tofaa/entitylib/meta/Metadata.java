@@ -45,7 +45,7 @@ public class Metadata {
         entries[index] = data;
         this.entryMap = null;
 
-        final WrapperEntity entity = EntityLib.getApi().findEntity(entityId);
+        final WrapperEntity entity = EntityLib.getApi().getEntity(entityId);
         if (entity == null || entity.isSpawned()) return; // Not EntityLib entity then, the user must send the packet manually. OR not spawned.
         if (!this.notifyChanges) {
             synchronized (this.notNotifiedChanges) {
@@ -64,7 +64,7 @@ public class Metadata {
         if (!notifyChanges) {
             return; // cache;
         }
-        final WrapperEntity entity = EntityLib.getApi().findEntity(entityId);
+        final WrapperEntity entity = EntityLib.getApi().getEntity(entityId);
         if (entity == null || entity.isSpawned()) return;
         Map<Byte, EntityData> entries;
         synchronized (this.notNotifiedChanges) {
