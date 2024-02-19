@@ -37,7 +37,7 @@ final class InternalRegistryListener extends PacketListenerAbstract implements L
                 if (tracked == null) {
                     continue;
                 }
-                platform.getEventBus().call(new UserStopTrackingEntityEvent(user, tracked));
+                platform.getEventHandler().callEvent(UserStopTrackingEntityEvent.class, new UserStopTrackingEntityEvent(user, tracked));
             }
         }
         else if (type == PacketType.Play.Server.SPAWN_ENTITY) {
@@ -77,7 +77,7 @@ final class InternalRegistryListener extends PacketListenerAbstract implements L
         if (entity == null) {
             return;
         }
-        platform.getEventBus().call(new UserTrackingEntityEvent(user, entity));
+        platform.getEventHandler().callEvent(UserTrackingEntityEvent.class, new UserTrackingEntityEvent(user, entity));
     }
 
     private TrackedEntity findTracker(int id) {

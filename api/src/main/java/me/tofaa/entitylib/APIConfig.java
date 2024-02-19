@@ -46,7 +46,7 @@ public final class APIConfig {
         return this;
     }
 
-    public @NotNull APIConfig usePlatformTracking() {
+    public @NotNull APIConfig trackPlatformEntities() {
         this.platformTracking = true;
         return this;
     }

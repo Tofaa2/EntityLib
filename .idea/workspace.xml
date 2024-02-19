@@ -5,27 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventCallback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventHandlerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/APIConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/APIConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/Platform.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/Platform.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventBus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventBusAsync.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventBusSync.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/UserReceiveMetaUpdateEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/UserRefreshEntityEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/tracking/GeneralTrackingEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/GeneralTrackingEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/tracking/UserStopTrackingEntityEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/UserStopTrackingEntityEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/tracking/UserTrackingEntityEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/UserTrackingEntityEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractPlatform.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/InternalRegistryListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/InternalRegistryListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestEntityLibPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestEntityLibPlugin.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -323,7 +304,7 @@
       <workItem from="1708265094998" duration="204000" />
       <workItem from="1708265345702" duration="358000" />
       <workItem from="1708343107313" duration="8276000" />
-      <workItem from="1708352150286" duration="1520000" />
+      <workItem from="1708352150286" duration="1849000" />
     </task>
     <servers />
   </component>

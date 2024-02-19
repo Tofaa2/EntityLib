@@ -30,18 +30,19 @@ public class TestEntityLibPlugin extends JavaPlugin implements CommandExecutor {
         APIConfig settings = new APIConfig(PacketEvents.getAPI())
                 .debugMode()
                 .tickTickables()
+                .trackPlatformEntities()
                 .usePlatformLogger();
 
         EntityLib.init(platform, settings);
         api = platform.getAPI();
         getCommand("testapi").setExecutor(this);
         platform.getEventHandler().addEventCallback(UserTrackingEntityEvent.class, event -> {
-            System.out.println("Tracking: " + event.getEntity().getEntityId());
-            System.out.println("Size: " + platform.queryPlatformEntities().toArray().length);
+            event.getUser().sendMessage("Tracking: " + event.getEntity().getEntityId());
+            event.getUser().sendMessage("Size: " + platform.queryPlatformEntities().toArray().length);
         });
         platform.getEventHandler().addEventCallback(UserStopTrackingEntityEvent.class, event -> {
-            System.out.println("Stop Tracking: " + event.getEntity().getEntityId());
-            System.out.println("Size: " + platform.queryPlatformEntities().toArray().length);
+            event.getUser().sendMessage("Stop Tracking: " + event.getEntity().getEntityId());
+            event.getUser().sendMessage("Size: " + platform.queryPlatformEntities().toArray().length);
         });
     }
 
