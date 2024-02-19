@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 /**
  * A basic EventBus for scheduling and handling {@link EntityLibEvent}
+ * Async event busses are not thread safe, and should be handled with care. This means theres no guarantee that the event will be cancelled in time.
  */
 public interface EventBus {
 

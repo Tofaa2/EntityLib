@@ -1,10 +1,11 @@
 package me.tofaa.entitylib.event.types;
 
 import com.github.retrooper.packetevents.protocol.player.User;
+import me.tofaa.entitylib.event.CancellableEntityLibEvent;
 import me.tofaa.entitylib.event.EntityLibEvent;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 
-public class UserRefreshEntityEvent implements EntityLibEvent {
+public class UserRefreshEntityEvent implements CancellableEntityLibEvent {
 
     private final User user;
     private final WrapperEntity entity;

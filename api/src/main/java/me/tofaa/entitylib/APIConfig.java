@@ -20,6 +20,7 @@ public final class APIConfig {
     private boolean platformLogger = false;
     private boolean useAsyncEvents = false;
     private boolean defaultCommands = false;
+    private boolean platformTracking = false;
 
     public APIConfig(PacketEventsAPI<?> packetEvents) {
         this.packetEvents = packetEvents;
@@ -43,6 +44,11 @@ public final class APIConfig {
 
     public @NotNull APIConfig usePlatformLogger() {
         this.platformLogger = true;
+        return this;
+    }
+
+    public @NotNull APIConfig usePlatformTracking() {
+        this.platformTracking = true;
         return this;
     }
 
@@ -97,6 +103,10 @@ public final class APIConfig {
 
     public boolean shouldUseAsyncEvents() {
         return useAsyncEvents;
+    }
+
+    public boolean shouldTrackPlatformEntities() {
+        return platformTracking;
     }
 
 }

@@ -2,14 +2,33 @@ package me.tofaa.entitylib;
 
 import me.tofaa.entitylib.event.EventBus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 /**
  * A generic representation of a platform that EntityLib is running on.
  * @param <P> The platform handle, for Spigot this would be a JavaPlugin. etc etc.
  */
 public interface Platform<P> {
+
+
+    /**
+     * Queries a stream of platform specific entities if the platform supports
+     * @throws UnsupportedOperationException if the platform does not support querying entities.
+     * @return a stream of platform specific entities. The stream is not guaranteed to be synchronized.
+     */
+    @NotNull Stream<TrackedEntity> queryPlatformEntities();
+
+    /**
+     * Finds a platform specific entity by its entityId.
+     * @param entityId the entityId of the entity.
+     * @return a future that completes with the entity if found, or null if not found.
+     * @throws UnsupportedOperationException if the platform does not support querying entities.
+     */
+    @Nullable TrackedEntity findPlatformEntity(int entityId);
 
     /**
      * Gets the entityId integer provider. This can be provided by a platform if needed.

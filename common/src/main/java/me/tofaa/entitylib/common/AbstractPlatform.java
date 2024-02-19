@@ -1,13 +1,13 @@
 package me.tofaa.entitylib.common;
 
-import me.tofaa.entitylib.APIConfig;
-import me.tofaa.entitylib.EntityIdProvider;
-import me.tofaa.entitylib.EntityUuidProvider;
-import me.tofaa.entitylib.Platform;
+import me.tofaa.entitylib.*;
 import me.tofaa.entitylib.event.EventBus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 public abstract class AbstractPlatform<P> implements Platform<P> {
 
@@ -24,6 +24,15 @@ public abstract class AbstractPlatform<P> implements Platform<P> {
         this.entityUuidProvider = new EntityUuidProvider.DefaultEntityUuidProvider();
     }
 
+    @Override
+    public @NotNull Stream<TrackedEntity> queryPlatformEntities() {
+        throw new UnsupportedOperationException("Platform does not support querying entities.");
+    }
+
+    @Override
+    public @Nullable TrackedEntity findPlatformEntity(int entityId) {
+        throw new UnsupportedOperationException("Platform does not support querying entities.");
+    }
 
     @Override
     public void setupApi(@NotNull APIConfig settings) {

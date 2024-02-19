@@ -4,7 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="" />
+    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/TrackedEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/CancellableEntityLibEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/tracking/GeneralTrackingEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/tracking/UserStopTrackingEntityEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/tracking/UserTrackingEntityEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractTrackedEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/InternalRegistryListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/APIConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/APIConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/Platform.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/Platform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EntityLibEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EntityLibEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventBus.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/EventBus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/UserReceiveMetaUpdateEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/UserReceiveMetaUpdateEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/UserRefreshEntityEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/event/types/UserRefreshEntityEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractPlatform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntityLibPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntityLibPlatform.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,6 +82,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/spigot/2.0.2/e1b5c8968213460b6bcf919597ea94de2157cb31/spigot-2.0.2.jar!/com/github/retrooper/packetevents/event/PacketListenerCommon.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.20.1-R0.1-SNAPSHOT/23c0dae3633c3dd31d4503969fa7f9f3d36840fb/spigot-api-1.20.1-R0.1-SNAPSHOT.jar!/org/bukkit/plugin/EventExecutor.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.20.1-R0.1-SNAPSHOT/23c0dae3633c3dd31d4503969fa7f9f3d36840fb/spigot-api-1.20.1-R0.1-SNAPSHOT.jar!/org/bukkit/plugin/PluginManager.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.20.1-R0.1-SNAPSHOT/23c0dae3633c3dd31d4503969fa7f9f3d36840fb/spigot-api-1.20.1-R0.1-SNAPSHOT.jar!/org/bukkit/profile/PlayerProfile.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.20.1-R0.1-SNAPSHOT/23c0dae3633c3dd31d4503969fa7f9f3d36840fb/spigot-api-1.20.1-R0.1-SNAPSHOT.jar!/org/bukkit/profile/PlayerTextures.class" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -103,7 +130,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.pluginManager",
@@ -232,6 +259,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
+        <option value="jdk-1.8.0_402-temurin-1.8.0_402-4caba194b151-d4a4326d" />
         <option value="jdk-17.0.10-temurin-17.0.10-4caba194b151-b3785831" />
         <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
       </set>
@@ -288,6 +316,10 @@
       <workItem from="1707300688189" duration="1512000" />
       <workItem from="1707381529971" duration="921000" />
       <workItem from="1708165509853" duration="12086000" />
+      <workItem from="1708264836358" duration="46000" />
+      <workItem from="1708265094998" duration="204000" />
+      <workItem from="1708265345702" duration="358000" />
+      <workItem from="1708343107313" duration="7795000" />
     </task>
     <servers />
   </component>
