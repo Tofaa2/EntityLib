@@ -10,6 +10,10 @@ public interface EventListener<E extends EntityLibEvent> {
 
     void handle(@NotNull E event);
 
+    static <T extends EntityLibEvent> EventCallback<T> createEventCallback(@NotNull EventListener<T> listener) {
+        return listener::handle;
+    }
+
     static <T extends EntityLibEvent> EventListener<T> generateListener(Class<T> eventClass, Consumer<T> consumer) {
         return new EventListener<T>() {
             @Override

@@ -1,10 +1,9 @@
 package me.tofaa.entitylib;
 
-import me.tofaa.entitylib.event.EventBus;
+import me.tofaa.entitylib.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
@@ -61,11 +60,10 @@ public interface Platform<P> {
     @NotNull Logger getLogger();
 
     /**
-     * Gets the event bus for the platform.
-     * WARNING: If you have {@link APIConfig#shouldUseAsyncEvents()} set to true, cast this to {@link EventBus.Async} when handling cancelled events.
+     * Gets the event handler for the platform.
      * @return
      */
-    @NotNull EventBus getEventBus();
+    @NotNull EventHandler getEventHandler();
 
     /**
      * Sets up the API for the platform. This method should be called automatically by the platform. Don't call it yourself.

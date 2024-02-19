@@ -9,8 +9,8 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerDe
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnExperienceOrb;
 import me.tofaa.entitylib.TrackedEntity;
-import me.tofaa.entitylib.event.types.tracking.UserStopTrackingEntityEvent;
-import me.tofaa.entitylib.event.types.tracking.UserTrackingEntityEvent;
+import me.tofaa.entitylib.event.types.UserStopTrackingEntityEvent;
+import me.tofaa.entitylib.event.types.UserTrackingEntityEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

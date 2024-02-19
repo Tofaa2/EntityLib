@@ -7,6 +7,12 @@ plugins {
 
 group = 'me.tofaa.peentitymeta'
 version = '1.0-SNAPSHOT'
+// java 17
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
 
 repositories {
     mavenCentral()
@@ -27,7 +33,7 @@ repositories {
 dependencies {
     compileOnly('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
     compileOnly('com.github.retrooper.packetevents:spigot:2.0.2')
-    implementation("com.github.Tofaa2.EntityLib:spigot:2.0.0-SNAPSHOT")
+    implementation(project(":platforms:spigot"))
 }
 
 tasks {

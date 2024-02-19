@@ -1,4 +1,5 @@
 rootProject.name = 'EntityLib'
+include 'test-plugin'
 include 'api'
 include 'platforms:spigot'
 findProject(':platforms:spigot')?.name = 'spigot'

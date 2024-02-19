@@ -9,7 +9,7 @@ import me.tofaa.entitylib.meta.mobs.passive.ChickenMeta;
 import me.tofaa.entitylib.spigot.SpigotEntityLibAPI;
 import me.tofaa.entitylib.spigot.SpigotEntityLibPlatform;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
-import org.bukkit.World;
+import me.tofaa.entitylib.event.types.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,6 +35,14 @@ public class TestEntityLibPlugin extends JavaPlugin implements CommandExecutor {
         EntityLib.init(platform, settings);
         api = platform.getAPI();
         getCommand("testapi").setExecutor(this);
+        platform.getEventHandler().addEventCallback(UserTrackingEntityEvent.class, event -> {
+            System.out.println("Tracking: " + event.getEntity().getEntityId());
+            System.out.println("Size: " + platform.queryPlatformEntities().toArray().length);
+        });
+        platform.getEventHandler().addEventCallback(UserStopTrackingEntityEvent.class, event -> {
+            System.out.println("Stop Tracking: " + event.getEntity().getEntityId());
+            System.out.println("Size: " + platform.queryPlatformEntities().toArray().length);
+        });
     }
 
     @Override

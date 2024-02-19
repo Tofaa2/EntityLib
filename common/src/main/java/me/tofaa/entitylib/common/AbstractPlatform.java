@@ -1,11 +1,10 @@
 package me.tofaa.entitylib.common;
 
 import me.tofaa.entitylib.*;
-import me.tofaa.entitylib.event.EventBus;
+import me.tofaa.entitylib.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
@@ -14,7 +13,7 @@ public abstract class AbstractPlatform<P> implements Platform<P> {
 
     protected final P handle;
     protected Logger logger;
-    private EventBus eventBus;
+    private EventHandler eventHandler;
     private EntityIdProvider entityIdProvider;
     private EntityUuidProvider entityUuidProvider;
 
@@ -36,11 +35,9 @@ public abstract class AbstractPlatform<P> implements Platform<P> {
 
     @Override
     public void setupApi(@NotNull APIConfig settings) {
-        this.eventBus = EventBus.newBus(settings.shouldUseAsyncEvents());
+        this.eventHandler = EventHandler.create();
         this.entityIdProvider = new EntityIdProvider.DefaultEntityIdProvider();
         this.entityUuidProvider = new EntityUuidProvider.DefaultEntityUuidProvider();
-
-
     }
 
     @NotNull
@@ -73,8 +70,8 @@ public abstract class AbstractPlatform<P> implements Platform<P> {
 
     @NotNull
     @Override
-    public EventBus getEventBus() {
-        return eventBus;
+    public EventHandler getEventHandler() {
+        return eventHandler;
     }
 
     @NotNull

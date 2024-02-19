@@ -18,7 +18,6 @@ public final class APIConfig {
     private boolean checkForUpdates = false;
     private boolean tickTickables = false;
     private boolean platformLogger = false;
-    private boolean useAsyncEvents = false;
     private boolean defaultCommands = false;
     private boolean platformTracking = false;
 
@@ -72,11 +71,6 @@ public final class APIConfig {
         return this;
     }
 
-    public @NotNull APIConfig useAsyncEvents() {
-        this.useAsyncEvents = true;
-        return this;
-    }
-
     public boolean shouldRegisterDefaultCommands() {
         return defaultCommands;
     }
@@ -99,10 +93,6 @@ public final class APIConfig {
 
     public boolean shouldUsePlatformLogger() {
         return platformLogger;
-    }
-
-    public boolean shouldUseAsyncEvents() {
-        return useAsyncEvents;
     }
 
     public boolean shouldTrackPlatformEntities() {

@@ -1,4 +1,4 @@
-package me.tofaa.entitylib.event.types.tracking;
+package me.tofaa.entitylib.event.types;
 
 import com.github.retrooper.packetevents.protocol.player.User;
 import me.tofaa.entitylib.TrackedEntity;
