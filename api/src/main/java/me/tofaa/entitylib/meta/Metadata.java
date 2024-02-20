@@ -35,7 +35,7 @@ public class Metadata {
         this.metadataMap.put(index, entry);
 
         final WrapperEntity entity = EntityLib.getApi().getEntity(entityId);
-        if (entity == null || entity.isSpawned()) return; // Not EntityLib entity then, the user must send the packet manually. OR not spawned.
+        if (entity == null || !entity.isSpawned()) return; // Not EntityLib entity then, the user must send the packet manually. OR not spawned.
         if (!this.notifyAboutChanges) {
             synchronized (this.notNotifiedChanges) {
                 this.notNotifiedChanges.put(index, entry);

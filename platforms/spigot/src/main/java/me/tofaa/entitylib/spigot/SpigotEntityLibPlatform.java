@@ -3,26 +3,20 @@ package me.tofaa.entitylib.spigot;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.TrackedEntity;
 import me.tofaa.entitylib.common.AbstractPlatform;
-import org.bukkit.Bukkit;
+import me.tofaa.entitylib.utils.ConcurrentWeakIdentityHashMap;
 import org.bukkit.entity.Entity;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
 import java.util.Map;
-import java.util.WeakHashMap;
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
 
     private SpigotEntityLibAPI api;
-    private Map<Integer, Entity> platformEntities = Collections.synchronizedMap(new WeakHashMap<>()); // Silly
+    private Map<Integer, Entity> platformEntities = new ConcurrentWeakIdentityHashMap<>();
 
     public SpigotEntityLibPlatform(@NotNull JavaPlugin plugin) {
         super(plugin);

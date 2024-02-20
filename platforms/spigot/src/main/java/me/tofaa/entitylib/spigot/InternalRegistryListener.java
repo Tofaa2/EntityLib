@@ -97,7 +97,7 @@ final class InternalRegistryListener extends PacketListenerAbstract implements L
     public void onEntitySpawn(EntitySpawnEvent event) {
         Entity e = event.getEntity();
         platform.getPlatformEntities().put(e.getEntityId(), e);
+        System.out.println("Entity spawned: " + e.getEntityId() + " " + e.getType() + " " + e.getLocation());
     }
-
 
 }
