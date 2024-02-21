@@ -2,6 +2,7 @@ package me.tofaa.testentitylib;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
+import com.github.retrooper.packetevents.protocol.player.UserProfile;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLib;
@@ -10,6 +11,7 @@ import me.tofaa.entitylib.spigot.SpigotEntityLibAPI;
 import me.tofaa.entitylib.spigot.SpigotEntityLibPlatform;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import me.tofaa.entitylib.event.types.*;
+import me.tofaa.entitylib.wrapper.WrapperPlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,11 +19,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 public class TestEntityLibPlugin extends JavaPlugin implements CommandExecutor {
 
 
     private SpigotEntityLibAPI api;
-    private WrapperEntity e;
+    private WrapperPlayer e;
 
     @Override
     public void onEnable() {
@@ -50,17 +54,18 @@ public class TestEntityLibPlugin extends JavaPlugin implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) return false;
         Player player = (Player) sender;
-        if (e == null) {
-            e = api.spawnEntity(EntityTypes.CHICKEN, SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
-            e.addViewer(player.getUniqueId());
-            player.sendMessage("Spawned");
+        if (e != null) {
+            e.remove();
+            player.sendMessage("Removed");
+            e = null;
+            return true;
         }
-        ChickenMeta meta = (ChickenMeta) e.getEntityMeta();
-        meta.setBaby(!meta.isBaby());
-        meta.setHasGlowingEffect(!meta.hasGlowingEffect());
-        meta.setHasNoGravity(!meta.hasNoGravity());
-
-        player.sendMessage("Updated");
+        UUID uuid = UUID.randomUUID();
+        UserProfile profile = new UserProfile(uuid, "RandomGoon");
+        e = new WrapperPlayer(profile, EntityLib.getPlatform().getEntityIdProvider().provide(uuid, EntityTypes.PLAYER));
+        e.addViewer(player.getUniqueId());
+        api.spawnEntity(e, SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
+        player.sendMessage("Spawned");
         return true;
     }
 

@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class WrapperEntity implements Tickable, TrackedEntity {
 
@@ -38,9 +39,10 @@ public class WrapperEntity implements Tickable, TrackedEntity {
         this.entityType = entityType;
         this.entityMeta = entityMeta;
         this.ticking = true;
-        this.viewers = new HashSet<>();
-        this.passengers = new HashSet<>();
+        this.viewers = ConcurrentHashMap.newKeySet();
+        this.passengers = ConcurrentHashMap.newKeySet();
     }
+
 
     public boolean spawn(Location location) {
         if (spawned) return false;
@@ -124,19 +126,27 @@ public class WrapperEntity implements Tickable, TrackedEntity {
         if (!viewers.add(uuid)) {
             return;
         }
-        WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(
-                entityId,
-                Optional.of(this.uuid),
-                entityType,
-                location.getPosition(),
-                location.getPitch(),
-                location.getYaw(),
-                location.getYaw(),
-                0,
-                Optional.empty()
-        );
-        sendPacket(uuid, packet);
-        sendPacket(uuid, entityMeta.createPacket());
+        if (location == null) {
+            if (EntityLib.getApi().getSettings().isDebugMode()) {
+                EntityLib.getPlatform().getLogger().warning("Location is null for entity " + entityId + ". Cannot spawn.");
+            }
+            return;
+        }
+        if (spawned) {
+            WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(
+                    entityId,
+                    Optional.of(this.uuid),
+                    entityType,
+                    location.getPosition(),
+                    location.getPitch(),
+                    location.getYaw(),
+                    location.getYaw(),
+                    0,
+                    Optional.empty()
+            );
+            sendPacket(uuid, packet);
+            sendPacket(uuid, entityMeta.createPacket());
+        }
     }
 
     public void addViewer(User user) {
