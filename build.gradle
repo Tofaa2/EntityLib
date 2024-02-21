@@ -3,7 +3,6 @@ plugins {
     id 'java-library'
     id 'maven-publish'
 }
-
 allprojects {
 
     project.ext.adventureVersion = '4.15.0'
