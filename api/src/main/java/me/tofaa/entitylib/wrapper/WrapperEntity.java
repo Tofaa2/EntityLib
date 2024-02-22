@@ -26,7 +26,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     private boolean ticking;
     protected Location location;
     private Location preRidingLocation;
-    private final Set<UUID> viewers;
+    protected final Set<UUID> viewers;
     private boolean onGround;
     private boolean spawned;
     private Vector3d velocity;

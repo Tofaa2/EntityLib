@@ -68,10 +68,19 @@ public class WrapperPlayer extends WrapperLivingEntity {
 
     public void setTextureProperties(List<TextureProperty> textureProperties) {
         profile.setTextureProperties(textureProperties);
-        despawn();
-        System.out.println("Despawning");
-        EntityLib.getApi().runLater(() -> spawn(getLocation()), 2L);
+        WrapperPlayServerDestroyEntities destroyEntities = new WrapperPlayServerDestroyEntities(getEntityId());
+        WrapperPlayServerPlayerInfoRemove removePacket = new WrapperPlayServerPlayerInfoRemove(getUuid());
+        WrapperPlayServerPlayerInfoUpdate updatePacket = tabListPacket();
+        {
+            sendPacketToViewers(removePacket);
+            sendPacketToViewers(destroyEntities);
 
+            sendPacketToViewers(updatePacket);
+            for (UUID viewer : viewers) {
+                removeViewer(viewer);
+                addViewer(viewer);
+            }
+        }
     }
 
     public GameMode getGameMode() {
