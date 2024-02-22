@@ -67,6 +67,4 @@ public interface EntityLibAPI<T> {
      * @param tickContainer the TickContainer to add.
      */
     void addTickContainer(@NotNull TickContainer<?, T> tickContainer);
-
-    void runLater(@NotNull Runnable runnable, long delayInTicks);
 }

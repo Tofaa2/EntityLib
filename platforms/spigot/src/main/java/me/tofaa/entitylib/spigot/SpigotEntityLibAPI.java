@@ -105,9 +105,4 @@ public class SpigotEntityLibAPI extends AbstractEntityLibAPI<JavaPlugin, BukkitT
         BukkitTask task = Bukkit.getScheduler().runTaskTimerAsynchronously(platform.getHandle(), () -> tickContainer.tick(System.currentTimeMillis()), 1L, 1L);
         tickContainer.setHandle(task);
     }
-
-    @Override
-    public void runLater(@NotNull Runnable runnable, long delayInTicks) {
-        Bukkit.getScheduler().runTaskLater(platform.getHandle(), runnable, delayInTicks);
-    }
 }
