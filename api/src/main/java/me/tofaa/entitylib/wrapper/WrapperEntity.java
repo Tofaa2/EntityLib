@@ -300,8 +300,9 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     }
 
     public void rotateHead(float yaw, float pitch) {
-        sendPacketToViewers(
-                new WrapperPlayServerEntityRotation(entityId, yaw, pitch, onGround)
+        sendPacketsToViewers(
+                new WrapperPlayServerEntityRotation(entityId, yaw, pitch, onGround),
+                new WrapperPlayServerEntityHeadLook(entityId, yaw)
         );
     }
 
