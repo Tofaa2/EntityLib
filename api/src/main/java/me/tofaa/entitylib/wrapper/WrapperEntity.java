@@ -24,7 +24,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     private EntityType entityType;
     private EntityMeta entityMeta;
     private boolean ticking;
-    private Location location;
+    protected Location location;
     private Location preRidingLocation;
     private final Set<UUID> viewers;
     private boolean onGround;
@@ -48,12 +48,35 @@ public class WrapperEntity implements Tickable, TrackedEntity {
         if (spawned) return false;
         this.location = location;
         this.spawned = true;
-        int data = 0;
+        sendPacketToViewers(
+                new WrapperPlayServerSpawnEntity(
+                        entityId,
+                        Optional.of(this.uuid),
+                        entityType,
+                        location.getPosition(),
+                        location.getPitch(),
+                        location.getYaw(),
+                        location.getYaw(),
+                        getObjectData(),
+                        createVeloPacket()
+                )
+        );
+        sendPacketToViewers(entityMeta.createPacket());
+        return true;
+    }
+
+    protected int getObjectData() {
+        if (entityMeta instanceof ObjectData) {
+            return ((ObjectData) entityMeta).getObjectData();
+        }
+        return 0;
+    }
+
+    protected Optional<Vector3d> createVeloPacket() {
         Optional<Vector3d> velocity;
         double veloX = 0, veloY = 0, veloZ = 0;
         if (entityMeta instanceof ObjectData) {
             ObjectData od = (ObjectData) entityMeta;
-            data = od.getObjectData();
             if (od.requiresVelocityPacketAtSpawn()) {
                 final WrapperPlayServerEntityVelocity veloPacket = getVelocityPacket();
                 veloX = veloPacket.getVelocity().getX();
@@ -66,21 +89,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
         } else {
             velocity = Optional.of(new Vector3d(veloX, veloY, veloZ));
         }
-        sendPacketToViewers(
-                new WrapperPlayServerSpawnEntity(
-                        entityId,
-                        Optional.of(this.uuid),
-                        entityType,
-                        location.getPosition(),
-                        location.getPitch(),
-                        location.getYaw(),
-                        location.getYaw(),
-                        data,
-                        velocity
-                )
-        );
-        sendPacketToViewers(entityMeta.createPacket());
-        return true;
+        return velocity;
     }
 
     public void setLocation(Location location) {
@@ -94,6 +103,10 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     public void despawn() {
         if (!spawned) return;
         spawned = false;
+        if (this instanceof WrapperPlayer) {
+            WrapperPlayer p = (WrapperPlayer) this;
+            sendPacketsToViewers(p.tabListRemovePacket());
+        }
         sendPacketToViewers(new WrapperPlayServerDestroyEntities(entityId));
     }
 
@@ -133,20 +146,30 @@ public class WrapperEntity implements Tickable, TrackedEntity {
             return;
         }
         if (spawned) {
-            WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(
-                    entityId,
-                    Optional.of(this.uuid),
-                    entityType,
-                    location.getPosition(),
-                    location.getPitch(),
-                    location.getYaw(),
-                    location.getYaw(),
-                    0,
-                    Optional.empty()
-            );
-            sendPacket(uuid, packet);
+            if (this instanceof WrapperPlayer) {
+                WrapperPlayer p = (WrapperPlayer) this;
+                sendPacket(uuid, p.tabListPacket());
+            }
+            sendPacket(uuid, createSpawnPacket());
             sendPacket(uuid, entityMeta.createPacket());
         }
+        if (EntityLib.getApi().getSettings().isDebugMode()) {
+            EntityLib.getPlatform().getLogger().info("Added viewer " + uuid + " to entity " + entityId);
+        }
+    }
+
+    protected WrapperPlayServerSpawnEntity createSpawnPacket() {
+        return new WrapperPlayServerSpawnEntity(
+                entityId,
+                Optional.of(this.uuid),
+                entityType,
+                location.getPosition(),
+                location.getPitch(),
+                location.getYaw(),
+                location.getYaw(),
+                getObjectData(),
+                createVeloPacket()
+        );
     }
 
     public void addViewer(User user) {
@@ -176,6 +199,10 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     public void removeViewer(UUID uuid) {
         if (!viewers.remove(uuid)) {
             return;
+        }
+        if (this instanceof WrapperPlayer) {
+            WrapperPlayer p = (WrapperPlayer) this;
+            sendPacket(uuid, p.tabListRemovePacket());
         }
         sendPacket(uuid, new WrapperPlayServerDestroyEntities(entityId));
     }

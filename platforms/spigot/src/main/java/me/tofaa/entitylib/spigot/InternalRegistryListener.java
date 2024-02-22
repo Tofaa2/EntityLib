@@ -11,6 +11,7 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSp
 import me.tofaa.entitylib.TrackedEntity;
 import me.tofaa.entitylib.event.types.UserStopTrackingEntityEvent;
 import me.tofaa.entitylib.event.types.UserTrackingEntityEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,13 +33,15 @@ final class InternalRegistryListener extends PacketListenerAbstract implements L
         if (type == PacketType.Play.Server.DESTROY_ENTITIES) {
             WrapperPlayServerDestroyEntities packet = new WrapperPlayServerDestroyEntities(event);
             int[] ids = packet.getEntityIds();
-            for (int id : ids) {
-                TrackedEntity tracked = findTracker(id);
-                if (tracked == null) {
-                    continue;
+            Bukkit.getScheduler().runTaskLater(platform.getHandle(), () -> {
+                for (int id : ids) {
+                    TrackedEntity tracked = findTracker(id);
+                    if (tracked == null) {
+                        continue;
+                    }
+                    platform.getEventHandler().callEvent(UserStopTrackingEntityEvent.class, new UserStopTrackingEntityEvent(user, tracked));
                 }
-                platform.getEventHandler().callEvent(UserStopTrackingEntityEvent.class, new UserStopTrackingEntityEvent(user, tracked));
-            }
+            }, 2L);
         }
         else if (type == PacketType.Play.Server.SPAWN_ENTITY) {
             WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(event);
@@ -73,11 +76,13 @@ final class InternalRegistryListener extends PacketListenerAbstract implements L
     }
 
     private void trackEntity(User user, int id) {
-        TrackedEntity entity = findTracker(id);
-        if (entity == null) {
-            return;
-        }
-        platform.getEventHandler().callEvent(UserTrackingEntityEvent.class, new UserTrackingEntityEvent(user, entity));
+        Bukkit.getScheduler().runTaskLater(platform.getHandle(), () -> {
+            TrackedEntity entity = findTracker(id);
+            if (entity == null) {
+                return;
+            }
+            platform.getEventHandler().callEvent(UserTrackingEntityEvent.class, new UserTrackingEntityEvent(user, entity));
+        }, 2L);
     }
 
     private TrackedEntity findTracker(int id) {
@@ -97,7 +102,6 @@ final class InternalRegistryListener extends PacketListenerAbstract implements L
     public void onEntitySpawn(EntitySpawnEvent event) {
         Entity e = event.getEntity();
         platform.getPlatformEntities().put(e.getEntityId(), e);
-        System.out.println("Entity spawned: " + e.getEntityId() + " " + e.getType() + " " + e.getLocation());
     }
 
 }

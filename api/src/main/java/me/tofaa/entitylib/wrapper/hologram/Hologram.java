@@ -19,6 +19,14 @@ public interface Hologram<W> {
         return new LegacyHologram<>(location, lines);
     }
 
+    static <C> Hologram.@NotNull Modern<C> modern(@NotNull Location location) {
+        return new ModernHologram<>(location);
+    }
+
+    static <C> Hologram.@NotNull Modern<C> modern(@NotNull Location location, List<Component> lines) {
+        return new ModernHologram<>(location, lines);
+    }
+
     @NotNull Location getLocation();
 
 

@@ -6,26 +6,25 @@ import com.github.retrooper.packetevents.protocol.player.UserProfile;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.meta.mobs.passive.ChickenMeta;
+import me.tofaa.entitylib.event.types.UserTrackingEntityEvent;
 import me.tofaa.entitylib.spigot.SpigotEntityLibAPI;
 import me.tofaa.entitylib.spigot.SpigotEntityLibPlatform;
-import me.tofaa.entitylib.wrapper.WrapperEntity;
-import me.tofaa.entitylib.event.types.*;
 import me.tofaa.entitylib.wrapper.WrapperPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
-public class TestEntityLibPlugin extends JavaPlugin implements CommandExecutor {
-
+public class TestEntityLibPlugin extends JavaPlugin {
 
     private SpigotEntityLibAPI api;
-    private WrapperPlayer e;
 
     @Override
     public void onEnable() {
@@ -39,34 +38,16 @@ public class TestEntityLibPlugin extends JavaPlugin implements CommandExecutor {
 
         EntityLib.init(platform, settings);
         api = platform.getAPI();
-        getCommand("testapi").setExecutor(this);
-        platform.getEventHandler().addEventCallback(UserTrackingEntityEvent.class, event -> {
-            event.getUser().sendMessage("Tracking: " + event.getEntity().getEntityId());
-            event.getUser().sendMessage("Size: " + platform.queryPlatformEntities().toArray().length);
-        });
-        platform.getEventHandler().addEventCallback(UserStopTrackingEntityEvent.class, event -> {
-            event.getUser().sendMessage("Stop Tracking: " + event.getEntity().getEntityId());
-            event.getUser().sendMessage("Size: " + platform.queryPlatformEntities().toArray().length);
-        });
-    }
 
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player)) return false;
-        Player player = (Player) sender;
-        if (e != null) {
-            e.remove();
-            player.sendMessage("Removed");
-            e = null;
-            return true;
+        CommandMap commandMap;
+        try {
+            commandMap = (CommandMap) Bukkit.getServer().getClass().getMethod("getCommandMap").invoke(Bukkit.getServer());
+            commandMap.register("testapi", new TestTextDisplayCommand());
+            commandMap.register("testplayer", new TestPlayerCommand());
         }
-        UUID uuid = UUID.randomUUID();
-        UserProfile profile = new UserProfile(uuid, "RandomGoon");
-        e = new WrapperPlayer(profile, EntityLib.getPlatform().getEntityIdProvider().provide(uuid, EntityTypes.PLAYER));
-        e.addViewer(player.getUniqueId());
-        api.spawnEntity(e, SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
-        player.sendMessage("Spawned");
-        return true;
+        catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
 }

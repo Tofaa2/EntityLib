@@ -75,7 +75,7 @@ public class SpigotEntityLibAPI extends AbstractEntityLibAPI<JavaPlugin, BukkitT
         UUID uuid = e.getUniqueId();
         if (meta instanceof PlayerMeta) {
             Player p = (Player) e;
-            entity = new WrapperPlayer(ExtraConversionUtil.fromBukkitPlayerProfile(p.getPlayerProfile()), id);
+            entity = new WrapperPlayer(ExtraConversionUtil.getProfileFromBukkitPlayer(p), id);
         }
         else if (meta instanceof LivingEntityMeta) {
             entity = new WrapperLivingEntity(id, uuid, type, meta);
@@ -106,6 +106,8 @@ public class SpigotEntityLibAPI extends AbstractEntityLibAPI<JavaPlugin, BukkitT
         tickContainer.setHandle(task);
     }
 
-
-
+    @Override
+    public void runLater(@NotNull Runnable runnable, long delayInTicks) {
+        Bukkit.getScheduler().runTaskLater(platform.getHandle(), runnable, delayInTicks);
+    }
 }

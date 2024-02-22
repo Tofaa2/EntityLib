@@ -4,6 +4,8 @@ import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.TrackedEntity;
 import me.tofaa.entitylib.common.AbstractPlatform;
 import me.tofaa.entitylib.utils.ConcurrentWeakIdentityHashMap;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -51,9 +53,17 @@ public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
     @Override
     public @Nullable TrackedEntity findPlatformEntity(final int entityId) {
         if (!api.getSettings().shouldTrackPlatformEntities()) return null;
-        Entity e = platformEntities.get(entityId);
-        if (e == null) return null;
-        return new SpigotEntity(e);
+
+        for (World world : Bukkit.getWorlds()) {
+            Entity e = world.getEntities().stream().filter(entity -> entity.getEntityId() == entityId).findFirst().orElse(null);
+            if (e != null) {
+                return new SpigotEntity(e);
+            }
+        }
+        return null;
+//        Entity e = platformEntities.get(entityId);
+//        if (e == null) return null;
+//        return new SpigotEntity(e);
     }
 
     @Override

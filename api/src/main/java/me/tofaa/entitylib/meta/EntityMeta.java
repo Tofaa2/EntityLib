@@ -3,6 +3,7 @@ package me.tofaa.entitylib.meta;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.manager.server.VersionComparison;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityDataType;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityMetadataProvider;
 import com.github.retrooper.packetevents.protocol.entity.pose.EntityPose;
@@ -212,6 +213,14 @@ public class EntityMeta implements EntityMetadataProvider {
      */
     protected static byte offset(byte value, int amount) {
         return (byte) (value + amount);
+    }
+
+    public <T> void setIndex(byte index, @NotNull EntityDataType<T> dataType, T value) {
+        this.metadata.setIndex(index, dataType, value);
+    }
+
+    public <T> T getIndex(byte index, @Nullable T defaultValue) {
+        return this.metadata.getIndex(index, defaultValue);
     }
 
     public byte getMask(byte index) {

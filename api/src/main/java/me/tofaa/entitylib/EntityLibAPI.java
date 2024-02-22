@@ -34,7 +34,6 @@ public interface EntityLibAPI<T> {
 
     @NotNull <T extends WrapperEntity> T createEntity(EntityType type);
 
-
     @NotNull WrapperPlayer spawnPlayer(UserProfile profile, Location location);
 
     @NotNull <T extends WrapperEntity> T spawnEntity(@NotNull Class<T> wrapperClass, @NotNull EntityType entityType, @NotNull Location location);
@@ -68,4 +67,6 @@ public interface EntityLibAPI<T> {
      * @param tickContainer the TickContainer to add.
      */
     void addTickContainer(@NotNull TickContainer<?, T> tickContainer);
+
+    void runLater(@NotNull Runnable runnable, long delayInTicks);
 }

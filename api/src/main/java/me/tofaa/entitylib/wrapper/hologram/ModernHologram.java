@@ -19,6 +19,17 @@ final class ModernHologram<W> implements Hologram.Modern<W> {
     private List<WrapperEntity> lines = new ArrayList<>(3);
     private Consumer<TextDisplayMeta> modifier;
 
+    ModernHologram(@NotNull Location location) {
+        this.location = location;
+    }
+
+    ModernHologram(@NotNull Location location, List<Component> lines) {
+        this(location);
+        for (Component line : lines) {
+            addLine(line);
+        }
+    }
+
     @Override
     public void show() {
         for (WrapperEntity line : lines) {

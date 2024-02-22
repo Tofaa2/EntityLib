@@ -3,40 +3,55 @@ package me.tofaa.entitylib.wrapper;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.player.*;
 import com.github.retrooper.packetevents.protocol.world.Location;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfo;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoRemove;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnPlayer;
+import com.github.retrooper.packetevents.util.Vector3d;
+import com.github.retrooper.packetevents.wrapper.PacketWrapper;
+import com.github.retrooper.packetevents.wrapper.play.server.*;
+import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.EntityMeta;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class WrapperPlayer extends WrapperLivingEntity {
 
-    private final UserProfile profile;
+    private UserProfile profile;
     private GameMode gameMode = GameMode.CREATIVE;
     private Component displayName;
     private boolean tablist = true;
+    private int latency = -1;
 
     public WrapperPlayer(UserProfile profile, int entityId) {
         super(entityId, profile.getUUID(), EntityTypes.PLAYER, EntityMeta.createMeta(entityId, EntityTypes.PLAYER));
         this.profile = profile;
     }
 
+    public WrapperPlayServerPlayerInfoUpdate tabListPacket() {
+        EnumSet<WrapperPlayServerPlayerInfoUpdate.Action> actions = EnumSet.of(
+                WrapperPlayServerPlayerInfoUpdate.Action.ADD_PLAYER,
+                WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_LISTED
+        );
+        return new WrapperPlayServerPlayerInfoUpdate(
+                actions,
+                createInfo()
+        );
+    }
+
+    public List<TextureProperty> getTextures() {
+        return profile.getTextureProperties();
+    }
+
+    public WrapperPlayServerPlayerInfoRemove tabListRemovePacket() {
+        return new WrapperPlayServerPlayerInfoRemove(getUuid());
+    }
+
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
-        sendPacketsToViewers(new WrapperPlayServerPlayerInfo(
-                WrapperPlayServerPlayerInfo.Action.UPDATE_GAME_MODE,
-                new WrapperPlayServerPlayerInfo.PlayerData(displayName, profile, gameMode, null, -1)));
+        sendPacketsToViewers(new WrapperPlayServerPlayerInfoUpdate(WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_GAME_MODE, createInfo()));
     }
 
     public void setDisplayName(Component displayName) {
         this.displayName = displayName;
-        sendPacketsToViewers(new WrapperPlayServerPlayerInfo(
-                WrapperPlayServerPlayerInfo.Action.UPDATE_DISPLAY_NAME,
-                new WrapperPlayServerPlayerInfo.PlayerData(displayName, profile, gameMode, null, -1)));
+        sendPacketsToViewers(new WrapperPlayServerPlayerInfoUpdate(WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_DISPLAY_NAME, createInfo()));
     }
 
     public Component getDisplayName() {
@@ -51,56 +66,54 @@ public class WrapperPlayer extends WrapperLivingEntity {
         return profile.getTextureProperties();
     }
 
+    public void setTextureProperties(List<TextureProperty> textureProperties) {
+        profile.setTextureProperties(textureProperties);
+        despawn();
+        System.out.println("Despawning");
+        EntityLib.getApi().runLater(() -> spawn(getLocation()), 2L);
+
+    }
+
     public GameMode getGameMode() {
         return gameMode;
     }
 
-    @Override
-    public void addViewer(User user) {
-        //user.sendPacket(createAddPacket());
-        sendJoiningPackets();
-        super.addViewer(user);
+    public boolean isInTablist() {
+        return tablist;
     }
 
-    @Override
-    public void removeViewer(User user) {
-        user.sendPacket(createRemovePacket());
-        super.removeViewer(user);
+    public void setInTablist(boolean tablist) {
+        this.tablist = tablist;
+        sendPacketToViewers(tabListPacket());
+        if (!tablist) {
+            sendPacketToViewers(tabListRemovePacket());
+        }
     }
 
-    @Override
-    public boolean spawn(Location location) {
-        this.setLocation(location);
-        WrapperPlayServerSpawnPlayer packet = new WrapperPlayServerSpawnPlayer(getEntityId(), getUuid(), location, getEntityMeta());
-        sendPacketsToViewers(packet);
-        return true;
-        //return super.spawn(location);
+    public int getLatency() {
+        return latency;
     }
 
-    private void sendJoiningPackets() {
-        List<WrapperPlayServerPlayerInfo.PlayerData> data = new ArrayList<>();
-        data.add(new WrapperPlayServerPlayerInfo.PlayerData(displayName, profile, gameMode, null, -1));
-        WrapperPlayServerPlayerInfo p1 = new WrapperPlayServerPlayerInfo(
-                WrapperPlayServerPlayerInfo.Action.ADD_PLAYER,
-                data
-        );
-        sendPacketsToViewers(p1);
-    }
-
-    private WrapperPlayServerPlayerInfoUpdate createAddPacket() {
-        return new WrapperPlayServerPlayerInfoUpdate(
-                WrapperPlayServerPlayerInfoUpdate.Action.ADD_PLAYER,
-                new WrapperPlayServerPlayerInfoUpdate.PlayerInfo(
-                        profile,
-                        true, -1, gameMode, displayName, null
+    public void setLatency(int latency) {
+        this.latency = latency;
+        sendPacketsToViewers(
+                new WrapperPlayServerPlayerInfoUpdate(
+                        WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_LATENCY,
+                        createInfo()
                 )
         );
     }
 
-    private WrapperPlayServerPlayerInfoRemove createRemovePacket() {
-        return new WrapperPlayServerPlayerInfoRemove(getUuid());
+    protected WrapperPlayServerPlayerInfoUpdate.PlayerInfo createInfo() {
+        return new WrapperPlayServerPlayerInfoUpdate.PlayerInfo(
+                profile,
+                tablist,
+                latency,
+                gameMode,
+                displayName,
+                null
+        );
     }
-
 
 
 }
