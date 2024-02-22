@@ -8,7 +8,7 @@ import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;
 import org.jetbrains.annotations.Nullable;
 
-public class PlayerMeta extends LivingEntityMeta {
+public class    PlayerMeta extends LivingEntityMeta {
 
     public static final byte OFFSET = LivingEntityMeta.MAX_OFFSET;
     public static final byte MAX_OFFSET = OFFSET + 1;

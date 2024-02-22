@@ -51,7 +51,7 @@ public class TestPlayerCommand extends BukkitCommand {
             player.sendMessage("texture");
         }
         else if (arg.equals( "ping")) {
-            p.setLatency(100);
+            p.setLatency(1000);
             player.sendMessage("Pong");
         }
         else if (arg.equals( "gamemode")) {

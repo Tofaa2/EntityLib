@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Tofaa2:EntityLib:<release-tag-here>'
+    implementation 'com.github.Tofaa2.EntityLib:<platform>:<latest-release-version'
 }
 ```
 ##  NOTE:
@@ -26,7 +26,7 @@ EntityLib does not provide packet-events as a dependency, you must have it in yo
 ## Usage
 
 For more realistic examples, please take a look at the `test-plugin` module. It has an example `Bukkit` plugin that uses EntityLib.
-
+Examples below show usage of the spigot module of entity lib, but the usage is the same for all platforms.
 ### Using the EntityMeta api
 
 ```java
@@ -34,12 +34,19 @@ class Example {
 
     public static void main(String[] args) {
         PacketEventsAPI api = ;// create PacketEventsAPI instance
-        EntityLib.init(api); // If failed, it will throw an exception.
+        SpigotEntityLibPlatform platform = new SpigotEntityLibPlatform(this);
+        APIConfig settings = new APIConfig(PacketEvents.getAPI())
+                .debugMode()
+                .tickTickables()
+                .trackPlatformEntities()
+                .usePlatformLogger();
+
+        EntityLib.init(platform, settings);
 
         // Making a random entity using packet events raw, i strongly recommend using the EntityLib#createEntity method instead
         int entityID = 1;
         WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(constructor args);
-        EntityMeta meta = EntityLib.createMeta(entityId, EntityType);
+        EntityMeta meta = EntityMeta.createMeta(entityId, EntityType);
         // You can cast the meta to the correct type depending on the entity type
         PigMeta pigMeta = (PigMeta) meta;
 
@@ -60,16 +67,17 @@ class Example {
 
     public static void main(String[] args) {
         PacketEventsAPI api = ;// create PacketEventsAPI instance
-        EntityLib.init(api); // If failed, it will throw an exception.
+        SpigotEntityLibPlatform platform = new SpigotEntityLibPlatform(this);
+        APIConfig settings = new APIConfig(PacketEvents.getAPI())
+                .debugMode()
+                .tickTickables()
+                .trackPlatformEntities()
+                .usePlatformLogger();
 
-        WrapperEntity entity = EntityLib.createEntity(UUID, EntityType); 
-        // You can keep track of the entity yourself or store its entityId or uuid and fetch it using EntityLib#getEntity
+        EntityLib.init(platform, settings);
 
-        // Handling entity interactions if needed
-        // By default EntityLib will ignore interaction packets and not handle them. You can enable this if needed
-        EntityLib.enableEntityInteractions(); // Now we need to create an interaction handler
-        EntityLib.setInteractionProcessor(EntityInteractionProcessor);
-
+        WrapperEntity entity = EntityLib..getApi().createEntity(UUID, EntityType); // optional uuid and entity id 
+        // You can keep track of the entity yourself or store its entityId or uuid and fetch it using EntityLib.getApi().getEntity(UUID or entityId)
 
         // Entities also have access to the EntityMeta api, the EntityMeta api can be used seperately from wrapper entities but also can be used together
         EntityMeta meta = entity.getEntityMeta();
@@ -87,7 +95,7 @@ class Example {
         
         // If the entityId provider for WrapperEntities is not working for you or needs changing, you can get it from EntityLib#getEntityIdProvider()
         // You can also set it to a custom provider if needed by calling EntityLib#setEntityIdProvider(EntityIdProvider)
-        int randomEntityId = EntityLib.getEntityIdProvider().provide();
+        int randomEntityId = EntityLib.getPlatform().getEntityIdProvider().provide();
     }
 
 }
