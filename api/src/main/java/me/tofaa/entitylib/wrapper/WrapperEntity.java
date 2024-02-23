@@ -11,6 +11,7 @@ import me.tofaa.entitylib.TrackedEntity;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.types.ObjectData;
 import me.tofaa.entitylib.tick.Tickable;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -156,6 +157,14 @@ public class WrapperEntity implements Tickable, TrackedEntity {
         if (EntityLib.getApi().getSettings().isDebugMode()) {
             EntityLib.getPlatform().getLogger().info("Added viewer " + uuid + " to entity " + entityId);
         }
+    }
+
+    public void sendMessageToViewers(Component message) {
+        sendPacketToViewers(new WrapperPlayServerSystemChatMessage(false, message));
+    }
+
+    public void sendActionbarToViewers(Component message) {
+        sendPacketToViewers(new WrapperPlayServerSystemChatMessage(true, message));
     }
 
     protected WrapperPlayServerSpawnEntity createSpawnPacket() {
