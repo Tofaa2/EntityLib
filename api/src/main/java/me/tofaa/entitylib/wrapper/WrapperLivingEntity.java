@@ -17,6 +17,12 @@ public class WrapperLivingEntity extends WrapperEntity{
         this.equipment = new WrapperEntityEquipment(this);
     }
 
+    @Override
+    public void refresh() {
+        super.refresh();
+        equipment.refresh();
+    }
+
     public void playCriticalHitAnimation() {
         sendAnimation(WrapperPlayServerEntityAnimation.EntityAnimationType.CRITICAL_HIT);
     }
