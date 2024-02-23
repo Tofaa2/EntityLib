@@ -36,6 +36,8 @@ public interface EntityLibAPI<T> {
 
     @NotNull WrapperPlayer spawnPlayer(UserProfile profile, Location location);
 
+    @NotNull WrapperPlayer createPlayer(UserProfile profile);
+
     @NotNull <T extends WrapperEntity> T spawnEntity(@NotNull Class<T> wrapperClass, @NotNull EntityType entityType, @NotNull Location location);
 
     @NotNull WrapperEntity spawnEntity(@NotNull EntityType entityType, @NotNull Location location);
