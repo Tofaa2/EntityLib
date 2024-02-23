@@ -1,0 +1,13 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
+}
+
+dependencies {
+    compileOnly(project(":platforms:spigot"))
+    compileOnly('com.github.retrooper.packetevents:spigot:2.0.2')
+    compileOnly('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
+}
+
+kotlin {
+    jvmToolchain(8)
+}

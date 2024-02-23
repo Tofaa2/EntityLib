@@ -1,3 +1,6 @@
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+}
 rootProject.name = 'EntityLib'
 //include 'test-plugin'
 include 'api'
@@ -9,3 +12,8 @@ include 'code-gen'
 if (!Boolean.parseBoolean(System.getenv("JITPACK"))) {
     include 'test-plugin'
 }
+include 'kotlin:kotlin-extensions-spigot'
+findProject(':kotlin:kotlin-extensions-spigot')?.name = 'kotlin-extensions-spigot'
+include 'platforms:velocity'
+findProject(':platforms:velocity')?.name = 'velocity'
+

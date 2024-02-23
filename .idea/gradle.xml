@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/code-gen" />
             <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/kotlin" />
+            <option value="$PROJECT_DIR$/kotlin/kotlin-extensions-spigot" />
             <option value="$PROJECT_DIR$/platforms" />
             <option value="$PROJECT_DIR$/platforms/spigot" />
             <option value="$PROJECT_DIR$/test-plugin" />

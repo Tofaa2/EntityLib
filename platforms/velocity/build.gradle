@@ -1,0 +1,20 @@
+
+repositories {
+    maven {
+        name = 'papermc'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+}
+tasks {
+    compileJava {
+        options.release.set(17)
+    }
+}
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+
+
+dependencies {
+    api(project(":common"))
+    compileOnly('com.github.retrooper.packetevents:velocity:2.0.2')
+    compileOnly 'com.velocitypowered:velocity-api:3.3.0-SNAPSHOT'
+}
