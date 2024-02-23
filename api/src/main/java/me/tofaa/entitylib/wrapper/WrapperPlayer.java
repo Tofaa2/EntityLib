@@ -68,6 +68,7 @@ public class WrapperPlayer extends WrapperLivingEntity {
 
     public void setTextureProperties(List<TextureProperty> textureProperties) {
         profile.setTextureProperties(textureProperties);
+        if (!isSpawned()) return;
         WrapperPlayServerDestroyEntities destroyEntities = new WrapperPlayServerDestroyEntities(getEntityId());
         WrapperPlayServerPlayerInfoRemove removePacket = new WrapperPlayServerPlayerInfoRemove(getUuid());
         WrapperPlayServerPlayerInfoUpdate updatePacket = tabListPacket();

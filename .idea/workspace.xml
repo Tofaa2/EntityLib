@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/code-gen/src/main/java/me/tofaa/entitylib/codegen/modern/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kotlin/kotlin-extensions-spigot/src/main/kotlin/me/tofaa/entitylib/kotlin/EntityExtensions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-    </list>
+    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,8 +55,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Kotlin Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -316,7 +311,7 @@
       <workItem from="1708550708196" duration="523000" />
       <workItem from="1708591139716" duration="1553000" />
       <workItem from="1708597333736" duration="3637000" />
-      <workItem from="1708679023133" duration="5295000" />
+      <workItem from="1708679023133" duration="6858000" />
     </task>
     <servers />
   </component>
