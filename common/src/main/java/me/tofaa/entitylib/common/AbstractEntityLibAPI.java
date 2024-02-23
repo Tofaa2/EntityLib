@@ -96,16 +96,20 @@ public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
 
     @Override
     public @NotNull WrapperPlayer createPlayer(UserProfile profile) {
-        if (getEntity(profile.getUUID()) != null) {
-            throw new IllegalArgumentException("Entity with UUID " + profile.getUUID() + " already exists in this world.");
-        }
-
         int id = EntityLib.getPlatform().getEntityIdProvider().provide(profile.getUUID(), EntityTypes.PLAYER);
         while (entitiesById.containsKey
         (id)) {
             id = EntityLib.getPlatform().getEntityIdProvider().provide(profile.getUUID(), EntityTypes.PLAYER);
         }
-        WrapperPlayer player = new WrapperPlayer(profile, id);
+        return createPlayer(profile, id);
+    }
+
+    @Override
+    public @NotNull WrapperPlayer createPlayer(UserProfile profile, int entityId) {
+        if (getEntity(profile.getUUID()) != null) {
+            throw new IllegalArgumentException("Entity with UUID " + profile.getUUID() + " already exists in this world.");
+        }
+        WrapperPlayer player = new WrapperPlayer(profile, entityId);
         entities.put(player.getUuid(), player);
         entitiesById.put(player.getEntityId(), player);
         return player;

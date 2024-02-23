@@ -6,6 +6,7 @@ import com.github.retrooper.packetevents.protocol.player.HumanoidArm;
 import com.github.retrooper.packetevents.protocol.potion.PotionType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityAnimation;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityEffect;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerTeams;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.types.LivingEntityMeta;
 import org.jetbrains.annotations.Nullable;
@@ -15,6 +16,7 @@ import java.util.UUID;
 public class WrapperLivingEntity extends WrapperEntity{
 
     private final WrapperEntityEquipment equipment;
+
 
     public WrapperLivingEntity(int entityId, UUID uuid, EntityType entityType, EntityMeta entityMeta) {
         super(entityId, uuid, entityType, entityMeta);
