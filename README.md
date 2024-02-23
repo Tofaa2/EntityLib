@@ -52,7 +52,7 @@ class Example {
 
         // Once you're done modifying the meta accordingly, you can convert it to a packet, and send it to whoever you want for them  to see the changes.
         WrapperPlayServerEntityMetadata metaPacket = meta.createPacket();
-        User.sendPacket(metaPacket);;
+        User.sendPacket(metaPacket);
     }
 
 }
