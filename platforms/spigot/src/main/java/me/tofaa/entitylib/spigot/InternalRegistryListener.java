@@ -5,9 +5,7 @@ import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.protocol.packettype.PacketTypeCommon;
 import com.github.retrooper.packetevents.protocol.player.User;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerDestroyEntities;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnExperienceOrb;
+import com.github.retrooper.packetevents.wrapper.play.server.*;
 import me.tofaa.entitylib.TrackedEntity;
 import me.tofaa.entitylib.event.types.UserStopTrackingEntityEvent;
 import me.tofaa.entitylib.event.types.UserTrackingEntityEvent;
@@ -54,22 +52,22 @@ final class InternalRegistryListener extends PacketListenerAbstract implements L
             trackEntity(user, id);
         }
         else if (type == PacketType.Play.Server.SPAWN_LIVING_ENTITY) {
-            WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(event);
+            WrapperPlayServerSpawnLivingEntity packet = new WrapperPlayServerSpawnLivingEntity(event);
             int id = packet.getEntityId();
             trackEntity(user, id);
         }
         else if (type == PacketType.Play.Server.SPAWN_PLAYER) {
-            WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(event);
+            WrapperPlayServerSpawnPlayer packet = new WrapperPlayServerSpawnPlayer(event);
             int id = packet.getEntityId();
             trackEntity(user, id);
         }
         else if (type == PacketType.Play.Server.SPAWN_WEATHER_ENTITY) {
-            WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(event);
+            WrapperPlayServerSpawnWeatherEntity packet = new WrapperPlayServerSpawnWeatherEntity(event);
             int id = packet.getEntityId();
             trackEntity(user, id);
         }
         else if (type == PacketType.Play.Server.SPAWN_PAINTING) {
-            WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(event);
+            WrapperPlayServerSpawnPainting packet = new WrapperPlayServerSpawnPainting(event);
             int id = packet.getEntityId();
             trackEntity(user, id);
         }
