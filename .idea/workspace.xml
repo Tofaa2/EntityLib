@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="" />
+    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/EntityMeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/meta/EntityMeta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/InternalRegistryListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/InternalRegistryListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestPlayerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestPlayerCommand.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,9 +70,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.1/5aea4193d2dadf2f99523ded56a910c4dd98d23f/api-2.2.1-default.jar!/com/github/retrooper/packetevents/protocol/entity/pose/EntityPose.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.1/5aea4193d2dadf2f99523ded56a910c4dd98d23f/api-2.2.1-default.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerEntityAnimation.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.1/5aea4193d2dadf2f99523ded56a910c4dd98d23f/api-2.2.1-default.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerSystemChatMessage.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.1/5aea4193d2dadf2f99523ded56a910c4dd98d23f/api-2.2.1-default.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerTeams.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/spigot/2.0.2/e1b5c8968213460b6bcf919597ea94de2157cb31/spigot-2.0.2.jar!/com/github/retrooper/packetevents/event/PacketListenerCommon.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/spigot/2.2.0/d8ce06232bdbdec3b31021c84545bd1aff957af0/spigot-2.2.0.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerTeams.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.20.1-R0.1-SNAPSHOT/23c0dae3633c3dd31d4503969fa7f9f3d36840fb/spigot-api-1.20.1-R0.1-SNAPSHOT.jar!/org/bukkit/plugin/EventExecutor.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.20.1-R0.1-SNAPSHOT/23c0dae3633c3dd31d4503969fa7f9f3d36840fb/spigot-api-1.20.1-R0.1-SNAPSHOT.jar!/org/bukkit/plugin/PluginManager.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.20.1-R0.1-SNAPSHOT/23c0dae3633c3dd31d4503969fa7f9f3d36840fb/spigot-api-1.20.1-R0.1-SNAPSHOT.jar!/org/bukkit/profile/PlayerProfile.class" root0="SKIP_INSPECTION" />
@@ -87,39 +96,39 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Gradle.Build EntityLib.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib [dependencies].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib [publish].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:code-gen [:code-gen:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [publish].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [runServer].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [shadowJar].executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Github/EntityLib/api/src/main/java/me/tofaa/entitylib/extras&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Gradle.Build EntityLib.executor": "Run",
+    "Gradle.EntityLib [dependencies].executor": "Run",
+    "Gradle.EntityLib [publish].executor": "Run",
+    "Gradle.EntityLib:code-gen [:code-gen:Main.main()].executor": "Run",
+    "Gradle.EntityLib:test-plugin [publish].executor": "Run",
+    "Gradle.EntityLib:test-plugin [runServer].executor": "Debug",
+    "Gradle.EntityLib:test-plugin [shadowJar].executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "corretto-17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Github/EntityLib/api/src/main/java/me/tofaa/entitylib/extras",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Github\EntityLib\api\src\main\java\me\tofaa\entitylib\extras" />
@@ -312,6 +321,12 @@
       <workItem from="1708591139716" duration="1553000" />
       <workItem from="1708597333736" duration="3637000" />
       <workItem from="1708679023133" duration="6858000" />
+      <workItem from="1708698582801" duration="3731000" />
+      <workItem from="1708809296046" duration="2479000" />
+      <workItem from="1708858398530" duration="1080000" />
+      <workItem from="1709057446428" duration="195000" />
+      <workItem from="1709074092924" duration="24000" />
+      <workItem from="1709139306864" duration="1813000" />
     </task>
     <servers />
   </component>

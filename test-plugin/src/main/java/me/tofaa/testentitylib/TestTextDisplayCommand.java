@@ -4,6 +4,7 @@ import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.display.TextDisplayMeta;
+import me.tofaa.entitylib.meta.mobs.passive.PigMeta;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
@@ -24,18 +25,15 @@ public class TestTextDisplayCommand extends BukkitCommand {
         if (!(commandSender instanceof Player)) return true;
         Player player = (Player) commandSender;
         if (e == null) {
-            e = EntityLib.getApi().createEntity(EntityTypes.TEXT_DISPLAY);
-            if (e == null) {
-                player.sendMessage("Failed to spawn entity");
-                return true;
-            }
+            e = EntityLib.getApi().createEntity(EntityTypes.PIG);
             e.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
             e.addViewer(player.getUniqueId());
             player.sendMessage("Spawned");
         }
         String msg = String.join(" ", strings);
-        TextDisplayMeta meta = (TextDisplayMeta) e.getEntityMeta();
-        meta.setText(Component.text(msg));
+        PigMeta meta = (PigMeta) e.getEntityMeta();
+        meta.setCustomNameVisible(true);
+        meta.setCustomName(Component.text(msg));
         player.sendMessage("Set text to: " + msg);
         return true;
     }

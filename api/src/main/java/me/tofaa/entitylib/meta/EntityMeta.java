@@ -13,11 +13,13 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEn
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.extras.InvalidVersionException;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 
@@ -111,16 +113,24 @@ public class EntityMeta implements EntityMetadataProvider {
         return getMaskBit(OFFSET, HAS_GLOWING_EFFECT_BIT);
     }
 
+    public boolean isGlowing() {
+        return hasGlowingEffect();
+    }
+
+    public void setHasGlowingEffect(boolean value) {
+        setMaskBit(OFFSET, HAS_GLOWING_EFFECT_BIT, value);
+    }
+
+    public void setGlowing(boolean value) {
+        setHasGlowingEffect(value);
+    }
+
     public boolean isSwimming() {
         return getMaskBit(OFFSET, SWIMMING_BIT);
     }
 
     public void setSwimming(boolean value) {
         setMaskBit(OFFSET, SWIMMING_BIT, value);
-    }
-
-    public void setHasGlowingEffect(boolean value) {
-        setMaskBit(OFFSET, HAS_GLOWING_EFFECT_BIT, value);
     }
 
     public boolean isFlyingWithElytra() {
@@ -140,11 +150,12 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     public Component getCustomName() {
-        return this.metadata.getIndex(customNameOffset(), null);
+        Optional<Component> component = this.metadata.getIndex(customNameOffset(), null);
+        return component.orElse(null);
     }
 
     public void setCustomName(Component value) {
-        this.metadata.setIndex(customNameOffset(), EntityDataTypes.ADV_COMPONENT, value);
+        this.metadata.setIndex(customNameOffset(), EntityDataTypes.OPTIONAL_ADV_COMPONENT, Optional.ofNullable(value));
     }
 
     public boolean isCustomNameVisible() {

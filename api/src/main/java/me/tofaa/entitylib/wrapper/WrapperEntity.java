@@ -1,5 +1,9 @@
 package me.tofaa.entitylib.wrapper;
 
+import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityDataType;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
+import com.github.retrooper.packetevents.protocol.entity.pose.EntityPose;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.protocol.world.Location;
@@ -43,7 +47,6 @@ public class WrapperEntity implements Tickable, TrackedEntity {
         this.viewers = ConcurrentHashMap.newKeySet();
         this.passengers = ConcurrentHashMap.newKeySet();
     }
-
 
     public boolean spawn(Location location) {
         if (spawned) return false;

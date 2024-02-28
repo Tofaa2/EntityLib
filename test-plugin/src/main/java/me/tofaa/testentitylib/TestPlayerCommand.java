@@ -38,37 +38,39 @@ public class TestPlayerCommand extends BukkitCommand {
             return false;
         }
         String arg = strings[0].toLowerCase();
-        if (arg.equals("spawn")) {
-            UserProfile profile = new UserProfile(UUID.randomUUID(), "randomname", new ArrayList<>());
-            p = new WrapperPlayer(profile, EntityLib.getPlatform().getEntityIdProvider().provide(profile.getUUID(), EntityTypes.PLAYER));
-            p.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
-            p.addViewer(player.getUniqueId());
-            ItemStack stack = ItemStack.builder().type(ItemTypes.DIAMOND_BOOTS).build();
-            p.getEquipment().setBoots(stack);
-        }
-        else if (arg.equals( "texture")) {
-            p.setTextureProperties(ExtraConversionUtil.getProfileFromBukkitPlayer(player).getTextureProperties());
-            player.sendMessage("texture");
-        }
-        else if (arg.equals( "ping")) {
-            p.setLatency(1000);
-            player.sendMessage("Pong");
-        }
-        else if (arg.equals( "gamemode")) {
-            p.setGameMode(GameMode.CREATIVE);
-            player.sendMessage("Gamemode set to creative");
-        }
-        else if (arg.equals( "displayname")) {
-            p.setDisplayName(Component.text("Hello"));
-            player.sendMessage("Display name set to Hello");
-        }
-        else if (arg.equals( "tablist")) {
-            p.setInTablist(!p.isInTablist());
-            player.sendMessage("Tablist " + (p.isInTablist() ? "enabled" : "disabled"));
-        }
-        else if (arg.equals("remove")) {
-            p.remove();
-            player.sendMessage("Entity removed");
+        switch (arg) {
+            case "spawn":
+                UserProfile profile = new UserProfile(UUID.randomUUID(), "randomname", new ArrayList<>());
+                p = new WrapperPlayer(profile, EntityLib.getPlatform().getEntityIdProvider().provide(profile.getUUID(), EntityTypes.PLAYER));
+                p.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
+                p.addViewer(player.getUniqueId());
+                ItemStack stack = ItemStack.builder().type(ItemTypes.DIAMOND_BOOTS).build();
+                p.getEquipment().setBoots(stack);
+                break;
+            case "texture":
+                p.setTextureProperties(ExtraConversionUtil.getProfileFromBukkitPlayer(player).getTextureProperties());
+                player.sendMessage("texture");
+                break;
+            case "ping":
+                p.setLatency(1000);
+                player.sendMessage("Pong");
+                break;
+            case "gamemode":
+                p.setGameMode(GameMode.CREATIVE);
+                player.sendMessage("Gamemode set to creative");
+                break;
+            case "displayname":
+                p.setDisplayName(Component.text("Hello"));
+                player.sendMessage("Display name set to Hello");
+                break;
+            case "tablist":
+                p.setInTablist(!p.isInTablist());
+                player.sendMessage("Tablist " + (p.isInTablist() ? "enabled" : "disabled"));
+                break;
+            case "remove":
+                p.remove();
+                player.sendMessage("Entity removed");
+                break;
         }
         return true;
     }
@@ -77,7 +79,7 @@ public class TestPlayerCommand extends BukkitCommand {
     @Override
     public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
         if (args.length == 1) {
-            return Arrays.asList(new String[]{"spawn", "texture", "ping", "gamemode", "displayname", "tablist", "remove"});
+            return Arrays.asList("spawn", "texture", "ping", "gamemode", "displayname", "tablist", "remove", "sneak");
         }
         return Collections.emptyList();
     }

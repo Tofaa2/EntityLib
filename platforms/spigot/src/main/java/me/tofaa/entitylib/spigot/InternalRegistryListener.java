@@ -28,6 +28,7 @@ final class InternalRegistryListener extends PacketListenerAbstract implements L
     public void onPacketSend(PacketSendEvent event) {
         final User user = event.getUser();
         final PacketTypeCommon type = event.getPacketType();
+        
         if (type == PacketType.Play.Server.DESTROY_ENTITIES) {
             WrapperPlayServerDestroyEntities packet = new WrapperPlayServerDestroyEntities(event);
             int[] ids = packet.getEntityIds();
