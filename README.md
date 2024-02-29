@@ -3,6 +3,7 @@ EntityLib is a PacketEvents addon that provides an abstraction over raw entity d
 Currently, EntityLib is only stable for 1.18+, but it will support all versions that PacketEvents supports in the future. <br>
 For general support and reports of bugs, join the [Discord](https://discord.gg/jawR25hrSK) server.
 
+Gradle (Groovy DSL):
 ```groovy
 //https://jitpack.io/#Tofaa2/EntityLib/
 repositories {
@@ -13,6 +14,27 @@ dependencies {
     implementation 'com.github.Tofaa2.EntityLib:<platform>:<latest-release-version'
 }
 ```
+
+Gradle (Kotlin DSL):
+```kotlin
+repositories {
+    maven(url = "https://jitpack.io")
+}
+
+dependencies {
+    implementation("com.github.Tofaa2.EntityLib:<platform>:<latest-release-version>")
+}
+```
+
+Maven:
+```xml
+    <dependency>
+        <groupId>com.github.Tofaa2.EntityLib</groupId>
+        <artifactId>(platform)</artifactId>
+        <version>(latest-release-version)</version>
+    </dependency>
+```
+
 ##  NOTE:
 EntityLib does not provide packet-events as a dependency, you must have it in your classpath already. EntityLib will also stay at the latest packet-events version at all times
 
