@@ -1,21 +1,16 @@
 package me.tofaa.testentitylib;
 
-import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.item.ItemStack;
 import com.github.retrooper.packetevents.protocol.item.type.ItemTypes;
 import com.github.retrooper.packetevents.protocol.player.GameMode;
-import com.github.retrooper.packetevents.protocol.player.TextureProperty;
 import com.github.retrooper.packetevents.protocol.player.UserProfile;
-import com.github.retrooper.packetevents.wrapper.PacketWrapper;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfo;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import me.tofaa.entitylib.EntityLib;
+import me.tofaa.entitylib.extras.skin.SkinFetcher;
 import me.tofaa.entitylib.spigot.ExtraConversionUtil;
 import me.tofaa.entitylib.wrapper.WrapperPlayer;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
@@ -26,6 +21,7 @@ import java.util.*;
 public class TestPlayerCommand extends BukkitCommand {
 
     private WrapperPlayer p;
+    private SkinFetcher sf;
     public TestPlayerCommand() {
         super("testplayer");
     }
@@ -33,12 +29,24 @@ public class TestPlayerCommand extends BukkitCommand {
     @Override
     public boolean execute(@NotNull CommandSender commandSender, @NotNull String s, @NotNull String[] strings) {
         Player player = (Player) commandSender;
-        if (strings.length != 1) {
+        if (strings.length < 1) {
             player.sendMessage("Usage: /testplayer <spawn|hello|ping|gamemode|displayname|tablist|remove>");
             return false;
         }
         String arg = strings[0].toLowerCase();
         switch (arg) {
+            case "skin":
+                String input = strings[1];
+                if (p == null) {
+                    player.sendMessage("Spawn an entity first");
+                    return false;
+                }
+                if (sf == null) {
+                    sf = SkinFetcher.builder()
+                            .cached()
+                            .build();
+                }
+                p.setTextureProperties(sf.getSkin(input));
             case "spawn":
                 UserProfile profile = new UserProfile(UUID.randomUUID(), "randomname", new ArrayList<>());
                 p = new WrapperPlayer(profile, EntityLib.getPlatform().getEntityIdProvider().provide(profile.getUUID(), EntityTypes.PLAYER));

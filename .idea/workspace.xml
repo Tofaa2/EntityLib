@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="" />
+    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/extras/MojangApiError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/extras/skin/CSFBImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/extras/skin/CachedSkinFetcherBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/extras/skin/CachedSkinFetcherImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/extras/skin/ErroredTextureProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/extras/skin/SFBImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/extras/skin/SFUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/extras/skin/SkinFetcher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/extras/skin/SkinFetcherBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/extras/skin/SkinFetcherImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLib.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLib.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestPlayerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestPlayerCommand.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,17 +49,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="EntityLib" type="f1a62948:ProjectNode" />
               </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="EntityLib" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="EntityLib" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="publishing" type="c8890929:TasksNode$1" />
-              </path>
             </expand>
             <select />
           </tree_state>
@@ -64,16 +68,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.1/5aea4193d2dadf2f99523ded56a910c4dd98d23f/api-2.2.1-default.jar!/com/github/retrooper/packetevents/protocol/entity/pose/EntityPose.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.1/5aea4193d2dadf2f99523ded56a910c4dd98d23f/api-2.2.1-default.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerEntityAnimation.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.1/5aea4193d2dadf2f99523ded56a910c4dd98d23f/api-2.2.1-default.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerSystemChatMessage.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.1/5aea4193d2dadf2f99523ded56a910c4dd98d23f/api-2.2.1-default.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerTeams.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/spigot/2.0.2/e1b5c8968213460b6bcf919597ea94de2157cb31/spigot-2.0.2.jar!/com/github/retrooper/packetevents/event/PacketListenerCommon.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/spigot/2.2.0/d8ce06232bdbdec3b31021c84545bd1aff957af0/spigot-2.2.0.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerTeams.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.20.1-R0.1-SNAPSHOT/23c0dae3633c3dd31d4503969fa7f9f3d36840fb/spigot-api-1.20.1-R0.1-SNAPSHOT.jar!/org/bukkit/plugin/EventExecutor.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.20.1-R0.1-SNAPSHOT/23c0dae3633c3dd31d4503969fa7f9f3d36840fb/spigot-api-1.20.1-R0.1-SNAPSHOT.jar!/org/bukkit/plugin/PluginManager.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.20.1-R0.1-SNAPSHOT/23c0dae3633c3dd31d4503969fa7f9f3d36840fb/spigot-api-1.20.1-R0.1-SNAPSHOT.jar!/org/bukkit/profile/PlayerProfile.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.20.1-R0.1-SNAPSHOT/23c0dae3633c3dd31d4503969fa7f9f3d36840fb/spigot-api-1.20.1-R0.1-SNAPSHOT.jar!/org/bukkit/profile/PlayerTextures.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.1/c70f2380ee7c60be444e22a10e679577ab9f8afa/api-2.2.1-default.jar!/com/github/retrooper/packetevents/protocol/player/TextureProperty.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.0/c4ba5371a29ac9b2ad6129b1d39ea38750043eff/gson-2.8.0.jar!/com/google/gson/JsonArray.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.jdks/corretto-17.0.10/lib/src.zip!/java.base/java/util/List.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -98,7 +95,7 @@
     &quot;Gradle.EntityLib [publish].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.EntityLib:code-gen [:code-gen:Main.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.EntityLib:test-plugin [publish].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [runServer].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.EntityLib:test-plugin [runServer].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.EntityLib:test-plugin [shadowJar].executor&quot;: &quot;Run&quot;,
     &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
     &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
@@ -110,7 +107,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Github/EntityLib/api/src/main/java/me/tofaa/entitylib/extras&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/mnt/sda2/Github/EntityLib&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -121,6 +118,11 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;kotlin-gradle-user-dirs&quot;: [
+      &quot;/home/tofaa/.gradle&quot;
+    ]
   }
 }</component>
   <component name="RecentsManager">
@@ -245,9 +247,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-1.8.0_402-temurin-1.8.0_402-4caba194b151-d4a4326d" />
-        <option value="jdk-17.0.10-temurin-17.0.10-4caba194b151-b3785831" />
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
       </set>
     </attachedChunks>
   </component>
@@ -322,6 +323,7 @@
       <workItem from="1709074092924" duration="24000" />
       <workItem from="1709139306864" duration="1813000" />
       <workItem from="1709142473633" duration="2565000" />
+      <workItem from="1714477887801" duration="3618000" />
     </task>
     <servers />
   </component>
@@ -347,7 +349,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestPlayerCommand.java</url>
-          <line>69</line>
+          <line>77</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">

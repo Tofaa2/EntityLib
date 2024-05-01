@@ -4,6 +4,7 @@ import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import me.tofaa.entitylib.EntityLib;
+import me.tofaa.entitylib.EntityLibAPI;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,7 +35,9 @@ public class Metadata {
         final EntityData entry = new EntityData(index, dataType, value);
         this.metadataMap.put(index, entry);
 
-        final WrapperEntity entity = EntityLib.getApi().getEntity(entityId);
+        final Optional<EntityLibAPI<?>> optionalApi = EntityLib.getOptionalApi();
+        if (!optionalApi.isPresent()) return;
+        final WrapperEntity entity = optionalApi.get().getEntity(entityId);
         if (entity == null || !entity.isSpawned()) return; // Not EntityLib entity then, the user must send the packet manually. OR not spawned.
         if (!this.notifyAboutChanges) {
             synchronized (this.notNotifiedChanges) {
