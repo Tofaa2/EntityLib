@@ -79,6 +79,15 @@ public class TestPlayerCommand extends BukkitCommand {
                 p.remove();
                 player.sendMessage("Entity removed");
                 break;
+            case "hidearmor":
+                p.getEquipment().setNotifyChanges(false);
+                p.getEquipment().setBoots(null);
+                p.getEquipment().setChestplate(null);
+                p.getEquipment().setHelmet(null);
+                p.getEquipment().setLeggings(null);
+                p.getEquipment().setMainHand(null);
+                p.getEquipment().setOffhand(null);
+                p.getEquipment().setNotifyChanges(true);
         }
         return true;
     }
@@ -87,7 +96,7 @@ public class TestPlayerCommand extends BukkitCommand {
     @Override
     public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
         if (args.length == 1) {
-            return Arrays.asList("spawn", "texture", "ping", "gamemode", "displayname", "tablist", "remove", "sneak");
+            return Arrays.asList("spawn", "texture", "ping", "gamemode", "displayname", "tablist", "remove", "sneak", "hidearmor");
         }
         return Collections.emptyList();
     }

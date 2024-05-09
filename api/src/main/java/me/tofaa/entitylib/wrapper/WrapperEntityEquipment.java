@@ -7,6 +7,7 @@ import com.github.retrooper.packetevents.protocol.player.EquipmentSlot;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityEquipment;
 import me.tofaa.entitylib.EntityLib;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,39 +30,38 @@ public class WrapperEntityEquipment {
         Arrays.fill(equipment, ItemStack.EMPTY);
     }
 
-    public void setHelmet(@NotNull ItemStack itemStack) {
-        equipment[5] = itemStack;
+    public void setHelmet(@Nullable ItemStack itemStack) {
+        equipment[5] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public void setChestplate(@NotNull ItemStack itemStack) {
-        equipment[4] = itemStack;
+    public void setChestplate(@Nullable ItemStack itemStack) {
+        equipment[4] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public void setLeggings(@NotNull ItemStack itemStack) {
-        equipment[3] = itemStack;
+    public void setLeggings(@Nullable ItemStack itemStack) {
+        equipment[3] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public void setBoots(@NotNull ItemStack itemStack) {
-        equipment[2] = itemStack;
+    public void setBoots(@Nullable ItemStack itemStack) {
+        equipment[2] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public void setMainHand(@NotNull ItemStack itemStack) {
-        equipment[0] = itemStack;
+    public void setMainHand(@Nullable ItemStack itemStack) {
+        equipment[0] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public void setOffhand(@NotNull ItemStack itemStack) {
-        verifyVersion(ServerVersion.V_1_9, "Offhand is only supported on 1.9+");
-        equipment[1] = itemStack;
+    public void setOffhand(@Nullable ItemStack itemStack) {
+        equipment[1] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public void setItem(@NotNull EquipmentSlot slot, @NotNull ItemStack itemStack) {
-        equipment[slot.ordinal()]  = itemStack;
+    public void setItem(@NotNull EquipmentSlot slot, @Nullable ItemStack itemStack) {
+        equipment[slot.ordinal()]  = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
@@ -102,7 +102,6 @@ public class WrapperEntityEquipment {
         List<Equipment> equipment = new ArrayList<>();
         for (int i = 0; i < this.equipment.length; i++) {
             ItemStack itemStack = this.equipment[i];
-            if (itemStack == null || itemStack.equals(ItemStack.EMPTY)) continue;
             equipment.add(new Equipment(EQUIPMENT_SLOTS[i], itemStack));
         }
         return new WrapperPlayServerEntityEquipment(
@@ -124,8 +123,6 @@ public class WrapperEntityEquipment {
 
     public void setNotifyChanges(boolean notifyChanges) {
         this.notifyChanges = notifyChanges;
-        if (notifyChanges) {
-            refresh();
-        }
+        refresh();
     }
 }
