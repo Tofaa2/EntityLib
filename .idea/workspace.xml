@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,6 +53,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.1/c70f2380ee7c60be444e22a10e679577ab9f8afa/api-2.2.1-default.jar!/com/github/retrooper/packetevents/protocol/item/ItemStack.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.1/c70f2380ee7c60be444e22a10e679577ab9f8afa/api-2.2.1-default.jar!/com/github/retrooper/packetevents/protocol/player/TextureProperty.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.0/c4ba5371a29ac9b2ad6129b1d39ea38750043eff/gson-2.8.0.jar!/com/google/gson/JsonArray.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.jdks/corretto-17.0.10/lib/src.zip!/java.base/java/util/List.java" root0="SKIP_INSPECTION" />
@@ -312,6 +311,7 @@
       <workItem from="1709142473633" duration="2565000" />
       <workItem from="1714477887801" duration="3618000" />
       <workItem from="1714566597065" duration="351000" />
+      <workItem from="1715283453023" duration="949000" />
     </task>
     <servers />
   </component>
