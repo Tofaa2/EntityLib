@@ -30,6 +30,17 @@ public class WrapperEntityEquipment {
         Arrays.fill(equipment, ItemStack.EMPTY);
     }
 
+
+    public void clearSlot(@NotNull EquipmentSlot slot) {
+        equipment[slot.ordinal()] = ItemStack.EMPTY;
+        refresh();
+    }
+
+    public void clearAll() {
+        Arrays.fill(equipment, ItemStack.EMPTY);
+        refresh();
+    }
+
     public void setHelmet(@Nullable ItemStack itemStack) {
         equipment[5] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
