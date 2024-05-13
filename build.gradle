@@ -59,6 +59,6 @@ allprojects {
 
 
 dependencies {
-    compileOnlyApi 'com.github.retrooper.packetevents:spigot:2.2.0'
+    compileOnlyApi 'com.github.retrooper.packetevents:spigot:2.3.0'
 }
 

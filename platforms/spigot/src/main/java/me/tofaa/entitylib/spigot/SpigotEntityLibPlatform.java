@@ -1,12 +1,17 @@
 package me.tofaa.entitylib.spigot;
 
+import com.github.retrooper.packetevents.PacketEventsAPI;
+import io.github.retrooper.packetevents.bstats.Metrics;
+import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import me.tofaa.entitylib.APIConfig;
+import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.TrackedEntity;
 import me.tofaa.entitylib.common.AbstractPlatform;
 import me.tofaa.entitylib.utils.ConcurrentWeakIdentityHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -36,6 +41,11 @@ public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
             InternalRegistryListener listener = new InternalRegistryListener(this);
             handle.getServer().getPluginManager().registerEvents(listener, handle);
             api.getPacketEvents().getEventManager().registerListener(listener);
+        }
+        if (settings.shouldUseBstats()) {
+            PacketEventsAPI<Plugin> pe = (PacketEventsAPI<Plugin>)api.getPacketEvents();
+            Metrics metrics = new Metrics((JavaPlugin) pe.getPlugin(), 21916);
+            metrics.addCustomChart(new Metrics.SimplePie("entitylib-version", EntityLib::getVersion));
         }
     }
 

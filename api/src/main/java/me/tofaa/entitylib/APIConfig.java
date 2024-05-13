@@ -3,6 +3,7 @@ package me.tofaa.entitylib;
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import me.tofaa.entitylib.utils.GithubUpdater;
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,6 +21,7 @@ public final class APIConfig {
     private boolean platformLogger = false;
     private boolean defaultCommands = false;
     private boolean platformTracking = false;
+    private boolean bstats = false;
 
     public APIConfig(PacketEventsAPI<?> packetEvents) {
         this.packetEvents = packetEvents;
@@ -28,17 +30,13 @@ public final class APIConfig {
     @Blocking
     public boolean requiresUpdate() throws IOException {
         if (!checkForUpdates) return false;
-        String urlString = "https://api.github.com/repos/Tofaa2/EntityLib/releases/latest";
-        String version = EntityLib.getVersion();
+        GithubUpdater updater = new GithubUpdater("Tofaa2", "EntityLib", EntityLib.getVersion());
+        return !updater.isLatestVersion();
+    }
 
-        URL url = new URL(urlString);
-        JsonParser json = new JsonParser();
-        InputStream stream = url.openStream();
-        JsonArray array = json.parse(new InputStreamReader(stream)).getAsJsonArray();
-        String latest = array.get(0).getAsJsonObject().get("tag_name").getAsString();
-
-        stream.close();
-        return !version.equalsIgnoreCase(latest);
+    public @NotNull APIConfig useBstats() {
+        this.bstats = true;
+        return this;
     }
 
     public @NotNull APIConfig usePlatformLogger() {
@@ -97,6 +95,10 @@ public final class APIConfig {
 
     public boolean shouldTrackPlatformEntities() {
         return platformTracking;
+    }
+
+    public boolean shouldUseBstats() {
+        return bstats;
     }
 
 }
