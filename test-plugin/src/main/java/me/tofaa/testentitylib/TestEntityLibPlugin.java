@@ -24,8 +24,6 @@ import java.util.UUID;
 
 public class TestEntityLibPlugin extends JavaPlugin {
 
-    private SpigotEntityLibAPI api;
-
     @Override
     public void onEnable() {
 
@@ -34,10 +32,10 @@ public class TestEntityLibPlugin extends JavaPlugin {
                 .debugMode()
                 .tickTickables()
                 .trackPlatformEntities()
+                .useBstats()
                 .usePlatformLogger();
 
         EntityLib.init(platform, settings);
-        api = platform.getAPI();
 
         CommandMap commandMap;
         try {

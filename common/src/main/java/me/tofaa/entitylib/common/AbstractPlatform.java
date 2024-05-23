@@ -79,4 +79,5 @@ public abstract class AbstractPlatform<P> implements Platform<P> {
     public P getHandle() {
         return handle;
     }
+
 }

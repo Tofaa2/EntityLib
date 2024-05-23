@@ -9,9 +9,7 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.Internal
 @SuppressWarnings("unused")
 public final class MetaOffsetConverter {
-    private MetaOffsetConverter() {
-
-    }
+    private MetaOffsetConverter() {}
 
     public static final class EntityMetaOffsets {
         public static byte airTicksOffset() {

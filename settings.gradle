@@ -11,6 +11,7 @@ include 'common'
 if (!Boolean.parseBoolean(System.getenv("JITPACK"))) {
     include 'code-gen'
     include 'test-plugin'
+    include 'model-engine-addon'
 }
 include 'platforms:velocity'
 findProject(':platforms:velocity')?.name = 'velocity'

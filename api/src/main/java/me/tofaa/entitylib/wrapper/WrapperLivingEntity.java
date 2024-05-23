@@ -1,5 +1,6 @@
 package me.tofaa.entitylib.wrapper;
 
+import com.github.retrooper.packetevents.protocol.attribute.Attribute;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.nbt.NBTCompound;
 import com.github.retrooper.packetevents.protocol.player.HumanoidArm;
@@ -7,20 +8,23 @@ import com.github.retrooper.packetevents.protocol.potion.PotionType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityAnimation;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityEffect;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerTeams;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerUpdateAttributes;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.types.LivingEntityMeta;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.UUID;
 
 public class WrapperLivingEntity extends WrapperEntity{
 
     private final WrapperEntityEquipment equipment;
-
+    private final WrapperEntityAttributes attributes;
 
     public WrapperLivingEntity(int entityId, UUID uuid, EntityType entityType, EntityMeta entityMeta) {
         super(entityId, uuid, entityType, entityMeta);
         this.equipment = new WrapperEntityEquipment(this);
+        this.attributes = new WrapperEntityAttributes(this);
     }
 
     @Override
@@ -28,6 +32,12 @@ public class WrapperLivingEntity extends WrapperEntity{
         super.refresh();
         equipment.refresh();
     }
+
+    public WrapperEntityAttributes getAttributes() {
+        return attributes;
+    }
+
+
 
     /**
      * Adds a potion effect to the entity.

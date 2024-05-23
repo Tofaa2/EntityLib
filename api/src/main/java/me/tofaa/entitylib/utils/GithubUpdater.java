@@ -23,15 +23,14 @@ public final class GithubUpdater {
     }
 
     @Blocking
-    public boolean isLatestVersion() {
+    public boolean isLatestVersion() throws IOException {
         String latest = getLatestVersion();
         return latest != null && latest.equals(currentVersion);
     }
 
 
     @Blocking
-    public String getLatestVersion() {
-        try {
+    public String getLatestVersion() throws IOException {
             URL url = new URL("https://api.github.com/repos/" + org + "/" + repo + "/releases/latest");
             URLConnection connection = url.openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/5.0");
@@ -45,10 +44,6 @@ public final class GithubUpdater {
                 return json.get("name").getAsString();
             }
             throw new IOException("Could not find name attribute in github api fetch");
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public String getCurrentVersion() {

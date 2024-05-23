@@ -18,10 +18,13 @@ public final class EntityLib {
         if (api.getSettings().shouldCheckForUpdate()) {
             try {
                 if (api.getSettings().isDebugMode()) {
-                    platform.getLogger().log(Level.CONFIG, "Checking for updates...");
+                    platform.getLogger().log(Level.INFO, "Checking for updates...");
                 }
                 if (api.getSettings().requiresUpdate()) {
                     platform.getLogger().log(Level.WARNING, "You are using an outdated version of EntityLib. Please take a look at the Github releases page.");
+                }
+                else {
+                    platform.getLogger().log(Level.INFO, "No EntityLib updates found.");
                 }
 
             } catch (IOException e) {
@@ -43,6 +46,6 @@ public final class EntityLib {
     }
 
     public static String getVersion() {
-        return "1.2.0-SNAPSHOT";
+        return "2.1.2-SNAPSHOT";
     }
 }

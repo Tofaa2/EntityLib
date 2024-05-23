@@ -67,7 +67,6 @@ public interface Platform<P> {
 
     /**
      * Sets up the API for the platform. This method should be called automatically by the platform. Don't call it yourself.
-     * @param settings
      */
     void setupApi(@NotNull APIConfig settings);
 
@@ -82,5 +81,11 @@ public interface Platform<P> {
     String getName();
 
     @NotNull P getHandle();
+
+    default void logIfNeeded(String message) {
+        if (getAPI().getSettings().isDebugMode()) {
+            getLogger().info(message);
+        }
+    }
 
 }
