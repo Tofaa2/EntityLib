@@ -3,6 +3,10 @@ EntityLib is a PacketEvents addon that provides an abstraction over raw entity d
 Currently, EntityLib is only stable for 1.18+, but it will support all versions that PacketEvents supports in the future. <br>
 For general support and reports of bugs, join the [Discord](https://discord.gg/jawR25hrSK) server.
 
+Currently supported platforms are `spigot` and `velocity`
+You can easily use EntityLib platformless by using the `api` or `common` module
+
+
 Gradle (Groovy DSL):
 ```groovy
 //https://jitpack.io/#Tofaa2/EntityLib/
