@@ -31,6 +31,7 @@ public class WrapperLivingEntity extends WrapperEntity{
     public void refresh() {
         super.refresh();
         equipment.refresh();
+        attributes.refresh();
     }
 
     public WrapperEntityAttributes getAttributes() {

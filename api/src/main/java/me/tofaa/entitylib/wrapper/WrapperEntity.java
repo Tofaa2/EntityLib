@@ -301,6 +301,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     }
 
     protected WrapperPlayServerSetPassengers createPassengerPacket() {
+        if (passengers.isEmpty()) return null;
         return new WrapperPlayServerSetPassengers(entityId, passengers.stream().mapToInt(i -> i).toArray());
     }
 
@@ -352,6 +353,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     public void refresh() {
         if (!spawned) return;
         sendPacketToViewers(entityMeta.createPacket());
+        sendPacketToViewers(createPassengerPacket());
     }
 
     public void sendPacketToViewers(PacketWrapper<?> packet) {
@@ -365,7 +367,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     }
 
     private static void sendPacket(UUID user, PacketWrapper<?> wrapper) {
-
+        if (wrapper == null) return;
         Object channel = EntityLib.getApi().getPacketEvents().getProtocolManager().getChannel(user);
         if (channel == null) {
             if (EntityLib.getApi().getSettings().isDebugMode()) {

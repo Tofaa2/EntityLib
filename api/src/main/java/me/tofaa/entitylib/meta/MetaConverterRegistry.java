@@ -80,7 +80,7 @@ final class MetaConverterRegistry {
         put(GUARDIAN, GuardianMeta.class, GuardianMeta::new);
         put(GIANT, GiantMeta.class, GiantMeta::new);
         put(ENDERMITE, EndermiteMeta.class, EndermiteMeta::new);
-        put(ENDERMITE, EndermiteMeta.class, EndermiteMeta::new);
+        put(ENDERMAN, EndermanMeta.class, EndermanMeta::new);
         put(ELDER_GUARDIAN, ElderGuardianMeta.class, ElderGuardianMeta::new);
         put(CREEPER, CreeperMeta.class, CreeperMeta::new);
         put(CAVE_SPIDER, CaveSpiderMeta.class, CaveSpiderMeta::new);
@@ -112,7 +112,6 @@ final class MetaConverterRegistry {
         put(VILLAGER, VillagerMeta.class, VillagerMeta::new);
         put(WANDERING_TRADER, WanderingTraderMeta.class, WanderingTraderMeta::new);
         put(CHEST_MINECART, ChestMinecartMeta.class, ChestMinecartMeta::new);
-        put(COMMAND_BLOCK_MINECART, CommandBlockMinecartMeta.class, CommandBlockMinecartMeta::new);
         put(COMMAND_BLOCK_MINECART, CommandBlockMinecartMeta.class, CommandBlockMinecartMeta::new);
         put(FURNACE_MINECART, FurnaceMinecartMeta.class, FurnaceMinecartMeta::new);
         put(HOPPER_MINECART, FurnaceMinecartMeta.class, FurnaceMinecartMeta::new);
