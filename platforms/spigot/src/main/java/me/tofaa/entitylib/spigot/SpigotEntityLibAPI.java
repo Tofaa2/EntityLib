@@ -51,7 +51,8 @@ public class SpigotEntityLibAPI extends AbstractEntityLibAPI<JavaPlugin, BukkitT
         EntityMeta meta = EntityMeta.createMeta(e.getEntityId(), type);
         meta.setHasNoGravity(!e.hasGravity());
         meta.setCustomNameVisible(e.isCustomNameVisible());
-        meta.setCustomName(LegacyComponentSerializer.legacyAmpersand().deserialize(e.getCustomName()));
+        String customName = e.getCustomName();
+        if (customName != null) meta.setCustomName(LegacyComponentSerializer.legacyAmpersand().deserialize(customName));
         meta.setPose(ExtraConversionUtil.fromBukkitPose(e.getPose()));
         meta.setOnFire(e.getFireTicks() > 0);
         meta.setSilent(e.isSilent());
