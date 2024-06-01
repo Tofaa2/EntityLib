@@ -150,7 +150,7 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     public Component getCustomName() {
-        Optional<Component> component = this.metadata.getIndex(customNameOffset(), null);
+        Optional<Component> component = this.metadata.getIndex(customNameOffset(), Optional.empty());
         return component.orElse(null);
     }
 

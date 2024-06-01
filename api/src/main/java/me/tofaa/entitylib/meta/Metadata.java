@@ -2,6 +2,7 @@ package me.tofaa.entitylib.meta;
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataType;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.EntityLibAPI;
@@ -74,6 +75,11 @@ public class Metadata {
         entity.sendPacketsToViewers(packet);
     }
 
+    public void setMetaFromPacket(WrapperPlayServerEntityMetadata wrapper) {
+        for (EntityData data : wrapper.getEntityMetadata()) {
+            metadataMap.put((byte) data.getIndex(), data);
+        }
+    }
 
     public boolean isNotifyingChanges() {
         return notifyAboutChanges;
