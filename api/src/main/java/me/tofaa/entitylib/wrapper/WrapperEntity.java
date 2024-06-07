@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 public class WrapperEntity implements Tickable, TrackedEntity {
 
@@ -279,6 +280,20 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     public EntityMeta getEntityMeta() {
         return entityMeta;
     }
+
+    public <T extends EntityMeta> T getEntityMeta(@NotNull Class<T> metaClass) {
+        return metaClass.cast(entityMeta);
+    }
+
+    public <T extends EntityMeta> void consumeEntityMeta(@NotNull Class<T> metaClass, Consumer<T> consumer) {
+        T meta = getEntityMeta(metaClass);
+        consumer.accept(meta);
+    }
+
+    public void consumeMeta(Consumer<EntityMeta> consumer) {
+        consumer.accept(entityMeta);
+    }
+
 
     public @NotNull UUID getUuid() {
         return uuid;
