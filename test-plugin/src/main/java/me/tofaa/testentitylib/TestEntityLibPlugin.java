@@ -42,6 +42,7 @@ public class TestEntityLibPlugin extends JavaPlugin {
             commandMap = (CommandMap) Bukkit.getServer().getClass().getMethod("getCommandMap").invoke(Bukkit.getServer());
             commandMap.register("testapi", new TestTextDisplayCommand());
             commandMap.register("testplayer", new TestPlayerCommand());
+            commandMap.register("testholo", new TestHologramsCommand());
         }
         catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();

@@ -4,6 +4,7 @@ import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.other.ArmorStandMeta;
+import me.tofaa.entitylib.utils.Check;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
@@ -11,11 +12,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-final class LegacyHologram<W> implements Hologram.Legacy<W> {
+final class LegacyHologram implements Hologram.Legacy {
 
     private Location location;
-    private List<WrapperEntity> lines = new ArrayList<>(3);
+    private final List<WrapperEntity> lines = new ArrayList<>(3);
     private float lineOffset = -0.9875f;
     private float markerOffset = -0.40625f;
     private boolean marker;
@@ -28,6 +30,13 @@ final class LegacyHologram<W> implements Hologram.Legacy<W> {
         this(location);
         for (Component line : lines) {
             addLine(line);
+        }
+    }
+
+    @Override
+    public void addViewer(@NotNull UUID viewer) {
+        for (WrapperEntity line : lines) {
+            line.addViewer(viewer);
         }
     }
 
@@ -95,7 +104,7 @@ final class LegacyHologram<W> implements Hologram.Legacy<W> {
         meta.setHasNoGravity(true);
         meta.setSmall(true);
         meta.setMarker(marker);
-        this.lines.set(index, e);
+        Check.arrayLength(lines, index, e);
         e.spawn(location);
         teleport(location);
     }

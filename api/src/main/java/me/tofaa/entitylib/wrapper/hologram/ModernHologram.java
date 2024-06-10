@@ -4,6 +4,7 @@ import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.display.TextDisplayMeta;
+import me.tofaa.entitylib.utils.Check;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
@@ -11,13 +12,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
-final class ModernHologram<W> implements Hologram.Modern<W> {
+final class ModernHologram implements Hologram.Modern {
 
     private Location location;
-    private List<WrapperEntity> lines = new ArrayList<>(3);
+    private final List<WrapperEntity> lines = new ArrayList<>(3);
     private Consumer<TextDisplayMeta> modifier;
+    private boolean spawned = false;
 
     ModernHologram(@NotNull Location location) {
         this.location = location;
@@ -36,6 +39,7 @@ final class ModernHologram<W> implements Hologram.Modern<W> {
             line.spawn(location);
         }
         teleport(location);
+        spawned = true;
     }
 
     @Override
@@ -43,6 +47,7 @@ final class ModernHologram<W> implements Hologram.Modern<W> {
         for (WrapperEntity line : lines) {
             line.despawn();
         }
+        spawned = false;
     }
 
     @Override
@@ -72,15 +77,26 @@ final class ModernHologram<W> implements Hologram.Modern<W> {
         meta.setInvisible(true);
         meta.setHasNoGravity(true);
         meta.setText(line);
-        this.modifier.accept(meta);
-        this.lines.set(index, e);
-        e.spawn(location);
-        teleport(location);
+        if (this.modifier != null) {
+            this.modifier.accept(meta);
+        }
+        Check.arrayLength(lines, index, e);
+        if (spawned) {
+            e.spawn(location);
+            teleport(location);
+        }
     }
 
     @Override
     public void addLine(@Nullable Component line) {
         setLine(lines.size(), line);
+    }
+
+    @Override
+    public void addViewer(@NotNull UUID viewer) {
+        for (WrapperEntity line : lines) {
+            line.addViewer(viewer);
+        }
     }
 
 

@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -13,6 +14,18 @@ import java.util.Objects;
 public final class Check {
 
     private Check() {}
+
+
+    public static <T> void arrayLength(List<T> lines, int index, T e) {
+        if (index >= lines.size()) {
+            for (int i = lines.size(); i < index; i++) {
+                lines.add(null);
+            }
+            lines.add(e);
+        }
+        else {lines.set(index, e);
+        }
+    }
 
     @Contract("null, _ -> fail")
     public static void notNull(@Nullable Object object, @NotNull String reason) {

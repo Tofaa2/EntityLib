@@ -1,5 +1,6 @@
 package me.tofaa.entitylib.wrapper.hologram;
 
+import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import me.tofaa.entitylib.meta.display.TextDisplayMeta;
 import net.kyori.adventure.text.Component;
@@ -7,24 +8,26 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
-public interface Hologram<W> {
+public interface Hologram {
 
-    static <C> Hologram.@NotNull Legacy<C> legacy(@NotNull Location location) {
-        return new LegacyHologram<>(location);
+    static  Hologram.@NotNull Legacy legacy(@NotNull Location location) {
+        return new LegacyHologram(location);
     }
 
-    static <C> Hologram.@NotNull Legacy<C> legacy(@NotNull Location location, List<Component> lines) {
-        return new LegacyHologram<>(location, lines);
+    static  Hologram.@NotNull Legacy legacy(@NotNull Location location, List<Component> lines) {
+        return new LegacyHologram(location, lines);
     }
 
-    static <C> Hologram.@NotNull Modern<C> modern(@NotNull Location location) {
-        return new ModernHologram<>(location);
+
+    static  Hologram.@NotNull Modern modern(@NotNull Location location) {
+        return new ModernHologram(location);
     }
 
-    static <C> Hologram.@NotNull Modern<C> modern(@NotNull Location location, List<Component> lines) {
-        return new ModernHologram<>(location, lines);
+    static  Hologram.@NotNull Modern modern(@NotNull Location location, List<Component> lines) {
+        return new ModernHologram(location, lines);
     }
 
     @NotNull Location getLocation();
@@ -44,13 +47,18 @@ public interface Hologram<W> {
 
     void addLine(@Nullable Component line);
 
-    interface Modern<W> extends Hologram<W> {
+    void addViewer(@NotNull UUID viewer);
+    default void addViewer(@NotNull User user) {
+        addViewer(user.getUUID());
+    }
+
+    interface Modern extends Hologram {
 
         // I got too lazy
         void setModifier(@NotNull Consumer<TextDisplayMeta> consumer);
 
     }
-    interface Legacy<W> extends Hologram<W> {
+    interface Legacy extends Hologram {
 
         float getLineOffset(boolean marker);
 
