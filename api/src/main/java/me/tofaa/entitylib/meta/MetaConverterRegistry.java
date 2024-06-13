@@ -151,7 +151,7 @@ final class MetaConverterRegistry {
         put(VILLAGER, VillagerMeta.class, VillagerMeta::new);
         put(VINDICATOR, VindicatorMeta.class, VindicatorMeta::new);
         put(WANDERING_TRADER, WanderingTraderMeta.class, WanderingTraderMeta::new);
-        put(WARDEN, LivingEntityMeta.class, LivingEntityMeta::new); // TODO: Implement
+        put(WARDEN, WardenMeta.class, WardenMeta::new);
         put(WIND_CHARGE, SmallFireballMeta.class, SmallFireballMeta::new); // TODO: Verify correctness
         put(WITCH, WitchMeta.class, WitchMeta::new);
         put(WITHER, WitherMeta.class, WitherMeta::new);
