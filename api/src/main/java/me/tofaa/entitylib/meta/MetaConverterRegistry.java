@@ -61,6 +61,7 @@ final class MetaConverterRegistry {
         put(BOGGED, LivingEntityMeta.class, LivingEntityMeta::new); // TODO: Implement
         put(BREEZE, LivingEntityMeta.class, LivingEntityMeta::new); // TODO: Implement
         put(BREEZE_WIND_CHARGE, SmallFireballMeta.class, SmallFireballMeta::new); // TODO: Verify correctness
+        put(CAMEL, CamelMeta.class, CamelMeta::new); // TODO: Verify correctness
         put(CAT, CatMeta.class, CatMeta::new);
         put(CAVE_SPIDER, CaveSpiderMeta.class, CaveSpiderMeta::new);
         put(CHEST_MINECART, ChestMinecartMeta.class, ChestMinecartMeta::new);
