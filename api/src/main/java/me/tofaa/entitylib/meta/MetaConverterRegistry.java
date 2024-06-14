@@ -48,7 +48,7 @@ final class MetaConverterRegistry {
     MetaConverterRegistry() {
         put(ABSTRACT_WIND_CHARGE, SmallFireballMeta.class, SmallFireballMeta::new); // TODO: Verify correctness
         put(AREA_EFFECT_CLOUD, AreaEffectCloudMeta.class, AreaEffectCloudMeta::new);
-        put(ARMADILLO, LivingEntityMeta.class, LivingEntityMeta::new); // TODO: Implement
+        put(ARMADILLO, ArmadilloMeta.class, ArmadilloMeta::new); // TODO: Verify correctness
         put(ARMOR_STAND, ArmorStandMeta.class, ArmorStandMeta::new);
         put(ALLAY, LivingEntityMeta.class, LivingEntityMeta::new); // TODO: Implement
         put(ARROW, ArrowMeta.class, ArrowMeta::new);
