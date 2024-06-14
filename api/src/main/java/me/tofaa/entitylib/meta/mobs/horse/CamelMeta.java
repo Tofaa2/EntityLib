@@ -21,10 +21,10 @@ public class CamelMeta extends BaseHorseMeta {
     }
 
     public long getLastPoseChangeTick() {
-        return super.metadata.getIndex(OFFSET, 0L);
+        return super.metadata.getIndex(offset(OFFSET, 1), 0L);
     }
 
     public void setLastPoseChangeTick(long value) {
-        super.metadata.setIndex(OFFSET, EntityDataTypes.LONG, value);
+        super.metadata.setIndex(offset(OFFSET, 1), EntityDataTypes.LONG, value);
     }
 }
