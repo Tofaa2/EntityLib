@@ -9,6 +9,7 @@ import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.EntityLibAPI;
 import me.tofaa.entitylib.Platform;
+import me.tofaa.entitylib.container.EntityContainer;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.projectile.ThrownExpBottleMeta;
 import me.tofaa.entitylib.meta.types.LivingEntityMeta;
@@ -33,130 +34,14 @@ public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
     protected final Map<Integer, WrapperEntity> entitiesById = new ConcurrentHashMap<>();
     protected final Map<UUID, WrapperEntity> entities = new ConcurrentHashMap<>();
 
+    protected final Set<EntityContainer> entityContainers = ConcurrentHashMap.newKeySet();
+    protected final EntityContainer defaultEntityContainer = EntityContainer.basic();
+
     protected AbstractEntityLibAPI(Platform<P> platform, APIConfig settings) {
         this.platform = platform;
         this.packetEvents = settings.getPacketEvents();
         this.settings = settings;
         this.tickContainers = settings.shouldTickTickables() ? new HashSet<>() : Collections.emptyList();
-    }
-
-    @Override
-    public <T1 extends WrapperEntity> @NotNull T1 createEntity(UUID uuid, int entityId, EntityType type) {
-        if (entities.containsKey(uuid)) {
-            throw new IllegalArgumentException("Entity with UUID " + uuid + " already exists in this world.");
-        }
-        if (entitiesById.containsKey(entityId)) {
-            throw new IllegalArgumentException("Entity with ID " + entityId + " already exists in this world.");
-        }
-        EntityMeta meta = EntityMeta.createMeta(entityId, type);
-        WrapperEntity e;
-        if (meta instanceof LivingEntityMeta) {
-            e = new WrapperLivingEntity(entityId, uuid, type, meta);
-        }
-        else if (meta instanceof ThrownExpBottleMeta) {
-            e = new WrapperExperienceOrbEntity(entityId, uuid, type, meta);
-        }
-        else {
-            e = new WrapperEntity(entityId, uuid, type, meta);
-        }
-        entities.put(uuid, e);
-        entitiesById.put(entityId, e);
-        return (T1) e;
-    }
-
-    @Override
-    public <T1 extends WrapperEntity> @NotNull T1 createEntity(EntityType type) {
-        UUID uuid = EntityLib.getPlatform().getEntityUuidProvider().provide(type);
-        while (entities.containsKey(uuid)) {
-            uuid = EntityLib.getPlatform().getEntityUuidProvider().provide(type);
-        }
-        int entityId = EntityLib.getPlatform().getEntityIdProvider().provide(uuid, type);
-        while (entitiesById.containsKey(entityId)) {
-            entityId = EntityLib.getPlatform().getEntityIdProvider().provide(uuid, type);
-        }
-        return createEntity(uuid, entityId, type);
-    }
-
-    @Override
-    public @NotNull WrapperPlayer spawnPlayer(UserProfile profile, Location location) {
-        if (getEntity(profile.getUUID()) != null) {
-            throw new IllegalArgumentException("Entity with UUID " + profile.getUUID() + " already exists in this world.");
-        }
-
-        int id = EntityLib.getPlatform().getEntityIdProvider().provide(profile.getUUID(), EntityTypes.PLAYER);
-        while (entitiesById.containsKey(id)) {
-            id = EntityLib.getPlatform().getEntityIdProvider().provide(profile.getUUID(), EntityTypes.PLAYER);
-        }
-        WrapperPlayer player = new WrapperPlayer(profile, id);
-        player.spawn(location);
-        entities.put(player.getUuid(), player);
-        entitiesById.put(player.getEntityId(), player);
-        return player;
-    }
-
-    @Override
-    public @NotNull WrapperPlayer createPlayer(UserProfile profile) {
-        int id = EntityLib.getPlatform().getEntityIdProvider().provide(profile.getUUID(), EntityTypes.PLAYER);
-        while (entitiesById.containsKey
-        (id)) {
-            id = EntityLib.getPlatform().getEntityIdProvider().provide(profile.getUUID(), EntityTypes.PLAYER);
-        }
-        return createPlayer(profile, id);
-    }
-
-    @Override
-    public @NotNull WrapperPlayer createPlayer(UserProfile profile, int entityId) {
-        if (getEntity(profile.getUUID()) != null) {
-            throw new IllegalArgumentException("Entity with UUID " + profile.getUUID() + " already exists in this world.");
-        }
-        WrapperPlayer player = new WrapperPlayer(profile, entityId);
-        entities.put(player.getUuid(), player);
-        entitiesById.put(player.getEntityId(), player);
-        return player;
-    }
-
-    @Override
-    public <T1 extends WrapperEntity> @NotNull T1 spawnEntity(@NotNull T1 entity, @NotNull Location location) {
-        entity.spawn(location);
-        entities.put(entity.getUuid(), entity);
-        entitiesById.put(entity.getEntityId(), entity);
-        return entity;
-    }
-
-    @Override
-    public void removeEntity(WrapperEntity entity) {
-        entity.despawn();
-        this.entities.remove(entity.getUuid());
-        this.entitiesById.remove(entity.getEntityId());
-    }
-
-    @Override
-    public <T1 extends WrapperEntity> @NotNull T1 spawnEntity(@NotNull Class<T1> wrapperClass, @NotNull EntityType entityType, @NotNull Location location) {
-        UUID uuid = EntityLib.getPlatform().getEntityUuidProvider().provide(entityType);
-        while (entities.containsKey(uuid)) {
-            uuid = EntityLib.getPlatform().getEntityUuidProvider().provide(entityType);
-        }
-        int entityId = EntityLib.getPlatform().getEntityIdProvider().provide(uuid, entityType);
-        while (entitiesById.containsKey(entityId)) {
-            entityId = EntityLib.getPlatform().getEntityIdProvider().provide(uuid, entityType);
-        }
-        EntityMeta meta = EntityMeta.createMeta(entityId, entityType);
-        WrapperEntity e;
-        if (meta instanceof LivingEntityMeta) {
-            e = new WrapperLivingEntity(entityId, uuid, entityType, meta);
-        }
-        else if (meta instanceof ThrownExpBottleMeta) {
-            e = new WrapperExperienceOrbEntity(entityId, uuid, entityType, meta);
-        }
-        else {
-            e = new WrapperEntity(entityId, uuid, entityType, meta);
-        }
-        return spawnEntity(wrapperClass.cast(e), location);
-    }
-
-    @Override
-    public @NotNull WrapperEntity spawnEntity(@NotNull EntityType entityType, @NotNull Location location) {
-        return spawnEntity(WrapperEntity.class, entityType, location);
     }
 
     @Override
@@ -172,6 +57,27 @@ public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
     @Override
     public @NotNull Collection<WrapperEntity> getAllEntities() {
         return Collections.unmodifiableCollection(entities.values());
+    }
+
+    @Override
+    public void addContainer(EntityContainer container) {
+        entityContainers.add(container);
+    }
+
+    @Override
+    public void removeContainer(EntityContainer container) {
+        entityContainers.remove(container);
+    }
+
+    @Override
+    public @NotNull EntityContainer getDefaultContainer() {
+        return defaultEntityContainer;
+    }
+
+    @NotNull
+    @Override
+    public Set<EntityContainer> getEntityContainers() {
+        return entityContainers;
     }
 
     @NotNull

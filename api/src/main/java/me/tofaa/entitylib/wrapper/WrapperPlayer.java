@@ -46,12 +46,12 @@ public class WrapperPlayer extends WrapperLivingEntity {
 
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
-        sendPacketsToViewers(new WrapperPlayServerPlayerInfoUpdate(WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_GAME_MODE, createInfo()));
+        sendPacketsToViewersIfSpawned(new WrapperPlayServerPlayerInfoUpdate(WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_GAME_MODE, createInfo()));
     }
 
     public void setDisplayName(Component displayName) {
         this.displayName = displayName;
-        sendPacketsToViewers(new WrapperPlayServerPlayerInfoUpdate(WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_DISPLAY_NAME, createInfo()));
+        sendPacketsToViewersIfSpawned(new WrapperPlayServerPlayerInfoUpdate(WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_DISPLAY_NAME, createInfo()));
     }
 
     public Component getDisplayName() {
@@ -94,9 +94,9 @@ public class WrapperPlayer extends WrapperLivingEntity {
 
     public void setInTablist(boolean tablist) {
         this.tablist = tablist;
-        sendPacketToViewers(tabListPacket());
+        sendPacketsToViewersIfSpawned(tabListPacket());
         if (!tablist) {
-            sendPacketToViewers(tabListRemovePacket());
+            sendPacketsToViewersIfSpawned(tabListRemovePacket());
         }
     }
 
@@ -106,7 +106,7 @@ public class WrapperPlayer extends WrapperLivingEntity {
 
     public void setLatency(int latency) {
         this.latency = latency;
-        sendPacketsToViewers(
+        sendPacketsToViewersIfSpawned(
                 new WrapperPlayServerPlayerInfoUpdate(
                         WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_LATENCY,
                         createInfo()

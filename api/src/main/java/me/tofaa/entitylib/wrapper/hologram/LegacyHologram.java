@@ -96,7 +96,8 @@ final class LegacyHologram implements Hologram.Legacy {
 
     @Override
     public void setLine(int index, @Nullable Component line) {
-        WrapperEntity e = EntityLib.getApi().spawnEntity(EntityTypes.ARMOR_STAND, location);
+        WrapperEntity e = new WrapperEntity(EntityTypes.ARMOR_STAND);
+        e.spawn(location);
         ArmorStandMeta meta = (ArmorStandMeta) e.getEntityMeta();
         meta.setCustomName(line);
         meta.setCustomNameVisible(true);

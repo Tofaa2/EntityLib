@@ -1,10 +1,8 @@
 package me.tofaa.entitylib.velocity;
 
-import com.github.retrooper.packetevents.protocol.world.Location;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.ScheduledTask;
 import me.tofaa.entitylib.APIConfig;
-import me.tofaa.entitylib.Platform;
 import me.tofaa.entitylib.common.AbstractEntityLibAPI;
 import me.tofaa.entitylib.tick.TickContainer;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
@@ -50,7 +48,7 @@ public class VelocityEntityLibAPI extends AbstractEntityLibAPI<ProxyServer, Sche
 
     @NotNull
     @Override
-    public WrapperEntity cloneEntity(@NotNull Object platformEntity, @NotNull Location location) {
+    public <P extends WrapperEntity> P cloneEntity(@NotNull Object platformEntity) {
         throw new UnsupportedOperationException("No support for cloning entities on Velocity");
     }
 }

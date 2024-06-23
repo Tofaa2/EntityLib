@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/model-engine-addon" />
             <option value="$PROJECT_DIR$/platforms" />
             <option value="$PROJECT_DIR$/platforms/spigot" />
+            <option value="$PROJECT_DIR$/platforms/standalone" />
             <option value="$PROJECT_DIR$/platforms/velocity" />
             <option value="$PROJECT_DIR$/test-plugin" />
           </set>

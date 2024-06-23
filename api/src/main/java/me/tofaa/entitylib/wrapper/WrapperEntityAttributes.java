@@ -75,7 +75,7 @@ public final class WrapperEntityAttributes {
 
 
     public void refresh() {
-        entity.sendPacketToViewers(createPacket());
+        if (entity.isSpawned()) entity.sendPacketToViewers(createPacket());
     }
 
     public WrapperPlayServerUpdateAttributes createPacket() {

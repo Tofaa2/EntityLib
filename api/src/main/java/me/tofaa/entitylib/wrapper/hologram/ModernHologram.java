@@ -10,6 +10,7 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.sql.Wrapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -72,7 +73,8 @@ final class ModernHologram implements Hologram.Modern {
 
     @Override
     public void setLine(int index, @Nullable Component line) {
-        WrapperEntity e = EntityLib.getApi().spawnEntity(EntityTypes.TEXT_DISPLAY, location);
+        WrapperEntity e = new WrapperEntity(EntityTypes.TEXT_DISPLAY);
+        e.spawn(location);
         TextDisplayMeta meta = (TextDisplayMeta) e.getEntityMeta();
         meta.setInvisible(true);
         meta.setHasNoGravity(true);

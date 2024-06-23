@@ -8,6 +8,7 @@ import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.*;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.TrackedEntity;
+import me.tofaa.entitylib.container.EntityContainer;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.types.ObjectData;
 import me.tofaa.entitylib.tick.Tickable;
@@ -34,6 +35,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     private Vector3d velocity;
     private int riding = -1;
     private final Set<Integer> passengers;
+    private EntityContainer parent;
 
     public WrapperEntity(int entityId, UUID uuid, EntityType entityType, EntityMeta entityMeta) {
         this.entityId = entityId;
@@ -45,7 +47,22 @@ public class WrapperEntity implements Tickable, TrackedEntity {
         this.passengers = ConcurrentHashMap.newKeySet();
     }
 
-    public boolean spawn(Location location) {
+    public WrapperEntity(int entityId, EntityType entityType) {
+        this(entityId, EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
+    }
+
+    public WrapperEntity(UUID uuid, EntityType entityType) {
+        this(EntityLib.getPlatform().getEntityIdProvider().provide(uuid, entityType), uuid, entityType);
+    }
+    public WrapperEntity(EntityType entityType) {
+        this(EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
+    }
+
+    public WrapperEntity(int entityId, UUID uuid, EntityType entityType) {
+        this(entityId, uuid, entityType, EntityMeta.createMeta(entityId, entityType));
+    }
+
+    public boolean spawn(Location location, EntityContainer parent) {
         if (spawned) return false;
         this.location = location;
         this.spawned = true;
@@ -63,7 +80,13 @@ public class WrapperEntity implements Tickable, TrackedEntity {
                 )
         );
         sendPacketToViewers(entityMeta.createPacket());
+        this.parent = parent;
+        parent.addEntity(this);
         return true;
+    }
+
+    public boolean spawn(Location location) {
+        return spawn(location, EntityLib.getApi().getDefaultContainer());
     }
 
     protected int getObjectData() {
@@ -98,7 +121,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     }
 
     public void remove() {
-        EntityLib.getApi().removeEntity(this);
+        parent.removeEntity(this, true);
     }
 
     public void despawn() {
@@ -157,6 +180,10 @@ public class WrapperEntity implements Tickable, TrackedEntity {
         if (EntityLib.getApi().getSettings().isDebugMode()) {
             EntityLib.getPlatform().getLogger().info("Added viewer " + uuid + " to entity " + entityId);
         }
+    }
+
+    public EntityContainer getParentContainer() {
+        return parent;
     }
 
     public void sendMessageToViewers(Component message) {
@@ -378,6 +405,18 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     public void sendPacketsToViewers(PacketWrapper<?>... wrappers) {
         for (PacketWrapper<?> wrapper : wrappers) {
             sendPacketToViewers(wrapper);
+        }
+    }
+
+    public void sendPacketToViewersIfSpawned(PacketWrapper<?> packet) {
+        if (spawned) {
+            sendPacketToViewers(packet);
+        }
+    }
+
+    public void sendPacketsToViewersIfSpawned(PacketWrapper<?>... wrappers) {
+        if (spawned) {
+            sendPacketsToViewers(wrappers);
         }
     }
 

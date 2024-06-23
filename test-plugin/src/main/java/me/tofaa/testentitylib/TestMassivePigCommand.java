@@ -3,6 +3,7 @@ package me.tofaa.testentitylib;
 import com.github.retrooper.packetevents.protocol.attribute.Attributes;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerUpdateAttributes;
+import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.wrapper.WrapperLivingEntity;
 import org.bukkit.command.CommandSender;
@@ -30,7 +31,7 @@ public class TestMassivePigCommand extends BukkitCommand {
             player.sendMessage("Large pig removed");
             return true;
         }
-        pig = EntityLib.getApi().createEntity(EntityTypes.PIG);
+        pig = new WrapperLivingEntity(EntityTypes.PIG);
         pig.getAttributes().setAttribute(
                 Attributes.GENERIC_SCALE,
                 10,
@@ -40,6 +41,8 @@ public class TestMassivePigCommand extends BukkitCommand {
                         WrapperPlayServerUpdateAttributes.PropertyModifier.Operation.MULTIPLY_BASE
                 )
         );
+        pig.addViewer(player.getUniqueId());
+        pig.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
         player.sendMessage("Large pig spawned");
         return true;
     }

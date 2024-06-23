@@ -11,6 +11,8 @@ allprojects {
                                          "net.kyori:adventure-text-serializer-legacy:${adventureVersion}",
                                          "net.kyori:adventure-nbt:${adventureVersion}"]
 
+    project.ext.peVersion = '2.3.0'
+
     apply plugin: 'java'
     apply plugin: 'java-library'
     apply plugin: 'maven-publish'
@@ -59,6 +61,6 @@ allprojects {
 
 
 dependencies {
-    compileOnlyApi 'com.github.retrooper.packetevents:spigot:2.3.0'
+    compileOnlyApi 'com.github.retrooper.packetevents:spigot:${project.ext.peVersion}'
 }
 

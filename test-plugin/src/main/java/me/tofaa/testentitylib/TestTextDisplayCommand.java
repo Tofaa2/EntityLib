@@ -22,19 +22,19 @@ public class TestTextDisplayCommand extends BukkitCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender commandSender, @NotNull String s, @NotNull String[] strings) {
-        if (!(commandSender instanceof Player)) return true;
-        Player player = (Player) commandSender;
-        if (e == null) {
-            e = EntityLib.getApi().createEntity(EntityTypes.PIG);
-            e.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
-            e.addViewer(player.getUniqueId());
-            player.sendMessage("Spawned");
-        }
-        String msg = String.join(" ", strings);
-        PigMeta meta = (PigMeta) e.getEntityMeta();
-        meta.setCustomNameVisible(true);
-        meta.setCustomName(Component.text(msg));
-        player.sendMessage("Set text to: " + msg);
+//        if (!(commandSender instanceof Player)) return true;
+//        Player player = (Player) commandSender;
+//        if (e == null) {
+//            e = EntityLib.getApi().createEntity(EntityTypes.PIG);
+//            e.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
+//            e.addViewer(player.getUniqueId());
+//            player.sendMessage("Spawned");
+//        }
+//        String msg = String.join(" ", strings);
+//        PigMeta meta = (PigMeta) e.getEntityMeta();
+//        meta.setCustomNameVisible(true);
+//        meta.setCustomName(Component.text(msg));
+//        player.sendMessage("Set text to: " + msg);
         return true;
     }
 }

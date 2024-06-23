@@ -1,19 +1,14 @@
 package me.tofaa.entitylib.wrapper;
 
-import com.github.retrooper.packetevents.protocol.attribute.Attribute;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.nbt.NBTCompound;
-import com.github.retrooper.packetevents.protocol.player.HumanoidArm;
 import com.github.retrooper.packetevents.protocol.potion.PotionType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityAnimation;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityEffect;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerTeams;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerUpdateAttributes;
+import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.EntityMeta;
-import me.tofaa.entitylib.meta.types.LivingEntityMeta;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.UUID;
 
 public class WrapperLivingEntity extends WrapperEntity{
@@ -25,6 +20,21 @@ public class WrapperLivingEntity extends WrapperEntity{
         super(entityId, uuid, entityType, entityMeta);
         this.equipment = new WrapperEntityEquipment(this);
         this.attributes = new WrapperEntityAttributes(this);
+    }
+
+    public WrapperLivingEntity(int entityId, UUID uuid, EntityType entityType) {
+        this(entityId, uuid, entityType, EntityMeta.createMeta(entityId, entityType));
+    }
+
+    public WrapperLivingEntity(int entityId, EntityType entityType) {
+        this(entityId, EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
+    }
+
+    public WrapperLivingEntity(UUID uuid, EntityType entityType) {
+        this(EntityLib.getPlatform().getEntityIdProvider().provide(uuid, entityType), uuid, entityType);
+    }
+    public WrapperLivingEntity(EntityType entityType) {
+        this(EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
     }
 
     @Override

@@ -16,3 +16,6 @@ if (!Boolean.parseBoolean(System.getenv("JITPACK"))) {
 include 'platforms:velocity'
 findProject(':platforms:velocity')?.name = 'velocity'
 
+include 'platforms:standalone'
+findProject(':platforms:standalone')?.name = 'standalone'
+

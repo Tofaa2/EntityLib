@@ -44,7 +44,7 @@ public class SpigotEntityLibAPI extends AbstractEntityLibAPI<JavaPlugin, BukkitT
     }
 
     @Override
-    public <T extends WrapperEntity> @NotNull T cloneEntity(@NotNull Object platformEntity, @NotNull Location location) {
+    public <T extends WrapperEntity> @NotNull T cloneEntity(@NotNull Object platformEntity) {
         Check.stateCondition(!(platformEntity instanceof Entity), "Entity must be a Bukkit entity");
         Entity e = (Entity) platformEntity;
         EntityType type = SpigotConversionUtil.fromBukkitEntityType(e.getType());
@@ -84,10 +84,7 @@ public class SpigotEntityLibAPI extends AbstractEntityLibAPI<JavaPlugin, BukkitT
         else {
             entity = new WrapperEntity(id, uuid, type, meta);
         }
-        if (entity == null) {
-            throw new IllegalArgumentException("Could not clone entity");
-        }
-        return (T) this.spawnEntity(entity, location);
+        return (T) entity;
     }
 
     @Override
