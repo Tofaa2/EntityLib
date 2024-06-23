@@ -102,7 +102,7 @@ class Example {
 
         EntityLib.init(platform, settings);
 
-        WrapperEntity entity = EntityLib..getApi().createEntity(UUID, EntityType); // optional uuid and entity id 
+        WrapperEntity entity = new WrapperEntity(EntityType); // optional uuid and entity id and meta 
         // You can keep track of the entity yourself or store its entityId or uuid and fetch it using EntityLib.getApi().getEntity(UUID or entityId)
 
         // Entities also have access to the EntityMeta api, the EntityMeta api can be used seperately from wrapper entities but also can be used together
