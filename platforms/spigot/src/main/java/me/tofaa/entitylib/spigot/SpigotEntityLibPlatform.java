@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
 
     private SpigotEntityLibAPI api;
-    private Map<Integer, Entity> platformEntities = new ConcurrentWeakIdentityHashMap<>();
+    private final Map<Integer, Entity> platformEntities = new ConcurrentWeakIdentityHashMap<>();
 
     public SpigotEntityLibPlatform(@NotNull JavaPlugin plugin) {
         super(plugin);

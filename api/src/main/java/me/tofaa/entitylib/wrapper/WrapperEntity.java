@@ -96,7 +96,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
         return 0;
     }
 
-    protected Optional<Vector3d> createVeloPacket() {
+    public Optional<Vector3d> createVeloPacket() {
         Optional<Vector3d> velocity;
         double veloX = 0, veloY = 0, veloZ = 0;
         if (entityMeta instanceof ObjectData) {

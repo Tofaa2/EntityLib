@@ -5,7 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/packetconversion/CommonSpawningMethods.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/packetconversion/EntitySpawningMethod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/packetconversion/EntitySpawningPacketConversion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/packetconversion/LegacySpawningMethods.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/packetconversion/ModernSpawningMethods.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/utils/VersionUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLibAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLibAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractEntityLibAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractEntityLibAPI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +65,9 @@
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.0/f981796d809d02eee3e485167b2476ed766be882/api-2.2.0.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerUpdateAttributes.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.3.0/a199b900341990aa6a2899e42e396800c83601f0/api-2.3.0-default.jar!/com/github/retrooper/packetevents/protocol/attribute/Attribute.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.3.0/a199b900341990aa6a2899e42e396800c83601f0/api-2.3.0-default.jar!/com/github/retrooper/packetevents/protocol/attribute/Attributes.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.3.0/a199b900341990aa6a2899e42e396800c83601f0/api-2.3.0-default.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerSpawnEntity.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.3.0/a199b900341990aa6a2899e42e396800c83601f0/api-2.3.0-default.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerSpawnPainting.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.3.0/a199b900341990aa6a2899e42e396800c83601f0/api-2.3.0-default.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerSpawnWeatherEntity.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.3.0/a199b900341990aa6a2899e42e396800c83601f0/api-2.3.0-default.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerUpdateAttributes.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/velocity/2.3.0/aba4fb09c29c8a071cac36acba545ed37bb80268/velocity-2.3.0-default.jar!/io/github/retrooper/packetevents/bstats/Metrics.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/velocity/2.3.0/aba4fb09c29c8a071cac36acba545ed37bb80268/velocity-2.3.0-default.jar!/io/github/retrooper/packetevents/velocity/factory/VelocityPacketEventsBuilder.class" root0="SKIP_INSPECTION" />
@@ -380,6 +392,11 @@
       <workItem from="1716926795264" duration="1000" />
       <workItem from="1718023888535" duration="2457000" />
       <workItem from="1719160307151" duration="7080000" />
+      <workItem from="1719172087999" duration="1867000" />
+      <workItem from="1719236981913" duration="33000" />
+      <workItem from="1719246637584" duration="6142000" />
+      <workItem from="1719306268310" duration="4050000" />
+      <workItem from="1719569161589" duration="807000" />
     </task>
     <servers />
   </component>

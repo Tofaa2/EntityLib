@@ -58,9 +58,4 @@ public interface EntityLibAPI<T> {
     @NotNull
     EntityContainer getDefaultContainer();
 
-    void addContainer(EntityContainer container);
-
-    void removeContainer(EntityContainer container);
-
-    @NotNull Collection<EntityContainer> getEntityContainers();
 }
