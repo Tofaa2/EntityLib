@@ -11,14 +11,14 @@ allprojects {
                                          "net.kyori:adventure-text-serializer-legacy:${adventureVersion}",
                                          "net.kyori:adventure-nbt:${adventureVersion}"]
 
-    project.ext.peVersion = '2.3.0'
+    project.ext.peVersion = '2.4.0'
 
     apply plugin: 'java'
     apply plugin: 'java-library'
     apply plugin: 'maven-publish'
 
     group = 'me.tofaa.entitylib'
-    version = '2.0-SNAPSHOT'
+    version = '2.3.1-SNAPSHOT'
 
     java.sourceCompatibility = JavaVersion.VERSION_1_8
     java.targetCompatibility = JavaVersion.VERSION_1_8
@@ -61,6 +61,6 @@ allprojects {
 
 
 dependencies {
-    compileOnlyApi 'com.github.retrooper.packetevents:spigot:${project.ext.peVersion}'
+    compileOnlyApi 'com.github.retrooper:packetevents-spigot:${project.ext.peVersion}'
 }
 

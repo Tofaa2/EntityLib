@@ -1,6 +1,6 @@
 
 dependencies {
     api(project(":common"))
-    compileOnly('com.github.retrooper.packetevents:spigot:' + peVersion)
-    compileOnly('org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT')
+    compileOnly('com.github.retrooper:packetevents-spigot:' + peVersion)
+    compileOnly('org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT')
 }
