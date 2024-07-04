@@ -46,6 +46,6 @@ public final class EntityLib {
     }
 
     public static String getVersion() {
-        return "2.1.2-SNAPSHOT";
+        return "2.3.1-SNAPSHOT";
     }
 }
