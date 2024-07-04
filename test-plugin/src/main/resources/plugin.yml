@@ -3,7 +3,7 @@ version: 1.0.0
 depend:
   - packetevents
 main: me.tofaa.testentitylib.TestEntityLibPlugin
-api-version: "1.19"
+api-version: "1.21"
 commands:
   testapi:
     description: Test EntityLib API
