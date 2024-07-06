@@ -18,7 +18,7 @@ allprojects {
     apply plugin: 'maven-publish'
 
     group = 'me.tofaa.entitylib'
-    version = '2.3.1-SNAPSHOT'
+    version = '2.4.1-SNAPSHOT'
 
     java.sourceCompatibility = JavaVersion.VERSION_1_8
     java.targetCompatibility = JavaVersion.VERSION_1_8

@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/packetconversion/CommonSpawningMethods.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/packetconversion/EntitySpawningMethod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/packetconversion/EntitySpawningPacketConversion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/packetconversion/LegacySpawningMethods.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/packetconversion/ModernSpawningMethods.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/utils/VersionUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLibAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLibAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/wrapper/WrapperEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractEntityLibAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/me/tofaa/entitylib/common/AbstractEntityLibAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/spigot/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
