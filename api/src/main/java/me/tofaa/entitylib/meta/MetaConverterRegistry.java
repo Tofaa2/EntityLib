@@ -16,6 +16,7 @@ import me.tofaa.entitylib.meta.mobs.monster.*;
 import me.tofaa.entitylib.meta.mobs.monster.piglin.PiglinBruteMeta;
 import me.tofaa.entitylib.meta.mobs.monster.piglin.PiglinMeta;
 import me.tofaa.entitylib.meta.mobs.monster.raider.*;
+import me.tofaa.entitylib.meta.mobs.monster.skeleton.BoggedMeta;
 import me.tofaa.entitylib.meta.mobs.monster.skeleton.SkeletonMeta;
 import me.tofaa.entitylib.meta.mobs.monster.skeleton.StrayMeta;
 import me.tofaa.entitylib.meta.mobs.monster.skeleton.WitherSkeletonMeta;
@@ -58,8 +59,8 @@ final class MetaConverterRegistry {
         put(BLAZE, BlazeMeta.class, BlazeMeta::new);
         put(BLOCK_DISPLAY, BlockDisplayMeta.class, BlockDisplayMeta::new);
         put(BOAT, BoatMeta.class, BoatMeta::new);
-        put(BOGGED, LivingEntityMeta.class, LivingEntityMeta::new); // TODO: Implement
-        put(BREEZE, LivingEntityMeta.class, LivingEntityMeta::new); // TODO: Implement
+        put(BOGGED, BoggedMeta.class, BoggedMeta::new); // TODO: Verify correctness
+        put(BREEZE, BreezeMeta.class, BreezeMeta::new); // TODO: Verify correctness
         put(BREEZE_WIND_CHARGE, SmallFireballMeta.class, SmallFireballMeta::new); // TODO: Verify correctness
         put(CAMEL, CamelMeta.class, CamelMeta::new); // TODO: Verify correctness
         put(CAT, CatMeta.class, CatMeta::new);
