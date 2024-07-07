@@ -28,7 +28,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "EntityLib"
-//include(":test-plugin")
 include(":common")
 include(":api")
 include(":platforms:spigot")
