@@ -4,22 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="Added: Build Source Module">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/utils/ELVersion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/me/tofaa/entitylib/version/ELVersionPlugin.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/me/tofaa/entitylib/version/ELVersionTask.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buildSrc/src/main/resources/META-INF/gradle-plugins/el-version.properties" afterDir="false" />
+    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="Added: ELVersion and ElVersionTask&#10;Updated: GithubUpdater to make use of the new ELVersion class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/api/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLib.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLib.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/utils/GithubUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/utils/GithubUpdater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/entitylib.java-conventions.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/entitylib.java-conventions.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model-engine-addon/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/model-engine-addon/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/spigot/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntityLibPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntityLibPlatform.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/standalone/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/standalone/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/velocity/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/velocity/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestEntityLibPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestEntityLibPlugin.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,53 +105,55 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Gradle.Build EntityLib.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib [dependencies].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib [publish].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib [runServer] (1).executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib [runServer].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:api [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:code-gen [:code-gen:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [cleanAllRunTaskCaches].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [cleanCustomServiceCaches].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [cleanPaperCache].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [cleanPaperPluginsCache].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [publish].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [runServer].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [shadowJar].executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/BuildChainRework&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Development/EntityLib/buildSrc/src/main/resources&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Gradle.Build EntityLib.executor": "Run",
+    "Gradle.EntityLib [build].executor": "Run",
+    "Gradle.EntityLib [clean build].executor": "Run",
+    "Gradle.EntityLib [clean].executor": "Run",
+    "Gradle.EntityLib [dependencies].executor": "Run",
+    "Gradle.EntityLib [publish].executor": "Run",
+    "Gradle.EntityLib [runServer] (1).executor": "Run",
+    "Gradle.EntityLib [runServer].executor": "Run",
+    "Gradle.EntityLib:api [build].executor": "Run",
+    "Gradle.EntityLib:code-gen [:code-gen:Main.main()].executor": "Run",
+    "Gradle.EntityLib:test-plugin [cleanAllRunTaskCaches].executor": "Run",
+    "Gradle.EntityLib:test-plugin [cleanCustomServiceCaches].executor": "Run",
+    "Gradle.EntityLib:test-plugin [cleanPaperCache].executor": "Run",
+    "Gradle.EntityLib:test-plugin [cleanPaperPluginsCache].executor": "Run",
+    "Gradle.EntityLib:test-plugin [publish].executor": "Run",
+    "Gradle.EntityLib:test-plugin [runServer].executor": "Run",
+    "Gradle.EntityLib:test-plugin [shadowJar].executor": "Run",
+    "JAR Application.Unnamed.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "feat/BuildChainRework",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "corretto-17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Development/EntityLib/buildSrc/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;kotlin-gradle-user-dirs&quot;: [
-      &quot;C:\\Users\\Bram\\.gradle&quot;
+  "keyToStringList": {
+    "kotlin-gradle-user-dirs": [
+      "C:\\Users\\Bram\\.gradle"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Development\EntityLib\buildSrc\src\main\resources" />
@@ -177,19 +168,19 @@
       <recent name="C:\Development\EntityLib\buildSrc\src\main\resources\META-INF.gradle.plugins" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.EntityLib [runServer]">
-    <configuration name="EntityLib [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.EntityLib:test-plugin [runServer]">
+    <configuration name="EntityLib [clean]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value="build" />
+            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -200,12 +191,12 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="EntityLib [runServer]" type="GradleRunConfiguration" factoryName="Gradle">
+    <configuration name="EntityLib:test-plugin [runServer]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/test-plugin" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -222,109 +213,13 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="EntityLib:api [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="EntityLib:test-plugin [cleanCustomServiceCaches]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/test-plugin" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="cleanCustomServiceCaches" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="EntityLib:test-plugin [cleanPaperCache]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/test-plugin" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="cleanPaperCache" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="EntityLib:test-plugin [cleanPaperPluginsCache]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/test-plugin" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="cleanPaperPluginsCache" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="Gradle.EntityLib [runServer]" />
-      <item itemvalue="Gradle.EntityLib [build]" />
-      <item itemvalue="Gradle.EntityLib:api [build]" />
-      <item itemvalue="Gradle.EntityLib:test-plugin [cleanCustomServiceCaches]" />
-      <item itemvalue="Gradle.EntityLib:test-plugin [cleanPaperCache]" />
-      <item itemvalue="Gradle.EntityLib:test-plugin [cleanPaperPluginsCache]" />
+      <item itemvalue="Gradle.EntityLib [clean]" />
+      <item itemvalue="Gradle.EntityLib:test-plugin [runServer]" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.EntityLib:api [build]" />
-        <item itemvalue="Gradle.EntityLib [build]" />
-        <item itemvalue="Gradle.EntityLib:test-plugin [cleanPaperPluginsCache]" />
-        <item itemvalue="Gradle.EntityLib:test-plugin [cleanPaperCache]" />
-        <item itemvalue="Gradle.EntityLib:test-plugin [cleanCustomServiceCaches]" />
+        <item itemvalue="Gradle.EntityLib:test-plugin [runServer]" />
       </list>
     </recent_temporary>
   </component>
@@ -440,7 +335,7 @@
       <workItem from="1720355632674" duration="198000" />
       <workItem from="1720355846554" duration="602000" />
       <workItem from="1720356495720" duration="180000" />
-      <workItem from="1720357993755" duration="733000" />
+      <workItem from="1720357993755" duration="1290000" />
     </task>
     <task id="LOCAL-00001" summary="Added: Build Source Module">
       <option name="closed" value="true" />
@@ -450,7 +345,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720354581808</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added: ELVersion and ElVersionTask&#10;Updated: GithubUpdater to make use of the new ELVersion class">
+      <option name="closed" value="true" />
+      <created>1720358883608</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1720358883608</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,7 +365,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added: Build Source Module" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added: Build Source Module" />
+    <MESSAGE value="Added: ELVersion and ElVersionTask&#10;Updated: GithubUpdater to make use of the new ELVersion class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added: ELVersion and ElVersionTask&#10;Updated: GithubUpdater to make use of the new ELVersion class" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -481,6 +385,11 @@
           <url>file://$PROJECT_DIR$/test-plugin/src/main/java/me/tofaa/testentitylib/TestPlayerCommand.java</url>
           <line>77</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/utils/GithubUpdater.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/me/tofaa/entitylib/meta/types/DisplayMeta.java</url>

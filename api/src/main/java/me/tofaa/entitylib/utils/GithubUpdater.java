@@ -38,8 +38,8 @@ public final class GithubUpdater {
         String response = reader.readLine();
         JsonObject json = AdventureSerializer.getGsonSerializer().serializer().fromJson(response, JsonObject.class);
 
-        if (json.has("name")) {
-            return ELVersion.fromString(json.get("name").getAsString().replaceFirst("^[vV]", ""));
+        if (json.has("tag_name")) {
+            return ELVersion.fromString(json.get("tag_name").getAsString().replaceFirst("^[vV]", ""));
         }
         throw new IOException("Could not find name attribute in github api fetch");
     }

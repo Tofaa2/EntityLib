@@ -1,6 +1,5 @@
 package me.tofaa.entitylib;
 
-import com.github.retrooper.packetevents.util.PEVersion;
 import me.tofaa.entitylib.utils.ELVersion;
 import me.tofaa.entitylib.utils.ELVersions;
 
