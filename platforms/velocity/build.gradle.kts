@@ -1,23 +1,22 @@
+plugins {
+    entitylib.`java-conventions`
+    id("java-library")
+}
 
 repositories {
-    maven {
-        name = "papermc"
-        url = uri("https://repo.papermc.io/repository/maven-public/")
-    }
+    maven("https://repo.papermc.io/repository/maven-public/")
 }
-
-tasks {
-    compileJava {
-        options.release.set(17)
-    }
-}
-
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-
 
 dependencies {
     api(project(":common"))
     compileOnly(libs.velocity)
     compileOnly(libs.packetevents.velocity)
     annotationProcessor(libs.velocity)
+}
+
+tasks {
+    withType<JavaCompile> {
+        options.encoding = Charsets.UTF_8.name()
+        options.release = 17
+    }
 }

@@ -1,3 +1,7 @@
+plugins {
+    entitylib.`java-conventions`
+}
+
 dependencies {
     implementation(libs.gson)
     implementation(libs.javapoet)

@@ -1,3 +1,8 @@
+plugins {
+    entitylib.`java-conventions`
+    id("java-library")
+}
+
 repositories {
     maven {
         url = uri("https://mvn.lumine.io/repository/maven-public/")

@@ -4,26 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libs.versions.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/gradle-publish.yml" beforeDir="false" />
+    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="Gradle Build Chain from Groovy -&gt; Kotlin DSL">
+      <change afterPath="$PROJECT_DIR$/buildSrc/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/entitylib.java-conventions.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code-gen/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/code-gen/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model-engine-addon/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/model-engine-addon/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/spigot/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/standalone/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/standalone/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/standalone/src/main/java/me/tofaa/entitylib/standalone/task/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/standalone/src/main/java/me/tofaa/entitylib/standalone/task/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/velocity/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/velocity/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/api/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-gen/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/code-gen/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model-engine-addon/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/model-engine-addon/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/spigot/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/standalone/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/standalone/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/velocity/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/velocity/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,17 +52,6 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="EntityLib" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="EntityLib" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="EntityLib" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -131,52 +116,53 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Downloaded.Files.Path.Enabled": "false",
-    "Gradle.Build EntityLib.executor": "Run",
-    "Gradle.EntityLib [build].executor": "Run",
-    "Gradle.EntityLib [dependencies].executor": "Run",
-    "Gradle.EntityLib [publish].executor": "Run",
-    "Gradle.EntityLib [runServer] (1).executor": "Run",
-    "Gradle.EntityLib [runServer].executor": "Run",
-    "Gradle.EntityLib:code-gen [:code-gen:Main.main()].executor": "Run",
-    "Gradle.EntityLib:test-plugin [cleanAllRunTaskCaches].executor": "Run",
-    "Gradle.EntityLib:test-plugin [cleanCustomServiceCaches].executor": "Run",
-    "Gradle.EntityLib:test-plugin [cleanPaperCache].executor": "Run",
-    "Gradle.EntityLib:test-plugin [cleanPaperPluginsCache].executor": "Run",
-    "Gradle.EntityLib:test-plugin [publish].executor": "Run",
-    "Gradle.EntityLib:test-plugin [runServer].executor": "Run",
-    "Gradle.EntityLib:test-plugin [shadowJar].executor": "Run",
-    "JAR Application.Unnamed.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feat/BuildChainRework",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "corretto-17",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Development/EntityLib",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Gradle.Build EntityLib.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib [dependencies].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib [publish].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib [runServer] (1).executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib [runServer].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib:api [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib:code-gen [:code-gen:Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib:test-plugin [cleanAllRunTaskCaches].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib:test-plugin [cleanCustomServiceCaches].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib:test-plugin [cleanPaperCache].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib:test-plugin [cleanPaperPluginsCache].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib:test-plugin [publish].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib:test-plugin [runServer].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.EntityLib:test-plugin [shadowJar].executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/BuildChainRework&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Development/EntityLib&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "kotlin-gradle-user-dirs": [
-      "/home/tofaa/.gradle"
+  &quot;keyToStringList&quot;: {
+    &quot;kotlin-gradle-user-dirs&quot;: [
+      &quot;C:\\Users\\Bram\\.gradle&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Development\EntityLib" />
@@ -186,7 +172,7 @@
       <recent name="D:\Github\EntityLib\test-plugin" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.EntityLib:api [build]">
+  <component name="RunManager" selected="Gradle.EntityLib [runServer]">
     <configuration name="EntityLib [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -444,6 +430,8 @@
       <workItem from="1719569161589" duration="807000" />
       <workItem from="1720349680459" duration="2922000" />
       <workItem from="1720352793422" duration="312000" />
+      <workItem from="1720353517992" duration="622000" />
+      <workItem from="1720354186649" duration="315000" />
     </task>
     <servers />
   </component>

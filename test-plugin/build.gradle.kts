@@ -1,34 +1,11 @@
 plugins {
-    id("java")
+    entitylib.`java-conventions`
     alias(libs.plugins.shadow)
     alias(libs.plugins.run.paper)
 }
 
-group = "me.tofaa.peentitymeta"
-version = "1.0-SNAPSHOT"
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
-    disableAutoTargetJvm()
-}
-
 repositories {
-    mavenCentral()
-    repositories {
-        maven("https://repo.papermc.io/repository/maven-public/")
-    }
-    maven {
-        name = "codemc-repo"
-        url = uri("https://repo.codemc.io/repository/maven-releases/")
-    }
-    maven {
-        url = uri("https://oss.sonatype.org/content/groups/public/")
-    }
-    maven {
-        url = uri("https://repo.codemc.org/repository/maven-public/")
-    }
+    maven("https://repo.papermc.io/repository/maven-public/")
 }
 
 dependencies {
