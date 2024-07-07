@@ -1,0 +1,57 @@
+name: Gradle Package
+
+on:
+  release:
+    types: [ created ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+      - name: Build with Gradle
+        run: chmod +x gradlew && ./gradlew build
+
+      - name: Upload build artifacts api
+        uses: actions/upload-artifact@v3
+        with:
+          name: api-build
+          path: api/build/libs
+
+      - name: Upload build artifacts common
+        uses: actions/upload-artifact@v3
+        with:
+          name: common-build
+          path: common/build/libs
+
+      - name: Upload build artifacts spigot
+        uses: actions/upload-artifact@v3
+        with:
+          name: spigot-build
+          path: platforms/spigot/build/libs
+
+      - name: Upload build artifacts velocity
+        uses: actions/upload-artifact@v3
+        with:
+          name: spigot-velocity
+          path: platforms/velocity/build/libs
+
+      - name: Upload build artifacts standalone
+        uses: actions/upload-artifact@v3
+        with:
+          name: standalone-build
+          path: platforms/standalone/build/libs
