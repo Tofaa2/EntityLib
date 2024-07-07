@@ -41,11 +41,13 @@ abstract class ELVersionTask : DefaultTask() {
              */
             package $packageName;
             
+            import com.github.retrooper.packetevents.util.PEVersion;
+            
             public final class ELVersions {
             
                 public static final String RAW = "$version";
-                public static final ELVersion CURRENT = new ELVersion(${ver.major}, ${ver.minor}, ${ver.patch}, ${ver.snapShot});
-                public static final ELVersion UNKNOWN = new ELVersion(0, 0, 0);
+                public static final PEVersion CURRENT = new PEVersion(${ver.major}, ${ver.minor}, ${ver.patch}, ${ver.snapShot});
+                public static final PEVersion UNKNOWN = new PEVersion(0, 0, 0);
                 
                 private ELVersions() {
                     throw new IllegalStateException();

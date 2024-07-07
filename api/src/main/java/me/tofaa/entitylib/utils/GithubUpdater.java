@@ -1,5 +1,6 @@
 package me.tofaa.entitylib.utils;
 
+import com.github.retrooper.packetevents.util.PEVersion;
 import com.github.retrooper.packetevents.util.adventure.AdventureSerializer;
 import com.google.gson.JsonObject;
 import me.tofaa.entitylib.EntityLib;
@@ -18,7 +19,7 @@ public final class GithubUpdater {
 
     private final String org;
     private final String repo;
-    private final ELVersion currentVersion;
+    private final PEVersion currentVersion;
     private final Logger logger;
 
     public GithubUpdater(String org, String repo) {
@@ -31,7 +32,7 @@ public final class GithubUpdater {
     public void checkForUpdates() {
         CompletableFuture.runAsync(() -> {
             try {
-                ELVersion latestVersion = getLatestVersion();
+                PEVersion latestVersion = getLatestVersion();
                 if (currentVersion.isOlderThan(latestVersion)) {
                     logger.log(Level.WARNING, "You are using an outdated version of EntityLib. Please take a look at the Github releases page.");
                 } else if (currentVersion.isNewerThan(latestVersion)) {
@@ -44,7 +45,7 @@ public final class GithubUpdater {
     }
 
     @Blocking
-    public ELVersion getLatestVersion() throws IOException {
+    public PEVersion getLatestVersion() throws IOException {
         URL url = new URL("https://api.github.com/repos/" + org + "/" + repo + "/releases/latest");
         URLConnection connection = url.openConnection();
         connection.addRequestProperty("User-Agent", "Mozilla/5.0");
@@ -54,7 +55,7 @@ public final class GithubUpdater {
         JsonObject json = AdventureSerializer.getGsonSerializer().serializer().fromJson(response, JsonObject.class);
 
         if (json.has("tag_name")) {
-            return ELVersion.fromString(json.get("tag_name").getAsString().replaceFirst("^[vV]", ""));
+            return PEVersion.fromString(json.get("tag_name").getAsString().replaceFirst("^[vV]", ""));
         }
         throw new IOException("Could not find name attribute in github api fetch");
     }

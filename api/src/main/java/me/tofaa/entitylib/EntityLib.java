@@ -1,6 +1,6 @@
 package me.tofaa.entitylib;
 
-import me.tofaa.entitylib.utils.ELVersion;
+import com.github.retrooper.packetevents.util.PEVersion;
 import me.tofaa.entitylib.utils.ELVersions;
 import me.tofaa.entitylib.utils.GithubUpdater;
 
@@ -40,7 +40,7 @@ public final class EntityLib {
         return platform;
     }
 
-    public static ELVersion getVersion() {
+    public static PEVersion getVersion() {
         return ELVersions.CURRENT;
     }
 }
