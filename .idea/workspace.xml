@@ -5,7 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/platforms/spigot/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs.versions.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/gradle-publish.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-gen/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/code-gen/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model-engine-addon/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/model-engine-addon/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/spigot/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/standalone/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/standalone/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/standalone/src/main/java/me/tofaa/entitylib/standalone/task/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/standalone/src/main/java/me/tofaa/entitylib/standalone/task/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/velocity/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/velocity/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-plugin/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +52,23 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="EntityLib" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="EntityLib" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="EntityLib" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -50,8 +84,25 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feat/GlobalVersioning" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Bram1903&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Tofaa2/EntityLib.git&quot;,
+    &quot;accountId&quot;: &quot;e257ab79-4278-4660-bbc6-e63d9844b8c0&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.2.0/f981796d809d02eee3e485167b2476ed766be882/api-2.2.0.jar!/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerUpdateAttributes.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.retrooper.packetevents/api/2.3.0/a199b900341990aa6a2899e42e396800c83601f0/api-2.3.0-default.jar!/com/github/retrooper/packetevents/protocol/attribute/Attribute.class" root0="SKIP_INSPECTION" />
@@ -74,66 +125,69 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2YjbRUeaUVrjckNx4bRHlK0Dq9m" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Gradle.Build EntityLib.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib [dependencies].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib [publish].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib [runServer] (1).executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib [runServer].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:code-gen [:code-gen:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [cleanAllRunTaskCaches].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [cleanCustomServiceCaches].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [cleanPaperCache].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [cleanPaperPluginsCache].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [publish].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [runServer].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.EntityLib:test-plugin [shadowJar].executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Github/EntityLib&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Gradle.Build EntityLib.executor": "Run",
+    "Gradle.EntityLib [build].executor": "Run",
+    "Gradle.EntityLib [dependencies].executor": "Run",
+    "Gradle.EntityLib [publish].executor": "Run",
+    "Gradle.EntityLib [runServer] (1).executor": "Run",
+    "Gradle.EntityLib [runServer].executor": "Run",
+    "Gradle.EntityLib:code-gen [:code-gen:Main.main()].executor": "Run",
+    "Gradle.EntityLib:test-plugin [cleanAllRunTaskCaches].executor": "Run",
+    "Gradle.EntityLib:test-plugin [cleanCustomServiceCaches].executor": "Run",
+    "Gradle.EntityLib:test-plugin [cleanPaperCache].executor": "Run",
+    "Gradle.EntityLib:test-plugin [cleanPaperPluginsCache].executor": "Run",
+    "Gradle.EntityLib:test-plugin [publish].executor": "Run",
+    "Gradle.EntityLib:test-plugin [runServer].executor": "Run",
+    "Gradle.EntityLib:test-plugin [shadowJar].executor": "Run",
+    "JAR Application.Unnamed.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "feat/BuildChainRework",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "corretto-17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Development/EntityLib",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;kotlin-gradle-user-dirs&quot;: [
-      &quot;/home/tofaa/.gradle&quot;
+  "keyToStringList": {
+    "kotlin-gradle-user-dirs": [
+      "/home/tofaa/.gradle"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Development\EntityLib" />
       <recent name="$PROJECT_DIR$/model-engine-addon" />
       <recent name="D:\Github\EntityLib\api\src\main\java\me\tofaa\entitylib\extras" />
       <recent name="D:\Github\EntityLib\api\src\main\java\me\tofaa\entitylib\meta" />
       <recent name="D:\Github\EntityLib\test-plugin" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.EntityLib [runServer]">
-    <configuration name="EntityLib [runServer] (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.EntityLib:api [build]">
+    <configuration name="EntityLib [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -144,7 +198,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="runServer" />
+            <option value="build" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -177,10 +231,10 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="EntityLib:test-plugin [cleanAllRunTaskCaches]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="EntityLib:api [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/test-plugin" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -188,7 +242,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="cleanAllRunTaskCaches" />
+            <option value="build" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -267,27 +321,27 @@
     </configuration>
     <list>
       <item itemvalue="Gradle.EntityLib [runServer]" />
-      <item itemvalue="Gradle.EntityLib [runServer] (1)" />
-      <item itemvalue="Gradle.EntityLib:test-plugin [cleanAllRunTaskCaches]" />
+      <item itemvalue="Gradle.EntityLib [build]" />
+      <item itemvalue="Gradle.EntityLib:api [build]" />
       <item itemvalue="Gradle.EntityLib:test-plugin [cleanCustomServiceCaches]" />
       <item itemvalue="Gradle.EntityLib:test-plugin [cleanPaperCache]" />
       <item itemvalue="Gradle.EntityLib:test-plugin [cleanPaperPluginsCache]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.EntityLib:api [build]" />
+        <item itemvalue="Gradle.EntityLib [build]" />
         <item itemvalue="Gradle.EntityLib:test-plugin [cleanPaperPluginsCache]" />
         <item itemvalue="Gradle.EntityLib:test-plugin [cleanPaperCache]" />
         <item itemvalue="Gradle.EntityLib:test-plugin [cleanCustomServiceCaches]" />
-        <item itemvalue="Gradle.EntityLib:test-plugin [cleanAllRunTaskCaches]" />
-        <item itemvalue="Gradle.EntityLib [runServer] (1)" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -388,6 +442,8 @@
       <workItem from="1719246637584" duration="6142000" />
       <workItem from="1719306268310" duration="4050000" />
       <workItem from="1719569161589" duration="807000" />
+      <workItem from="1720349680459" duration="2922000" />
+      <workItem from="1720352793422" duration="312000" />
     </task>
     <servers />
   </component>

@@ -1,0 +1,33 @@
+[versions]
+adventure = "4.16.0"
+jetbrains-annotations = "24.0.0"
+gson = "2.11.0"
+packetevents = "2.4.1-SNAPSHOT"
+paper = "1.21-R0.1-SNAPSHOT"
+velocity = "3.3.0-SNAPSHOT"
+run-paper = "2.3.0"
+shadow = "8.1.1"
+javapoet = "1.13.0"
+
+[libraries]
+adventure-api = { group = "net.kyori", name = "adventure-api", version.ref = "adventure" }
+adventure-text-serializer-gson = { group = "net.kyori", name = "adventure-text-serializer-gson", version.ref = "adventure" }
+adventure-text-serializer-legacy = { group = "net.kyori", name = "adventure-text-serializer-legacy", version.ref = "adventure" }
+adventure-text-serializer-gson-legacy = { group = "net.kyori", name = "adventure-text-serializer-gson-legacy-impl", version.ref = "adventure" }
+adventure-nbt = { group = "net.kyori", name = "adventure-nbt", version.ref = "adventure" }
+jetbrains-annotations = { group = "org.jetbrains", name = "annotations", version.ref = "jetbrains-annotations" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+packetevents-api = { group = "com.github.retrooper", name = "packetevents-api", version.ref = "packetevents" }
+packetevents-spigot = { group = "com.github.retrooper", name = "packetevents-spigot", version.ref = "packetevents" }
+packetevents-velocity = { group = "com.github.retrooper", name = "packetevents-velocity", version.ref = "packetevents" }
+paper = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }
+velocity = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
+javapoet = { group = "com.squareup", name = "javapoet", version.ref = "javapoet" }
+
+[bundles]
+adventure = ["adventure-api", "adventure-text-serializer-gson", "adventure-text-serializer-legacy", "adventure-nbt"]
+
+[plugins]
+run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
+run-velocity = { id = "xyz.jpenilla.run-velocity", version.ref = "run-paper" }
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
