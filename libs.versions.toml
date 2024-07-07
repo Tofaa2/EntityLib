@@ -6,7 +6,6 @@ packetevents = "2.4.1-SNAPSHOT"
 paper = "1.21-R0.1-SNAPSHOT"
 velocity = "3.3.0-SNAPSHOT"
 run-paper = "2.3.0"
-shadow = "8.1.1"
 javapoet = "1.13.0"
 
 [libraries]
@@ -30,4 +29,3 @@ adventure = ["adventure-api", "adventure-text-serializer-gson", "adventure-text-
 [plugins]
 run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
 run-velocity = { id = "xyz.jpenilla.run-velocity", version.ref = "run-paper" }
-shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }

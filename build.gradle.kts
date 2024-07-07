@@ -1,6 +1,5 @@
 plugins {
-    entitylib.`java-conventions`
-    id("java-library")
+    entitylib.`library-conventions`
 }
 
 group = "me.tofaa.entitylib"

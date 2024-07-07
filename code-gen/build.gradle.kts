@@ -1,5 +1,6 @@
 plugins {
-    entitylib.`java-conventions`
+    entitylib.`library-conventions`
+    entitylib.`shadow-conventions`
 }
 
 dependencies {

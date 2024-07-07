@@ -1,6 +1,6 @@
 plugins {
-    entitylib.`java-conventions`
-    alias(libs.plugins.shadow)
+    entitylib.`library-conventions`
+    entitylib.`shadow-conventions`
     alias(libs.plugins.run.paper)
 }
 
