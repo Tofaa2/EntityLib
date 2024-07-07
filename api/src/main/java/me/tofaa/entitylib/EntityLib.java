@@ -2,8 +2,8 @@ package me.tofaa.entitylib;
 
 import me.tofaa.entitylib.utils.ELVersion;
 import me.tofaa.entitylib.utils.ELVersions;
+import me.tofaa.entitylib.utils.GithubUpdater;
 
-import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -20,20 +20,11 @@ public final class EntityLib {
         api = platform.getAPI();
 
         if (api.getSettings().shouldCheckForUpdate()) {
-            try {
-                if (api.getSettings().isDebugMode()) {
-                    platform.getLogger().log(Level.INFO, "Checking for updates...");
-                }
-                if (api.getSettings().requiresUpdate()) {
-                    platform.getLogger().log(Level.WARNING, "You are using an outdated version of EntityLib. Please take a look at the Github releases page.");
-                }
-                else {
-                    platform.getLogger().log(Level.INFO, "No EntityLib updates found.");
-                }
-
-            } catch (IOException e) {
-                platform.getLogger().log(Level.WARNING, e, () -> "EntityLib failed to check for updates.");
+            if (api.getSettings().isDebugMode()) {
+                platform.getLogger().log(Level.INFO, "Checking for updates...");
             }
+
+            new GithubUpdater("Tofaa2", "EntityLib").checkForUpdates();
         }
     }
 
