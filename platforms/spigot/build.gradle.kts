@@ -1,6 +1,6 @@
 plugins {
     entitylib.`java-conventions`
-    id("java-library")
+    `java-library`
 }
 
 repositories {

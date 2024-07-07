@@ -45,8 +45,9 @@ public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
         if (settings.shouldUseBstats()) {
             PacketEventsAPI<Plugin> pe = (PacketEventsAPI<Plugin>)api.getPacketEvents();
             Metrics metrics = new Metrics((JavaPlugin) pe.getPlugin(), 21916);
-            metrics.addCustomChart(new Metrics.SimplePie("entitylib-version", EntityLib::getVersion));
+            metrics.addCustomChart(new Metrics.SimplePie("entitylib-version", () -> EntityLib.getVersion().toString()));
         }
+
     }
 
 

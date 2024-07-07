@@ -4,22 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="Gradle Build Chain from Groovy -&gt; Kotlin DSL">
-      <change afterPath="$PROJECT_DIR$/buildSrc/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/entitylib.java-conventions.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="9d5d9b6f-43c8-41a4-bb42-a66ffc96c9b0" name="Changes" comment="Added: Build Source Module">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/utils/ELVersion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/me/tofaa/entitylib/version/ELVersionPlugin.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/me/tofaa/entitylib/version/ELVersionTask.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/buildSrc/src/main/resources/META-INF/gradle-plugins/el-version.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/api/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code-gen/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/code-gen/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLib.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/EntityLib.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/utils/GithubUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/tofaa/entitylib/utils/GithubUpdater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/entitylib.java-conventions.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/entitylib.java-conventions.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model-engine-addon/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/model-engine-addon/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/spigot/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntityLibPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/spigot/src/main/java/me/tofaa/entitylib/spigot/SpigotEntityLibPlatform.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/standalone/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/standalone/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/velocity/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/velocity/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test-plugin/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +145,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Development/EntityLib&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Development/EntityLib/buildSrc/src/main/resources&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -165,11 +165,16 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Development\EntityLib\buildSrc\src\main\resources" />
+      <recent name="C:\Development\EntityLib\buildSrc\src\main\kotlin\me\tofaa\entitylib" />
       <recent name="C:\Development\EntityLib" />
       <recent name="$PROJECT_DIR$/model-engine-addon" />
       <recent name="D:\Github\EntityLib\api\src\main\java\me\tofaa\entitylib\extras" />
-      <recent name="D:\Github\EntityLib\api\src\main\java\me\tofaa\entitylib\meta" />
-      <recent name="D:\Github\EntityLib\test-plugin" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Development\EntityLib\buildSrc\src\main\resources\META-INF\gradle-plugins" />
+      <recent name="C:\Development\EntityLib\buildSrc\src\main\resources" />
+      <recent name="C:\Development\EntityLib\buildSrc\src\main\resources\META-INF.gradle.plugins" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.EntityLib [runServer]">
@@ -431,8 +436,21 @@
       <workItem from="1720349680459" duration="2922000" />
       <workItem from="1720352793422" duration="312000" />
       <workItem from="1720353517992" duration="622000" />
-      <workItem from="1720354186649" duration="315000" />
+      <workItem from="1720354186649" duration="1369000" />
+      <workItem from="1720355632674" duration="198000" />
+      <workItem from="1720355846554" duration="602000" />
+      <workItem from="1720356495720" duration="180000" />
+      <workItem from="1720357993755" duration="733000" />
     </task>
+    <task id="LOCAL-00001" summary="Added: Build Source Module">
+      <option name="closed" value="true" />
+      <created>1720354581808</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1720354581808</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -441,6 +459,10 @@
   <component name="UnknownFeatures">
     <option featureType="dependencySupport" implementationName="java:net.kyori:adventure-api" />
     <option featureType="dependencySupport" implementationName="java:org.spigotmc:spigot-api" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added: Build Source Module" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added: Build Source Module" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

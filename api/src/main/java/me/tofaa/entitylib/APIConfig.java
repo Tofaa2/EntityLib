@@ -30,7 +30,7 @@ public final class APIConfig {
     @Blocking
     public boolean requiresUpdate() throws IOException {
         if (!checkForUpdates) return false;
-        GithubUpdater updater = new GithubUpdater("Tofaa2", "EntityLib", EntityLib.getVersion());
+        GithubUpdater updater = new GithubUpdater("Tofaa2", "EntityLib");
         return !updater.isLatestVersion();
     }
 

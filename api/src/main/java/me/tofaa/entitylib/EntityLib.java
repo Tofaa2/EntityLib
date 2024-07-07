@@ -1,5 +1,9 @@
 package me.tofaa.entitylib;
 
+import com.github.retrooper.packetevents.util.PEVersion;
+import me.tofaa.entitylib.utils.ELVersion;
+import me.tofaa.entitylib.utils.ELVersions;
+
 import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -15,6 +19,7 @@ public final class EntityLib {
         EntityLib.platform = platform;
         platform.setupApi(settings);
         api = platform.getAPI();
+
         if (api.getSettings().shouldCheckForUpdate()) {
             try {
                 if (api.getSettings().isDebugMode()) {
@@ -45,7 +50,7 @@ public final class EntityLib {
         return platform;
     }
 
-    public static String getVersion() {
-        return "2.3.1-SNAPSHOT";
+    public static ELVersion getVersion() {
+        return ELVersions.CURRENT;
     }
 }

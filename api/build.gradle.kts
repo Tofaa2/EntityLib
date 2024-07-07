@@ -1,6 +1,7 @@
 plugins {
     entitylib.`java-conventions`
-    id("java-library")
+    `java-library`
+    `el-version`
 }
 
 dependencies {
@@ -8,4 +9,10 @@ dependencies {
 
     compileOnlyApi(libs.bundles.adventure)
     compileOnlyApi(libs.packetevents.api)
+}
+
+tasks {
+    generateVersionsFile {
+        packageName = "me.tofaa.entitylib.utils"
+    }
 }

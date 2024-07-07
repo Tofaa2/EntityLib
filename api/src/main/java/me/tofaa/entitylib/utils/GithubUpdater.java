@@ -14,40 +14,39 @@ public final class GithubUpdater {
 
     private final String org;
     private final String repo;
-    private final String currentVersion;
+    private final ELVersion currentVersion;
 
-    public GithubUpdater(String org, String repo, String currentVersion) {
+    public GithubUpdater(String org, String repo) {
         this.org = org;
         this.repo = repo;
-        this.currentVersion = currentVersion;
+        this.currentVersion = ELVersions.CURRENT;
     }
 
     @Blocking
     public boolean isLatestVersion() throws IOException {
-        String latest = getLatestVersion();
-        return latest != null && latest.equals(currentVersion);
+        ELVersion latest = getLatestVersion();
+        return currentVersion.isNewerThan(latest);
     }
-
 
     @Blocking
-    public String getLatestVersion() throws IOException {
-            URL url = new URL("https://api.github.com/repos/" + org + "/" + repo + "/releases/latest");
-            URLConnection connection = url.openConnection();
-            connection.addRequestProperty("User-Agent", "Mozilla/5.0");
-            InputStreamReader isr = new InputStreamReader(connection.getInputStream());
-            BufferedReader reader = new BufferedReader(isr);
-            String response = reader.readLine();
-            JsonObject json = AdventureSerializer.getGsonSerializer().serializer().fromJson(response, JsonObject.class);
-            reader.close();
-            isr.close();
-            if (json.has("name")) {
-                return json.get("name").getAsString();
-            }
-            throw new IOException("Could not find name attribute in github api fetch");
+    public ELVersion getLatestVersion() throws IOException {
+        URL url = new URL("https://api.github.com/repos/" + org + "/" + repo + "/releases/latest");
+        URLConnection connection = url.openConnection();
+        connection.addRequestProperty("User-Agent", "Mozilla/5.0");
+        InputStreamReader isr = new InputStreamReader(connection.getInputStream());
+        BufferedReader reader = new BufferedReader(isr);
+        String response = reader.readLine();
+        JsonObject json = AdventureSerializer.getGsonSerializer().serializer().fromJson(response, JsonObject.class);
+
+        if (json.has("name")) {
+            return ELVersion.fromString(json.get("name").getAsString().replaceFirst("^[vV]", ""));
+        }
+        throw new IOException("Could not find name attribute in github api fetch");
     }
 
+    @Deprecated
     public String getCurrentVersion() {
-        return currentVersion;
+        return currentVersion.toString();
     }
 
     public String getOrg() {
