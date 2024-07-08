@@ -45,7 +45,7 @@ public final class GithubUpdater {
     }
 
     @Blocking
-    public PEVersion getLatestVersion() throws IOException {
+    private PEVersion getLatestVersion() throws IOException {
         URL url = new URL("https://api.github.com/repos/" + org + "/" + repo + "/releases/latest");
         URLConnection connection = url.openConnection();
         connection.addRequestProperty("User-Agent", "Mozilla/5.0");
