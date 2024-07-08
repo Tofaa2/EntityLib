@@ -6,7 +6,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -30,28 +29,28 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: api-build
-          path: api/build/libs
+          path: api/build/libs/EntityLib-*.jar
 
       - name: Upload build artifacts common
         uses: actions/upload-artifact@v3
         with:
           name: common-build
-          path: common/build/libs
+          path: common/build/libs/EntityLib-*.jar
 
       - name: Upload build artifacts spigot
         uses: actions/upload-artifact@v3
         with:
           name: spigot-build
-          path: platforms/spigot/build/libs
+          path: platforms/spigot/build/libs/EntityLib-*.jar
 
       - name: Upload build artifacts velocity
         uses: actions/upload-artifact@v3
         with:
-          name: spigot-velocity
-          path: platforms/velocity/build/libs
+          name: velocity-build
+          path: platforms/velocity/build/libs/EntityLib-*.jar
 
       - name: Upload build artifacts standalone
         uses: actions/upload-artifact@v3
         with:
           name: standalone-build
-          path: platforms/standalone/build/libs
+          path: platforms/standalone/build/libs/EntityLib-*.jar
