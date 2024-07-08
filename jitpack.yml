@@ -1,5 +1,2 @@
 jdk:
   - temurin-21
-
-install:
-  - ./gradlew clean build

@@ -1,9 +1,5 @@
 import java.io.ByteArrayOutputStream
 
-plugins {
-    entitylib.`library-conventions`
-}
-
 group = "me.tofaa.entitylib"
 description = rootProject.name
 val fullVersion = "2.4.1"
@@ -25,3 +21,51 @@ fun getVersionMeta(): String {
     return "$commitHash-SNAPSHOT"
 }
 version = "$fullVersion${getVersionMeta()}"
+
+tasks {
+    wrapper {
+        gradleVersion = "8.8"
+        distributionType = Wrapper.DistributionType.ALL
+    }
+
+    register("build") {
+        // Filter out the 'platforms' directory itself, but include its subprojects
+        val subModuleBuildTasks = subprojects
+            .filter { it.name != "platforms" }
+            .mapNotNull { it.tasks.findByName("build") }
+
+        dependsOn(subModuleBuildTasks)
+        group = "build"
+
+        doLast {
+            val buildOut = project.layout.buildDirectory.dir("libs").get().asFile.apply {
+                if (!exists()) mkdirs()
+            }
+
+            subprojects.forEach { subproject ->
+                val subIn = subproject.layout.buildDirectory.dir("libs").get().asFile
+                if (subIn.exists()) {
+                    copy {
+                        from(subIn) {
+                            include("EntityLib-*.jar")
+                            exclude("*-javadoc.jar", "*-sources.jar")
+                        }
+                        into(buildOut)
+                    }
+                }
+            }
+        }
+    }
+
+    register<Delete>("clean") {
+        val cleanTasks = subprojects
+            .filter { it.name != "platforms" }
+            .mapNotNull { it.tasks.findByName("clean") }
+
+        dependsOn(cleanTasks)
+        group = "build"
+        delete(rootProject.layout.buildDirectory)
+    }
+
+    defaultTasks("build")
+}
