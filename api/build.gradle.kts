@@ -12,6 +12,18 @@ dependencies {
 }
 
 tasks {
+    javadoc {
+        mustRunAfter(generateVersionsFile)
+    }
+
+    sourcesJar {
+        mustRunAfter(generateVersionsFile)
+    }
+
+    withType<JavaCompile> {
+        dependsOn(generateVersionsFile)
+    }
+
     generateVersionsFile {
         packageName = "me.tofaa.entitylib.utils"
     }
