@@ -1,2 +1,5 @@
 jdk:
-  - 'openjdk8'
+  - temurin-21
+
+install:
+  - ./gradlew clean build
