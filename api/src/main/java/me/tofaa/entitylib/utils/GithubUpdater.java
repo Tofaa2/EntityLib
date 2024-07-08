@@ -54,6 +54,9 @@ public final class GithubUpdater {
         String response = reader.readLine();
         JsonObject json = AdventureSerializer.getGsonSerializer().serializer().fromJson(response, JsonObject.class);
 
+        reader.close();
+        isr.close();
+
         if (json.has("tag_name")) {
             return PEVersion.fromString(json.get("tag_name").getAsString().replaceFirst("^[vV]", ""));
         }
