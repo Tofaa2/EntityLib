@@ -51,7 +51,7 @@ publishing {
     publications {
         create<MavenPublication>("shadow") {
             groupId = project.group as String
-            artifactId = "EntityLib-" + project.name
+            artifactId = project.name
             version = project.version as String
 
             if (isShadow) {
