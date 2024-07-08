@@ -46,9 +46,7 @@ class SchedulerImpl implements Scheduler {
         TaskSchedule schedule = task.task.get();
         if (schedule instanceof TaskSchedule.DurationSchedule) {
             TaskSchedule.DurationSchedule d = (TaskSchedule.DurationSchedule) schedule;
-            SCHEDULED_EXECUTOR.schedule(() -> {
-                safeExecute(task);
-            }, d.duration.toMillis(), TimeUnit.MILLISECONDS);
+            SCHEDULED_EXECUTOR.schedule(() -> safeExecute(task), d.duration.toMillis(), TimeUnit.MILLISECONDS);
         }
         else if (schedule instanceof TaskSchedule.FutureSchedule) {
             TaskSchedule.FutureSchedule f = (TaskSchedule.FutureSchedule) schedule;

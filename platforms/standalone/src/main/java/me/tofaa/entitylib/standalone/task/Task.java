@@ -20,7 +20,7 @@ public interface Task {
         private final Runnable runnable;
         private final Scheduler scheduler;
 
-        private ExecutionType executionType = ExecutionType.SYNC;//default
+        private ExecutionType executionType = ExecutionType.BLOCKING;//default
         private TaskSchedule delay = TaskSchedule.immediate();
         private TaskSchedule repeat = TaskSchedule.stop();
 
