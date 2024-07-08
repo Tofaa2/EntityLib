@@ -17,7 +17,7 @@ public class BlockDisplayMeta extends AbstractDisplayMeta {
     }
 
     public void setBlockId(int blockId) {
-        super.metadata.setIndex(OFFSET, EntityDataTypes.INT, blockId);
+        super.metadata.setIndex(OFFSET, EntityDataTypes.BLOCK_STATE, blockId);
     }
 
 }
