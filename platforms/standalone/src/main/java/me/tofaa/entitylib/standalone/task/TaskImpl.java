@@ -14,7 +14,7 @@ class TaskImpl implements Task {
     final int id;
     final Supplier<TaskSchedule> task;
     final ExecutionType type;
-    final Scheduler owner;
+    final SchedulerImpl owner;
 
     TaskImpl(int id, Supplier<TaskSchedule> task, ExecutionType type, SchedulerImpl owner) {
         this.id = id;
