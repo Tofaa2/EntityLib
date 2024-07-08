@@ -1,3 +1,6 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import groovy.util.Node
+
 plugins {
     `java-library`
     `maven-publish`
@@ -14,6 +17,8 @@ repositories {
     maven("https://repo.codemc.io/repository/maven-snapshots/")
 }
 
+val isShadow = project.pluginManager.hasPlugin("io.github.goooler.shadow")
+
 java {
     withSourcesJar()
     withJavadocJar()
@@ -23,6 +28,11 @@ java {
 }
 
 tasks {
+    withType<JavaCompile> {
+        options.encoding = Charsets.UTF_8.name()
+        options.release = 8
+    }
+
     processResources {
         inputs.property("version", project.version)
         filesMatching(listOf("plugin.yml", "velocity-plugin.json")) {
@@ -30,23 +40,70 @@ tasks {
         }
     }
 
-    withType<JavaCompile> {
-        options.encoding = Charsets.UTF_8.name()
-        options.release = 8
-    }
-
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                groupId = project.group.toString()
-                artifactId = project.name
-                version = project.version.toString()
-                from(components["java"])
-            }
-        }
+    jar {
+        archiveClassifier = "default"
     }
 
     defaultTasks("build")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("shadow") {
+            groupId = project.group as String
+            artifactId = "EntityLib-" + project.name
+            version = project.version as String
+
+            if (isShadow) {
+                artifact(project.tasks.withType<ShadowJar>().getByName("shadowJar").archiveFile)
+
+                val allDependencies = project.provider {
+                    project.configurations.getByName("shadow").allDependencies
+                        .filter { it is ProjectDependency || it !is SelfResolvingDependency }
+                }
+
+                pom {
+                    withXml {
+                        val (libraryDeps, projectDeps) = allDependencies.get().partition { it !is ProjectDependency }
+                        val dependenciesNode = asNode().get("dependencies") as? Node ?: asNode().appendNode("dependencies")
+
+                        libraryDeps.forEach {
+                            val dependencyNode = dependenciesNode.appendNode("dependency")
+                            dependencyNode.appendNode("groupId", it.group)
+                            dependencyNode.appendNode("artifactId", it.name)
+                            dependencyNode.appendNode("version", it.version)
+                            dependencyNode.appendNode("scope", "compile")
+                        }
+
+                        projectDeps.forEach {
+                            val dependencyNode = dependenciesNode.appendNode("dependency")
+                            dependencyNode.appendNode("groupId", it.group)
+                            dependencyNode.appendNode("artifactId", "packetevents-" + it.name)
+                            dependencyNode.appendNode("version", it.version)
+                            dependencyNode.appendNode("scope", "compile")
+                        }
+                    }
+                }
+
+                artifact(tasks["sourcesJar"])
+            } else {
+                from(components["java"])
+            }
+
+            pom {
+                name = "${rootProject.name}-${project.name}"
+                description = rootProject.description
+                url = "https://github.com/Tofaa2/EntityLib"
+
+                licenses {
+                    license {
+                        name = "GPL-3.0"
+                        url = "https://www.gnu.org/licenses/gpl-3.0.html"
+                    }
+                }
+            }
+        }
+    }
 }
 
 // So that SNAPSHOT is always the latest SNAPSHOT

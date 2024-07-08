@@ -1,2 +1,15 @@
 jdk:
   - temurin-21
+
+stages:
+  - name: build
+  - name: publish
+    depends_on: build
+
+build:
+  script:
+    - ./gradlew build
+
+publish:
+  script:
+    - ./gradlew publishToMavenLocal
