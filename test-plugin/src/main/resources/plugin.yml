@@ -1,5 +1,5 @@
 name: EntityLibPlugin
-version: 1.0.0
+version: ${version}
 depend:
   - packetevents
 main: me.tofaa.testentitylib.TestEntityLibPlugin

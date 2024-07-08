@@ -30,6 +30,7 @@ public class TestEntityLibPlugin extends JavaPlugin {
         SpigotEntityLibPlatform platform = new SpigotEntityLibPlatform(this);
         APIConfig settings = new APIConfig(PacketEvents.getAPI())
                 .debugMode()
+                .checkForUpdates()
                 .tickTickables()
                 .trackPlatformEntities()
                 .useBstats()

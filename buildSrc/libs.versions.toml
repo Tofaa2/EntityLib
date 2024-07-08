@@ -1,0 +1,5 @@
+[versions]
+shadow = "8.1.8"
+
+[libraries]
+shadow = { group = "io.github.goooler.shadow", name = "shadow-gradle-plugin", version.ref = "shadow" }

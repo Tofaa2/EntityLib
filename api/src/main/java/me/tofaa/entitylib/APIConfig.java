@@ -1,16 +1,7 @@
 package me.tofaa.entitylib;
 
 import com.github.retrooper.packetevents.PacketEventsAPI;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
-import me.tofaa.entitylib.utils.GithubUpdater;
-import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 
 public final class APIConfig {
 
@@ -25,13 +16,6 @@ public final class APIConfig {
 
     public APIConfig(PacketEventsAPI<?> packetEvents) {
         this.packetEvents = packetEvents;
-    }
-
-    @Blocking
-    public boolean requiresUpdate() throws IOException {
-        if (!checkForUpdates) return false;
-        GithubUpdater updater = new GithubUpdater("Tofaa2", "EntityLib", EntityLib.getVersion());
-        return !updater.isLatestVersion();
     }
 
     public @NotNull APIConfig useBstats() {
