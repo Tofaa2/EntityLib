@@ -1,6 +1,6 @@
 plugins {
-    entitylib.`library-conventions`
     entitylib.`shadow-conventions`
+    entitylib.`library-conventions`
 }
 
 dependencies {
