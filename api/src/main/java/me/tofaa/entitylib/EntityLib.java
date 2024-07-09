@@ -5,7 +5,6 @@ import me.tofaa.entitylib.utils.ELVersions;
 import me.tofaa.entitylib.utils.GithubUpdater;
 
 import java.util.Optional;
-import java.util.logging.Level;
 
 public final class EntityLib {
 
@@ -19,13 +18,7 @@ public final class EntityLib {
         platform.setupApi(settings);
         api = platform.getAPI();
 
-        if (api.getSettings().shouldCheckForUpdate()) {
-            if (api.getSettings().isDebugMode()) {
-                platform.getLogger().log(Level.INFO, "Checking for updates...");
-            }
-
-            new GithubUpdater("Tofaa2", "EntityLib").checkForUpdates();
-        }
+        new GithubUpdater("Tofaa2", "EntityLib");
     }
 
     public static Optional<EntityLibAPI<?>> getOptionalApi() {

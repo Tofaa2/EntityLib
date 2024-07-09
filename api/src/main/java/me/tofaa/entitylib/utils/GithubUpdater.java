@@ -27,15 +27,23 @@ public final class GithubUpdater {
         this.repo = repo;
         this.currentVersion = ELVersions.CURRENT;
         this.logger = EntityLib.getPlatform().getLogger();
+
+        if (EntityLib.getApi().getSettings().shouldCheckForUpdate()) {
+            if (EntityLib.getApi().getSettings().isDebugMode()) {
+                logger.log(Level.INFO, "Checking for updates...");
+            }
+
+            checkForUpdates();
+        }
     }
 
-    public void checkForUpdates() {
+    private void checkForUpdates() {
         CompletableFuture.runAsync(() -> {
             try {
                 PEVersion latestVersion = getLatestVersion();
                 if (currentVersion.isOlderThan(latestVersion)) {
-                    logger.log(Level.WARNING, "You are using an outdated version of EntityLib. Please take a look at the Github releases page.");
-                } else if (currentVersion.isNewerThan(latestVersion)) {
+                    logger.log(Level.WARNING, "You are using an outdated version of EntityLib. Version: " + latestVersion + " is now available.");
+                } else if (currentVersion.equals(latestVersion)) {
                     logger.log(Level.INFO, "No EntityLib updates found.");
                 }
             } catch (Exception ex) {
