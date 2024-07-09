@@ -5,7 +5,7 @@ plugins {
 
 tasks {
     shadowJar {
-        archiveFileName = "EntityLib-${project.name}-${project.version}.jar"
+        archiveFileName = "EntityLib-${project.name}-${rootProject.ext["versionNoHash"]}.jar"
         archiveClassifier = null
 
         mergeServiceFiles()

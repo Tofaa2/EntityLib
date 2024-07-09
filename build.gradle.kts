@@ -1,16 +1,17 @@
 import java.io.ByteArrayOutputStream
 
-group = "me.tofaa.entitylib"
-description = rootProject.name
-val fullVersion = "2.4.1"
+val fullVersion = "2.4.5"
 val snapshot = true
 
-fun getVersionMeta(): String {
+group = "me.tofaa.entitylib"
+description = rootProject.name
+
+fun getVersionMeta(includeHash: Boolean): String {
     if (!snapshot) {
         return ""
     }
     var commitHash = ""
-    if (file(".git").isDirectory) {
+    if (includeHash && file(".git").isDirectory) {
         val stdout = ByteArrayOutputStream()
         exec {
             commandLine("git", "rev-parse", "--short", "HEAD")
@@ -20,7 +21,8 @@ fun getVersionMeta(): String {
     }
     return "$commitHash-SNAPSHOT"
 }
-version = "$fullVersion${getVersionMeta()}"
+version = "$fullVersion${getVersionMeta(true)}"
+ext["versionNoHash"] = "$fullVersion${getVersionMeta(false)}"
 
 tasks {
     wrapper {
@@ -28,12 +30,14 @@ tasks {
         distributionType = Wrapper.DistributionType.ALL
     }
 
-    register("build") {
-        // Filter out the 'platforms' directory itself, but include its subprojects
-        val subModuleBuildTasks = subprojects
+    fun subModuleTasks(taskName: String): List<Task> {
+        return subprojects
             .filter { it.name != "platforms" }
-            .mapNotNull { it.tasks.findByName("build") }
+            .mapNotNull { it.tasks.findByName(taskName) }
+    }
 
+    register("build") {
+        val subModuleBuildTasks = subModuleTasks("build")
         dependsOn(subModuleBuildTasks)
         group = "build"
 
@@ -58,10 +62,7 @@ tasks {
     }
 
     register<Delete>("clean") {
-        val cleanTasks = subprojects
-            .filter { it.name != "platforms" }
-            .mapNotNull { it.tasks.findByName("clean") }
-
+        val cleanTasks = subModuleTasks("clean")
         dependsOn(cleanTasks)
         group = "build"
         delete(rootProject.layout.buildDirectory)

@@ -52,7 +52,7 @@ publishing {
         create<MavenPublication>("shadow") {
             groupId = project.group as String
             artifactId = project.name
-            version = project.version as String
+            version = rootProject.ext["versionNoHash"] as String
 
             if (isShadow) {
                 artifact(project.tasks.withType<ShadowJar>().getByName("shadowJar").archiveFile)
@@ -100,6 +100,12 @@ publishing {
                         name = "GPL-3.0"
                         url = "https://www.gnu.org/licenses/gpl-3.0.html"
                     }
+                }
+
+                scm {
+                    connection = "scm:git:https://github.com/Tofaa2/EntityLib.git"
+                    developerConnection = "scm:git:https://github.com/Tofaa2/EntityLib.git"
+                    url = "https://github.com/Tofaa2/EntityLib"
                 }
             }
         }
