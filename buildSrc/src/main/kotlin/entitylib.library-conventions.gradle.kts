@@ -49,46 +49,11 @@ tasks {
 
 publishing {
     publications {
-        create<MavenPublication>("shadow") {
+        create<MavenPublication>("EntityLib") {
             groupId = project.group as String
             artifactId = project.name
             version = rootProject.ext["versionNoHash"] as String
-
-            if (isShadow) {
-                artifact(project.tasks.withType<ShadowJar>().getByName("shadowJar").archiveFile)
-
-                val allDependencies = project.provider {
-                    project.configurations.getByName("shadow").allDependencies
-                        .filter { it is ProjectDependency || it !is SelfResolvingDependency }
-                }
-
-                pom {
-                    withXml {
-                        val (libraryDeps, projectDeps) = allDependencies.get().partition { it !is ProjectDependency }
-                        val dependenciesNode = asNode().get("dependencies") as? Node ?: asNode().appendNode("dependencies")
-
-                        libraryDeps.forEach {
-                            val dependencyNode = dependenciesNode.appendNode("dependency")
-                            dependencyNode.appendNode("groupId", it.group)
-                            dependencyNode.appendNode("artifactId", it.name)
-                            dependencyNode.appendNode("version", it.version)
-                            dependencyNode.appendNode("scope", "compile")
-                        }
-
-                        projectDeps.forEach {
-                            val dependencyNode = dependenciesNode.appendNode("dependency")
-                            dependencyNode.appendNode("groupId", it.group)
-                            dependencyNode.appendNode("artifactId", "packetevents-" + it.name)
-                            dependencyNode.appendNode("version", it.version)
-                            dependencyNode.appendNode("scope", "compile")
-                        }
-                    }
-                }
-
-                artifact(tasks["sourcesJar"])
-            } else {
-                from(components["java"])
-            }
+            from(components["java"])
 
             pom {
                 name = "${rootProject.name}-${project.name}"
