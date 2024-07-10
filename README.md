@@ -31,12 +31,12 @@ dependencies {
 ```
 
 Maven:
-```xml
-    <dependency>
-        <groupId>com.github.Tofaa2.EntityLib</groupId>
-        <artifactId>(platform)</artifactId>
-        <version>(latest-release-version)</version>
-    </dependency>
+```xml 
+<dependency>
+    <groupId>com.github.Tofaa2.EntityLib</groupId>
+    <artifactId>(platform)</artifactId>
+    <version>(latest-release-version)</version>
+</dependency>
 ```
 
 ##  NOTE:
