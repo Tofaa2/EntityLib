@@ -40,8 +40,8 @@ public class WrapperPlayer extends WrapperLivingEntity {
         return profile.getTextureProperties();
     }
 
-    public WrapperPlayServerPlayerInfoRemove tabListRemovePacket() {
-        return new WrapperPlayServerPlayerInfoRemove(getUuid());
+    public WrapperPlayServerPlayerInfoUpdate tabListRemovePacket() {
+        return new WrapperPlayServerPlayerInfoUpdate(EnumSet.of(WrapperPlayServerPlayerInfoUpdate.Action.UPDATE_LISTED), createInfo());
     }
 
     public void setGameMode(GameMode gameMode) {
@@ -95,9 +95,9 @@ public class WrapperPlayer extends WrapperLivingEntity {
     public void setInTablist(boolean tablist) {
         this.tablist = tablist;
         sendPacketsToViewersIfSpawned(tabListPacket());
-        if (!tablist) {
-            sendPacketsToViewersIfSpawned(tabListRemovePacket());
-        }
+//        if (!tablist) {
+//            sendPacketsToViewersIfSpawned(tabListRemovePacket());
+//        }
     }
 
     public int getLatency() {

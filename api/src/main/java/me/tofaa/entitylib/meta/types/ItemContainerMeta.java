@@ -11,7 +11,7 @@ public abstract class ItemContainerMeta extends EntityMeta {
 
     private final ItemStack baseItem;
 
-    protected ItemContainerMeta(int entityId, Metadata metadata, ItemStack baseItem) {
+    public ItemContainerMeta(int entityId, Metadata metadata, ItemStack baseItem) {
         super(entityId, metadata);
         this.baseItem = baseItem;
     }
