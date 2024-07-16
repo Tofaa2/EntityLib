@@ -1,5 +1,6 @@
 package me.tofaa.entitylib.meta;
 
+import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.manager.server.VersionComparison;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
@@ -203,17 +204,29 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     protected static void isVersionNewer(ServerVersion version) {
-        if (!EntityLib.getApi().getPacketEvents().getServerManager().getVersion().is(VersionComparison.NEWER_THAN, version)) {
+        if (EntityLib.getOptionalApi().isPresent()) {
+            if (!EntityLib.getApi().getPacketEvents().getServerManager().getVersion().is(VersionComparison.NEWER_THAN, version)) {
+                throw new InvalidVersionException("This method is only available for versions newer than " + version.name() + ".");
+            }
+        }
+        if (!PacketEvents.getAPI().getServerManager().getVersion().is(VersionComparison.NEWER_THAN, version)) {
             throw new InvalidVersionException("This method is only available for versions newer than " + version.name() + ".");
         }
     }
 
     protected static boolean isVersion(ServerVersion version, VersionComparison comparison) {
-        return EntityLib.getApi().getPacketEvents().getServerManager().getVersion().is(comparison, version);
+        if (EntityLib.getOptionalApi().isPresent()) {
+
+            return EntityLib.getApi().getPacketEvents().getServerManager().getVersion().is(comparison, version);
+        }
+        return PacketEvents.getAPI().getServerManager().getVersion().is(comparison, version);
     }
 
     protected static boolean isVersion(ServerVersion version) {
-        return EntityLib.getApi().getPacketEvents().getServerManager().getVersion().is(VersionComparison.EQUALS, version);
+        if (EntityLib.getOptionalApi().isPresent()) {
+            return EntityLib.getApi().getPacketEvents().getServerManager().getVersion().is(VersionComparison.EQUALS, version);
+        }
+        return PacketEvents.getAPI().getServerManager().getVersion().is(VersionComparison.EQUALS, version);
     }
 
     /**

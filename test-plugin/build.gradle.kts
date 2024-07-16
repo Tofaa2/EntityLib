@@ -11,6 +11,7 @@ repositories {
 dependencies {
     compileOnly(libs.paper)
     compileOnly(libs.packetevents.spigot)
+    implementation("com.github.Tofaa2.EntityLib:spigot:24887cb05a")
     implementation(project(":platforms:spigot"))
 }
 

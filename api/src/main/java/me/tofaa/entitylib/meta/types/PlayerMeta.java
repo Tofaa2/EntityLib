@@ -4,7 +4,6 @@ import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.nbt.NBTCompound;
 import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;
 import org.jetbrains.annotations.Nullable;
 
