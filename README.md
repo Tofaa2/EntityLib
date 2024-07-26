@@ -9,31 +9,31 @@ You can easily use EntityLib platformless by using the `api` or `common` module
 
 Gradle (Groovy DSL):
 ```groovy
-//https://jitpack.io/#Tofaa2/EntityLib/
+//https://maven.evokegames.gg/#/snapshots/me/tofaa/entitylib
 repositories {
-    maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.evokegames.gg/snapshots' }
 }
 
 dependencies {
-    implementation 'com.github.Tofaa2.EntityLib:<platform>:<latest-release-version'
+    implementation 'me.tofaa.entitylib:<platform>:<latest-release-version'
 }
 ```
 
 Gradle (Kotlin DSL):
 ```kotlin
 repositories {
-    maven(url = "https://jitpack.io")
+    maven(url = "https://maven.evokegames.gg/snapshots")
 }
 
 dependencies {
-    implementation("com.github.Tofaa2.EntityLib:<platform>:<latest-release-version>")
+    implementation("me.tofaa.entitylib:<platform>:<latest-release-version>")
 }
 ```
 
 Maven:
 ```xml 
 <dependency>
-    <groupId>com.github.Tofaa2.EntityLib</groupId>
+    <groupId>me.tofaa.entitylib</groupId>
     <artifactId>(platform)</artifactId>
     <version>(latest-release-version)</version>
 </dependency>

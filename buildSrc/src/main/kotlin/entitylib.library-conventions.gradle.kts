@@ -45,6 +45,17 @@ tasks {
 }
 
 publishing {
+
+    repositories {
+        maven {
+            url = uri("https://maven.evokegames.gg/snapshots")
+            credentials {
+                username = System.getenv("TYCOONS_REPO_USER")
+                password = System.getenv("TYCOONS_REPO_PASS")
+            }
+        }
+    }
+
     publications {
         create<MavenPublication>("EntityLib") {
             groupId = project.group as String
