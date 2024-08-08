@@ -121,7 +121,12 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     }
 
     public void remove() {
-        parent.removeEntity(this, true);
+        if (parent != null) {
+            parent.removeEntity(this, true);
+        }
+        else {
+            despawn();
+        }
     }
 
     public void despawn() {
@@ -382,6 +387,8 @@ public class WrapperEntity implements Tickable, TrackedEntity {
                 new WrapperPlayServerEntityRotation(entityId, yaw, pitch, onGround),
                 new WrapperPlayServerEntityHeadLook(entityId, yaw)
         );
+        this.location.setYaw(yaw);
+        this.location.setPitch(pitch);
     }
 
     public void rotateHead(Location location) {
