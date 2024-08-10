@@ -45,6 +45,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
         this.ticking = true;
         this.viewers = ConcurrentHashMap.newKeySet();
         this.passengers = ConcurrentHashMap.newKeySet();
+        this.location = new Location(0, 0, 0, 0, 0);
     }
 
     public WrapperEntity(int entityId, EntityType entityType) {
@@ -383,7 +384,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     }
 
     public void rotateHead(float yaw, float pitch) {
-        sendPacketsToViewers(
+        sendPacketsToViewersIfSpawned(
                 new WrapperPlayServerEntityRotation(entityId, yaw, pitch, onGround),
                 new WrapperPlayServerEntityHeadLook(entityId, yaw)
         );
