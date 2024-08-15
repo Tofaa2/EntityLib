@@ -6,6 +6,7 @@ For general support and reports of bugs, join the [Discord](https://discord.gg/j
 Currently supported platforms are `spigot` and `velocity`
 You can easily use EntityLib platformless by using the `api` or `common` module
 
+If you like EntityLib and or want to sponsor me, visit my [ko-fi page](https://ko-fi.com/tofaa) :D 
 
 Gradle (Groovy DSL):
 ```groovy
