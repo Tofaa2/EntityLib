@@ -14,7 +14,7 @@ repositories {
     maven("https://repo.codemc.io/repository/maven-snapshots/")
 }
 
-val isShadow = project.pluginManager.hasPlugin("io.github.goooler.shadow")
+val isShadow = project.pluginManager.hasPlugin("com.gradleup.shadow")
 
 java {
     withSourcesJar()
