@@ -10,7 +10,7 @@ public class ItemEntityMeta extends ItemContainerMeta implements ObjectData {
     public static final byte OFFSET = ItemContainerMeta.MAX_OFFSET;
     public static final byte MAX_OFFSET = OFFSET + 0;
 
-    protected ItemEntityMeta(int entityId, Metadata metadata) {
+    public ItemEntityMeta(int entityId, Metadata metadata) {
         super(entityId, metadata, ItemStack.EMPTY);
     }
 

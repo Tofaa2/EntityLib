@@ -7,8 +7,8 @@ plugins {
 dependencies {
     api(libs.jetbrains.annotations)
 
-    compileOnlyApi(libs.bundles.adventure)
-    compileOnlyApi(libs.packetevents.api)
+    compileOnly(libs.bundles.adventure)
+    compileOnly(libs.packetevents.api)
 }
 
 tasks {

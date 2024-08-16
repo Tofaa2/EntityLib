@@ -6,34 +6,35 @@ For general support and reports of bugs, join the [Discord](https://discord.gg/j
 Currently supported platforms are `spigot` and `velocity`
 You can easily use EntityLib platformless by using the `api` or `common` module
 
+If you like EntityLib and or want to sponsor me, visit my [ko-fi page](https://ko-fi.com/tofaa) :D 
 
 Gradle (Groovy DSL):
 ```groovy
-//https://jitpack.io/#Tofaa2/EntityLib/
+//https://maven.evokegames.gg/#/snapshots/me/tofaa/entitylib
 repositories {
-    maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.evokegames.gg/snapshots' }
 }
 
 dependencies {
-    implementation 'com.github.Tofaa2.EntityLib:<platform>:<latest-release-version'
+    implementation 'me.tofaa.entitylib:<platform>:<latest-release-version'
 }
 ```
 
 Gradle (Kotlin DSL):
 ```kotlin
 repositories {
-    maven(url = "https://jitpack.io")
+    maven(url = "https://maven.evokegames.gg/snapshots")
 }
 
 dependencies {
-    implementation("com.github.Tofaa2.EntityLib:<platform>:<latest-release-version>")
+    implementation("me.tofaa.entitylib:<platform>:<latest-release-version>")
 }
 ```
 
 Maven:
 ```xml 
 <dependency>
-    <groupId>com.github.Tofaa2.EntityLib</groupId>
+    <groupId>me.tofaa.entitylib</groupId>
     <artifactId>(platform)</artifactId>
     <version>(latest-release-version)</version>
 </dependency>

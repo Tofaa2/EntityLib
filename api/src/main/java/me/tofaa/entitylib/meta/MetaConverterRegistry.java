@@ -1,6 +1,7 @@
 package me.tofaa.entitylib.meta;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import me.tofaa.entitylib.meta.display.BlockDisplayMeta;
 import me.tofaa.entitylib.meta.display.ItemDisplayMeta;
 import me.tofaa.entitylib.meta.display.TextDisplayMeta;
@@ -82,6 +83,7 @@ final class MetaConverterRegistry {
         put(ENDERMAN, EndermanMeta.class, EndermanMeta::new);
         put(ENDERMITE, EndermiteMeta.class, EndermiteMeta::new);
         put(EVOKER, EvokerMeta.class, EvokerMeta::new);
+        put(EYE_OF_ENDER, EyeOfEnderMeta.class, EyeOfEnderMeta::new);
         put(EVOKER_FANGS, EvokerFangsMeta.class, EvokerFangsMeta::new);
         put(FALLING_BLOCK, FallingBlockMeta.class, FallingBlockMeta::new);
         put(FIREBALL, LargeFireballMeta.class, LargeFireballMeta::new); // TODO: Verify correctness
@@ -104,6 +106,7 @@ final class MetaConverterRegistry {
         put(IRON_GOLEM, IronGolemMeta.class, IronGolemMeta::new);
         put(ITEM_DISPLAY, ItemDisplayMeta.class, ItemDisplayMeta::new);
         put(ITEM_FRAME, ItemFrameMeta.class, ItemFrameMeta::new);
+        put(ITEM, ItemEntityMeta.class, ItemEntityMeta::new);
         put(LEASH_KNOT, LeashKnotMeta.class, LeashKnotMeta::new);
         put(LIGHTNING_BOLT, LightningBoltMeta.class, LightningBoltMeta::new);
         put(LLAMA, LlamaMeta.class, LlamaMeta::new);
@@ -114,6 +117,7 @@ final class MetaConverterRegistry {
         put(OCELOT, OcelotMeta.class, OcelotMeta::new);
         put(PAINTING, PaintingMeta.class, PaintingMeta::new);
         put(PANDA, PandaMeta.class, PandaMeta::new);
+        put(POTION, ThrownPotionMeta.class, ThrownPotionMeta::new);
         put(PARROT, ParrotMeta.class, ParrotMeta::new);
         put(PIG, PigMeta.class, PigMeta::new);
         put(PIGLIN, PiglinMeta.class, PiglinMeta::new);
@@ -128,6 +132,7 @@ final class MetaConverterRegistry {
         put(RAVAGER, RavagerMeta.class, RavagerMeta::new);
         put(SALMON, SalmonMeta.class, SalmonMeta::new);
         put(SHEEP, SheepMeta.class, SheepMeta::new);
+        put(SNOWBALL, SnowballMeta.class, SnowballMeta::new);
         put(SHULKER, ShulkerMeta.class, ShulkerMeta::new);
         put(SHULKER_BULLET, ShulkerBulletMeta.class, ShulkerBulletMeta::new);
         put(SILVERFISH, SilverfishMeta.class, SilverfishMeta::new);
@@ -144,6 +149,7 @@ final class MetaConverterRegistry {
         put(TADPOLE, LivingEntityMeta.class, LivingEntityMeta::new); // TODO: Implement
         put(TEXT_DISPLAY, TextDisplayMeta.class, TextDisplayMeta::new);
         put(THROWN_EXP_BOTTLE, ThrownExpBottleMeta.class, ThrownExpBottleMeta::new);
+        put(ENDER_PEARL, ThrownEnderPearlMeta.class, ThrownEnderPearlMeta::new);
         put(TNT_MINECART, TntMinecartMeta.class, TntMinecartMeta::new);
         put(TRADER_LLAMA, TraderLlamaMeta.class, TraderLlamaMeta::new);
         put(TRIDENT, ThrownTridentMeta.class, ThrownTridentMeta::new);

@@ -5,13 +5,15 @@ plugins {
 }
 
 repositories {
+    maven("https://maven.evokegames.gg/snapshots")
     maven("https://repo.papermc.io/repository/maven-public/")
 }
 
 dependencies {
     compileOnly(libs.paper)
     compileOnly(libs.packetevents.spigot)
-    implementation(project(":platforms:spigot"))
+    implementation("me.tofaa.entitylib:spigot:2.4.5-SNAPSHOT")
+//    implementation(project(":platforms:spigot"))
 }
 
 tasks {

@@ -20,6 +20,9 @@ import java.util.*;
 
 public class TestPlayerCommand extends BukkitCommand {
 
+
+    private static final char UNICODE_EMPTY = '\u2800';
+
     private WrapperPlayer p;
     private SkinFetcher sf;
     public TestPlayerCommand() {
@@ -28,6 +31,22 @@ public class TestPlayerCommand extends BukkitCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender commandSender, @NotNull String s, @NotNull String[] strings) {
+        Player player = (Player) commandSender;
+        if (p != null) {
+            p.setInTablist(!p.isInTablist());
+            return true;
+        }
+
+        p = new WrapperPlayer(new UserProfile(UUID.randomUUID(), "\u2800"), EntityLib.getPlatform().getEntityIdProvider().provide(UUID.randomUUID(), EntityTypes.PLAYER));
+        p.setInTablist(true);
+        p.setTextureProperties(ExtraConversionUtil.getProfileFromBukkitPlayer(player).getTextureProperties());
+        p.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
+        p.addViewer(player.getUniqueId());
+        player.sendMessage("Entity spawned");
+        return true;
+    }
+
+    private boolean legacyProcess(@NotNull CommandSender commandSender, @NotNull String s, @NotNull String[] strings) {
         Player player = (Player) commandSender;
         if (strings.length < 1) {
             player.sendMessage("Usage: /testplayer <spawn|hello|ping|gamemode|displayname|tablist|remove>");
@@ -91,6 +110,7 @@ public class TestPlayerCommand extends BukkitCommand {
         }
         return true;
     }
+
 
     @NotNull
     @Override
