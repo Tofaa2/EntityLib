@@ -22,7 +22,7 @@ public class ItemDisplayMeta extends AbstractDisplayMeta {
     }
 
     public DisplayType getDisplayType() {
-        return DisplayType.VALUES[super.metadata.getIndex(offset(OFFSET, 1), 0)];
+        return DisplayType.VALUES[super.metadata.getIndex(offset(OFFSET, 1), (byte) 0)];
     }
 
     public void setDisplayType(DisplayType displayType) {
