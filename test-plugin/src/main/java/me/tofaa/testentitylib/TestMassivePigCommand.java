@@ -5,6 +5,7 @@ import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerUpdateAttributes;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import me.tofaa.entitylib.EntityLib;
+import me.tofaa.entitylib.wrapper.WrapperEntity;
 import me.tofaa.entitylib.wrapper.WrapperLivingEntity;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
@@ -15,7 +16,7 @@ import java.util.UUID;
 
 public class TestMassivePigCommand extends BukkitCommand {
 
-    private WrapperLivingEntity pig;
+    private WrapperEntity pig;
 
     public TestMassivePigCommand() {
         super("testmassivepig");
@@ -31,16 +32,7 @@ public class TestMassivePigCommand extends BukkitCommand {
             player.sendMessage("Large pig removed");
             return true;
         }
-        pig = new WrapperLivingEntity(EntityTypes.PIG);
-        pig.getAttributes().setAttribute(
-                Attributes.GENERIC_SCALE,
-                10,
-                new WrapperPlayServerUpdateAttributes.PropertyModifier(
-                        UUID.randomUUID(),
-                        10,
-                        WrapperPlayServerUpdateAttributes.PropertyModifier.Operation.MULTIPLY_BASE
-                )
-        );
+        pig = new WrapperEntity(EntityTypes.TNT);
         pig.addViewer(player.getUniqueId());
         pig.spawn(SpigotConversionUtil.fromBukkitLocation(player.getLocation()));
         player.sendMessage("Large pig spawned");

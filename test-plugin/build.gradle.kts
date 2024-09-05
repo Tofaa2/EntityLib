@@ -12,7 +12,7 @@ repositories {
 dependencies {
     compileOnly(libs.paper)
     compileOnly(libs.packetevents.spigot)
-    implementation("me.tofaa.entitylib:spigot:2.4.5-SNAPSHOT")
+    implementation(project(":platforms:spigot"))
 //    implementation(project(":platforms:spigot"))
 }
 
