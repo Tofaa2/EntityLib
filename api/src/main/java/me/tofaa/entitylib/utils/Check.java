@@ -1,5 +1,6 @@
 package me.tofaa.entitylib.utils;
 
+import com.github.retrooper.packetevents.protocol.world.Location;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,6 +16,12 @@ public final class Check {
 
     private Check() {}
 
+    public static boolean inChunk(Location location, int cx, int cz) {
+        // Assumes each chunk is 16x
+        int lx = ((int) Math.floor(location.getX())) >> 4;
+        int lz = ((int) Math.floor(location.getZ())) >> 4;
+        return cx == lx && cz == lz;
+    }
 
     public static <T> void arrayLength(List<T> lines, int index, T e) {
         if (index >= lines.size()) {

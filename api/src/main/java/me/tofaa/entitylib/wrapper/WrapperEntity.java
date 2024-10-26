@@ -12,12 +12,15 @@ import me.tofaa.entitylib.container.EntityContainer;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.types.ObjectData;
 import me.tofaa.entitylib.tick.Tickable;
+import me.tofaa.entitylib.ve.ViewerRule;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 public class WrapperEntity implements Tickable, TrackedEntity {
@@ -36,6 +39,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
     private int riding = -1;
     private final Set<Integer> passengers;
     private EntityContainer parent;
+    private final List<ViewerRule> viewerRules;
 
     public WrapperEntity(int entityId, UUID uuid, EntityType entityType, EntityMeta entityMeta) {
         this.entityId = entityId;
@@ -46,6 +50,7 @@ public class WrapperEntity implements Tickable, TrackedEntity {
         this.viewers = ConcurrentHashMap.newKeySet();
         this.passengers = ConcurrentHashMap.newKeySet();
         this.location = new Location(0, 0, 0, 0, 0);
+        this.viewerRules = new CopyOnWriteArrayList<>();
     }
 
     public WrapperEntity(int entityId, EntityType entityType) {
@@ -353,6 +358,31 @@ public class WrapperEntity implements Tickable, TrackedEntity {
         return new WrapperPlayServerSetPassengers(entityId, passengers.stream().mapToInt(i -> i).toArray());
     }
 
+    public @UnmodifiableView Collection<ViewerRule> getViewerRules() {
+        return Collections.unmodifiableCollection(viewerRules);
+    }
+
+    public void addViewerRule(@NotNull ViewerRule rule) {
+        this.viewerRules.add(rule);
+    }
+
+    public void removeViewerRule(@NotNull ViewerRule rule) {
+        this.viewerRules.remove(rule);
+    }
+
+    public void removeViewerRule(int index) {
+        this.viewerRules.remove(index);
+    }
+
+    public void clearViewerRules() {
+        this.viewerRules.clear();
+    }
+
+    public @Nullable ViewerRule getViewerRule(int index) {
+        if (this.viewerRules.size() >= index - 1) return null;
+        if (index < 0) return null;
+        return viewerRules.get(index);
+    }
 
     private WrapperPlayServerEntityVelocity getVelocityPacket() {
         Vector3d velocity = this.velocity.multiply(8000.0f / 20.0f);
@@ -576,6 +606,14 @@ public class WrapperEntity implements Tickable, TrackedEntity {
 
     public @NotNull Set<UUID> getViewers() {
         return Collections.unmodifiableSet(viewers);
+    }
+
+    public boolean hasViewer(UUID uuid) {
+        return viewers.contains(uuid);
+    }
+
+    public boolean hasViewer(User user) {
+        return hasViewer(user.getUUID());
     }
 
     public Location getLocation() {
