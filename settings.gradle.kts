@@ -37,5 +37,5 @@ include(":platforms:standalone")
 if (!System.getenv("JITPACK").toBoolean()) {
     include(":code-gen")
     include(":test-plugin")
-    include(":model-engine-addon")
+    include(":block-bench-addon")
 }

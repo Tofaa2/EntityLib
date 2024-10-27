@@ -11,9 +11,9 @@ repositories {
 }
 
 dependencies {
-    // compileOnly("com.ticxo.modelengine:ModelEngine:R4.0.4")
     api(project(":api"))
-
+    compileOnly(libs.packetevents.api)
+    compileOnly(libs.gson)
     implementation("commons-io:commons-io:2.11.0")
     implementation("org.zeroturnaround:zt-zip:1.8")
 
