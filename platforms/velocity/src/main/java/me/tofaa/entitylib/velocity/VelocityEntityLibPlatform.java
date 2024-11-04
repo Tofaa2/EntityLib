@@ -6,7 +6,6 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerBl
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerBlockChange;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
-import io.github.retrooper.packetevents.bstats.Metrics;
 import io.github.retrooper.packetevents.velocity.factory.VelocityPacketEventsBuilder;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLibAPI;
