@@ -1,6 +1,7 @@
 package me.tofaa.entitylib.meta.other;
 
 import com.github.retrooper.packetevents.protocol.world.Direction;
+import com.github.retrooper.packetevents.protocol.world.PaintingType;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;
 import org.jetbrains.annotations.NotNull;
@@ -113,6 +114,10 @@ public class PaintingMeta extends EntityMeta {
 
         public int getHeight() {
             return this.height;
+        }
+
+        public PaintingType asProtocolType() {
+            return PaintingType.getById(this.ordinal());
         }
 
     }
