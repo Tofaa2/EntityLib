@@ -7,6 +7,6 @@ import me.tofaa.entitylib.wrapper.WrapperEntity;
 @FunctionalInterface
 public interface SpawnPacketProvider<T extends PacketWrapper<T>> extends SpawnPacketProviders {
 
-    T provide(User user, WrapperEntity entity);
+    T provide(WrapperEntity entity);
 
 }

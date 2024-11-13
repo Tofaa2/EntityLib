@@ -92,6 +92,11 @@ public class WrapperEntity implements Tickable {
         return true;
     }
 
+    public PacketWrapper<?> getSpawnPacket(User user) {
+        // TODO: Version/EntityType compatibility
+        return SpawnPacketProvider.GENERAL.provide(this);
+    }
+
     public boolean spawn(Location location) {
         return spawn(location, EntityLib.getApi().getDefaultContainer());
     }

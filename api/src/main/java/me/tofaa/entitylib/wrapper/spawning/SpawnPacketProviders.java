@@ -13,7 +13,7 @@ import java.util.Optional;
 
 interface SpawnPacketProviders {
 
-    @NotNull SpawnPacketProvider<WrapperPlayServerSpawnExperienceOrb> EXPERIENCE_ORB = (user, entity) -> {
+    @NotNull SpawnPacketProvider<WrapperPlayServerSpawnExperienceOrb> EXPERIENCE_ORB = (entity) -> {
         Check.stateCondition(!(entity instanceof WrapperExperienceOrbEntity), "Attempted to use spawn packet provider for Experience orbs on a non ExperienceOrb entity. Please use an instance of WrapperExperienceOrbEntity.");
         WrapperExperienceOrbEntity expEntity = (WrapperExperienceOrbEntity) entity;
         return new WrapperPlayServerSpawnExperienceOrb(
@@ -25,7 +25,7 @@ interface SpawnPacketProviders {
         );
     };
 
-    @NotNull SpawnPacketProvider<WrapperPlayServerSpawnEntity> GENERAL = (user, entity) -> {
+    @NotNull SpawnPacketProvider<WrapperPlayServerSpawnEntity> GENERAL = (entity) -> {
         Location location = entity.getLocation();
         return new WrapperPlayServerSpawnEntity(
                 entity.getEntityId(),
@@ -40,10 +40,10 @@ interface SpawnPacketProviders {
         );
     };
 
-    @NotNull SpawnPacketProvider<WrapperPlayServerSpawnWeatherEntity> LEGACY_WEATHER_ENTITY = (user, entity) -> {
+    @NotNull SpawnPacketProvider<WrapperPlayServerSpawnWeatherEntity> LEGACY_WEATHER_ENTITY = (entity) -> {
         throw new NotImplementedException();
     };
-    @NotNull SpawnPacketProvider<WrapperPlayServerSpawnPainting> LEGACY_PAINTING = (user, entity) -> {
+    @NotNull SpawnPacketProvider<WrapperPlayServerSpawnPainting> LEGACY_PAINTING = (entity) -> {
         Check.stateCondition(!(entity.getEntityMeta() instanceof PaintingMeta), "Attempted to use spawn packet provider for paintings but not using an entity with PaintingMeta.");
         PaintingMeta meta = entity.getEntityMeta(PaintingMeta.class);
         return new WrapperPlayServerSpawnPainting(
@@ -55,7 +55,7 @@ interface SpawnPacketProviders {
         );
     };
 
-    @NotNull SpawnPacketProvider<WrapperPlayServerSpawnLivingEntity> PRE_1_19_LIVING = (user, entity) -> {
+    @NotNull SpawnPacketProvider<WrapperPlayServerSpawnLivingEntity> PRE_1_19_LIVING = (entity) -> {
         Location location = entity.getLocation();
         return new WrapperPlayServerSpawnLivingEntity(
                 entity.getEntityId(),
