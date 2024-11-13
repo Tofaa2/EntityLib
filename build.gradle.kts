@@ -1,6 +1,6 @@
 import java.io.ByteArrayOutputStream
 
-val fullVersion = "2.4.11"
+val fullVersion = "3.0.0"
 val snapshot = true
 
 group = "me.tofaa.entitylib"

@@ -6,8 +6,8 @@ import me.tofaa.entitylib.meta.other.PaintingMeta;
 import me.tofaa.entitylib.utils.Check;
 import me.tofaa.entitylib.wrapper.WrapperExperienceOrbEntity;
 import org.jetbrains.annotations.NotNull;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.naming.OperationNotSupportedException;
 import java.awt.*;
 import java.util.Optional;
 
@@ -41,7 +41,7 @@ interface SpawnPacketProviders {
     };
 
     @NotNull SpawnPacketProvider<WrapperPlayServerSpawnWeatherEntity> LEGACY_WEATHER_ENTITY = (entity) -> {
-        throw new NotImplementedException();
+        throw new RuntimeException("Not supported yet");
     };
     @NotNull SpawnPacketProvider<WrapperPlayServerSpawnPainting> LEGACY_PAINTING = (entity) -> {
         Check.stateCondition(!(entity.getEntityMeta() instanceof PaintingMeta), "Attempted to use spawn packet provider for paintings but not using an entity with PaintingMeta.");
