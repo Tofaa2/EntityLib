@@ -13,6 +13,7 @@ import me.tofaa.entitylib.meta.types.ObjectData;
 import me.tofaa.entitylib.tick.Tickable;
 import me.tofaa.entitylib.ve.ViewerRule;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnmodifiableView;
@@ -94,13 +95,15 @@ public class WrapperEntity implements Tickable {
         return spawn(location, EntityLib.getApi().getDefaultContainer());
     }
 
-    protected int getObjectData() {
+    @ApiStatus.Internal
+    public int getObjectData() {
         if (entityMeta instanceof ObjectData) {
             return ((ObjectData) entityMeta).getObjectData();
         }
         return 0;
     }
 
+    @ApiStatus.Internal
     public Optional<Vector3d> createVeloPacket() {
         Optional<Vector3d> velocity;
         double veloX = 0, veloY = 0, veloZ = 0;
