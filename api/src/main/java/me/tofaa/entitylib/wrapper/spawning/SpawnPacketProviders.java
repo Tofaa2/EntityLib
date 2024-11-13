@@ -2,15 +2,29 @@ package me.tofaa.entitylib.wrapper.spawning;
 
 import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnExperienceOrb;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnLivingEntity;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnWeatherEntity;
 import me.tofaa.entitylib.utils.Check;
+import me.tofaa.entitylib.wrapper.WrapperExperienceOrbEntity;
 import org.jetbrains.annotations.NotNull;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Optional;
 
 interface SpawnPacketProviders {
+
+    @NotNull SpawnPacketProvider<WrapperPlayServerSpawnExperienceOrb> EXPERIENCE_ORB = (user, entity) -> {
+        Check.stateCondition(!(entity instanceof WrapperExperienceOrbEntity), "Attempted to use spawn packet provider for Experience orbs on a non ExperienceOrb entity. Please use an instance of WrapperExperienceOrbEntity.");
+        WrapperExperienceOrbEntity expEntity = (WrapperExperienceOrbEntity) entity;
+        return new WrapperPlayServerSpawnExperienceOrb(
+                entity.getEntityId(),
+                entity.getX(),
+                entity.getY(),
+                entity.getZ(),
+                expEntity.getExperience()
+        );
+    };
 
     @NotNull SpawnPacketProvider<WrapperPlayServerSpawnEntity> GENERAL = (user, entity) -> {
         Location location = entity.getLocation();
