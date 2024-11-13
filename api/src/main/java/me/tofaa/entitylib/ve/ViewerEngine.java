@@ -4,6 +4,7 @@ package me.tofaa.entitylib.ve;
 import com.github.retrooper.packetevents.protocol.player.User;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnmodifiableView;
@@ -13,6 +14,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+/**
+ * A basic viewer manipulation engine.
+ * Allows for a set of rules to be applied as to show and hide an entity from viewers.
+ */
+@ApiStatus.Experimental
 public class ViewerEngine {
 
     private final List<ViewerRule> globalRules;
@@ -34,6 +40,16 @@ public class ViewerEngine {
         EntityLib.getApi().getPacketEvents().getEventManager().unregisterListener(listener);
     }
 
+    public void refresh() {
+        getTracked0().forEach(entity -> {
+            for (UUID viewer : entity.getViewers()) {
+                if (!canSpawnFor(viewer, entity)) {
+                    entity.removeViewer(viewer);
+                }
+            }
+        });
+    }
+
     public Executor getExecutor() {
         return executor;
     }
@@ -53,6 +69,14 @@ public class ViewerEngine {
     public boolean canSpawnFor(User user, WrapperEntity entity) {
         if (entity.getViewerRules().stream().anyMatch(rule -> rule.shouldSee(user))) return true;
         return globalRules.stream().anyMatch(rule -> rule.shouldSee(user));
+    }
+
+    public boolean canSpawnFor(UUID userId, WrapperEntity entity) {
+        User user = EntityLib.getApi().getPacketEvents().getProtocolManager().getUser(
+                EntityLib.getApi().getPacketEvents().getProtocolManager().getChannel(userId)
+        );
+        if (user == null) return false;
+        return canSpawnFor(user, entity);
     }
 
     public @UnmodifiableView Collection<WrapperEntity> getTracked() {

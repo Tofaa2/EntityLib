@@ -10,9 +10,7 @@ public final class APIConfig {
     private boolean checkForUpdates = false;
     private boolean tickTickables = false;
     private boolean platformLogger = false;
-    private boolean defaultCommands = false;
-    private boolean platformTracking = false;
-    private boolean bstats = false;
+    private boolean bstats = true;
 
     public APIConfig(PacketEventsAPI<?> packetEvents) {
         this.packetEvents = packetEvents;
@@ -23,13 +21,13 @@ public final class APIConfig {
         return this;
     }
 
-    public @NotNull APIConfig usePlatformLogger() {
-        this.platformLogger = true;
+    public @NotNull APIConfig disableBStats() {
+        this.bstats = false;
         return this;
     }
 
-    public @NotNull APIConfig trackPlatformEntities() {
-        this.platformTracking = true;
+    public @NotNull APIConfig usePlatformLogger() {
+        this.platformLogger = true;
         return this;
     }
 
@@ -46,15 +44,6 @@ public final class APIConfig {
     public @NotNull APIConfig debugMode() {
         this.debugMode = true;
         return this;
-    }
-
-    public @NotNull APIConfig registerDefaultCommands() {
-        this.defaultCommands = true;
-        return this;
-    }
-
-    public boolean shouldRegisterDefaultCommands() {
-        return defaultCommands;
     }
 
     public boolean isDebugMode() {
@@ -75,10 +64,6 @@ public final class APIConfig {
 
     public boolean shouldUsePlatformLogger() {
         return platformLogger;
-    }
-
-    public boolean shouldTrackPlatformEntities() {
-        return platformTracking;
     }
 
     public boolean shouldUseBstats() {

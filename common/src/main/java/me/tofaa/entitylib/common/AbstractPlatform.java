@@ -24,16 +24,6 @@ public abstract class AbstractPlatform<P> implements Platform<P> {
     }
 
     @Override
-    public @NotNull Stream<TrackedEntity> queryPlatformEntities() {
-        throw new UnsupportedOperationException("Platform does not support querying entities.");
-    }
-
-    @Override
-    public @Nullable TrackedEntity findPlatformEntity(int entityId) {
-        throw new UnsupportedOperationException("Platform does not support querying entities.");
-    }
-
-    @Override
     public void setupApi(@NotNull APIConfig settings) {
         this.eventHandler = EventHandler.create();
         this.entityIdProvider = new EntityIdProvider.DefaultEntityIdProvider();

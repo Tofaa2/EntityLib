@@ -15,21 +15,6 @@ public interface Platform<P> {
 
 
     /**
-     * Queries a stream of platform specific entities if the platform supports
-     * @throws UnsupportedOperationException if the platform does not support querying entities.
-     * @return a stream of platform specific entities. The stream is not guaranteed to be synchronized.
-     */
-    @NotNull Stream<TrackedEntity> queryPlatformEntities();
-
-    /**
-     * Finds a platform specific entity by its entityId.
-     * @param entityId the entityId of the entity.
-     * @return a future that completes with the entity if found, or null if not found.
-     * @throws UnsupportedOperationException if the platform does not support querying entities.
-     */
-    @Nullable TrackedEntity findPlatformEntity(int entityId);
-
-    /**
      * Gets the entityId integer provider. This can be provided by a platform if needed.
      * @return the entityId integer provider.
      */
