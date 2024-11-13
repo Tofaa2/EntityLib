@@ -35,6 +35,7 @@ include(":platforms:velocity")
 include(":platforms:standalone")
 
 if (!System.getenv("JITPACK").toBoolean()) {
+    include("discord-bot")
     include(":code-gen")
     include(":test-plugin")
     include(":block-bench-addon")

@@ -8,6 +8,8 @@ test-plugin/run
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+discord-bot/.env
+
 /website
 
 ### IntelliJ IDEA ###

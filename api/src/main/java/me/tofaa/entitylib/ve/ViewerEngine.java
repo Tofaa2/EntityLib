@@ -1,6 +1,7 @@
 package me.tofaa.entitylib.ve;
 
 
+import com.github.retrooper.packetevents.protocol.player.User;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.jetbrains.annotations.NotNull;
@@ -47,6 +48,11 @@ public class ViewerEngine {
 
     public void clearTracked() {
         tracked.clear();
+    }
+
+    public boolean canSpawnFor(User user, WrapperEntity entity) {
+        if (entity.getViewerRules().stream().anyMatch(rule -> rule.shouldSee(user))) return true;
+        return globalRules.stream().anyMatch(rule -> rule.shouldSee(user));
     }
 
     public @UnmodifiableView Collection<WrapperEntity> getTracked() {
