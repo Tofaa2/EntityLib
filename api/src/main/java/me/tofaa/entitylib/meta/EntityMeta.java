@@ -63,6 +63,15 @@ public class EntityMeta implements EntityMetadataProvider {
         this.metadata = metadata;
     }
 
+    public EntityMeta(EntityMeta other) {
+        this(other.entityId, new Metadata(other.entityId));
+        metadata.setMetaFromPacket(other.createPacket());
+    }
+
+    public EntityMeta(int entityId) {
+        this(entityId, new Metadata(entityId));
+    }
+
     public void setNotifyAboutChanges(boolean notifyAboutChanges) {
         metadata.setNotifyAboutChanges(notifyAboutChanges);
     }

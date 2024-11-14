@@ -19,11 +19,31 @@ public class Metadata {
 
     private final int entityId;
     private volatile boolean notifyAboutChanges = true;
-    private final Map<Byte, EntityData> notNotifiedChanges = new HashMap<>();
-    private final Map<Byte, EntityData> metadataMap = new ConcurrentHashMap<>();
+    private final HashMap<Byte, EntityData> notNotifiedChanges = new HashMap<>();
+    private final ConcurrentHashMap<Byte, EntityData> metadataMap = new ConcurrentHashMap<>();
 
     public Metadata(int entityId) {
         this.entityId = entityId;
+    }
+
+    public void copyTo(Metadata other) {
+        other.clear();
+        synchronized (other.notNotifiedChanges) {
+            other.notNotifiedChanges.putAll(notNotifiedChanges);
+        }
+        other.metadataMap.putAll(metadataMap);
+    }
+
+    public void copyFrom(Metadata other) {
+        other.copyTo(this); // Scuffed pepelaugh
+    }
+
+    /**
+     * Clears the internal metadata map, is not responsible for informing the clients entity view with the newly reset information
+     */
+    public void clear() {
+        this.metadataMap.clear();
+        this.notNotifiedChanges.clear();
     }
 
     public <T> T getIndex(byte index, @Nullable T defaultValue) {
