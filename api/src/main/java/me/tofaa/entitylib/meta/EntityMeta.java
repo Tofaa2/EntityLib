@@ -29,7 +29,6 @@ import static me.tofaa.entitylib.meta.MetaOffsetConverter.EntityMetaOffsets.*;
 public class EntityMeta implements EntityMetadataProvider {
 
     private static final MetaConverterRegistry registry = new MetaConverterRegistry();
-    private static final Map<Integer, EntityMeta> metaMap = new ConcurrentHashMap<>();
 
     public static @NotNull BiFunction<Integer, Metadata, EntityMeta> getConverter(EntityType entityType) {
         return registry.get(entityType);
@@ -42,13 +41,7 @@ public class EntityMeta implements EntityMetadataProvider {
     public static @NotNull EntityMeta createMeta(int entityId, EntityType entityType) {
         Metadata metadata = new Metadata(entityId);
         BiFunction<Integer, Metadata, EntityMeta> converter = getConverter(entityType);
-        EntityMeta entityMeta = converter.apply(entityId, metadata);
-        metaMap.put(entityId, entityMeta);
-        return entityMeta;
-    }
-
-    public static @Nullable EntityMeta getMeta(int entityId) {
-        return metaMap.get(entityId);
+        return converter.apply(entityId, metadata);
     }
 
     public static final byte OFFSET = 0;
