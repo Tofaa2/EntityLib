@@ -39,6 +39,10 @@ public class WrapperPerPlayerEntity {
         execute(e -> e.spawn(location));
     }
 
+    public Map<UUID, WrapperEntity> getEntities() {
+        return entities;
+    }
+
     public void addViewer(User user) {
         getEntityOf(user).addViewer(user);
     }
