@@ -285,5 +285,7 @@ public class EntityMeta implements EntityMetadataProvider {
         return metadata.getEntries();
     }
 
-
+    public Metadata getMetadata() {
+        return metadata;
+    }
 }
