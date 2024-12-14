@@ -33,7 +33,7 @@ tasks {
     processResources {
         inputs.property("version", project.version)
         filesMatching(listOf("plugin.yml", "velocity-plugin.json")) {
-            expand("versionBeta" to project.version)
+            expand("version" to project.version)
         }
     }
 
@@ -60,7 +60,7 @@ publishing {
         create<MavenPublication>("EntityLib") {
             groupId = project.group as String
             artifactId = project.name
-            version = rootProject.ext["version"] as String
+            version = rootProject.ext["versionBeta"] as String
             from(components["java"])
 
             pom {
