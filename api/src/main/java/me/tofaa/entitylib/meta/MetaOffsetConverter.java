@@ -18,7 +18,7 @@ public final class MetaOffsetConverter {
 
         public static byte airTicksOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 47 && protocolVersion <= 767) {
+            if (protocolVersion >= 47 && protocolVersion <= 769) {
                 return 1;
             }
             throw new RuntimeException("Unknown protocol version for this method");
@@ -26,7 +26,7 @@ public final class MetaOffsetConverter {
 
         public static byte customNameOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 47 && protocolVersion <= 767) {
+            if (protocolVersion >= 47 && protocolVersion <= 769) {
                 return 2;
             }
             throw new RuntimeException("Unknown protocol version for this method");
@@ -34,7 +34,7 @@ public final class MetaOffsetConverter {
 
         public static byte customNameVisibleOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 47 && protocolVersion <= 767) {
+            if (protocolVersion >= 47 && protocolVersion <= 769) {
                 return 3;
             }
             throw new RuntimeException("Unknown protocol version for this method");
@@ -42,7 +42,7 @@ public final class MetaOffsetConverter {
 
         public static byte silentOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 47 && protocolVersion <= 767) {
+            if (protocolVersion >= 47 && protocolVersion <= 769) {
                 return 4;
             }
             throw new RuntimeException("Unknown protocol version for this method");
@@ -50,7 +50,7 @@ public final class MetaOffsetConverter {
 
         public static byte hasNoGravityOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 47 && protocolVersion <= 767) {
+            if (protocolVersion >= 47 && protocolVersion <= 769) {
                 return 5;
             }
             throw new RuntimeException("Unknown protocol version for this method");
@@ -58,7 +58,7 @@ public final class MetaOffsetConverter {
 
         public static byte poseOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 47 && protocolVersion <= 767) {
+            if (protocolVersion >= 47 && protocolVersion <= 769) {
                 return 6;
             }
             throw new RuntimeException("Unknown protocol version for this method");
@@ -66,8 +66,37 @@ public final class MetaOffsetConverter {
 
         public static byte ticksFrozenInPowderedSnowOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 47 && protocolVersion <= 767) {
+            if (protocolVersion >= 47 && protocolVersion <= 769) {
                 return 7;
+            }
+            throw new RuntimeException("Unknown protocol version for this method");
+        }
+    }
+
+    public static final class AreaEffectCloudOffsets {
+        private AreaEffectCloudOffsets() {
+        }
+
+        public static byte radiusOffset() {
+            int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
+            if (protocolVersion >= 769 && protocolVersion <= 757) {
+                return 8;
+            }
+            throw new RuntimeException("Unknown protocol version for this method");
+        }
+
+        public static byte waitingOffset() {
+            int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
+            if (protocolVersion >= 769 && protocolVersion <= 757) {
+                return 9;
+            }
+            throw new RuntimeException("Unknown protocol version for this method");
+        }
+
+        public static byte particleOffset() {
+            int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
+            if (protocolVersion >= 769 && protocolVersion <= 757) {
+                return 10;
             }
             throw new RuntimeException("Unknown protocol version for this method");
         }
@@ -79,7 +108,7 @@ public final class MetaOffsetConverter {
 
         public static byte interpolationDelayOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 762 && protocolVersion <= 767) {
+            if (protocolVersion >= 762 && protocolVersion <= 769) {
                 return 8;
             }
             throw new RuntimeException("Unknown protocol version for this method");
@@ -87,7 +116,7 @@ public final class MetaOffsetConverter {
 
         public static byte transformationDurationOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 762 && protocolVersion <= 767) {
+            if (protocolVersion >= 762 && protocolVersion <= 769) {
                 return 9;
             }
             throw new RuntimeException("Unknown protocol version for this method");
@@ -95,7 +124,7 @@ public final class MetaOffsetConverter {
 
         public static byte positionRotationInterpolationDurationOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 10;
             }
             throw new RuntimeException("Unknown protocol version for this method");
@@ -103,7 +132,7 @@ public final class MetaOffsetConverter {
 
         public static byte translationOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 11;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -114,7 +143,7 @@ public final class MetaOffsetConverter {
 
         public static byte scaleOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 12;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -125,7 +154,7 @@ public final class MetaOffsetConverter {
 
         public static byte leftRotationOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 13;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -136,7 +165,7 @@ public final class MetaOffsetConverter {
 
         public static byte rightRotationOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 14;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -147,7 +176,7 @@ public final class MetaOffsetConverter {
 
         public static byte billboardConstraintsOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 15;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -158,7 +187,7 @@ public final class MetaOffsetConverter {
 
         public static byte brightnessOverrideOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 16;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -169,7 +198,7 @@ public final class MetaOffsetConverter {
 
         public static byte viewRangeOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 17;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -180,7 +209,7 @@ public final class MetaOffsetConverter {
 
         public static byte shadowRadiusOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 18;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -191,7 +220,7 @@ public final class MetaOffsetConverter {
 
         public static byte shadowStrengthOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 19;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -202,7 +231,7 @@ public final class MetaOffsetConverter {
 
         public static byte widthOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 20;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -213,7 +242,7 @@ public final class MetaOffsetConverter {
 
         public static byte heightOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 21;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -224,7 +253,7 @@ public final class MetaOffsetConverter {
 
         public static byte glowColorOverrideOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 22;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -240,7 +269,7 @@ public final class MetaOffsetConverter {
 
         public static byte blockIdOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 23;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -256,7 +285,7 @@ public final class MetaOffsetConverter {
 
         public static byte itemOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 24;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -267,7 +296,7 @@ public final class MetaOffsetConverter {
 
         public static byte displayTypeOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 25;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -283,7 +312,7 @@ public final class MetaOffsetConverter {
 
         public static byte textOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 26;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -294,7 +323,7 @@ public final class MetaOffsetConverter {
 
         public static byte textColorOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 27;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -305,7 +334,7 @@ public final class MetaOffsetConverter {
 
         public static byte textBackgroundColorOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 28;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -316,7 +345,7 @@ public final class MetaOffsetConverter {
 
         public static byte textBackgroundOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 29;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -327,7 +356,7 @@ public final class MetaOffsetConverter {
 
         public static byte textScaleOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 30;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -338,10 +367,10 @@ public final class MetaOffsetConverter {
 
         public static byte textAlignmentOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 31;
             }
-            if (protocolVersion >= 762 && protocolVersion <= 767) {
+            if (protocolVersion >= 762 && protocolVersion <= 769) {
                 return 30;
             }
             throw new RuntimeException("Unknown protocol version for this method");
@@ -349,7 +378,7 @@ public final class MetaOffsetConverter {
 
         public static byte lineWidthOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 32;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -360,7 +389,7 @@ public final class MetaOffsetConverter {
 
         public static byte backgroundColorOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 33;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -371,7 +400,7 @@ public final class MetaOffsetConverter {
 
         public static byte textOpacityOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 34;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -382,7 +411,7 @@ public final class MetaOffsetConverter {
 
         public static byte shadowOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 35;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -393,7 +422,7 @@ public final class MetaOffsetConverter {
 
         public static byte seeThroughOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 36;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -404,7 +433,7 @@ public final class MetaOffsetConverter {
 
         public static byte useDefaultBackgroundOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 37;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -413,9 +442,9 @@ public final class MetaOffsetConverter {
             throw new RuntimeException("Unknown protocol version for this method");
         }
 
-        public static byte allighnLeftOffset() {
+        public static byte alignLeftOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 38;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -424,9 +453,9 @@ public final class MetaOffsetConverter {
             throw new RuntimeException("Unknown protocol version for this method");
         }
 
-        public static byte allighnRightOffset() {
+        public static byte alignRightOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 39;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
@@ -435,9 +464,9 @@ public final class MetaOffsetConverter {
             throw new RuntimeException("Unknown protocol version for this method");
         }
 
-        public static byte allighnCenterOffset() {
+        public static byte alignCenterOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 764 && protocolVersion <= 767) {
+            if (protocolVersion >= 764 && protocolVersion <= 769) {
                 return 40;
             }
             if (protocolVersion >= 762 && protocolVersion <= 763) {
