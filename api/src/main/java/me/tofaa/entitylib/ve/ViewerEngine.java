@@ -44,7 +44,7 @@ public class ViewerEngine {
         getTracked0().forEach(entity -> {
             for (UUID viewer : entity.getViewers()) {
                 if (!canSpawnFor(viewer, entity)) {
-                    entity.removeViewer(viewer);
+                    entity.removeViewer(viewer); 
                 }
             }
         });

@@ -3,6 +3,7 @@ package me.tofaa.entitylib.extras;
 import net.kyori.adventure.util.RGBLike;
 import org.jetbrains.annotations.NotNull;
 
+@Deprecated
 public enum DyeColor implements RGBLike {
     WHITE(new Color(0xf9fffe), new Color(0xffffff), new Color(0xf0f0f0), 8),
 
