@@ -75,6 +75,41 @@
     ]
   },
   {
+    "class-name": "AreaEffectCloud",
+    "offsets": [
+      {
+        "name": "radius",
+        "checks": [
+          {
+            "from": 757,
+            "to": 769,
+            "offset": 8
+          }
+        ]
+      },
+      {
+        "name": "waiting",
+        "checks": [
+          {
+            "from": 757,
+            "to": 769,
+            "offset": 9
+          }
+        ]
+      },
+      {
+        "name": "particle",
+        "checks": [
+          {
+            "from": 757,
+            "to": 769,
+            "offset": 10
+          }
+        ]
+      }
+    ]
+  },
+  {
     "class-name": "AbstractDisplayMeta",
     "offsets": [
       {
