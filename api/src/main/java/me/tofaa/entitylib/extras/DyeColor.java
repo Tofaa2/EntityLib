@@ -3,6 +3,9 @@ package me.tofaa.entitylib.extras;
 import net.kyori.adventure.util.RGBLike;
 import org.jetbrains.annotations.NotNull;
 
+/*
+    @Deprecated: My PR for this was accepted a while ago into PacketEvents, 3.0 will convert to the packet events version of this class.
+ */
 @Deprecated
 public enum DyeColor implements RGBLike {
     WHITE(new Color(0xf9fffe), new Color(0xffffff), new Color(0xf0f0f0), 8),

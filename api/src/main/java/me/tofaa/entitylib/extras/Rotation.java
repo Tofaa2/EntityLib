@@ -1,5 +1,9 @@
 package me.tofaa.entitylib.extras;
 
+/*
+    @Deprecated: My PR for this was accepted a while ago into PacketEvents, 3.0 will convert to the packet events version of this class.
+ */
+@Deprecated
 public enum Rotation {
 
     /**

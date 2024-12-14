@@ -49,12 +49,12 @@ public abstract class AbstractPlatform<P> implements Platform<P> {
     }
 
     @Override
-    public void setEntityIdProvider(EntityIdProvider entityIdProvider) {
+    public void setEntityIdProvider(@NotNull EntityIdProvider entityIdProvider) {
         this.entityIdProvider = entityIdProvider;
     }
 
     @Override
-    public void setEntityUuidProvider(EntityUuidProvider entityUuidProvider) {
+    public void setEntityUuidProvider(@NotNull EntityUuidProvider entityUuidProvider) {
         this.entityUuidProvider = entityUuidProvider;
     }
 

@@ -4,6 +4,10 @@ import net.kyori.adventure.util.RGBLike;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
+/*
+    @Deprecated: My PR for this was accepted a while ago into PacketEvents, 3.0 will convert to the packet events version of this class.
+ */
+@Deprecated
 public final class Color implements RGBLike {
 
     private static final int BIT_MASK = 0xFF;
