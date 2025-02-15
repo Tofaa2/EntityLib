@@ -123,7 +123,7 @@ public class WrapperEntity implements Tickable {
             }
         }
         if (veloX == 0 && veloY == 0 && veloZ == 0) {
-            velocity = Optional.empty();
+            velocity = Optional.of(Vector3d.zero());
         } else {
             velocity = Optional.of(new Vector3d(veloX, veloY, veloZ));
         }
