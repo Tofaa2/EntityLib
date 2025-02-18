@@ -32,6 +32,7 @@ public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
         super.setupApi(settings);
         this.logger = settings.shouldUsePlatformLogger() ? handle.getLogger() : Logger.getLogger("EntityLib");
         this.api = new SpigotEntityLibAPI(this, settings);
+        this.setEntityIdProvider(new SpigotEntityIdProvider(this));
         this.api.onLoad();
         this.api.onEnable();
         if (settings.shouldUseBstats()) {
