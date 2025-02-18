@@ -195,6 +195,7 @@ public class WrapperEntity implements Tickable {
             }
             sendPacket(uuid, createSpawnPacket());
             sendPacket(uuid, entityMeta.createPacket());
+            sendPacket(uuid, createPassengerPacket());
         }
         if (EntityLib.getApi().getSettings().isDebugMode()) {
             EntityLib.getPlatform().getLogger().info("Added viewer " + uuid + " to entity " + entityId);
