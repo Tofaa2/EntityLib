@@ -18,7 +18,7 @@ jobs:
       TYCOONS_REPO_PASS: ${{ secrets.EVOKE_REPO_PASSWORD }}
     steps:
       - name: Clone project
-        uses: actions/checkou@v4
+        uses: actions/checkout@v4
 
       - name: Install JDK 21
         uses: actions/setup-java@v4
