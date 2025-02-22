@@ -111,6 +111,15 @@ final class LegacyHologram implements Hologram.Legacy {
     }
 
     @Override
+    public void removeLine(int index) {
+        if (index < 0 || index >= lines.size()) {
+            return;
+        }
+        this.lines.get(index).remove();
+        this.lines.remove(index);
+    }
+
+    @Override
     public void addLine(@Nullable Component line) {
         setLine(lines.size(), line);
     }

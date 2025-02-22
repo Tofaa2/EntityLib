@@ -1,6 +1,7 @@
 package me.tofaa.entitylib;
 
 import com.github.retrooper.packetevents.PacketEventsAPI;
+import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import org.jetbrains.annotations.NotNull;
 
 public final class APIConfig {
@@ -11,6 +12,7 @@ public final class APIConfig {
     private boolean tickTickables = false;
     private boolean platformLogger = false;
     private boolean bstats = true;
+    private boolean forceBundle = false;
 
     public APIConfig(PacketEventsAPI<?> packetEvents) {
         this.packetEvents = packetEvents;
@@ -23,6 +25,11 @@ public final class APIConfig {
 
     public @NotNull APIConfig disableBStats() {
         this.bstats = false;
+        return this;
+    }
+
+    public @NotNull APIConfig forceBundles() {
+        this.forceBundle = true;
         return this;
     }
 
@@ -68,6 +75,12 @@ public final class APIConfig {
 
     public boolean shouldUseBstats() {
         return bstats;
+    }
+
+    public boolean shouldForceBundles() {
+        return this.forceBundle
+                && EntityLib.getOptionalApi().isPresent()
+                && EntityLib.getOptionalApi().get().getPacketEvents().getServerManager().getVersion().isNewerThanOrEquals(ServerVersion.V_1_19_4);
     }
 
 }

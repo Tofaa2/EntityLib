@@ -73,7 +73,7 @@ public class WrapperEntity implements Tickable {
         if (spawned) return false;
         this.location = location;
         this.spawned = true;
-        sendPacketToViewers(
+        sendPacketsToViewers(
                 new WrapperPlayServerSpawnEntity(
                         entityId,
                         Optional.of(this.uuid),
@@ -84,9 +84,12 @@ public class WrapperEntity implements Tickable {
                         location.getYaw(),
                         getObjectData(),
                         createVeloPacket()
-                )
+                ),
+                entityMeta.createPacket()
         );
-        sendPacketToViewers(entityMeta.createPacket());
+        if (this instanceof WrapperLivingEntity) {
+            sendPacketsToViewers(((WrapperLivingEntity)this).getAttributes().createPacket());
+        }
         this.parent = parent;
         parent.addEntity(this);
         return true;
@@ -196,6 +199,9 @@ public class WrapperEntity implements Tickable {
             sendPacket(uuid, createSpawnPacket());
             sendPacket(uuid, entityMeta.createPacket());
             sendPacket(uuid, createPassengerPacket());
+            if (this instanceof WrapperLivingEntity) {
+                sendPacket(uuid, ((WrapperLivingEntity)this).getAttributes().createPacket());
+            }
         }
         if (EntityLib.getApi().getSettings().isDebugMode()) {
             EntityLib.getPlatform().getLogger().info("Added viewer " + uuid + " to entity " + entityId);
@@ -341,7 +347,6 @@ public class WrapperEntity implements Tickable {
         consumer.accept(entityMeta);
     }
 
-
     public @NotNull UUID getUuid() {
         return uuid;
     }
@@ -393,7 +398,7 @@ public class WrapperEntity implements Tickable {
         return viewerRules.get(index);
     }
 
-    private WrapperPlayServerEntityVelocity getVelocityPacket() {
+    public WrapperPlayServerEntityVelocity getVelocityPacket() {
         Vector3d velocity = this.velocity.multiply(8000.0f / 20.0f);
         return new WrapperPlayServerEntityVelocity(entityId, velocity);
     }
@@ -441,12 +446,20 @@ public class WrapperEntity implements Tickable {
 
     public void refresh() {
         if (!spawned) return;
-        sendPacketToViewers(entityMeta.createPacket());
-        sendPacketToViewers(createPassengerPacket());
+        sendPacketsToViewers(entityMeta.createPacket(), createPassengerPacket());
     }
 
     public void sendPacketToViewers(PacketWrapper<?> packet) {
-        viewers.forEach(uuid -> sendPacket(uuid, packet));
+        if (EntityLib.getApi().getSettings().shouldForceBundles()) {
+            viewers.forEach(uuid -> {
+                sendPacket(uuid, new WrapperPlayServerBundle());
+                sendPacket(uuid, packet);
+                sendPacket(uuid, new WrapperPlayServerBundle());
+            });
+        }
+        else {
+            viewers.forEach(uuid -> sendPacket(uuid, packet));
+        }
     }
 
     public void sendPacketsToViewers(PacketWrapper<?>... wrappers) {
