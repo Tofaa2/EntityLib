@@ -20,8 +20,16 @@ jobs:
       - name: Clone project
         uses: actions/checkout@v4
 
-      - name: Install JDK 21
+      - name: Install JDK 8
         uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          check-latest: true
+
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v4
+
       - name: Run build & publish with Gradle Wrapper
         if: github.ref == 'refs/heads/master'
         run: chmod +x ./gradlew && ./gradlew publishAllPublicationsToMavenRepository
