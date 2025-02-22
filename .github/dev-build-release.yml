@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: ['*']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TYCOONS_REPO_USER: ${{ secrets.EVOKE_REPO_USERNAME }}
+      TYCOONS_REPO_PASS: ${{ secrets.EVOKE_REPO_PASSWORD }}
+    steps:
+      - name: Clone project
+        uses: actions/checkou@v4
+
+      - name: Install JDK 21
+        uses: actions/setup-java@v4
+      - name: Run build & publish with Gradle Wrapper
+        if: github.ref == 'refs/heads/master'
+        run: chmod +x ./gradlew && ./gradlew publishAllPublicationsToMavenRepository
+
+      - name: Run build with Gradle Wrapper
+        if: github.ref != 'refs/heads/master'
+        run: chmod +x ./gradlew && ./gradlew build
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: '${{ github.ref_name }}: ${{ github.event.head_commit.message }} (${{ github.sha }})'
+          prerelease: ${{ github.ref != 'refs/heads/master' }}
+          tag_name: ${{ github.ref_name }}-${{ github.sha }}
