@@ -8,10 +8,14 @@ import org.jetbrains.annotations.ApiStatus;
 
 @ApiStatus.Internal
 @SuppressWarnings("unused")
+@Deprecated
+@ApiStatus.ScheduledForRemoval
 public final class MetaOffsetConverter {
     private MetaOffsetConverter() {
     }
 
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval
     public static final class EntityMetaOffsets {
         private EntityMetaOffsets() {
         }
@@ -73,6 +77,8 @@ public final class MetaOffsetConverter {
         }
     }
 
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval
     public static final class AreaEffectCloudOffsets {
         private AreaEffectCloudOffsets() {
         }
@@ -87,10 +93,10 @@ public final class MetaOffsetConverter {
 
         public static byte waitingOffset() {
             int protocolVersion = getApi().getPacketEvents().getServerManager().getVersion().getProtocolVersion();
-            if (protocolVersion >= 769 && protocolVersion <= 757) {
-                return 9;
-            }
-            throw new RuntimeException("Unknown protocol version for this method");
+            return 9;
+//            if (protocolVersion >= 769 && protocolVersion <= 757) {
+//            }
+//            throw new RuntimeException("Unknown protocol version for this method");
         }
 
         public static byte particleOffset() {
@@ -102,6 +108,8 @@ public final class MetaOffsetConverter {
         }
     }
 
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval
     public static final class AbstractDisplayMetaOffsets {
         private AbstractDisplayMetaOffsets() {
         }
@@ -263,6 +271,8 @@ public final class MetaOffsetConverter {
         }
     }
 
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval
     public static final class BlockDisplayMetaOffsets {
         private BlockDisplayMetaOffsets() {
         }
@@ -279,6 +289,8 @@ public final class MetaOffsetConverter {
         }
     }
 
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval
     public static final class ItemDisplayMetaOffsets {
         private ItemDisplayMetaOffsets() {
         }
@@ -306,6 +318,8 @@ public final class MetaOffsetConverter {
         }
     }
 
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval
     public static final class TextDisplayMetaOffsets {
         private TextDisplayMetaOffsets() {
         }

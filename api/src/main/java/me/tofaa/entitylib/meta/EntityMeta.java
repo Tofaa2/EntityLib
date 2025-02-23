@@ -14,17 +14,12 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEn
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.extras.InvalidVersionException;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
-
-import static me.tofaa.entitylib.meta.MetaOffsetConverter.EntityMetaOffsets.*;
 
 public class EntityMeta implements EntityMetadataProvider {
 
@@ -145,60 +140,60 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     public short getAirTicks() {
-        return this.metadata.getIndex(airTicksOffset(), (short) 300);
+        return this.metadata.getIndex((byte)1, (short) 300);
     }
 
     public void setAirTicks(short value) {
-        this.metadata.setIndex(airTicksOffset(), EntityDataTypes.SHORT, value);
+        this.metadata.setIndex((byte)1, EntityDataTypes.SHORT, value);
     }
 
     public Component getCustomName() {
-        Optional<Component> component = this.metadata.getIndex(customNameOffset(), Optional.empty());
+        Optional<Component> component = this.metadata.getIndex((byte)2, Optional.empty());
         return component.orElse(null);
     }
 
     public void setCustomName(Component value) {
-        this.metadata.setIndex(customNameOffset(), EntityDataTypes.OPTIONAL_ADV_COMPONENT, Optional.ofNullable(value));
+        this.metadata.setIndex((byte)2, EntityDataTypes.OPTIONAL_ADV_COMPONENT, Optional.ofNullable(value));
     }
 
     public boolean isCustomNameVisible() {
-        return this.metadata.getIndex(customNameVisibleOffset(), false);
+        return this.metadata.getIndex((byte)3, false);
     }
 
     public void setCustomNameVisible(boolean value) {
-        this.metadata.setIndex(customNameVisibleOffset(), EntityDataTypes.BOOLEAN, value);
+        this.metadata.setIndex((byte)3, EntityDataTypes.BOOLEAN, value);
     }
 
     public boolean isSilent() {
-        return this.metadata.getIndex(silentOffset(), false);
+        return this.metadata.getIndex((byte)4, false);
     }
 
     public void setSilent(boolean value) {
-        this.metadata.setIndex(silentOffset(), EntityDataTypes.BOOLEAN, value);
+        this.metadata.setIndex((byte)4, EntityDataTypes.BOOLEAN, value);
     }
 
     public boolean hasNoGravity() {
-        return this.metadata.getIndex(hasNoGravityOffset(), true);
+        return this.metadata.getIndex((byte)5, true);
     }
 
     public void setHasNoGravity(boolean value) {
-        this.metadata.setIndex(hasNoGravityOffset(), EntityDataTypes.BOOLEAN, value);
+        this.metadata.setIndex((byte)5, EntityDataTypes.BOOLEAN, value);
     }
 
     public EntityPose getPose() {
-        return this.metadata.getIndex(poseOffset(), EntityPose.STANDING);
+        return this.metadata.getIndex((byte)6, EntityPose.STANDING);
     }
 
     public void setPose(EntityPose value) {
-        this.metadata.setIndex(poseOffset(), EntityDataTypes.ENTITY_POSE, value);
+        this.metadata.setIndex((byte)6, EntityDataTypes.ENTITY_POSE, value);
     }
 
     public int getTicksFrozenInPowderedSnow() {
-        return this.metadata.getIndex(ticksFrozenInPowderedSnowOffset(), 0);
+        return this.metadata.getIndex((byte)7, 0);
     }
 
     public void setTicksFrozenInPowderedSnow(int value) {
-        this.metadata.setIndex(ticksFrozenInPowderedSnowOffset(), EntityDataTypes.INT, value);
+        this.metadata.setIndex((byte)7, EntityDataTypes.INT, value);
     }
 
     public WrapperPlayServerEntityMetadata createPacket() {
