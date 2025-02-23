@@ -52,6 +52,7 @@ public class WrapperEntity implements Tickable {
         this.passengers = ConcurrentHashMap.newKeySet();
         this.location = new Location(0, 0, 0, 0, 0);
         this.viewerRules = new CopyOnWriteArrayList<>();
+        this.velocity = Vector3d.zero();
     }
 
     public WrapperEntity(int entityId, EntityType entityType) {
