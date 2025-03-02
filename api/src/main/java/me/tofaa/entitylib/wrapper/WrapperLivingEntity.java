@@ -1,12 +1,15 @@
 package me.tofaa.entitylib.wrapper;
 
+import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.nbt.NBTCompound;
 import com.github.retrooper.packetevents.protocol.potion.PotionType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityAnimation;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityEffect;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerHurtAnimation;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.EntityMeta;
+import me.tofaa.entitylib.utils.VersionUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -110,7 +113,29 @@ public class WrapperLivingEntity extends WrapperEntity{
         sendAnimation(WrapperPlayServerEntityAnimation.EntityAnimationType.WAKE_UP);
     }
 
+    /**
+     * Plays the hurt animation of the entity.
+     * This method is deprecated and should use {@link #playHurtAnimation(int)} instead.
+     */
+    @Deprecated
     public void playHurtAnimation() {
+        playHurtAnimation(0);
+    }
+
+    /**
+     * Plays the hurt animation of the entity.
+     * @param yaw The yaw of the entity when the hurt animation is played.
+     *            For any entity other than a player it's safe to simply put 0, as it's not used.
+     *            The yaw is only used on 1.19.4+.
+     */
+    public void playHurtAnimation(int yaw) {
+        // 1.19.4+ uses a different packet for hurt animation than previous versions
+        if (VersionUtil.isNewerThan(ServerVersion.V_1_19_4)) {
+            sendPacketToViewers(
+                    new WrapperPlayServerHurtAnimation(getEntityId(), yaw)
+            );
+            return;
+        }
         sendAnimation(WrapperPlayServerEntityAnimation.EntityAnimationType.HURT);
     }
 
