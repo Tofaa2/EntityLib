@@ -10,7 +10,7 @@ public class StandaloneEntityLibPlatform extends AbstractPlatform<Object> {
 
     private StandaloneEntityLibApi api;
 
-    private StandaloneEntityLibPlatform() {
+    public StandaloneEntityLibPlatform() {
         super(null);
     }
 
