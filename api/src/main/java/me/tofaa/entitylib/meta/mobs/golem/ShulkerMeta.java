@@ -30,14 +30,6 @@ public class ShulkerMeta extends MobMeta {
         super.metadata.setIndex(OFFSET, EntityDataTypes.INT, value.ordinal());
     }
 
-    public Optional<Vector3i> getAttachmentPosition() {
-        return super.metadata.getIndex(offset(OFFSET, 1), Optional.empty());
-    }
-
-    public void setAttachmentPosition(Vector3i value) {
-        super.metadata.setIndex(offset(OFFSET, 1), EntityDataTypes.OPTIONAL_BLOCK_POSITION, Optional.of(value));
-    }
-
     public byte getShieldHeight() {
         return super.metadata.getIndex(offset(OFFSET, 1), (byte) 0);
     }

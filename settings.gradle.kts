@@ -34,7 +34,7 @@ include(":platforms:spigot")
 include(":platforms:velocity")
 include(":platforms:standalone")
 
-if (!System.getenv("JITPACK").toBoolean()) {
+if (System.getenv("PRIVATE").toBoolean()) {
     include("discord-bot")
     include(":code-gen")
     include(":test-plugin")

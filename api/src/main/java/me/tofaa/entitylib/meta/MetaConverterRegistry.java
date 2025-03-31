@@ -1,7 +1,6 @@
 package me.tofaa.entitylib.meta;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
-import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import me.tofaa.entitylib.meta.display.BlockDisplayMeta;
 import me.tofaa.entitylib.meta.display.ItemDisplayMeta;
 import me.tofaa.entitylib.meta.display.TextDisplayMeta;
