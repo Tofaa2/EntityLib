@@ -9,11 +9,13 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.DateFormat;
 
 public class TestEntityLibPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        DateFormat.getDateTimeInstance().format(new java.util.Date(timestamp));
 
         SpigotEntityLibPlatform platform = new SpigotEntityLibPlatform(this);
         APIConfig settings = new APIConfig(PacketEvents.getAPI())
