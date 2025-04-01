@@ -40,15 +40,11 @@ public class WrapperEntityPotionEffect implements Tickable {
             boolean showIcons,
             @Nullable NBTCompound factorData
     ) {
-        this.effects.put(type, new WrapperPotionEffect(
-                type,
-                amplifier,
-                duration,
-                ambient,
-                visible,
-                showIcons,
-                factorData
-        ));
+        WrapperPotionEffect effect = new WrapperPotionEffect(type, amplifier, duration, ambient, visible, showIcons, factorData);
+
+        this.effects.put(type, effect);
+
+        this.entity.sendPacketToViewers(createEffectPacket(effect));
     }
 
     /**
@@ -149,16 +145,25 @@ public class WrapperEntityPotionEffect implements Tickable {
             remainingDuration = Math.max(duration - elapsedTicks, 0);
         }
 
-        WrapperPlayServerEntityEffect wrapperPlayServerEntityEffect = new WrapperPlayServerEntityEffect(0, null, 0, 0, (byte) 0);
+        int flags = 0;
+
+        flags |= ambient ? 1 : 0;       // Bit 0 para ambient
+        flags |= visible ? (1 << 1) : 0;  // Bit 1 para visible
+        flags |= icons ? (1 << 2) : 0;    // Bit 2 para icons
+
+        WrapperPlayServerEntityEffect wrapperPlayServerEntityEffect = new WrapperPlayServerEntityEffect(
+                0,
+                null,
+                0,
+                0,
+                (byte) flags
+        );
 
         wrapperPlayServerEntityEffect.setEntityId(this.entity.getEntityId());
         wrapperPlayServerEntityEffect.setPotionType(potionType);
         wrapperPlayServerEntityEffect.setEffectAmplifier(amplifier);
         wrapperPlayServerEntityEffect.setEffectDurationTicks(remainingDuration);
         wrapperPlayServerEntityEffect.setFactorData(factorData);
-        wrapperPlayServerEntityEffect.setAmbient(ambient);
-        wrapperPlayServerEntityEffect.setVisible(visible);
-        wrapperPlayServerEntityEffect.setShowIcon(icons);
 
         return wrapperPlayServerEntityEffect;
     }

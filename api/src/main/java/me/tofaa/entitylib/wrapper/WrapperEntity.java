@@ -93,9 +93,7 @@ public class WrapperEntity implements Tickable {
 
         if (this instanceof WrapperLivingEntity) {
             WrapperLivingEntity wrapperLivingEntity = (WrapperLivingEntity) this;
-            wrapperLivingEntity.createSpawnPackets().forEach(packetWrapper -> {
-                sendPacket(uuid, packetWrapper);
-            });
+            wrapperLivingEntity.createSpawnPackets().forEach(packetWrapper -> sendPacket(uuid, packetWrapper));
         }
 
         this.parent = parent;
@@ -219,9 +217,7 @@ public class WrapperEntity implements Tickable {
 
             if (this instanceof WrapperLivingEntity) {
                 WrapperLivingEntity wrapperLivingEntity = (WrapperLivingEntity) this;
-                wrapperLivingEntity.createSpawnPackets().forEach(packetWrapper -> {
-                   sendPacket(uuid, packetWrapper);
-                });
+                wrapperLivingEntity.createSpawnPackets().forEach(packetWrapper -> sendPacket(uuid, packetWrapper));
             }
         }
 
