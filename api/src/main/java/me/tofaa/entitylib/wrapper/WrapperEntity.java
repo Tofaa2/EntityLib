@@ -25,11 +25,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 public class WrapperEntity implements Tickable {
-
     private final UUID uuid;
     private final int entityId;
-    private EntityType entityType;
-    private EntityMeta entityMeta;
+    private final EntityType entityType;
+    private final EntityMeta entityMeta;
     private boolean ticking;
     protected Location location;
     private Location preRidingLocation;
@@ -62,6 +61,7 @@ public class WrapperEntity implements Tickable {
     public WrapperEntity(UUID uuid, EntityType entityType) {
         this(EntityLib.getPlatform().getEntityIdProvider().provide(uuid, entityType), uuid, entityType);
     }
+
     public WrapperEntity(EntityType entityType) {
         this(EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
     }
@@ -72,8 +72,10 @@ public class WrapperEntity implements Tickable {
 
     public boolean spawn(Location location, EntityContainer parent) {
         if (spawned) return false;
+
         this.location = location;
         this.spawned = true;
+
         sendPacketsToViewers(
                 new WrapperPlayServerSpawnEntity(
                         entityId,
@@ -88,9 +90,14 @@ public class WrapperEntity implements Tickable {
                 ),
                 entityMeta.createPacket()
         );
+
         if (this instanceof WrapperLivingEntity) {
-            sendPacketsToViewers(((WrapperLivingEntity)this).getAttributes().createPacket());
+            WrapperLivingEntity wrapperLivingEntity = (WrapperLivingEntity) this;
+            wrapperLivingEntity.createSpawnPackets().forEach(packetWrapper -> {
+                sendPacket(uuid, packetWrapper);
+            });
         }
+
         this.parent = parent;
         parent.addEntity(this);
         return true;
@@ -101,7 +108,7 @@ public class WrapperEntity implements Tickable {
         return SpawnPacketProvider.GENERAL.provide(this);
     }
 
-    public boolean spawn(Location location) {
+    public boolean spawn(@NotNull Location location) {
         return spawn(location, EntityLib.getApi().getDefaultContainer());
     }
 
@@ -110,6 +117,7 @@ public class WrapperEntity implements Tickable {
         if (entityMeta instanceof ObjectData) {
             return ((ObjectData) entityMeta).getObjectData();
         }
+
         return 0;
     }
 
@@ -117,6 +125,7 @@ public class WrapperEntity implements Tickable {
     public Optional<Vector3d> createVeloPacket() {
         Optional<Vector3d> velocity;
         double veloX = 0, veloY = 0, veloZ = 0;
+
         if (entityMeta instanceof ObjectData) {
             ObjectData od = (ObjectData) entityMeta;
             if (od.requiresVelocityPacketAtSpawn()) {
@@ -126,11 +135,13 @@ public class WrapperEntity implements Tickable {
                 veloZ = veloPacket.getVelocity().getZ();
             }
         }
+
         if (veloX == 0 && veloY == 0 && veloZ == 0) {
             velocity = Optional.of(Vector3d.zero());
         } else {
             velocity = Optional.of(new Vector3d(veloX, veloY, veloZ));
         }
+
         return velocity;
     }
 
@@ -141,37 +152,37 @@ public class WrapperEntity implements Tickable {
     public void remove() {
         if (parent != null) {
             parent.removeEntity(this, true);
-        }
-        else {
+        } else {
             despawn();
         }
     }
 
     public void despawn() {
         if (!spawned) return;
+
         spawned = false;
+
         if (this instanceof WrapperPlayer) {
             WrapperPlayer p = (WrapperPlayer) this;
             sendPacketsToViewers(p.tabListRemovePacket());
         }
+
         sendPacketToViewers(new WrapperPlayServerDestroyEntities(entityId));
     }
 
     public void teleport(@NotNull Location location, boolean onGround) {
-        if (!spawned) {
-            return;
-        }
+        if (!spawned) return;
+
         this.location = location;
         this.onGround = onGround;
-        sendPacketToViewers(
-                new WrapperPlayServerEntityTeleport(
-                        entityId,
-                        location.getPosition(),
-                        location.getYaw(),
-                        location.getPitch(),
-                        onGround
-                )
-        );
+
+        sendPacketToViewers(new WrapperPlayServerEntityTeleport(
+                entityId,
+                location.getPosition(),
+                location.getYaw(),
+                location.getPitch(),
+                onGround
+        ));
     }
 
     public void teleport(@NotNull Location location) {
@@ -180,30 +191,40 @@ public class WrapperEntity implements Tickable {
 
     /**
      * Adds a viewer to the viewers set. The viewer will receive all packets and be informed of this addition
+     *
      * @param uuid the uuid of the user to add
      */
-    public void addViewer(UUID uuid) {
+    public void addViewer(@NotNull UUID uuid) {
         if (!viewers.add(uuid)) {
             return;
         }
+
         if (location == null) {
             if (EntityLib.getApi().getSettings().isDebugMode()) {
                 EntityLib.getPlatform().getLogger().warning("Location is null for entity " + entityId + ". Cannot spawn.");
             }
+
             return;
         }
+
         if (spawned) {
             if (this instanceof WrapperPlayer) {
                 WrapperPlayer p = (WrapperPlayer) this;
                 sendPacket(uuid, p.tabListPacket());
             }
+
             sendPacket(uuid, createSpawnPacket());
             sendPacket(uuid, entityMeta.createPacket());
             sendPacket(uuid, createPassengerPacket());
+
             if (this instanceof WrapperLivingEntity) {
-                sendPacket(uuid, ((WrapperLivingEntity)this).getAttributes().createPacket());
+                WrapperLivingEntity wrapperLivingEntity = (WrapperLivingEntity) this;
+                wrapperLivingEntity.createSpawnPackets().forEach(packetWrapper -> {
+                   sendPacket(uuid, packetWrapper);
+                });
             }
         }
+
         if (EntityLib.getApi().getSettings().isDebugMode()) {
             EntityLib.getPlatform().getLogger().info("Added viewer " + uuid + " to entity " + entityId);
         }
@@ -235,62 +256,70 @@ public class WrapperEntity implements Tickable {
         );
     }
 
-    public void addViewer(User user) {
+    public void addViewer(@NotNull User user) {
         addViewer(user.getUUID());
     }
 
     /**
      * Adds a viewer silently into the viewers set. The viewer will not receive any packets or be informed of this addition
+     *
      * @param uuid the uuid of the user to add
      */
-    public void addViewerSilently(UUID uuid) {
+    public void addViewerSilently(@NotNull UUID uuid) {
         viewers.add(uuid);
     }
 
     /**
      * Adds a viewer silently into the viewers set. The viewer will not receive any packets or be informed of this addition
+     *
      * @param user the user to add
      */
-    public void addViewerSilently(User user) {
+    public void addViewerSilently(@NotNull User user) {
         addViewerSilently(user.getUUID());
     }
 
     /**
      * Removes a viewer from the viewers set of this entity. The viewer will be informed of this removal and will no longer receive any packets
+     *
      * @param uuid the uuid of the user to remove
      */
-    public void removeViewer(UUID uuid) {
+    public void removeViewer(@NotNull UUID uuid) {
         if (!viewers.remove(uuid)) {
             return;
         }
+
         if (this instanceof WrapperPlayer) {
             WrapperPlayer p = (WrapperPlayer) this;
             sendPacket(uuid, p.tabListRemovePacket());
         }
+
         sendPacket(uuid, new WrapperPlayServerDestroyEntities(entityId));
     }
 
     /**
      * Removes a viewer from the viewers set of this entity. The viewer will be informed of this removal and will no longer receive any packets
+     *
      * @param user the user to remove
      */
-    public void removeViewer(User user) {
+    public void removeViewer(@NotNull User user) {
         removeViewer(user.getUUID());
     }
 
     /**
      * removes a viewer silently into the viewers set. The viewer will not receive any packets or be informed of this removal
+     *
      * @param uuid of the user to remove
      */
-    public void removeViewerSilently(UUID uuid) {
+    public void removeViewerSilently(@NotNull UUID uuid) {
         viewers.remove(uuid);
     }
 
     /**
      * removes a viewer silently into the viewers set. The viewer will not receive any packets or be informed of this removal
+     *
      * @param user the user to remove
      */
-    public void removeViewerSilently(User user) {
+    public void removeViewerSilently(@NotNull User user) {
         removeViewerSilently(user.getUUID());
     }
 
@@ -298,11 +327,11 @@ public class WrapperEntity implements Tickable {
         return onGround;
     }
 
-    public Vector3d getVelocity() {
+    public @NotNull Vector3d getVelocity() {
         return velocity;
     }
 
-    public void setVelocity(Vector3d velocity) {
+    public void setVelocity(@NotNull Vector3d velocity) {
         this.velocity = velocity;
         sendPacketToViewers(getVelocityPacket());
     }
@@ -331,7 +360,7 @@ public class WrapperEntity implements Tickable {
         return entityId;
     }
 
-    public EntityMeta getEntityMeta() {
+    public @NotNull EntityMeta getEntityMeta() {
         return entityMeta;
     }
 
@@ -339,12 +368,12 @@ public class WrapperEntity implements Tickable {
         return metaClass.cast(entityMeta);
     }
 
-    public <T extends EntityMeta> void consumeEntityMeta(@NotNull Class<T> metaClass, Consumer<T> consumer) {
+    public <T extends EntityMeta> void consumeEntityMeta(@NotNull Class<T> metaClass, @NotNull Consumer<T> consumer) {
         T meta = getEntityMeta(metaClass);
         consumer.accept(meta);
     }
 
-    public void consumeMeta(Consumer<EntityMeta> consumer) {
+    public void consumeMeta(@NotNull Consumer<EntityMeta> consumer) {
         consumer.accept(entityMeta);
     }
 
@@ -358,13 +387,14 @@ public class WrapperEntity implements Tickable {
 
     /**
      * Returns an unmodifiable set of the passengers of the entity.
+     *
      * @return the passengers of the entity
      */
-    public Set<Integer> getPassengers() {
+    public @NotNull Set<Integer> getPassengers() {
         return Collections.unmodifiableSet(passengers);
     }
 
-    public WrapperEntity getRiding() {
+    public @Nullable WrapperEntity getRiding() {
         return EntityLib.getApi().getEntity(riding);
     }
 
@@ -433,20 +463,22 @@ public class WrapperEntity implements Tickable {
                 new WrapperPlayServerEntityRotation(entityId, yaw, pitch, onGround),
                 new WrapperPlayServerEntityHeadLook(entityId, yaw)
         );
+
         this.location.setYaw(yaw);
         this.location.setPitch(pitch);
     }
 
-    public void rotateHead(Location location) {
+    public void rotateHead(@NotNull Location location) {
         rotateHead(location.getYaw(), location.getPitch());
     }
 
-    public void rotateHead(WrapperEntity entity) {
+    public void rotateHead(@NotNull WrapperEntity entity) {
         rotateHead(entity.getLocation());
     }
 
     public void refresh() {
         if (!spawned) return;
+
         sendPacketsToViewers(entityMeta.createPacket(), createPassengerPacket());
     }
 
@@ -457,13 +489,12 @@ public class WrapperEntity implements Tickable {
                 sendPacket(uuid, packet);
                 sendPacket(uuid, new WrapperPlayServerBundle());
             });
-        }
-        else {
+        } else {
             viewers.forEach(uuid -> sendPacket(uuid, packet));
         }
     }
 
-    public void sendPacketsToViewers(PacketWrapper<?>... wrappers) {
+    public void sendPacketsToViewers(PacketWrapper<?> @NotNull ... wrappers) {
         for (PacketWrapper<?> wrapper : wrappers) {
             sendPacketToViewers(wrapper);
         }
@@ -483,13 +514,16 @@ public class WrapperEntity implements Tickable {
 
     private static void sendPacket(UUID user, PacketWrapper<?> wrapper) {
         if (wrapper == null) return;
+
         Object channel = EntityLib.getApi().getPacketEvents().getProtocolManager().getChannel(user);
         if (channel == null) {
             if (EntityLib.getApi().getSettings().isDebugMode()) {
                 EntityLib.getPlatform().getLogger().warning("Failed to send packet to " + user + " because the channel was null. They may be disconnected/not online.");
             }
+
             return;
         }
+
         EntityLib.getApi().getPacketEvents().getProtocolManager().sendPacket(channel, wrapper);
     }
 
@@ -504,12 +538,14 @@ public class WrapperEntity implements Tickable {
 
     /**
      * Adds a passenger to the entity. The passenger will be visible to all viewers of the entity.
+     *
      * @param passenger the entity id of the passenger
      */
     public void addPassenger(int passenger) {
         if (passengers.contains(passenger)) {
             throw new IllegalArgumentException("Passenger already exists");
         }
+
         passengers.add(passenger);
         sendPacketToViewers(createPassengerPacket());
         WrapperEntity e = EntityLib.getApi().getEntity(passenger);
@@ -533,9 +569,10 @@ public class WrapperEntity implements Tickable {
 
     /**
      * Adds multiple passengers to the entity. The passengers will be visible to all viewers of the entity.
+     *
      * @param passengers the entity ids of the passengers
      */
-    public void addPassengers(int... passengers) {
+    public void addPassengers(int @NotNull ... passengers) {
         for (int passenger : passengers) {
             addPassenger(passenger);
         }
@@ -543,17 +580,19 @@ public class WrapperEntity implements Tickable {
 
     /**
      * Adds a passenger to the entity. The passenger will be visible to all viewers of the entity.
+     *
      * @param passenger the wrapper entity passenger
      */
-    public void addPassenger(WrapperEntity passenger) {
+    public void addPassenger(@NotNull WrapperEntity passenger) {
         addPassenger(passenger.getEntityId());
     }
 
     /**
      * Adds multiple passengers to the entity. The passengers will be visible to all viewers of the entity.
+     *
      * @param passengers the wrapper entity passengers
      */
-    public void addPassengers(WrapperEntity... passengers) {
+    public void addPassengers(WrapperEntity @NotNull ... passengers) {
         for (WrapperEntity passenger : passengers) {
             addPassenger(passenger);
         }
@@ -561,12 +600,14 @@ public class WrapperEntity implements Tickable {
 
     /**
      * Removes a passenger from the entity. The passenger will be removed from the view of all viewers of the entity.
+     *
      * @param passenger the entity id of the passenger
      */
     public void removePassenger(int passenger) {
         if (!passengers.contains(passenger)) {
             throw new IllegalArgumentException("Passenger does not exist");
         }
+
         passengers.remove(passenger);
         sendPacketToViewers(createPassengerPacket());
         WrapperEntity e = EntityLib.getApi().getEntity(passenger);
@@ -588,15 +629,16 @@ public class WrapperEntity implements Tickable {
      * @param passenger the passenger wrapper entity
      * @return true if the entity has the passenger, false otherwise
      */
-    public boolean hasPassenger(WrapperEntity passenger) {
+    public boolean hasPassenger(@NotNull WrapperEntity passenger) {
         return hasPassenger(passenger.getEntityId());
     }
 
     /**
      * Removes multiple passengers from the entity. The passengers will be removed from the view of all viewers of the entity.
+     *
      * @param passengers the entity ids of the passengers
      */
-    public void removePassengers(int... passengers) {
+    public void removePassengers(int @NotNull ... passengers) {
         for (int passenger : passengers) {
             removePassenger(passenger);
         }
@@ -604,17 +646,19 @@ public class WrapperEntity implements Tickable {
 
     /**
      * Removes a passenger from the entity. The passenger will be removed from the view of all viewers of the entity.
+     *
      * @param passenger the wrapper entity passenger
      */
-    public void removePassenger(WrapperEntity passenger) {
+    public void removePassenger(@NotNull WrapperEntity passenger) {
         removePassenger(passenger.getEntityId());
     }
 
     /**
      * Removes multiple passengers from the entity. The passengers will be removed from the view of all viewers of the entity.
+     *
      * @param passengers the wrapper entity passengers
      */
-    public void removePassengers(WrapperEntity... passengers) {
+    public void removePassengers(WrapperEntity @NotNull ... passengers) {
         for (WrapperEntity passenger : passengers) {
             removePassenger(passenger);
         }
@@ -631,11 +675,11 @@ public class WrapperEntity implements Tickable {
         return Collections.unmodifiableSet(viewers);
     }
 
-    public boolean hasViewer(UUID uuid) {
+    public boolean hasViewer(@NotNull UUID uuid) {
         return viewers.contains(uuid);
     }
 
-    public boolean hasViewer(User user) {
+    public boolean hasViewer(@NotNull User user) {
         return hasViewer(user.getUUID());
     }
 
