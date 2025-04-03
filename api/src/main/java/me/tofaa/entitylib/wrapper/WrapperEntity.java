@@ -509,18 +509,9 @@ public class WrapperEntity implements Tickable {
     }
 
     private static void sendPacket(UUID user, PacketWrapper<?> wrapper) {
-        if (wrapper == null) return;
-
-        Object channel = EntityLib.getApi().getPacketEvents().getProtocolManager().getChannel(user);
-        if (channel == null) {
-            if (EntityLib.getApi().getSettings().isDebugMode()) {
-                EntityLib.getPlatform().getLogger().warning("Failed to send packet to " + user + " because the channel was null. They may be disconnected/not online.");
-            }
-
-            return;
+        if (wrapper != null) {
+            EntityLib.getApi().getPacketDispatcher().accept(user, wrapper);
         }
-
-        EntityLib.getApi().getPacketEvents().getProtocolManager().sendPacket(channel, wrapper);
     }
 
     public boolean hasNoGravity() {

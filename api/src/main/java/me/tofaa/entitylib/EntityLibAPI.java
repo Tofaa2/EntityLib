@@ -4,6 +4,7 @@ import com.github.retrooper.packetevents.PacketEventsAPI;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.player.UserProfile;
 import com.github.retrooper.packetevents.protocol.world.Location;
+import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import me.tofaa.entitylib.container.EntityContainer;
 import me.tofaa.entitylib.tick.TickContainer;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
@@ -14,6 +15,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.UUID;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Represents the API for EntityLib.
@@ -55,7 +58,8 @@ public interface EntityLibAPI<T> {
      */
     void addTickContainer(@NotNull TickContainer<?, T> tickContainer);
 
-    @NotNull
-    EntityContainer getDefaultContainer();
+    @NotNull BiConsumer<UUID, PacketWrapper<?>> getPacketDispatcher();
+
+    @NotNull EntityContainer getDefaultContainer();
 
 }

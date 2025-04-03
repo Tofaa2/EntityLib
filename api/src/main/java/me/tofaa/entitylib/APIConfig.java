@@ -13,6 +13,7 @@ public final class APIConfig {
     private boolean platformLogger = false;
     private boolean bstats = true;
     private boolean forceBundle = false;
+    private boolean ignoreServerVersionVerify = false;
 
     public APIConfig(PacketEventsAPI<?> packetEvents) {
         this.packetEvents = packetEvents;
@@ -53,6 +54,11 @@ public final class APIConfig {
         return this;
     }
 
+    public @NotNull APIConfig ignoreServerVersionVerify() {
+        this.ignoreServerVersionVerify = true;
+        return this;
+    }
+
     public boolean isDebugMode() {
         return debugMode;
     }
@@ -83,4 +89,7 @@ public final class APIConfig {
                 && EntityLib.getOptionalApi().get().getPacketEvents().getServerManager().getVersion().isNewerThanOrEquals(ServerVersion.V_1_19_4);
     }
 
+    public boolean shouldIgnoreServerVersionVerify() {
+        return ignoreServerVersionVerify;
+    }
 }
