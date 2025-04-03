@@ -60,6 +60,8 @@ public interface EntityLibAPI<T> {
 
     @NotNull BiConsumer<UUID, PacketWrapper<?>> getPacketDispatcher();
 
+    void setPacketDispatcher(@NotNull BiConsumer<UUID, PacketWrapper<?>> packetDispatcher);
+
     @NotNull EntityContainer getDefaultContainer();
 
 }

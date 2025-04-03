@@ -25,7 +25,8 @@ public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
     protected final APIConfig settings;
     protected final Collection<TickContainer<?, T>> tickContainers;
     protected final EntityContainer defaultEntityContainer = EntityContainer.basic();
-    protected final BiConsumer<UUID, PacketWrapper<?>> packetDispatcher;
+
+    protected BiConsumer<UUID, PacketWrapper<?>> packetDispatcher;
 
     protected AbstractEntityLibAPI(Platform<P> platform, APIConfig settings) {
         this.platform = platform;
@@ -79,6 +80,11 @@ public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
     @Override
     public @NotNull BiConsumer<UUID, PacketWrapper<?>> getPacketDispatcher() {
         return packetDispatcher;
+    }
+
+    @Override
+    public void setPacketDispatcher(@NotNull BiConsumer<UUID, PacketWrapper<?>> packetDispatcher) {
+        this.packetDispatcher = packetDispatcher;
     }
 
     @Override
