@@ -1,16 +1,12 @@
 package me.tofaa.entitylib.meta.mobs.horse;
 
-import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import me.tofaa.entitylib.meta.Metadata;
-import me.tofaa.entitylib.meta.types.MobMeta;
+import me.tofaa.entitylib.meta.types.AgeableMeta;
 
-import java.util.Optional;
-import java.util.UUID;
+public abstract class BaseHorseMeta extends AgeableMeta {
 
-public abstract class BaseHorseMeta extends MobMeta {
-
-    public static final byte OFFSET = MobMeta.MAX_OFFSET;
-    public static final byte MAX_OFFSET = OFFSET + 2;
+    public static final byte OFFSET = AgeableMeta.MAX_OFFSET;
+    public static final byte MAX_OFFSET = OFFSET + 1;
 
     private final static byte TAMED_BIT = 0x02;
     private final static byte SADDLED_BIT = 0x04;
@@ -70,13 +66,4 @@ public abstract class BaseHorseMeta extends MobMeta {
     public void setMouthOpen(boolean value) {
         setMaskBit(OFFSET, MOUTH_OPEN_BIT, value);
     }
-
-    public Optional<UUID> getOwner() {
-        return super.metadata.getIndex(offset(OFFSET, 1), Optional.empty());
-    }
-
-    public void setOwner(UUID value) {
-        super.metadata.setIndex(offset(OFFSET, 1), EntityDataTypes.OPTIONAL_UUID, Optional.of(value));
-    }
-
 }
