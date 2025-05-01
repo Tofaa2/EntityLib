@@ -9,6 +9,7 @@ dependencies {
 
     compileOnly(libs.bundles.adventure)
     compileOnly(libs.packetevents.api)
+    testCompileOnly(libs.packetevents.api)
 }
 
 tasks {
