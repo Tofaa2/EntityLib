@@ -1,14 +1,9 @@
 package me.tofaa.entitylib;
 
 import com.github.retrooper.packetevents.PacketEventsAPI;
-import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
-import com.github.retrooper.packetevents.protocol.player.UserProfile;
-import com.github.retrooper.packetevents.protocol.world.Location;
 import me.tofaa.entitylib.container.EntityContainer;
 import me.tofaa.entitylib.tick.TickContainer;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
-import me.tofaa.entitylib.wrapper.WrapperPlayer;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -10,11 +10,12 @@ import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.UUID;
 
 public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
-
     protected final Platform<P> platform;
     protected final PacketEventsAPI<?> packetEvents;
     protected final APIConfig settings;
@@ -36,7 +37,6 @@ public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
     @Override
     public @Nullable WrapperEntity getEntity(@NotNull UUID uuid) {
         return defaultEntityContainer.getEntity(uuid);
-
     }
 
     @Override
@@ -49,9 +49,8 @@ public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
         return defaultEntityContainer;
     }
 
-    @NotNull
     @Override
-    public APIConfig getSettings() {
+    public @NotNull APIConfig getSettings() {
         return settings;
     }
 
@@ -60,9 +59,8 @@ public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
         return packetEvents;
     }
 
-    @NotNull
     @Override
-    public Collection<TickContainer<?, T>> getTickContainers() {
+    public @NotNull Collection<TickContainer<?, T>> getTickContainers() {
         return tickContainers;
     }
 }

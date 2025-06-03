@@ -228,6 +228,7 @@ public class EntityMeta implements EntityMetadataProvider {
 
     /**
      * Annoying java 8 not letting me do OFFSET + amount in the method call so this is a workaround
+     *
      * @param value the value to offset
      * @param amount the amount to offset by
      * @return the offset value
