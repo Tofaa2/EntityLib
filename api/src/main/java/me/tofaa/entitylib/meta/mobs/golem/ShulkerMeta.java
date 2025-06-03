@@ -23,11 +23,11 @@ public class ShulkerMeta extends MobMeta {
     }
 
     public Direction getAttachFace() {
-        return super.metadata.getIndex(OFFSET, Direction.DOWN);
+        return super.metadata.getIndex((byte)16, Direction.DOWN);
     }
 
     public void setAttachFace(Direction value) {
-        super.metadata.setIndex(OFFSET, EntityDataTypes.INT, value.ordinal());
+        super.metadata.setIndex((byte)16, EntityDataTypes.INT, value.ordinal());
     }
 
     public byte getShieldHeight() {
