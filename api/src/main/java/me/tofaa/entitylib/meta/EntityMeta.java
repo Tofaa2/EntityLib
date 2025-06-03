@@ -201,12 +201,12 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     protected static void isVersionNewer(ServerVersion version) {
-        if (EntityLib.getApi().getSettings().shouldIgnoreServerVersionVerify()) return;
         if (EntityLib.getOptionalApi().isPresent()) {
             if (!EntityLib.getApi().getPacketEvents().getServerManager().getVersion().is(VersionComparison.NEWER_THAN, version)) {
                 throw new InvalidVersionException("This method is only available for versions newer than " + version.name() + ".");
             }
         }
+
         if (!PacketEvents.getAPI().getServerManager().getVersion().is(VersionComparison.NEWER_THAN, version)) {
             throw new InvalidVersionException("This method is only available for versions newer than " + version.name() + ".");
         }

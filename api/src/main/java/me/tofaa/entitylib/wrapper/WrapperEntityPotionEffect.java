@@ -4,19 +4,17 @@ import com.github.retrooper.packetevents.protocol.nbt.NBTCompound;
 import com.github.retrooper.packetevents.protocol.potion.PotionType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityEffect;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerRemoveEntityEffect;
-import me.tofaa.entitylib.tick.Tickable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class WrapperEntityPotionEffect implements Tickable {
+public class WrapperEntityPotionEffect {
     private final WrapperLivingEntity entity;
     private final Map<PotionType, WrapperPotionEffect> effects = new ConcurrentHashMap<>();
 
     private boolean notifyChanges = true;
-    private boolean ticking = true;
 
     public WrapperEntityPotionEffect(WrapperLivingEntity entity) {
         this.entity = entity;
@@ -134,16 +132,6 @@ public class WrapperEntityPotionEffect implements Tickable {
         boolean visible = effect.isVisible();
         boolean icons = effect.hasIcons();
         NBTCompound factorData = effect.getFactorData();
-        long createdAt = effect.getCreatedAt();
-
-        int remainingDuration = duration;
-        if (duration != -1) {
-            long elapsedMillis = System.currentTimeMillis() - createdAt;
-
-            int elapsedTicks = (int) (elapsedMillis / 50);
-
-            remainingDuration = Math.max(duration - elapsedTicks, 0);
-        }
 
         int flags = 0;
 
@@ -162,7 +150,7 @@ public class WrapperEntityPotionEffect implements Tickable {
         wrapperPlayServerEntityEffect.setEntityId(this.entity.getEntityId());
         wrapperPlayServerEntityEffect.setPotionType(potionType);
         wrapperPlayServerEntityEffect.setEffectAmplifier(amplifier);
-        wrapperPlayServerEntityEffect.setEffectDurationTicks(remainingDuration);
+        wrapperPlayServerEntityEffect.setEffectDurationTicks(duration);
         wrapperPlayServerEntityEffect.setFactorData(factorData);
 
         return wrapperPlayServerEntityEffect;
@@ -191,39 +179,6 @@ public class WrapperEntityPotionEffect implements Tickable {
         refresh();
     }
 
-    @Override
-    public boolean isTicking() {
-        return this.ticking;
-    }
-
-    @Override
-    public void setTicking(boolean ticking) {
-        this.ticking = ticking;
-    }
-
-    @Override
-    public void tick(long time) {
-        Set<PotionType> toRemove = new HashSet<>();
-
-        this.effects.values().forEach(effect -> {
-            PotionType potionType = effect.getPotionType();
-
-            int duration = effect.getDuration();
-            if (duration <= -1) return; // Infinity effect
-
-            long createdAt = effect.getCreatedAt();
-
-            long elapsedMillis = time - createdAt;
-
-            int elapsedTicks = (int) (elapsedMillis / 50);
-
-            int remainingDuration = duration - elapsedTicks;
-            if (remainingDuration <= 0) toRemove.add(potionType);
-        });
-
-        toRemove.forEach(this::removePotionEffect);
-    }
-
     public static class WrapperPotionEffect {
         private final PotionType potionType;
         private final int amplifier;
@@ -232,7 +187,6 @@ public class WrapperEntityPotionEffect implements Tickable {
         private final boolean visible;
         private final boolean icons;
         private final @Nullable NBTCompound factorData;
-        private final long createdAt;
 
         private WrapperPotionEffect(PotionType potionType, int amplifier, int duration, boolean ambient, boolean visible, boolean icons, @Nullable NBTCompound factorData) {
             this.potionType = potionType;
@@ -242,7 +196,6 @@ public class WrapperEntityPotionEffect implements Tickable {
             this.visible = visible;
             this.icons = icons;
             this.factorData = factorData;
-            this.createdAt = System.currentTimeMillis();
         }
 
         public PotionType getPotionType() {
@@ -271,10 +224,6 @@ public class WrapperEntityPotionEffect implements Tickable {
 
         public @Nullable NBTCompound getFactorData() {
             return factorData;
-        }
-
-        public long getCreatedAt() {
-            return createdAt;
         }
     }
 }

@@ -59,13 +59,6 @@ public class WrapperLivingEntity extends WrapperEntity {
         this.attributes.refresh();
     }
 
-    @Override
-    public void tick(long time) {
-        this.potionEffect.tick(time);
-
-        super.tick(time);
-    }
-
     public WrapperEntityAttributes getAttributes() {
         return this.attributes;
     }
@@ -83,7 +76,7 @@ public class WrapperLivingEntity extends WrapperEntity {
 
         packets.add(getAttributes().createPacket());
         packets.add(getEquipment().createPacket());
-        packets.addAll(this.potionEffect.createEffectPackets());
+        packets.addAll(getPotionEffect().createEffectPackets());
 
         return packets;
     }
