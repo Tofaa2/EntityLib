@@ -82,4 +82,5 @@ public final class APIConfig {
                 && EntityLib.getOptionalApi().isPresent()
                 && EntityLib.getOptionalApi().get().getPacketEvents().getServerManager().getVersion().isNewerThanOrEquals(ServerVersion.V_1_19_4);
     }
+
 }

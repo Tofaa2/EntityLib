@@ -19,6 +19,7 @@ public class TextDisplayMeta extends AbstractDisplayMeta {
         super(entityId, metadata);
     }
 
+
     public Component getText() {
         return metadata.getIndex(OFFSET, Component.empty());
     }

@@ -165,7 +165,7 @@ public class WrapperEntityPotionEffect {
             new ArrayList<>(this.effects.values()).forEach(effect -> {
                 WrapperPlayServerEntityEffect wrapperPlayServerEntityEffect = createEffectPacket(effect);
 
-                this.entity.sendPacketsToViewers(wrapperPlayServerEntityEffect);
+                this.entity.sendPacketToViewers(wrapperPlayServerEntityEffect);
             });
         }
     }

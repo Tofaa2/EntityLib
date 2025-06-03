@@ -140,60 +140,60 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     public short getAirTicks() {
-        return this.metadata.getIndex((byte) 1, (short) 300);
+        return this.metadata.getIndex((byte)1, (short) 300);
     }
 
     public void setAirTicks(short value) {
-        this.metadata.setIndex((byte) 1, EntityDataTypes.SHORT, value);
+        this.metadata.setIndex((byte)1, EntityDataTypes.SHORT, value);
     }
 
     public Component getCustomName() {
-        Optional<Component> component = this.metadata.getIndex((byte) 2, Optional.empty());
+        Optional<Component> component = this.metadata.getIndex((byte)2, Optional.empty());
         return component.orElse(null);
     }
 
     public void setCustomName(Component value) {
-        this.metadata.setIndex((byte) 2, EntityDataTypes.OPTIONAL_ADV_COMPONENT, Optional.ofNullable(value));
+        this.metadata.setIndex((byte)2, EntityDataTypes.OPTIONAL_ADV_COMPONENT, Optional.ofNullable(value));
     }
 
     public boolean isCustomNameVisible() {
-        return this.metadata.getIndex((byte) 3, false);
+        return this.metadata.getIndex((byte)3, false);
     }
 
     public void setCustomNameVisible(boolean value) {
-        this.metadata.setIndex((byte) 3, EntityDataTypes.BOOLEAN, value);
+        this.metadata.setIndex((byte)3, EntityDataTypes.BOOLEAN, value);
     }
 
     public boolean isSilent() {
-        return this.metadata.getIndex((byte) 4, false);
+        return this.metadata.getIndex((byte)4, false);
     }
 
     public void setSilent(boolean value) {
-        this.metadata.setIndex((byte) 4, EntityDataTypes.BOOLEAN, value);
+        this.metadata.setIndex((byte)4, EntityDataTypes.BOOLEAN, value);
     }
 
     public boolean hasNoGravity() {
-        return this.metadata.getIndex((byte) 5, true);
+        return this.metadata.getIndex((byte)5, true);
     }
 
     public void setHasNoGravity(boolean value) {
-        this.metadata.setIndex((byte) 5, EntityDataTypes.BOOLEAN, value);
+        this.metadata.setIndex((byte)5, EntityDataTypes.BOOLEAN, value);
     }
 
     public EntityPose getPose() {
-        return this.metadata.getIndex((byte) 6, EntityPose.STANDING);
+        return this.metadata.getIndex((byte)6, EntityPose.STANDING);
     }
 
     public void setPose(EntityPose value) {
-        this.metadata.setIndex((byte) 6, EntityDataTypes.ENTITY_POSE, value);
+        this.metadata.setIndex((byte)6, EntityDataTypes.ENTITY_POSE, value);
     }
 
     public int getTicksFrozenInPowderedSnow() {
-        return this.metadata.getIndex((byte) 7, 0);
+        return this.metadata.getIndex((byte)7, 0);
     }
 
     public void setTicksFrozenInPowderedSnow(int value) {
-        this.metadata.setIndex((byte) 7, EntityDataTypes.INT, value);
+        this.metadata.setIndex((byte)7, EntityDataTypes.INT, value);
     }
 
     public WrapperPlayServerEntityMetadata createPacket() {
@@ -206,7 +206,6 @@ public class EntityMeta implements EntityMetadataProvider {
                 throw new InvalidVersionException("This method is only available for versions newer than " + version.name() + ".");
             }
         }
-
         if (!PacketEvents.getAPI().getServerManager().getVersion().is(VersionComparison.NEWER_THAN, version)) {
             throw new InvalidVersionException("This method is only available for versions newer than " + version.name() + ".");
         }
@@ -230,7 +229,7 @@ public class EntityMeta implements EntityMetadataProvider {
     /**
      * Annoying java 8 not letting me do OFFSET + amount in the method call so this is a workaround
      *
-     * @param value  the value to offset
+     * @param value the value to offset
      * @param amount the amount to offset by
      * @return the offset value
      */
@@ -259,7 +258,7 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     public void setMaskBit(int index, byte bit, boolean value) {
-        byte mask = getMask((byte) index);
+        byte mask = getMask((byte)index);
         boolean currentValue = (mask & bit) == bit;
         if (currentValue == value) {
             return;
@@ -269,7 +268,7 @@ public class EntityMeta implements EntityMetadataProvider {
         } else {
             mask &= (byte) ~bit;
         }
-        setMask((byte) index, mask);
+        setMask((byte)index, mask);
     }
 
     @Override
