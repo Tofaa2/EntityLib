@@ -124,7 +124,6 @@ final class MetaConverterRegistry {
         put(PILLAGER, PillagerMeta.class, PillagerMeta::new);
         put(PLAYER, PlayerMeta.class, PlayerMeta::new);
         put(POLAR_BEAR, PolarBearMeta.class, PolarBearMeta::new);
-        put(POTION, ThrownTridentMeta.class, ThrownTridentMeta::new);
         put(PRIMED_TNT, PrimedTntMeta.class, PrimedTntMeta::new);
         put(PUFFERFISH, PufferFishMeta.class, PufferFishMeta::new);
         put(RABBIT, RabbitMeta.class, RabbitMeta::new);
