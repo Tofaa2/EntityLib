@@ -7,6 +7,8 @@ import com.github.retrooper.packetevents.protocol.player.TextureProperty;
 import com.github.retrooper.packetevents.protocol.player.UserProfile;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerDestroyEntities;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityHeadLook;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityRotation;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoRemove;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnPlayer;
@@ -16,6 +18,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 
 public class WrapperPlayer extends WrapperLivingEntity {
 
@@ -41,6 +44,14 @@ public class WrapperPlayer extends WrapperLivingEntity {
             );
         }
         return super.createSpawnPacket();
+    }
+
+    @Override
+    public @NotNull List<PacketWrapper<?>> createSpawnPackets() {
+        final List<PacketWrapper<?>> packets = super.createSpawnPackets();
+        packets.add(new WrapperPlayServerEntityRotation(getEntityId(), getYaw(), getPitch(), isOnGround()));
+        packets.add(new WrapperPlayServerEntityHeadLook(getEntityId(), getYaw()));
+        return packets;
     }
 
     public WrapperPlayServerPlayerInfoUpdate tabListPacket() {
