@@ -77,17 +77,7 @@ public class WrapperEntity implements Tickable {
         this.spawned = true;
 
         sendPacketsToViewers(
-                new WrapperPlayServerSpawnEntity(
-                        entityId,
-                        Optional.of(this.uuid),
-                        entityType,
-                        location.getPosition(),
-                        location.getPitch(),
-                        location.getYaw(),
-                        location.getYaw(),
-                        getObjectData(),
-                        createVeloPacket()
-                ),
+                createSpawnPacket(),
                 entityMeta.createPacket()
         );
 
@@ -238,7 +228,7 @@ public class WrapperEntity implements Tickable {
         sendPacketToViewers(new WrapperPlayServerSystemChatMessage(true, message));
     }
 
-    protected WrapperPlayServerSpawnEntity createSpawnPacket() {
+    protected PacketWrapper<?> createSpawnPacket() {
         return new WrapperPlayServerSpawnEntity(
                 entityId,
                 Optional.of(this.uuid),
