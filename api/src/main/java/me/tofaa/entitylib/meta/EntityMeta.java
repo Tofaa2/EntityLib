@@ -272,12 +272,12 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     @Override
-    public List<EntityData> entityData(ClientVersion clientVersion) {
+    public @NotNull List<EntityData<?>> entityData(@NotNull ClientVersion clientVersion) {
         return metadata.getEntries(); // TODO: Atm this is useless cause of the way the api works. Might change in the future
     }
 
     @Override
-    public List<EntityData> entityData() {
+    public @NotNull List<EntityData<?>> entityData() {
         return metadata.getEntries();
     }
 

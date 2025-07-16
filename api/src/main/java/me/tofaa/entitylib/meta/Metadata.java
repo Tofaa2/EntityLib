@@ -19,8 +19,8 @@ public class Metadata {
 
     private final int entityId;
     private volatile boolean notifyAboutChanges = true;
-    private final HashMap<Byte, EntityData> notNotifiedChanges = new HashMap<>();
-    private final ConcurrentHashMap<Byte, EntityData> metadataMap = new ConcurrentHashMap<>();
+    private final HashMap<Byte, EntityData<?>> notNotifiedChanges = new HashMap<>();
+    private final ConcurrentHashMap<Byte, EntityData<?>> metadataMap = new ConcurrentHashMap<>();
 
     public Metadata(int entityId) {
         this.entityId = entityId;
@@ -47,13 +47,13 @@ public class Metadata {
     }
 
     public <T> T getIndex(byte index, @Nullable T defaultValue) {
-        EntityData value = this.metadataMap.get(index);
+        EntityData<?> value = this.metadataMap.get(index);
         return value != null ? (T) value.getValue() : defaultValue;
     }
 
     public <T> void setIndex(byte index, @NotNull EntityDataType<T> dataType, T value) {
 
-        final EntityData entry = new EntityData(index, dataType, value);
+        final EntityData<?> entry = new EntityData<>(index, dataType, value);
         this.metadataMap.put(index, entry);
 
         final Optional<EntityLibAPI<?>> optionalApi = EntityLib.getOptionalApi();
@@ -75,7 +75,7 @@ public class Metadata {
             return;
         }
 
-        List<EntityData> entries = null;
+        List<EntityData<?>> entries = null;
         synchronized (this.notNotifiedChanges) {
             this.notifyAboutChanges = notifyAboutChanges;
             if (notifyAboutChanges) {
@@ -96,7 +96,7 @@ public class Metadata {
     }
 
     public void setMetaFromPacket(WrapperPlayServerEntityMetadata wrapper) {
-        for (EntityData data : wrapper.getEntityMetadata()) {
+        for (EntityData<?> data : wrapper.getEntityMetadata()) {
             metadataMap.put((byte) data.getIndex(), data);
         }
     }
@@ -105,7 +105,7 @@ public class Metadata {
         return notifyAboutChanges;
     }
 
-    @NotNull List<EntityData> getEntries() {
+    @NotNull List<EntityData<?>> getEntries() {
         return Collections.unmodifiableList(new ArrayList<>(metadataMap.values()));
     }
 
