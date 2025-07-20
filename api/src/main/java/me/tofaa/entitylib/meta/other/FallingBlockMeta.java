@@ -1,6 +1,8 @@
 package me.tofaa.entitylib.meta.other;
 
+import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
+import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
 import com.github.retrooper.packetevents.util.Vector3i;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;
@@ -32,6 +34,14 @@ public class FallingBlockMeta extends EntityMeta implements ObjectData {
 
     public void setBlockStateId(int blockStateId) {
         this.blockStateId = blockStateId;
+    }
+
+    public WrappedBlockState getBlockState() {
+        return WrappedBlockState.getByGlobalId(PacketEvents.getAPI().getServerManager().getVersion().toClientVersion(), getBlockStateId());
+    }
+
+    public void setBlockState(WrappedBlockState blockState) {
+        setBlockStateId(blockState.getGlobalId());
     }
 
     @Override
