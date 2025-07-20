@@ -1,6 +1,8 @@
 package me.tofaa.entitylib.meta.mobs.monster;
 
+import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
+import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.types.MobMeta;
 import org.jetbrains.annotations.Nullable;
@@ -24,6 +26,16 @@ public class EndermanMeta extends MobMeta {
         super.metadata.setIndex(OFFSET, EntityDataTypes.OPTIONAL_INT, Optional.ofNullable(value));
     }
 
+    public WrappedBlockState getCarriedBlockState() {
+        Integer carriedBlockID = getCarriedBlockID();
+        if (carriedBlockID == null) return null;
+        return WrappedBlockState.getByGlobalId(PacketEvents.getAPI().getServerManager().getVersion().toClientVersion(), carriedBlockID);
+    }
+
+    public void setCarriedBlockState(WrappedBlockState blockState) {
+        setCarriedBlockID(blockState.getGlobalId());
+    }
+
     public boolean isScreaming() {
         return super.metadata.getIndex(offset(OFFSET, 1), false);
     }
@@ -33,7 +45,7 @@ public class EndermanMeta extends MobMeta {
     }
 
     public boolean isStaring() {
-        return super.metadata.getIndex(offset(OFFSET, 2),  false);
+        return super.metadata.getIndex(offset(OFFSET, 2), false);
     }
 
     public void setStaring(boolean value) {

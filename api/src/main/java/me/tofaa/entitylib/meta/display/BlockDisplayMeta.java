@@ -1,6 +1,8 @@
 package me.tofaa.entitylib.meta.display;
 
+import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
+import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
 import me.tofaa.entitylib.meta.Metadata;
 
 public class BlockDisplayMeta extends AbstractDisplayMeta {
@@ -20,4 +22,11 @@ public class BlockDisplayMeta extends AbstractDisplayMeta {
         super.metadata.setIndex(OFFSET, EntityDataTypes.BLOCK_STATE, blockId);
     }
 
+    public WrappedBlockState getBlockState() {
+        return WrappedBlockState.getByGlobalId(PacketEvents.getAPI().getServerManager().getVersion().toClientVersion(), getBlockId());
+    }
+
+    public void setBlockState(WrappedBlockState blockState) {
+        setBlockId(blockState.getGlobalId());
+    }
 }

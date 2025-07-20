@@ -1,6 +1,8 @@
 package me.tofaa.entitylib.meta.other;
 
+import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
+import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
 import com.github.retrooper.packetevents.protocol.world.states.type.StateTypes;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;
@@ -28,4 +30,13 @@ public class TntMeta extends EntityMeta {
     public void setBlockData(int blockData) {
         super.metadata.setIndex(offset(OFFSET, 1), EntityDataTypes.BLOCK_STATE, blockData);
     }
+
+    public WrappedBlockState getBlockState() {
+        return WrappedBlockState.getByGlobalId(PacketEvents.getAPI().getServerManager().getVersion().toClientVersion(), getBlockData());
+    }
+
+    public void setBlockState(WrappedBlockState blockState) {
+        setBlockData(blockState.getGlobalId());
+    }
+
 }
