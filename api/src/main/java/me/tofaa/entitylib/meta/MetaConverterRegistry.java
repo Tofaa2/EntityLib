@@ -148,6 +148,7 @@ final class MetaConverterRegistry {
         put(TEXT_DISPLAY, TextDisplayMeta.class, TextDisplayMeta::new);
         put(THROWN_EXP_BOTTLE, ThrownExpBottleMeta.class, ThrownExpBottleMeta::new);
         put(ENDER_PEARL, ThrownEnderPearlMeta.class, ThrownEnderPearlMeta::new);
+        put(TNT, TntMeta.class, TntMeta::new);
         put(TNT_MINECART, TntMinecartMeta.class, TntMinecartMeta::new);
         put(TRADER_LLAMA, TraderLlamaMeta.class, TraderLlamaMeta::new);
         put(TRIDENT, ThrownTridentMeta.class, ThrownTridentMeta::new);
