@@ -5,9 +5,8 @@ import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.types.MobMeta;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Optional;
+import org.jetbrains.annotations.Nullable;
 
 public class EndermanMeta extends MobMeta {
 
@@ -33,6 +32,10 @@ public class EndermanMeta extends MobMeta {
     }
 
     public void setCarriedBlockState(WrappedBlockState blockState) {
+        if (blockState == null) {
+            setCarriedBlockID(null);
+            return;
+        }
         setCarriedBlockID(blockState.getGlobalId());
     }
 

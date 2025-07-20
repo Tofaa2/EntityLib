@@ -40,7 +40,7 @@ public class FallingBlockMeta extends EntityMeta implements ObjectData {
         return WrappedBlockState.getByGlobalId(PacketEvents.getAPI().getServerManager().getVersion().toClientVersion(), getBlockStateId());
     }
 
-    public void setBlockStateId(WrappedBlockState blockState) {
+    public void setBlockState(WrappedBlockState blockState) {
         setBlockStateId(blockState.getGlobalId());
     }
 
