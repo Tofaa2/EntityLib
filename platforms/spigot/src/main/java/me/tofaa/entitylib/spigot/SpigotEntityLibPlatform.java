@@ -5,23 +5,17 @@ import io.github.retrooper.packetevents.bstats.bukkit.Metrics;
 import io.github.retrooper.packetevents.bstats.charts.SimplePie;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLib;
+import me.tofaa.entitylib.UserLocaleProvider;
 import me.tofaa.entitylib.common.AbstractPlatform;
-import me.tofaa.entitylib.utils.ConcurrentWeakIdentityHashMap;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.entity.Entity;
+import java.util.logging.Logger;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
-import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
 
     private SpigotEntityLibAPI api;
+    private UserLocaleProvider userLocaleProvider = new SpigotPlayerLocaleProvider();
 
     public SpigotEntityLibPlatform(@NotNull JavaPlugin plugin) {
         super(plugin);
@@ -36,7 +30,7 @@ public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
         this.api.onLoad();
         this.api.onEnable();
         if (settings.shouldUseBstats()) {
-            PacketEventsAPI<Plugin> pe = (PacketEventsAPI<Plugin>)api.getPacketEvents();
+            PacketEventsAPI<Plugin> pe = (PacketEventsAPI<Plugin>) api.getPacketEvents();
             Metrics metrics = new Metrics(pe.getPlugin(), 21916);
             metrics.addCustomChart(new SimplePie("entitylib-version", () -> EntityLib.getVersion().toString()));
         }
@@ -51,5 +45,15 @@ public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
     @Override
     public String getName() {
         return "Spigot";
+    }
+
+    @Override
+    public @NotNull UserLocaleProvider getUserLocaleProvider() {
+        return userLocaleProvider;
+    }
+
+    @Override
+    public void setUserLocaleProvider(@NotNull final UserLocaleProvider provider) {
+        this.userLocaleProvider = provider;
     }
 }

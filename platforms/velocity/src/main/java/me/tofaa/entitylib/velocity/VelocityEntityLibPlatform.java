@@ -9,6 +9,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import io.github.retrooper.packetevents.velocity.factory.VelocityPacketEventsBuilder;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLibAPI;
+import me.tofaa.entitylib.UserLocaleProvider;
 import me.tofaa.entitylib.common.AbstractPlatform;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
 
 public class VelocityEntityLibPlatform extends AbstractPlatform<ProxyServer> {
     private VelocityEntityLibAPI api;
+    private UserLocaleProvider userLocaleProvider;
     private Object plugin;
 
     public VelocityEntityLibPlatform(Object plugin, ProxyServer handle) {
@@ -53,5 +55,15 @@ public class VelocityEntityLibPlatform extends AbstractPlatform<ProxyServer> {
     @Override
     public String getName() {
         return "Velocity";
+    }
+
+    @Override
+    public @NotNull UserLocaleProvider getUserLocaleProvider() {
+        return userLocaleProvider;
+    }
+
+    @Override
+    public void setUserLocaleProvider(final UserLocaleProvider userLocaleProvider) {
+        this.userLocaleProvider = userLocaleProvider;
     }
 }
