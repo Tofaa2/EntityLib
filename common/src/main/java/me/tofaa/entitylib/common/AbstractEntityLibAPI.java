@@ -4,6 +4,7 @@ import com.github.retrooper.packetevents.PacketEventsAPI;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLibAPI;
 import me.tofaa.entitylib.Platform;
+import me.tofaa.entitylib.UserLocaleProvider;
 import me.tofaa.entitylib.container.EntityContainer;
 import me.tofaa.entitylib.tick.TickContainer;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
@@ -62,5 +63,10 @@ public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
     @Override
     public @NotNull Collection<TickContainer<?, T>> getTickContainers() {
         return tickContainers;
+    }
+
+    @Override
+    public @NotNull UserLocaleProvider getUserLocaleProvider() {
+        return platform.getUserLocaleProvider();
     }
 }

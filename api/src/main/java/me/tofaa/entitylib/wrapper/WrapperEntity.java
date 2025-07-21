@@ -5,24 +5,38 @@ import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
-import com.github.retrooper.packetevents.wrapper.play.server.*;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerBundle;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerDestroyEntities;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityHeadLook;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityRotation;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityTeleport;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityVelocity;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSetPassengers;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSystemChatMessage;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.container.EntityContainer;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.types.ObjectData;
 import me.tofaa.entitylib.tick.Tickable;
+import me.tofaa.entitylib.utils.PacketUtil;
 import me.tofaa.entitylib.ve.ViewerRule;
 import me.tofaa.entitylib.wrapper.spawning.SpawnPacketProvider;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnmodifiableView;
-
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Consumer;
 
 public class WrapperEntity implements Tickable {
     private final UUID uuid;
@@ -508,6 +522,11 @@ public class WrapperEntity implements Tickable {
             }
 
             return;
+        }
+
+        // Special handling for entity metadata packets to support `GlobalTranslator` functionality and component rendering
+        if (wrapper instanceof WrapperPlayServerEntityMetadata) {
+            PacketUtil.renderPacket(user, (WrapperPlayServerEntityMetadata) wrapper);
         }
 
         EntityLib.getApi().getPacketEvents().getProtocolManager().sendPacket(channel, wrapper);
