@@ -53,4 +53,6 @@ public interface EntityLibAPI<T> {
     @NotNull
     EntityContainer getDefaultContainer();
 
+    @NotNull
+    UserLocaleProvider getUserLocaleProvider();
 }

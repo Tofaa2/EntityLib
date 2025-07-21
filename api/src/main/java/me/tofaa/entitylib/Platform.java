@@ -27,6 +27,13 @@ public interface Platform<P> {
     @NotNull EntityUuidProvider getEntityUuidProvider();
 
     /**
+     * Gets the provider responsible for retrieving the locale of a user.
+     *
+     * @return a non-null {@link UserLocaleProvider} instance.
+     */
+    @NotNull UserLocaleProvider getUserLocaleProvider();
+
+    /**
      * Sets the entityId integer provider. This can be provided by a platform if needed.
      * @param provider the entityId integer provider.
      */
@@ -38,6 +45,12 @@ public interface Platform<P> {
      */
     void setEntityUuidProvider(@NotNull EntityUuidProvider provider);
 
+    /**
+     * Sets the provider responsible for retrieving the locale of a user.
+     *
+     * @param provider the {@link UserLocaleProvider} instance to be set. Must not be null.
+     */
+    void setUserLocaleProvider(@NotNull UserLocaleProvider provider);
 
     /**
      * @return the logger EntityLib uses internally.
