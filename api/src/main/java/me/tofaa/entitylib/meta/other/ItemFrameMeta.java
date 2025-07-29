@@ -21,11 +21,11 @@ public class ItemFrameMeta extends EntityMeta implements ObjectData {
 
     @NotNull
     public ItemStack getItem() {
-        return super.metadata.getIndex(OFFSET, ItemStack.EMPTY);
+        return super.metadata.getIndex(9, ItemStack.EMPTY);
     }
 
     public void setItem(@NotNull ItemStack value) {
-        super.metadata.setIndex(OFFSET, EntityDataTypes.ITEMSTACK, value);
+        super.metadata.setIndex(9, EntityDataTypes.ITEMSTACK, value);
     }
 
     @NotNull
@@ -34,7 +34,11 @@ public class ItemFrameMeta extends EntityMeta implements ObjectData {
     }
 
     public void setRotation(@NotNull Rotation value) {
-        super.metadata.setIndex(offset(OFFSET, 1), EntityDataTypes.INT, value.ordinal());
+        super.metadata.setIndex(
+            offset(OFFSET, 1),
+            EntityDataTypes.INT,
+            value.ordinal()
+        );
     }
 
     @NotNull
@@ -68,7 +72,6 @@ public class ItemFrameMeta extends EntityMeta implements ObjectData {
         NORTH,
         SOUTH,
         WEST,
-        EAST
+        EAST,
     }
-
 }
