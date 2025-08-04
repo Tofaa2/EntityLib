@@ -57,18 +57,19 @@ public final class GithubUpdater {
         URL url = new URL("https://api.github.com/repos/" + org + "/" + repo + "/releases/latest");
         URLConnection connection = url.openConnection();
         connection.addRequestProperty("User-Agent", "Mozilla/5.0");
-        InputStreamReader isr = new InputStreamReader(connection.getInputStream());
-        BufferedReader reader = new BufferedReader(isr);
-        String response = reader.readLine();
-        JsonObject json = AdventureSerializer.getGsonSerializer().serializer().fromJson(response, JsonObject.class);
 
-        reader.close();
-        isr.close();
+        try (
+                InputStreamReader isr = new InputStreamReader(connection.getInputStream());
+                BufferedReader reader = new BufferedReader(isr)
+        ) {
+            String response = reader.readLine();
+            JsonObject json = AdventureSerializer.getGsonSerializer().serializer().fromJson(response, JsonObject.class);
 
-        if (json.has("tag_name")) {
-            return PEVersion.fromString(json.get("tag_name").getAsString().replaceFirst("^[vV]", ""));
+            if (json.has("tag_name")) {
+                return PEVersion.fromString(json.get("tag_name").getAsString().replaceFirst("^[vV]", ""));
+            }
+            throw new IOException("Could not find name attribute in github api fetch");
         }
-        throw new IOException("Could not find name attribute in github api fetch");
     }
 
     @Deprecated
