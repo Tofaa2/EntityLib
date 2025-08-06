@@ -21,11 +21,11 @@ public class ItemFrameMeta extends EntityMeta implements ObjectData {
 
     @NotNull
     public ItemStack getItem() {
-        return super.metadata.getIndex(9, ItemStack.EMPTY);
+        return super.metadata.getIndex((byte)9, ItemStack.EMPTY);
     }
 
     public void setItem(@NotNull ItemStack value) {
-        super.metadata.setIndex(9, EntityDataTypes.ITEMSTACK, value);
+        super.metadata.setIndex((byte)9, EntityDataTypes.ITEMSTACK, value);
     }
 
     @NotNull
