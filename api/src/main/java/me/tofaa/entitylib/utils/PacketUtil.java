@@ -4,6 +4,7 @@ import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import me.tofaa.entitylib.EntityLib;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,6 +16,11 @@ public class PacketUtil {
     }
 
     public static void renderPacket(UUID user, WrapperPlayServerEntityMetadata metadata) {
+        final ArrayList<EntityData<?>> copiedEntityData = new ArrayList<>();
+        metadata.getEntityMetadata().forEach(entityData ->
+                copiedEntityData.add(new EntityData(entityData.getIndex(), entityData.getType(), entityData.getValue()))
+        );
+        metadata.setEntityMetadata(copiedEntityData);
         Locale locale = EntityLib.getApi().getUserLocaleProvider().locale(user);
         for (final EntityData<?> entityData : metadata.getEntityMetadata()) {
             if (entityData.getType() == EntityDataTypes.ADV_COMPONENT) {
