@@ -141,7 +141,7 @@ EntityLib uses the new Maven Central publishing system via the Central Portal (r
 
 ### Setting Up Central Portal Credentials
 1. Go to [Central Portal](https://central.sonatype.com/) and log in with your GitHub account.
-2. Create a namespace for your group ID (`io.github.tofaa2`).
+2. **Create a namespace**: In the "Namespaces" section, create a new namespace for your group ID (`io.github.tofaa2`). This is crucial for publishing to work.
 3. Generate a publishing token from the "Account Settings" > "Publishing Tokens".
 4. Use your email as the username and the token as the password.
 

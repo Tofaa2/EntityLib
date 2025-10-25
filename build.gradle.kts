@@ -21,8 +21,8 @@ fun getVersionMeta(includeHash: Boolean): String {
     }
     return "$commitHash-SNAPSHOT"
 }
-version = "$fullVersion${getVersionMeta(true)}"
-ext["versionBeta"] = getVersionMeta(true)
+version = "$fullVersion${getVersionMeta(false)}"
+ext["versionBeta"] = getVersionMeta(false)
 ext["versionNoHash"] = "$fullVersion${getVersionMeta(false)}"
 
 tasks {
