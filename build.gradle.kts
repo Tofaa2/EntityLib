@@ -3,7 +3,7 @@ import java.io.ByteArrayOutputStream
 val fullVersion = "3.0.3"
 val snapshot = true
 
-group = "me.tofaa.entitylib"
+group = "io.github.tofaa2"
 description = rootProject.name
 
 fun getVersionMeta(includeHash: Boolean): String {
@@ -60,6 +60,12 @@ tasks {
                 }
             }
         }
+    }
+
+    register("publishAllPublicationsToMavenRepository") {
+        val publishTasks = subModuleTasks("publishAllPublicationsToMavenRepository")
+        dependsOn(publishTasks)
+        group = "publishing"
     }
 
     register<Delete>("clean") {

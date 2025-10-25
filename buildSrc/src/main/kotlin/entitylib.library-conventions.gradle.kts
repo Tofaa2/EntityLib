@@ -1,6 +1,7 @@
 plugins {
     `java-library`
     `maven-publish`
+    signing
 }
 
 group = rootProject.group
@@ -45,17 +46,6 @@ tasks {
 }
 
 publishing {
-
-    repositories {
-        maven {
-            url = uri("https://maven.evokegames.gg/snapshots")
-            credentials {
-                username = System.getenv("TYCOONS_REPO_USER")
-                password = System.getenv("TYCOONS_REPO_PASS")
-            }
-        }
-    }
-
     publications {
         create<MavenPublication>("EntityLib") {
             groupId = project.group as String
@@ -75,6 +65,14 @@ publishing {
                     }
                 }
 
+                developers {
+                    developer {
+                        id = "Tofaa2"
+                        name = "Tofaa"
+                        email = "tofaadev@gmail.com"
+                    }
+                }
+
                 scm {
                     connection = "scm:git:https://github.com/Tofaa2/EntityLib.git"
                     developerConnection = "scm:git:https://github.com/Tofaa2/EntityLib.git"
@@ -82,6 +80,22 @@ publishing {
                 }
             }
         }
+    }
+
+    repositories {
+        maven {
+            url = uri("https://central.sonatype.com/api/v1/publisher/upload")
+            credentials {
+                username = System.getenv("CENTRAL_PORTAL_USERNAME")
+                password = System.getenv("CENTRAL_PORTAL_TOKEN")
+            }
+        }
+    }
+}
+
+signing {
+    if (!version.toString().endsWith("-SNAPSHOT")) {
+        sign(publishing.publications["EntityLib"])
     }
 }
 

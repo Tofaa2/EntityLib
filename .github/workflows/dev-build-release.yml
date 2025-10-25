@@ -32,6 +32,9 @@ jobs:
 
       - name: Run build & publish with Gradle Wrapper
         if: github.ref == 'refs/heads/master'
+        env:
+          OSSRH_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.CENTRAL_PORTAL_TOKEN }}
         run: chmod +x ./gradlew && ./gradlew publishAllPublicationsToMavenRepository
 
       - name: Run build with Gradle Wrapper

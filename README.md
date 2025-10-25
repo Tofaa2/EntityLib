@@ -8,37 +8,36 @@ You can easily use EntityLib platformless by using the `api` or `common` module
 
 If you like EntityLib and or want to sponsor me, visit my [ko-fi page](https://ko-fi.com/tofaa) :D 
 
-EntityLib builds are available on [Jitpack](https://jitpack.io/#Tofaa2/EntityLib) and my own [Maven Repository](https://maven.evokegames.gg/#/snapshots/me/tofaa/entitylib)
-The examples below use my repository, open the jitpack link for its group information.
+EntityLib is published to [Maven Central](https://central.sonatype.com/artifact/io.github.tofaa2). Snapshots are available on pushes to the main branch, and stable releases are published on GitHub releases.
 
 Gradle (Groovy DSL):
 ```groovy
 repositories {
-    maven { url 'https://maven.evokegames.gg/snapshots' }
+    mavenCentral()
 }
 
 dependencies {
-    implementation 'me.tofaa.entitylib:<platform>:<latest-release-version'
+    implementation 'io.github.tofaa2:<platform>:<version>'
 }
 ```
 
 Gradle (Kotlin DSL):
 ```kotlin
 repositories {
-    maven(url = "https://maven.evokegames.gg/snapshots")
+    mavenCentral()
 }
 
 dependencies {
-    implementation("me.tofaa.entitylib:<platform>:<latest-release-version>")
+    implementation("io.github.tofaa2:<platform>:<version>")
 }
 ```
 
 Maven:
-```xml 
+```xml
 <dependency>
-    <groupId>me.tofaa.entitylib</groupId>
-    <artifactId>(platform)</artifactId>
-    <version>(latest-release-version)</version>
+    <groupId>io.github.tofaa2</groupId>
+    <artifactId><platform></artifactId>
+    <version><version></version>
 </dependency>
 ```
 
