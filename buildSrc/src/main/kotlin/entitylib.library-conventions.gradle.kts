@@ -86,8 +86,8 @@ publishing {
         maven {
             url = uri("https://central.sonatype.com/api/v1/publisher/upload")
             credentials {
-                username = System.getenv("CENTRAL_PORTAL_USERNAME")
-                password = System.getenv("CENTRAL_PORTAL_TOKEN")
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_PASSWORD")
             }
         }
     }

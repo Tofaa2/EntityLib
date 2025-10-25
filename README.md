@@ -130,6 +130,23 @@ class Example {
 
 ```
 
+## Publishing to Maven Central
+
+EntityLib uses the new Maven Central publishing system via the Central Portal (replacing the deprecated OSSRH). To publish, set up the following GitHub secrets:
+
+- `OSSRH_USERNAME`: Your Central Portal username (usually your email).
+- `OSSRH_PASSWORD`: Your publishing token from the Central Portal.
+- `GPG_PRIVATE_KEY`: Your GPG private key (for signing artifacts).
+- `GPG_PASSPHRASE`: The passphrase for your GPG key.
+
+### Setting Up Central Portal Credentials
+1. Go to [Central Portal](https://central.sonatype.com/) and log in with your GitHub account.
+2. Create a namespace for your group ID (`io.github.tofaa2`).
+3. Generate a publishing token from the "Account Settings" > "Publishing Tokens".
+4. Use your email as the username and the token as the password.
+
+Snapshots are automatically published on pushes to the `master` branch. Stable releases are published when a GitHub release is created.
+
 ### TODO:
 Once this list is complete, i will release a stable version of the library.
 - [ ] Implement checks for each EntityMeta to make sure the version specific data is correct.
