@@ -49,8 +49,6 @@ EntityLib does not provide packet-events as a dependency, you must have it in yo
 - Creation of WrapperEntities
 - Keeping track of entities.
 
-
-
 ## Usage
 
 For more realistic examples, please take a look at the `test-plugin` module. It has an example `Bukkit` plugin that uses EntityLib.
