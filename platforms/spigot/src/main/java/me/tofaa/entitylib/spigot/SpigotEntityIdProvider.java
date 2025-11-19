@@ -1,19 +1,22 @@
 package me.tofaa.entitylib.spigot;
 
-import com.github.retrooper.packetevents.manager.server.ServerVersion;
-import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
-import me.tofaa.entitylib.EntityIdProvider;
-import me.tofaa.entitylib.Platform;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
 import org.bukkit.Bukkit;
 import org.bukkit.UnsafeValues;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Field;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
+import com.github.retrooper.packetevents.manager.server.ServerVersion;
+import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+
+import me.tofaa.entitylib.EntityIdProvider;
+import me.tofaa.entitylib.Platform;
 
 /**
  * Internal {@link EntityIdProvider} for Spigot servers, handling version and platform differences.
@@ -63,37 +66,49 @@ public final class SpigotEntityIdProvider implements EntityIdProvider {
 
         final Class<?> entityClass = getEntityClass();
         if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_14)) {
-            final Field entityAtomicField = getField(entityClass, "entityCount", "d", "c"); // Obfuscated names
-            if (entityAtomicField == null) {
-                throw new IllegalStateException("Could not find entity counter field");
-            }
-            try {
-                entityAtomicField.setAccessible(true);
-                final AtomicInteger counter = (AtomicInteger) entityAtomicField.get(null);
-                return counter::incrementAndGet;
-            } catch (final Exception exception) {
-                throw new IllegalStateException("Failed to access entity counter", exception);
+            final Supplier<Integer> modernSupplier = resolveAtomicSupplier(entityClass);
+            if (modernSupplier != null) {
+                return modernSupplier;
             }
         }
 
-        final Field entityLegacyField = getField(entityClass, "entityCount");
+        return resolveLegacySupplier(entityClass);
+    }
+
+    private Supplier<Integer> resolveAtomicSupplier(final Class<?> entityClass) {
+        final Field entityAtomicField = getStaticFieldOfType(entityClass, AtomicInteger.class,
+                "entityCount", "d", "c", "counter", "nextEntityId");
+        if (entityAtomicField == null) {
+            return null;
+        }
+        try {
+            entityAtomicField.setAccessible(true);
+            final Object fieldValue = entityAtomicField.get(null);
+            if (!(fieldValue instanceof AtomicInteger)) {
+                return null; // incompatible type, fall back to legacy strategy
+            }
+            final AtomicInteger counter = (AtomicInteger) fieldValue;
+            return counter::incrementAndGet;
+        } catch (final IllegalAccessException exception) {
+            throw new IllegalStateException("Failed to access entity counter", exception);
+        }
+    }
+
+    private Supplier<Integer> resolveLegacySupplier(final Class<?> entityClass) {
+        final Field entityLegacyField = getStaticFieldOfType(entityClass, Integer.TYPE, "entityCount", "b");
         if (entityLegacyField == null) {
             throw new IllegalStateException("Could not find legacy entity counter field");
         }
-        try {
-            entityLegacyField.setAccessible(true);
-            return () -> {
-                try {
-                    final int entityId = entityLegacyField.getInt(null);
-                    entityLegacyField.setInt(null, entityId + 1);
-                    return entityId;
-                } catch (final Exception exception) {
-                    throw new IllegalStateException("Failed to modify entity counter", exception);
-                }
-            };
-        } catch (final Exception exception) {
-            throw new IllegalStateException("Failed to access legacy entity counter", exception);
-        }
+        entityLegacyField.setAccessible(true);
+        return () -> {
+            try {
+                final int entityId = entityLegacyField.getInt(null);
+                entityLegacyField.setInt(null, entityId + 1);
+                return entityId;
+            } catch (final IllegalAccessException exception) {
+                throw new IllegalStateException("Failed to modify entity counter", exception);
+            }
+        };
     }
 
     /**
@@ -130,6 +145,24 @@ public final class SpigotEntityIdProvider implements EntityIdProvider {
                 return clazz.getDeclaredField(name);
             } catch (final NoSuchFieldException ignored) {
                 // Field name not found, proceed to the next
+            }
+        }
+        return null;
+    }
+
+    private static Field getStaticFieldOfType(final Class<?> clazz, final Class<?> desiredType,
+                                              final String... possibleNames) {
+        for (final String name : possibleNames) {
+            final Field field = getField(clazz, name);
+            if (field != null && desiredType.isAssignableFrom(field.getType())
+                    && Modifier.isStatic(field.getModifiers())) {
+                return field;
+            }
+        }
+
+        for (final Field field : clazz.getDeclaredFields()) {
+            if (Modifier.isStatic(field.getModifiers()) && desiredType.isAssignableFrom(field.getType())) {
+                return field;
             }
         }
         return null;
