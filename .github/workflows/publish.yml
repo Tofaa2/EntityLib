@@ -1,6 +1,5 @@
 name: Gradle Package
 
-
 on:
   push:
     branches: ["**"]
@@ -10,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: BRAM
     permissions:
       contents: read
 
