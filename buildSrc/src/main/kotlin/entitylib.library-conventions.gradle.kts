@@ -54,7 +54,7 @@ publishing {
         create<MavenPublication>("EntityLib") {
             groupId = project.group as String
             artifactId = project.name
-            version = rootProject.ext["versionBeta"] as String
+            version = rootProject.ext["versionNoHash"].toString()
             from(components["java"])
 
             pom {
@@ -88,10 +88,11 @@ publishing {
 
     repositories {
         maven {
-            url = uri("https://central.sonatype.com/api/v1/publisher/upload")
+            name = "pvphubMavenTofaa"
+            url = uri("https://maven.pvphub.me/tofaa")
             credentials {
-                username = System.getenv("OSSRH_USERNAME")
-                password = System.getenv("OSSRH_PASSWORD")
+                username = System.getenv("PVPHUB_MAVEN_USERNAME")
+                password = System.getenv("PVPHUB_MAVEN_SECRET")
             }
         }
     }
