@@ -10,15 +10,16 @@ fun getVersionMeta(includeHash: Boolean): String {
     if (!snapshot) {
         return ""
     }
+
     var commitHash = ""
     if (includeHash && file(".git").isDirectory) {
-        val stdout = ByteArrayOutputStream()
-        exec {
+        val result = providers.exec {
             commandLine("git", "rev-parse", "--short", "HEAD")
-            standardOutput = stdout
-        }
-        commitHash = "+${stdout.toString().trim()}"
+        }.standardOutput.asText.get().trim()
+
+        commitHash = "+$result"
     }
+
     return "$commitHash-SNAPSHOT"
 }
 version = "$fullVersion${getVersionMeta(false)}"

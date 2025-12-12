@@ -1,30 +1,11 @@
 pluginManagement {
     repositories {
-        mavenCentral()
         gradlePluginPortal()
     }
 }
 
 plugins {
-    id("org.gradle.toolchains.foojay-resolver") version "0.8.0"
-}
-
-toolchainManagement {
-    jvm {
-        javaRepositories {
-            repository("foojay") {
-                resolverClass.set(org.gradle.toolchains.foojay.FoojayToolchainResolver::class.java)
-            }
-        }
-    }
-}
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("libs") {
-            from(files("libs.versions.toml"))
-        }
-    }
+    id("org.gradle.toolchains.foojay-resolver") version "1.0.0"
 }
 
 rootProject.name = "EntityLib"

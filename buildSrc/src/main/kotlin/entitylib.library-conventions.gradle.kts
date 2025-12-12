@@ -31,6 +31,10 @@ tasks {
         options.release = 8
     }
 
+    withType<Test> {
+        failOnNoDiscoveredTests = false
+    }
+
     processResources {
         inputs.property("version", project.version)
         filesMatching(listOf("plugin.yml", "velocity-plugin.json")) {
