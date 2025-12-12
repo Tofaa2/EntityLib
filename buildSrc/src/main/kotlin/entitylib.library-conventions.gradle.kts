@@ -50,6 +50,17 @@ tasks {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "pvphub-maven-tofaa"
+            url = uri("https://maven.pvphub.me/tofaa")
+            credentials {
+                username = System.getenv("PVPHUB_MAVEN_USERNAME")
+                password = System.getenv("PVPHUB_MAVEN_SECRET")
+            }
+        }
+    }
+
     publications {
         create<MavenPublication>("EntityLib") {
             groupId = project.group as String
@@ -84,23 +95,6 @@ publishing {
                 }
             }
         }
-    }
-
-    repositories {
-        maven {
-            name = "pvphubMavenTofaa"
-            url = uri("https://maven.pvphub.me/tofaa")
-            credentials {
-                username = System.getenv("PVPHUB_MAVEN_USERNAME")
-                password = System.getenv("PVPHUB_MAVEN_SECRET")
-            }
-        }
-    }
-}
-
-signing {
-    if (!version.toString().endsWith("-SNAPSHOT")) {
-        sign(publishing.publications["EntityLib"])
     }
 }
 
