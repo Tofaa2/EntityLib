@@ -11,6 +11,8 @@ If you like EntityLib and or want to sponsor me, visit my [ko-fi page](https://k
 EntityLib is published to [PVPHub](https://maven.pvphub.me/#/tofaa/io/github/tofaa2). Snapshots are available on pushes to the main branch, and stable releases are published on GitHub releases.
 Many thanks to the team at PVP Hub and @Bram1903 for hosting EntityLib
 
+Current Version: `3.0.3-SNAPSHOT`
+
 Gradle (Groovy DSL):
 ```groovy
 repositories {
