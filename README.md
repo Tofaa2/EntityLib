@@ -8,12 +8,14 @@ You can easily use EntityLib platformless by using the `api` or `common` module
 
 If you like EntityLib and or want to sponsor me, visit my [ko-fi page](https://ko-fi.com/tofaa) :D 
 
-EntityLib is published to [Maven Central](https://central.sonatype.com/artifact/io.github.tofaa2). Snapshots are available on pushes to the main branch, and stable releases are published on GitHub releases.
+EntityLib is published to [PVPHub](https://maven.pvphub.me/#/tofaa/io/github/tofaa2). Snapshots are available on pushes to the main branch, and stable releases are published on GitHub releases.
+Many thanks to the team at PVP Hub and @Bram1903 for hosting EntityLib
 
 Gradle (Groovy DSL):
 ```groovy
 repositories {
     mavenCentral()
+    maven("https://maven.pvphub.me/tofaa")
 }
 
 dependencies {
@@ -25,6 +27,7 @@ Gradle (Kotlin DSL):
 ```kotlin
 repositories {
     mavenCentral()
+    maven("https://maven.pvphub.me/tofaa")
 }
 
 dependencies {
