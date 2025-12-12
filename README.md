@@ -159,3 +159,4 @@ Once this list is complete, i will release a stable version of the library.
 ### Credits
 - PacketEvents for providing the API and retrooper being a cool guy in general
 - Minestom certain mappings were taken from Minestom cause i have not slept in 4 days and it was faster
+
