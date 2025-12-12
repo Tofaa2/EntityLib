@@ -37,4 +37,4 @@ jobs:
         env:
           PVPHUB_MAVEN_USERNAME: ${{ secrets.PVPHUB_MAVEN_USERNAME }}
           PVPHUB_MAVEN_SECRET: ${{ secrets.PVPHUB_MAVEN_SECRET }}
-        run: ./gradlew publishAllPublicationsToPvphub-maven-tofaaRepository
+        run: ./gradlew publishEntityLibPublicationToPvphub-maven-tofaaRepository
