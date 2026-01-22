@@ -1,4 +1,4 @@
-val fullVersion = "3.0.3"
+val fullVersion = "3.1.0"
 val snapshot = true
 
 group = "io.github.tofaa2"
@@ -25,6 +25,11 @@ ext["versionBeta"] = getVersionMeta(false)
 ext["versionNoHash"] = "$fullVersion${getVersionMeta(false)}"
 
 tasks {
+    wrapper {
+        gradleVersion = "8.8"
+        distributionType = Wrapper.DistributionType.ALL
+    }
+
     fun subModuleTasks(taskName: String): List<Task> {
         return subprojects
             .filter { it.name != "platforms" }
