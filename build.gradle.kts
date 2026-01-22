@@ -1,5 +1,3 @@
-import java.io.ByteArrayOutputStream
-
 val fullVersion = "3.1.0"
 val snapshot = true
 
