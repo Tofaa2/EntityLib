@@ -1,6 +1,6 @@
 # EntityLib  
 EntityLib is a PacketEvents addon that provides an abstraction over raw entity data and packets to make it easier to work with entities as a whole.
-Currently, EntityLib is only stable for 1.18+, but it will support all versions that PacketEvents supports in the future. <br>
+Currently, EntityLib is only stable for 1.21.9+, but it will support all versions that PacketEvents supports in the future. <br>
 For general support and reports of bugs, join the [Discord](https://discord.gg/jawR25hrSK) server.
 
 Currently supported platforms are `spigot` and `velocity`
