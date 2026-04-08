@@ -548,7 +548,7 @@ public class WrapperEntity implements Tickable {
      */
     public void addPassenger(int passenger) {
         if (passengers.contains(passenger)) {
-            throw new IllegalArgumentException("Passenger already exists");
+            return;
         }
 
         passengers.add(passenger);

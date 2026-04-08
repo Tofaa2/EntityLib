@@ -1,0 +1,11 @@
+name: SpaceNPC
+version: 1.0.0
+main: me.tofaa.entitylib.npc.SpaceNPC
+api-version: 1.21
+depend: [packetevents]
+commands:
+  spacenpc:
+    description: NPC command idk
+    aliases: [npc]
+    permission: spacenpc.admin
+    permission-message: You do   not have permission to use this!

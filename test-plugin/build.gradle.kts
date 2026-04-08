@@ -17,10 +17,6 @@ dependencies {
 }
 
 tasks {
-    // 1.8.8 - 1.16.5 = Java 8
-    // 1.17           = Java 16
-    // 1.18 - 1.20.4  = Java 17
-    // 1-20.5+        = Java 21
     val version = "1.21.3"
     val javaVersion = JavaLanguageVersion.of(21)
 

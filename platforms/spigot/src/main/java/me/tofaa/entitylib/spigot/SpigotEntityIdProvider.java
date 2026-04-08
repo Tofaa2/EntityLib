@@ -58,6 +58,8 @@ public final class SpigotEntityIdProvider implements EntityIdProvider {
      * @throws IllegalStateException if the entity counter field cannot be located or accessed.
      */
     private Supplier<Integer> detectIdSupplier() {
+
+
         final ServerVersion serverVersion = platform.getAPI().getPacketEvents().getServerManager().getVersion();
 
         if (isPaper() && serverVersion.isNewerThanOrEquals(ServerVersion.V_1_16)) {

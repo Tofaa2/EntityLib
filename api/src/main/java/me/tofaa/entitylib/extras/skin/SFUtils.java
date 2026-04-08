@@ -22,7 +22,8 @@ final class SFUtils {
             InputStream stream = url.openStream();
             InputStreamReader isr = new InputStreamReader(stream);
             JsonObject root = parse(isr);
-            UUID uuid = UUID.fromString(root.get("id").getAsString());
+            String uuidStr = root.get("id").getAsString();
+            UUID uuid = UUID.fromString(uuidStr.substring(0, 8) + "-" + uuidStr.substring(8, 12) + "-" + uuidStr.substring(12, 16) + "-" + uuidStr.substring(16, 20) + "-" + uuidStr.substring(20));
             isr.close();
             stream.close();
             return getTextures(uuid);

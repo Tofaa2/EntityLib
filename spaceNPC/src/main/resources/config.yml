@@ -1,0 +1,35 @@
+# SpaceNPC Configuration
+
+# Debug mode - enable for more verbose logging
+debug: false
+
+# Default NPC settings
+npc:
+  # Default name tag visibility
+  show-name-tag: true
+  
+  # Default look at players behavior
+  look-at-players: true
+  
+  # Default look at players per player behavior (each viewer sees different rotation)
+  look-at-players-per-player: false
+  
+  # Default collision
+  collides: true
+  
+  # Default gravity
+  gravity: true
+  
+  # Default invulnerable
+  invulnerable: true
+
+# Movement settings
+movement:
+  # Default movement speed
+  speed: 4.0
+  
+  # Pathfinding search range
+  pathfind-range: 50.0
+  
+  # Max search nodes for pathfinding
+  max-nodes: 10000

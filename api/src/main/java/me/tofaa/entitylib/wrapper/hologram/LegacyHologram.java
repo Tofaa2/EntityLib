@@ -41,15 +41,30 @@ final class LegacyHologram implements Hologram.Legacy {
     }
 
     @Override
+    public void removeViewer(@NotNull UUID viewer) {
+        for (WrapperEntity line : lines) {
+            line.removeViewer(viewer);
+        }
+    }
+
+@Override
+    public @NotNull Location getLocation() {
+        return location;
+    }
+
+    @Override
+    public @NotNull WrapperEntity getEntity() {
+        return lines.isEmpty() ? null : lines.get(0);
+    }
+
+    @Override
     public boolean isMarker() {
         return marker;
     }
 
     @Override
     public void setMarker(boolean marker) {
-        this.marker = true;
-        if (lines.isEmpty()) return;
-        teleport(location); // refresh
+        this.marker = marker;
     }
 
     @Override
@@ -144,8 +159,19 @@ final class LegacyHologram implements Hologram.Legacy {
     }
 
     @Override
-    public @NotNull Location getLocation() {
-        return location;
+    public void setParent(@NotNull WrapperEntity parent) {
+        if (lines.isEmpty()) return;
+        
+        WrapperEntity first = lines.get(0);
+        for (WrapperEntity e : lines) {
+            if (e.getUuid().equals(first.getUuid())) continue;
+            try {
+                first.addPassenger(e);
+            } catch (Exception ignored) {}
+        }
+        try {
+            parent.addPassenger(first);
+        } catch (Exception ignored) {}
     }
 
 }

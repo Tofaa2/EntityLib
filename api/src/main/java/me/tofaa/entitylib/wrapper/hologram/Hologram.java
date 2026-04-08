@@ -32,6 +32,8 @@ public interface Hologram {
 
     @NotNull Location getLocation();
 
+    @NotNull me.tofaa.entitylib.wrapper.WrapperEntity getEntity();
+
 
     void show();
 
@@ -53,6 +55,13 @@ public interface Hologram {
     default void addViewer(@NotNull User user) {
         addViewer(user.getUUID());
     }
+
+    void removeViewer(@NotNull UUID viewer);
+    default void removeViewer(@NotNull User user) {
+        removeViewer(user.getUUID());
+    }
+
+    void setParent(@NotNull me.tofaa.entitylib.wrapper.WrapperEntity parent);
 
     interface Modern extends Hologram {
 

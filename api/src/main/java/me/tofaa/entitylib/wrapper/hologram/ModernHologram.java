@@ -22,6 +22,7 @@ final class ModernHologram implements Hologram.Modern {
     private final List<WrapperEntity> lines = new ArrayList<>(3);
     private Consumer<TextDisplayMeta> modifier;
     private boolean spawned = false;
+    private WrapperEntity parent;
 
     ModernHologram(@NotNull Location location) {
         this.location = location;
@@ -55,12 +56,34 @@ final class ModernHologram implements Hologram.Modern {
     public void teleport(Location location) {
         this.location = location;
         if (lines.isEmpty()) return;
+        
+        if (parent != null) {
+            return;
+        }
+        
         WrapperEntity first = lines.get(0);
         first.teleport(location);
         for (WrapperEntity e : lines) {
             if (e.getUuid().equals(first.getUuid())) continue;
             first.addPassenger(e);
         }
+    }
+
+    @Override
+    public void setParent(@NotNull WrapperEntity parent) {
+        this.parent = parent;
+        if (lines.isEmpty()) return;
+        
+        WrapperEntity first = lines.get(0);
+        for (WrapperEntity e : lines) {
+            if (e.getUuid().equals(first.getUuid())) continue;
+            try {
+                first.addPassenger(e);
+            } catch (Exception ignored) {}
+        }
+        try {
+            parent.addPassenger(first);
+        } catch (Exception ignored) {}
     }
 
     @Override
@@ -79,6 +102,7 @@ final class ModernHologram implements Hologram.Modern {
         meta.setInvisible(true);
         meta.setHasNoGravity(true);
         meta.setText(line);
+        meta.setBillboardConstraints(me.tofaa.entitylib.meta.display.AbstractDisplayMeta.BillboardConstraints.CENTER);
         if (this.modifier != null) {
             this.modifier.accept(meta);
         }
@@ -110,6 +134,13 @@ final class ModernHologram implements Hologram.Modern {
         }
     }
 
+    @Override
+    public void removeViewer(@NotNull UUID viewer) {
+        for (WrapperEntity line : lines) {
+            line.removeViewer(viewer);
+        }
+    }
+
 
     @Override
     public int length() {
@@ -119,6 +150,11 @@ final class ModernHologram implements Hologram.Modern {
     @Override
     public @NotNull Location getLocation() {
         return location;
+    }
+
+    @Override
+    public @NotNull WrapperEntity getEntity() {
+        return lines.isEmpty() ? null : lines.get(0);
     }
 
 

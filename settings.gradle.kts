@@ -14,6 +14,9 @@ include(":api")
 include(":platforms:spigot")
 include(":platforms:velocity")
 include(":platforms:standalone")
+include(":movement-engine")
+include(":platforms:movement")
+include(":spaceNPC")
 
 if (System.getenv("PRIVATE").toBoolean()) {
     include("discord-bot")
