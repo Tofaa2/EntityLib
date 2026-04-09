@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    `maven-publish`
     entitylib.`shadow-conventions`
     alias(libs.plugins.run.paper)
 }
@@ -17,7 +18,7 @@ repositories {
 
 dependencies {
     compileOnly(libs.paper)
-    implementation(libs.packetevents.spigot)
+    compileOnly(libs.packetevents.spigot)
     compileOnly(libs.adventure.api)
     implementation(project(":platforms:spigot"))
     implementation(project(":movement-engine"))
@@ -50,3 +51,14 @@ tasks {
 //        relocate("com.github.retrooper", "me.tofaa.npc.thirdparty.retrooper")
 //    }
 //}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            artifact(tasks.named("jar"))
+            groupId = project.group.toString()
+            artifactId = "spaceNPC"
+            version = project.version.toString()
+        }
+    }
+}
