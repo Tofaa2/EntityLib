@@ -142,7 +142,7 @@ public class NPC {
                     .getEntityIdProvider()
                     .provide(profile.getUUID(), entityType)
             );
-            wrapperPlayer.setInTablist(true);
+            wrapperPlayer.setInTablist(false);
             wrapperPlayer.setGameMode(
                 GameMode.SURVIVAL
             );
