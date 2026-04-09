@@ -32,7 +32,9 @@ public class NPCPath {
         if (index >= 0 && index < waypoints.size()) {
             waypoints.remove(index);
             if (currentIndex >= waypoints.size()) {
+                int previousIndex = currentIndex;
                 currentIndex = 0;
+                recomputeYaw(previousIndex, currentIndex);
             }
         }
     }
@@ -70,24 +72,34 @@ public class NPCPath {
         if (waypoints.isEmpty()) return;
 
         int previousIndex = currentIndex;
-        Location currentWaypoint = waypoints.get(previousIndex);
         currentIndex++;
         if (currentIndex >= waypoints.size()) {
             currentIndex = looping ? 0 : waypoints.size() - 1;
         }
 
-        if (currentIndex == previousIndex) return; // No yaw change
-        Location nextWaypoint = waypoints.get(currentIndex);
+        recomputeYaw(previousIndex, currentIndex);
+    }
+
+    private void recomputeYaw(int fromIndex, int toIndex) {
+        if (waypoints.size() < 2) return;
+        if (fromIndex == toIndex) return;
+        if (fromIndex < 0 || fromIndex >= waypoints.size()) return;
+        if (toIndex < 0 || toIndex >= waypoints.size()) return;
+
+        Location from = waypoints.get(fromIndex);
+        Location to = waypoints.get(toIndex);
 
         this.yaw = (float) Math.toDegrees(Math.atan2(
-                -(nextWaypoint.getX() - currentWaypoint.getX()),
-                nextWaypoint.getZ() - currentWaypoint.getZ()
+                -(to.getX() - from.getX()),
+                to.getZ() - from.getZ()
         ));
     }
 
     public void setIndex(int index) {
         if (index >= 0 && index < waypoints.size()) {
+            int previousIndex = this.currentIndex;
             this.currentIndex = index;
+            recomputeYaw(previousIndex, currentIndex);
         }
     }
 
@@ -140,8 +152,10 @@ public class NPCPath {
     }
 
     public void reset() {
+        int previousIndex = currentIndex;
         currentIndex = 0;
         started = false;
+        recomputeYaw(previousIndex, currentIndex);
     }
 
     public float getYaw() {

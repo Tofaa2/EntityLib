@@ -243,17 +243,18 @@ public class NPCMovement {
                             }
                         }
 
+                        float yaw = npc.getOptions().isLookAtPath() ? npc.getPath().getYaw() : current.getYaw();
                         Location newLoc = new Location(
                             newX,
                             newY,
                             newZ,
-                            npc.getOptions().isLookAtPath() ? npc.getPath().getYaw() : current.getYaw(),
+                            yaw,
                             0
                         );
 
                         entity.teleport(newLoc);
 
-                        entity.rotateHead(npc.getPath().getYaw(), 0);
+                        entity.rotateHead(yaw, 0);
                     }
                 });
         }
