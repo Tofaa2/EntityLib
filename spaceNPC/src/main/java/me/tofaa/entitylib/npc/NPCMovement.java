@@ -2,29 +2,21 @@ package me.tofaa.entitylib.npc;
 
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import com.github.retrooper.packetevents.protocol.world.Location;
-import com.github.retrooper.packetevents.util.Vector3f;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityHeadLook;
 import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.meta.display.AbstractDisplayMeta;
 import me.tofaa.entitylib.movement.MovementEngine;
-import me.tofaa.entitylib.movement.MovementEngine.MovementSettings;
-import me.tofaa.entitylib.movement.MovementEngine.Path;
-import me.tofaa.entitylib.movement.MovementEngine.PathfindSettings;
 import me.tofaa.entitylib.movement.SpigotMovementEngine;
 import me.tofaa.entitylib.npc.path.NPCPath;
-import me.tofaa.entitylib.npc.NPCRegistry;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class NPCMovement {
 
@@ -166,26 +158,13 @@ public class NPCMovement {
                     yaw = npcLocation.getYaw();
                 }
             } else if (npc.getOptions().isLookAtPath()) {
-                yaw = npcLocation.getYaw();
+                // Gets handled by the movement itself
+                continue;
             } else {
                 continue;
             }
 
-            PacketEventsAPI<?> api = EntityLib.getApi().getPacketEvents();
-            for (UUID viewerId : entity.getViewers()) {
-                Player player = org.bukkit.Bukkit.getPlayer(viewerId);
-                if (player == null || player.getWorld() != world) continue;
-
-                var headPacket = new com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityHeadLook(
-                    entity.getEntityId(),
-                    yaw
-                );
-
-                Object channel = api.getProtocolManager().getChannel(viewerId);
-                if (channel != null) {
-                    api.getProtocolManager().sendPacket(channel, headPacket);
-                }
-            }
+            entity.rotateHead(yaw, 0);
         }
     }
 
@@ -226,19 +205,6 @@ public class NPCMovement {
                         dx /= len;
                         dy /= len;
                         dz /= len;
-
-                        // float yaw = (float) Math.toDegrees(Math.atan2(dz, dx));
-                        float yaw = getYawTowards(
-                            target,
-                            new org.bukkit.Location(
-                                null,
-                                target.getX(),
-                                target.getY(),
-                                target.getZ(),
-                                target.getYaw(),
-                                target.getPitch()
-                            )
-                        );
 
                         double newY = current.getY() + dy * speed;
                         double newX = current.getX() + dx * speed;
@@ -281,13 +247,13 @@ public class NPCMovement {
                             newX,
                             newY,
                             newZ,
-                            yaw,
+                            npc.getOptions().isLookAtPath() ? npc.getPath().getYaw() : current.getYaw(),
                             0
                         );
 
                         entity.teleport(newLoc);
 
-                        entity.rotateHead(yaw, 0);
+                        entity.rotateHead(npc.getPath().getYaw(), 0);
                     }
                 });
         }

@@ -13,6 +13,7 @@ public class NPCPath {
     private double speed;
     private boolean paused;
     private boolean started;
+    private float yaw = 0;
 
     public NPCPath() {
         this.waypoints = new ArrayList<>();
@@ -67,11 +68,21 @@ public class NPCPath {
 
     public void advanceToNext() {
         if (waypoints.isEmpty()) return;
-        
+
+        int previousIndex = currentIndex;
+        Location currentWaypoint = waypoints.get(previousIndex);
         currentIndex++;
         if (currentIndex >= waypoints.size()) {
             currentIndex = looping ? 0 : waypoints.size() - 1;
         }
+
+        if (currentIndex == previousIndex) return; // No yaw change
+        Location nextWaypoint = waypoints.get(currentIndex);
+
+        this.yaw = (float) Math.toDegrees(Math.atan2(
+                -(nextWaypoint.getX() - currentWaypoint.getX()),
+                nextWaypoint.getZ() - currentWaypoint.getZ()
+        ));
     }
 
     public void setIndex(int index) {
@@ -131,5 +142,9 @@ public class NPCPath {
     public void reset() {
         currentIndex = 0;
         started = false;
+    }
+
+    public float getYaw() {
+        return yaw;
     }
 }
