@@ -12,7 +12,6 @@ import me.tofaa.entitylib.movement.MovementEngine;
 import me.tofaa.entitylib.movement.SpigotMovementEngine;
 import me.tofaa.entitylib.npc.path.NPCPath;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.entity.Player;
@@ -93,14 +92,7 @@ public class NPCMovement {
             Location npcLocation = entity.getLocation();
 
             npc.getHologram().ifPresent(hologram -> {
-                Location holoLoc = new Location(
-                    npcLocation.getX(),
-                    npcLocation.getY() + 2.0,
-                    npcLocation.getZ(),
-                    npcLocation.getYaw(),
-                    npcLocation.getPitch()
-                );
-                hologram.teleport(holoLoc);
+                hologram.setParent(npc.getEntity().get());
             });
 
             boolean permanentlyVisible = npc.getOptions().isPermanentlyVisible();
@@ -186,78 +178,129 @@ public class NPCMovement {
                 .getEntity()
                 .ifPresent(entity -> {
                     Location current = entity.getLocation();
-                    double distance = Math.sqrt(
+
+                    // Use horizontal (XZ) distance for waypoint arrival check
+                    double hDistSq =
                         Math.pow(target.getX() - current.getX(), 2) +
-                            Math.pow(target.getY() - current.getY(), 2) +
-                            Math.pow(target.getZ() - current.getZ(), 2)
-                    );
+                        Math.pow(target.getZ() - current.getZ(), 2);
 
-                    if (distance < 0.5) {
+                    if (hDistSq < 0.25 && Math.abs(target.getY() - current.getY()) < 1.5) {
                         path.advanceToNext();
+                        return;
+                    }
+
+                    double speed = npc.getOptions().getMovementSpeed() * 0.1;
+
+                    // --- Horizontal movement (XZ only) ---
+                    double dx = target.getX() - current.getX();
+                    double dz = target.getZ() - current.getZ();
+                    double hLen = Math.sqrt(dx * dx + dz * dz);
+
+                    double newX, newZ;
+                    if (hLen > 0.01) {
+                        dx /= hLen;
+                        dz /= hLen;
+                        newX = current.getX() + dx * speed;
+                        newZ = current.getZ() + dz * speed;
                     } else {
-                        double speed =
-                            npc.getOptions().getMovementSpeed() * 0.1;
-                        double dx = target.getX() - current.getX();
-                        double dy = target.getY() - current.getY();
-                        double dz = target.getZ() - current.getZ();
-                        double len = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                        newX = current.getX();
+                        newZ = current.getZ();
+                        dx = 0;
+                        dz = 0;
+                    }
 
-                        dx /= len;
-                        dy /= len;
-                        dz /= len;
+                    // --- Vertical movement (jump + gravity physics) ---
+                    double newY = current.getY();
 
-                        double newY = current.getY() + dy * speed;
-                        double newX = current.getX() + dx * speed;
-                        double newZ = current.getZ() + dz * speed;
+                    if (npc.getOptions().isClampToGround()) {
+                        var world = npc.getWorld();
+                        if (world != null) {
+                            int bx = (int) Math.floor(newX);
+                            int bz = (int) Math.floor(newZ);
+                            int feetY = (int) Math.floor(current.getY());
 
-                        if (npc.getOptions().isClampToGround()) {
-                            var world = npc.getWorld();
-                            if (world != null) {
-                                int cx = (int) Math.floor(newX);
-                                int cz = (int) Math.floor(newZ);
-                                int cy = (int) Math.floor(current.getY());
+                            // Check if there's a solid block ahead at feet level (obstacle)
+                            var blockAtFeet = world.getBlockAt(bx, feetY, bz);
+                            var blockAboveFeet = world.getBlockAt(bx, feetY + 1, bz);
 
-                                var feet = world.getBlockAt(
-                                    cx,
-                                    cy,
-                                    cz
-                                );
-                                var below = world.getBlockAt(
-                                    cx,
-                                    cy - 1,
-                                    cz
-                                );
+                            boolean obstacleAhead = !blockAtFeet.isPassable()
+                                && blockAboveFeet.isPassable();
 
-                                if (
-                                    below.getType() == Material.AIR
-                                ) {
-                                    newY = newY - 1;
-                                }
+                            // If we hit a 1-block obstacle and we're on the ground, jump
+                            if (obstacleAhead && follower.isOnGround()) {
+                                follower.jump();
+                            }
 
-                                if (
-                                    target.getY() > current.getY() + 0.1 &&
-                                    feet.getType() != org.bukkit.Material.AIR
-                                ) {
-                                    newY = current.getY() + 0.5;
-                                }
+                            // Apply vertical physics (gravity + velocity)
+                            newY = follower.applyVerticalPhysics(current.getY());
+
+                            // Resolve ground collision: find solid ground below new position
+                            int newFeetY = (int) Math.floor(newY);
+                            double groundLevel = findGroundLevel(world, bx, newFeetY, bz, feetY + 2);
+
+                            if (newY <= groundLevel) {
+                                // Landed on ground
+                                newY = groundLevel;
+                                follower.land(groundLevel);
+                            } else {
+                                // Still airborne
+                                follower.setOnGround(false);
+                            }
+
+                            // If jumping into a ceiling (block above head), stop upward velocity
+                            int headY = (int) Math.floor(newY + 1.8);
+                            var blockAtHead = world.getBlockAt(bx, headY, bz);
+                            if (!blockAtHead.isPassable() && follower.verticalVelocity > 0) {
+                                follower.verticalVelocity = 0;
+                            }
+
+                            // If obstacle is 2+ blocks tall, don't move horizontally into it
+                            if (!blockAtFeet.isPassable() && !blockAboveFeet.isPassable()) {
+                                newX = current.getX();
+                                newZ = current.getZ();
                             }
                         }
-
-                        float yaw = npc.getOptions().isLookAtPath() ? npc.getPath().getYaw() : current.getYaw();
-                        Location newLoc = new Location(
-                            newX,
-                            newY,
-                            newZ,
-                            yaw,
-                            0
-                        );
-
-                        entity.teleport(newLoc);
-
-                        entity.rotateHead(yaw, 0);
+                    } else {
+                        // No ground clamping: use linear Y interpolation (original behavior)
+                        double dy = target.getY() - current.getY();
+                        double fullLen = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                        if (fullLen > 0.01) {
+                            newY = current.getY() + (dy / fullLen) * speed;
+                        }
                     }
+
+                    float yaw = npc.getOptions().isLookAtPath() ? npc.getPath().getYaw() : current.getYaw();
+                    Location newLoc = new Location(
+                        newX,
+                        newY,
+                        newZ,
+                        yaw,
+                        0
+                    );
+
+                    entity.teleport(newLoc);
+                    entity.rotateHead(yaw, 0);
                 });
         }
+    }
+
+    /**
+     * Finds the Y level of the ground (top of highest solid block) at the given XZ,
+     * searching downward from startY. Returns the Y on top of the first solid block found.
+     * If no solid block is found down to y=minY or world min, returns startY (no change).
+     */
+    private static double findGroundLevel(org.bukkit.World world, int bx, int startY, int bz, int maxY) {
+        // Don't search too far down - limit to 4 blocks below current position
+        int minSearch = Math.max(world.getMinHeight(), startY - 4);
+        for (int y = startY; y >= minSearch; y--) {
+            var block = world.getBlockAt(bx, y, bz);
+            if (!block.isPassable()) {
+                // Ground found: NPC stands on top of this block
+                return y + 1;
+            }
+        }
+        // No ground found within search range, keep falling
+        return startY;
     }
 
     private static void updateGlobalHeadRotation(
@@ -390,23 +433,6 @@ public class NPCMovement {
         return (float) (Math.toDegrees(Math.atan2(dz, dx)) - 90);
     }
 
-    private static double getGroundY(
-        org.bukkit.World world,
-        double x,
-        double y,
-        double z
-    ) {
-        int cx = (int) Math.floor(x);
-        int cz = (int) Math.floor(z);
-        for (int cy = (int) Math.floor(y); cy >= 0; cy--) {
-            org.bukkit.block.Block block = world.getBlockAt(cx, cy, cz);
-            if (block.getType() != org.bukkit.Material.AIR) {
-                return cy + 1;
-            }
-        }
-        return y;
-    }
-
     public static void startPathFollowing(NPC npc) {
         NPCPath path = npc.getPath();
         if (path.getWaypointCount() == 0) {
@@ -433,8 +459,13 @@ public class NPCMovement {
 
     public static class PathFollowing {
 
+        private static final double GRAVITY = 0.08;
+        private static final double JUMP_VELOCITY = 0.42;
+
         private final NPC npc;
         private final long startTime;
+        private double verticalVelocity = 0.0;
+        private boolean onGround = true;
 
         public PathFollowing(NPC npc) {
             this.npc = npc;
@@ -447,6 +478,36 @@ public class NPCMovement {
 
         public long getStartTime() {
             return startTime;
+        }
+
+        public void jump() {
+            if (onGround) {
+                verticalVelocity = JUMP_VELOCITY;
+                onGround = false;
+            }
+        }
+
+        public double applyVerticalPhysics(double currentY) {
+            if (onGround && verticalVelocity <= 0) {
+                verticalVelocity = 0;
+                return currentY;
+            }
+            verticalVelocity -= GRAVITY;
+            double newY = currentY + verticalVelocity;
+            return newY;
+        }
+
+        public void land(double groundY) {
+            onGround = true;
+            verticalVelocity = 0.0;
+        }
+
+        public boolean isOnGround() {
+            return onGround;
+        }
+
+        public void setOnGround(boolean onGround) {
+            this.onGround = onGround;
         }
     }
 }
