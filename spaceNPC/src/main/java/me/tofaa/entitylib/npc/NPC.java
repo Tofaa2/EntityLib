@@ -274,7 +274,7 @@ public class NPC {
         );
         hologram.show();
         if (hologram.getEntity().getEntityMeta() instanceof AbstractDisplayMeta displayMeta) {
-//            displayMeta.setTranslation(new Vector3f(0, 0.5f, 0));
+            displayMeta.setTranslation(new Vector3f(0, 0.25f, 0));
         }
 
         this.hologram = hologram;
