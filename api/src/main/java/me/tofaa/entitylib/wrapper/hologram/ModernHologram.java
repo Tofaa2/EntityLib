@@ -87,11 +87,66 @@ final class ModernHologram implements Hologram.Modern {
     }
 
     @Override
+    public boolean updateLineContent(int index, @NotNull Component line) {
+        if (index < 0 || index >= lines.size()) {
+            return false;
+        }
+        TextDisplayMeta meta = (TextDisplayMeta) lines.get(index).getEntityMeta();
+        meta.setText(line);
+        return true;
+    }
+
+    @Override
+    public void setLines(List<Component> newLines) {
+        int existingCount = lines.size();
+        int newCount = newLines.size();
+
+        if (newCount == 0) {
+            for (WrapperEntity line : lines) {
+                line.remove();
+            }
+            lines.clear();
+            return;
+        }
+
+        for (int i = 0; i < Math.min(existingCount, newCount); i++) {
+            TextDisplayMeta meta = (TextDisplayMeta) lines.get(i).getEntityMeta();
+            meta.setText(newLines.get(i));
+        }
+
+        for (int i = existingCount - 1; i >= newCount; i--) {
+            lines.get(i).remove();
+            lines.remove(i);
+        }
+
+        for (int i = existingCount; i < newCount; i++) {
+            WrapperEntity e = new WrapperEntity(EntityTypes.TEXT_DISPLAY);
+            TextDisplayMeta meta = (TextDisplayMeta) e.getEntityMeta();
+            meta.setInvisible(true);
+            meta.setHasNoGravity(true);
+            meta.setText(newLines.get(i));
+            meta.setBillboardConstraints(me.tofaa.entitylib.meta.display.AbstractDisplayMeta.BillboardConstraints.CENTER);
+            if (this.modifier != null) {
+                this.modifier.accept(meta);
+            }
+            if (spawned) {
+                e.spawn(location);
+            }
+            lines.add(e);
+        }
+
+        if (spawned && parent == null) {
+            teleport(location);
+        }
+    }
+
+    @Override
     public @Nullable Component getLine(int index) {
         if (index < 0 || index >= lines.size()) {
             return null;
         }
-        return lines.get(index).getEntityMeta().getCustomName();
+        TextDisplayMeta meta = (TextDisplayMeta) lines.get(index).getEntityMeta();
+        return meta.getText();
     }
 
     @Override

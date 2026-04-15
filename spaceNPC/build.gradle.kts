@@ -1,7 +1,8 @@
 plugins {
     id("java")
-    `maven-publish`
     entitylib.`shadow-conventions`
+
+    entitylib.`library-conventions`
     alias(libs.plugins.run.paper)
 }
 
@@ -29,6 +30,12 @@ tasks {
     val version = "1.21.3"
     val javaVersion = JavaLanguageVersion.of(21)
 
+//    shadowJar {
+//        relocate("io.github.retrooper", "me.tofaa.npc.thirdparty.retrooper")
+//        relocate("com.github.retrooper", "me.tofaa.npc.thirdparty.retrooper")
+//        mergeServiceFiles()
+//    }
+
     val packetEvents = runPaper.downloadPluginsSpec {
         modrinth("packetevents", "3Jr8ovul")
     }
@@ -41,24 +48,6 @@ tasks {
         }
         downloadPlugins {
             from(packetEvents)
-        }
-    }
-}
-
-//tasks {
-//    shadowJar {
-//        relocate("io.github.retrooper", "me.tofaa.npc.thirdparty.retrooper")
-//        relocate("com.github.retrooper", "me.tofaa.npc.thirdparty.retrooper")
-//    }
-//}
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            artifact(tasks.named("jar"))
-            groupId = project.group.toString()
-            artifactId = "spaceNPC"
-            version = project.version.toString()
         }
     }
 }

@@ -43,6 +43,10 @@ public interface Hologram {
 
     @Nullable Component getLine(int index);
 
+    boolean updateLineContent(int idx, @NotNull Component line);
+
+    void setLines(List<Component> lines);
+
     int length();
 
     void setLine(int index, @Nullable Component line);

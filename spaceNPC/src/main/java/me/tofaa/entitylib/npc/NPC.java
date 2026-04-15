@@ -1,5 +1,6 @@
 package me.tofaa.entitylib.npc;
 
+import com.github.retrooper.packetevents.PacketEventsAPI;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.player.GameMode;
@@ -9,19 +10,22 @@ import com.github.retrooper.packetevents.protocol.world.Location;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.github.retrooper.packetevents.util.Vector3f;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityHeadLook;
 import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.meta.display.AbstractDisplayMeta;
+import me.tofaa.entitylib.meta.EntityMeta;
+import me.tofaa.entitylib.meta.other.ArmorStandMeta;
+import me.tofaa.entitylib.meta.types.PlayerMeta;
 import me.tofaa.entitylib.npc.path.NPCPath;
 import me.tofaa.entitylib.npc.skin.NPCSkin;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
+import me.tofaa.entitylib.wrapper.WrapperLivingEntity;
 import me.tofaa.entitylib.wrapper.WrapperPlayer;
 import me.tofaa.entitylib.wrapper.hologram.Hologram;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.scoreboard.NameTagVisibility;
+import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -35,6 +39,7 @@ public class NPC {
     private final NPCOptions options;
     private final NPCPath path;
     private WrapperEntity entity;
+    private WrapperEntity sittingEntity;
     private Hologram hologram;
     private String name;
     private NPCSkin skin;
@@ -74,6 +79,13 @@ public class NPC {
 
     public void setSkin(@Nullable NPCSkin skin) {
         this.skin = skin;
+        getEntity().ifPresent(e -> {
+            e.consumeEntityMeta(PlayerMeta.class, meta -> {
+                meta.setLeftSleeveEnabled(true);
+                meta.setRightSleeveEnabled(true);
+                meta.setCapeEnabled(true);
+            });
+        });
     }
 
     public @Nullable NPCSkin getSkin() {
@@ -154,7 +166,12 @@ public class NPC {
                     name
             );
         } else {
-            entity = new WrapperEntity(entityType);
+            if (EntityMeta.isLivingEntity(entityType)) {
+                entity = new WrapperLivingEntity(entityType);
+            }
+            else {
+                entity = new WrapperEntity(entityType);
+            }
             Bukkit.getLogger().info(
                 "[NPC] Created WrapperEntity with type: " + entityType
             );
@@ -171,10 +188,44 @@ public class NPC {
 
         entity.spawn(location);
 
-        var npcWorld = getWorld();
-        for (var player : Bukkit.getOnlinePlayers()) {
+        if (options.isSwimming()) {
+            entity.getEntityMeta().setSwimming(true);
+        }
+        if (options.isCrouching()) {
+            entity.getEntityMeta().setSneaking(true);
+        }
+
+        World npcWorld = getWorld();
+
+        if (options.isSitting()) {
+            Location sittingLoc = new Location(
+                location.getX(),
+                location.getY(),
+                location.getZ(),
+                location.getYaw(),
+                location.getPitch()
+            );
+            sittingEntity = new WrapperEntity(EntityTypes.ARMOR_STAND);
+            sittingEntity.setLocation(sittingLoc);
+            sittingEntity.spawn(sittingLoc);
+
+            ArmorStandMeta meta = (ArmorStandMeta) sittingEntity.getEntityMeta();
+            meta.setSmall(true);
+            meta.setInvisible(true);
+
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player.getWorld() != npcWorld) continue;
+                sittingEntity.addViewer(player.getUniqueId());
+            }
+        }
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.getWorld() != npcWorld) continue;
             entity.addViewer(player.getUniqueId());
+        }
+
+        if (options.isSitting()) {
+            sittingEntity.addPassenger(entity);
         }
 
         NPCRegistry.registerEntityId(this);
@@ -189,7 +240,7 @@ public class NPC {
     private void registerScoreboardTeam() {
         if (entity == null) return;
         
-        var scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+        Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         Team team = scoreboard.getTeam(TEAM_NAME);
         if (team == null) {
             team = scoreboard.registerNewTeam(TEAM_NAME);
@@ -206,8 +257,8 @@ public class NPC {
     private void createHologramWithViewers() {
         createHologram();
         if (hologram != null) {
-            var npcWorld = getWorld();
-            for (var player : Bukkit.getOnlinePlayers()) {
+            World npcWorld = getWorld();
+            for (Player player : Bukkit.getOnlinePlayers()) {
                 if (player.getWorld() != npcWorld) continue;
                 hologram.addViewer(player.getUniqueId());
             }
@@ -226,13 +277,18 @@ public class NPC {
             hologram = null;
         }
 
+        if (sittingEntity != null) {
+            sittingEntity.remove();
+            sittingEntity = null;
+        }
+
         entity.remove();
         entity = null;
         spawned = false;
     }
 
     private void removeScoreboardTeamEntry() {
-            var scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+            Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
             Team team = scoreboard.getTeam(TEAM_NAME);
             if (team != null && teamEntry != null) {
                 team.removeEntry(teamEntry);
@@ -246,9 +302,10 @@ public class NPC {
 
     private void createHologram() {
         Location loc = getPosition();
+        double yOffset = options.isSitting() ? 2.76 : 2.26;
         Location hologramLoc = new Location(
             loc.getX(),
-            loc.getY(),
+            loc.getY() + yOffset,
             loc.getZ(),
             loc.getYaw(),
             loc.getPitch()
@@ -273,9 +330,9 @@ public class NPC {
                 : Component.text(name)
         );
         hologram.show();
-        if (hologram.getEntity().getEntityMeta() instanceof AbstractDisplayMeta displayMeta) {
-            displayMeta.setTranslation(new Vector3f(0, 0.25f, 0));
-        }
+//        if (hologram.getEntity().getEntityMeta() instanceof AbstractDisplayMeta displayMeta) {
+////            displayMeta.setTranslation(new Vector3f(0, 0.5f, 0));
+//        }
 
         this.hologram = hologram;
     }
@@ -294,7 +351,7 @@ public class NPC {
     public void updateHeadRotationForViewers(Location npcLocation) {
         if (entity == null || !spawned) return;
 
-        var api = me.tofaa.entitylib.EntityLib.getApi().getPacketEvents();
+        PacketEventsAPI<?> api = me.tofaa.entitylib.EntityLib.getApi().getPacketEvents();
 
         for (UUID viewerId : entity.getViewers()) {
             org.bukkit.entity.Player player = org.bukkit.Bukkit.getPlayer(
@@ -306,7 +363,7 @@ public class NPC {
             double dz = player.getLocation().getZ() - npcLocation.getZ();
             float yaw = (float) Math.toDegrees(Math.atan2(dz, dx));
 
-            var headPacket =
+            WrapperPlayServerEntityHeadLook headPacket =
                 new WrapperPlayServerEntityHeadLook(
                     entity.getEntityId(),
                     yaw
@@ -424,4 +481,7 @@ public class NPC {
             return hidden;
         }
     }
+
+
 }
+

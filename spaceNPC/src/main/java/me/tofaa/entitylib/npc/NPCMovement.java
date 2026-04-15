@@ -5,14 +5,16 @@ import com.github.retrooper.packetevents.protocol.world.Location;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityHeadLook;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.movement.MovementEngine;
 import me.tofaa.entitylib.movement.SpigotMovementEngine;
 import me.tofaa.entitylib.npc.path.NPCPath;
+import me.tofaa.entitylib.npc.NPCRegistry;
+import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -85,8 +87,8 @@ public class NPCMovement {
         for (NPC npc : NPCRegistry.getAll()) {
             if (!npc.isSpawned() || !npc.getEntity().isPresent()) continue;
 
-            var entity = npc.getEntity().get();
-            org.bukkit.World npcWorld = npc.getWorld();
+            WrapperEntity entity = npc.getEntity().get();
+            World npcWorld = npc.getWorld();
             if (npcWorld == null) continue;
 
             Location npcLocation = entity.getLocation();
@@ -116,7 +118,7 @@ public class NPCMovement {
         }
     }
 
-    private static boolean isPlayerInRange(org.bukkit.entity.Player player, Location npcLocation, double range) {
+    private static boolean isPlayerInRange(Player player, Location npcLocation, double range) {
         org.bukkit.Location playerLoc = player.getLocation();
         double dx = playerLoc.getX() - npcLocation.getX();
         double dy = playerLoc.getY() - npcLocation.getY();
@@ -128,7 +130,7 @@ public class NPCMovement {
         for (NPC npc : NPCRegistry.getAll()) {
             if (!npc.isSpawned() || !npc.getEntity().isPresent()) continue;
 
-            var entity = npc.getEntity().get();
+            WrapperEntity entity = npc.getEntity().get();
             Location npcLocation = entity.getLocation();
             org.bukkit.World world = npc.getWorld();
             if (world == null) continue;
@@ -305,10 +307,10 @@ public class NPCMovement {
 
     private static void updateGlobalHeadRotation(
         NPC npc,
-        me.tofaa.entitylib.wrapper.WrapperEntity entity,
+        WrapperEntity entity,
         float pathYaw
     ) {
-        var world = npc.getWorld();
+        World world = npc.getWorld();
         if (world == null) return;
 
         Location npcLocation = entity.getLocation();
@@ -327,7 +329,7 @@ public class NPCMovement {
             Player player = org.bukkit.Bukkit.getPlayer(viewerId);
             if (player == null || player.getWorld() != world) continue;
 
-            var headPacket = new WrapperPlayServerEntityHeadLook(
+            WrapperPlayServerEntityHeadLook headPacket = new WrapperPlayServerEntityHeadLook(
                 entity.getEntityId(),
                 yaw
             );
@@ -344,7 +346,7 @@ public class NPCMovement {
         me.tofaa.entitylib.wrapper.WrapperEntity entity,
         float pathYaw
     ) {
-        var world = npc.getWorld();
+        World world = npc.getWorld();
 
         Location npcLocation = entity.getLocation();
         PacketEventsAPI<?> api = EntityLib.getApi().getPacketEvents();
@@ -367,7 +369,7 @@ public class NPCMovement {
                 yaw = pathYaw;
             }
 
-            var headPacket = new WrapperPlayServerEntityHeadLook(
+            WrapperPlayServerEntityHeadLook headPacket = new WrapperPlayServerEntityHeadLook(
                 entity.getEntityId(),
                 yaw
             );
