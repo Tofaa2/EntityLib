@@ -2,7 +2,6 @@ package me.tofaa.entitylib.wrapper.hologram;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.world.Location;
-import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.other.ArmorStandMeta;
 import me.tofaa.entitylib.utils.Check;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
@@ -18,8 +17,8 @@ final class LegacyHologram implements Hologram.Legacy {
 
     private Location location;
     private final List<WrapperEntity> lines = new ArrayList<>(3);
-    private float lineOffset = -0.9875f;
-    private float markerOffset = -0.40625f;
+    private float lineOffset = -0.3f;
+    private float markerOffset = -0.25f;
     private boolean marker;
     private boolean spawned = false;
 
@@ -119,6 +118,13 @@ final class LegacyHologram implements Hologram.Legacy {
     @Override
     public void setMarker(boolean marker) {
         this.marker = marker;
+        for (WrapperEntity line : lines) {
+            ArmorStandMeta meta = (ArmorStandMeta) line.getEntityMeta();
+            meta.setMarker(marker);
+        }
+        if (spawned) {
+            teleport(location);
+        }
     }
 
     @Override
@@ -141,7 +147,7 @@ final class LegacyHologram implements Hologram.Legacy {
     @Override
     public void teleport(Location location) {
         this.location = location;
-        for (int i = lines.size() - 1; i >= 0; i--) {
+        for (int i = 0; i < lines.size(); i++) {
             WrapperEntity line = lines.get(i);
             if (!line.isSpawned()) {
                 line.spawn(location);
@@ -149,17 +155,12 @@ final class LegacyHologram implements Hologram.Legacy {
             }
             double y;
             if (marker) {
-                y = location.getY() + markerOffset;
+                y = location.getY() + (i * markerOffset);
             } else {
                 y = location.getY() + (i * lineOffset);
             }
-            ArmorStandMeta meta = (ArmorStandMeta) line.getEntityMeta();
-            meta.setMarker(marker);
             Location l = new Location(location.getX(), y, location.getZ(), location.getYaw(), location.getPitch());
             line.teleport(l, false);
-        }
-        if (spawned) {
-            setParent(getEntity());
         }
     }
 
@@ -173,8 +174,12 @@ final class LegacyHologram implements Hologram.Legacy {
 
     @Override
     public void setLine(int index, @Nullable Component line) {
+        if (index >= 0 && index < lines.size()) {
+            ArmorStandMeta meta = (ArmorStandMeta) lines.get(index).getEntityMeta();
+            meta.setCustomName(line);
+            return;
+        }
         WrapperEntity e = new WrapperEntity(EntityTypes.ARMOR_STAND);
-        e.spawn(location);
         ArmorStandMeta meta = (ArmorStandMeta) e.getEntityMeta();
         meta.setCustomName(line);
         meta.setCustomNameVisible(true);
@@ -183,8 +188,10 @@ final class LegacyHologram implements Hologram.Legacy {
         meta.setSmall(true);
         meta.setMarker(marker);
         Check.arrayLength(lines, index, e);
-        e.spawn(location);
-        teleport(location);
+        if (spawned) {
+            e.spawn(location);
+            teleport(location);
+        }
     }
 
     @Override
@@ -194,6 +201,9 @@ final class LegacyHologram implements Hologram.Legacy {
         }
         this.lines.get(index).remove();
         this.lines.remove(index);
+        if (spawned && !lines.isEmpty()) {
+            teleport(location);
+        }
     }
 
     @Override
@@ -223,18 +233,10 @@ final class LegacyHologram implements Hologram.Legacy {
     @Override
     public void setParent(@NotNull WrapperEntity parent) {
         if (lines.isEmpty()) return;
-        
+
         WrapperEntity first = lines.get(0);
-        for (WrapperEntity e : lines) {
-            if (e.getUuid().equals(first.getUuid())) continue;
-            try {
-                first.addPassenger(e);
-            } catch (Exception ignored) {}
-        }
         if (!first.getUuid().equals(parent.getUuid())) {
-            try {
-                parent.addPassenger(first);
-            } catch (Exception ignored) {}
+            parent.addPassenger(first);
         }
     }
 
