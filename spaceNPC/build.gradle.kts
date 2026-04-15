@@ -32,6 +32,9 @@ tasks {
         targetCompatibility = "21"
         options.release.set(21)
     }
+    shadowJar {
+        archiveFileName.set("SpaceNPC.jar")
+    }
 }
 
 tasks {
