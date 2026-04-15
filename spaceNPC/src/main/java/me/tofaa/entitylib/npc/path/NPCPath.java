@@ -13,6 +13,7 @@ public class NPCPath {
     private double speed;
     private boolean paused;
     private boolean started;
+    private float yaw = 0;
 
     public NPCPath() {
         this.waypoints = new ArrayList<>();
@@ -31,7 +32,9 @@ public class NPCPath {
         if (index >= 0 && index < waypoints.size()) {
             waypoints.remove(index);
             if (currentIndex >= waypoints.size()) {
+                int previousIndex = currentIndex;
                 currentIndex = 0;
+                recomputeYaw(previousIndex, currentIndex);
             }
         }
     }
@@ -67,16 +70,36 @@ public class NPCPath {
 
     public void advanceToNext() {
         if (waypoints.isEmpty()) return;
-        
+
+        int previousIndex = currentIndex;
         currentIndex++;
         if (currentIndex >= waypoints.size()) {
             currentIndex = looping ? 0 : waypoints.size() - 1;
         }
+
+        recomputeYaw(previousIndex, currentIndex);
+    }
+
+    private void recomputeYaw(int fromIndex, int toIndex) {
+        if (waypoints.size() < 2) return;
+        if (fromIndex == toIndex) return;
+        if (fromIndex < 0 || fromIndex >= waypoints.size()) return;
+        if (toIndex < 0 || toIndex >= waypoints.size()) return;
+
+        Location from = waypoints.get(fromIndex);
+        Location to = waypoints.get(toIndex);
+
+        this.yaw = (float) Math.toDegrees(Math.atan2(
+                -(to.getX() - from.getX()),
+                to.getZ() - from.getZ()
+        ));
     }
 
     public void setIndex(int index) {
         if (index >= 0 && index < waypoints.size()) {
+            int previousIndex = this.currentIndex;
             this.currentIndex = index;
+            recomputeYaw(previousIndex, currentIndex);
         }
     }
 
@@ -129,7 +152,13 @@ public class NPCPath {
     }
 
     public void reset() {
+        int previousIndex = currentIndex;
         currentIndex = 0;
         started = false;
+        recomputeYaw(previousIndex, currentIndex);
+    }
+
+    public float getYaw() {
+        return yaw;
     }
 }
