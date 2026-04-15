@@ -19,8 +19,15 @@ public class InteractionHandler {
         }
 
         NPCOptions options = npc.getOptions();
+
+        List<InteractionAction> anyActions = options.getInteractions(InteractionType.ANY);
+        executeActions(anyActions, player, npc);
+
         List<InteractionAction> actions = options.getInteractions(interactionType);
-        
+        executeActions(actions, player, npc);
+    }
+
+    private static void executeActions(List<InteractionAction> actions, Player player, NPC npc) {
         if (actions == null || actions.isEmpty()) {
             return;
         }

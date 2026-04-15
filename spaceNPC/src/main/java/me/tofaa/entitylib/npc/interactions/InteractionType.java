@@ -4,7 +4,8 @@ public enum InteractionType {
     RIGHT_CLICK("right_click", "rightclick"),
     LEFT_CLICK("left_click", "leftclick"),
     SHIFT_RIGHT_CLICK("shift_right_click", "shiftrightclick", "shift_right", "shiftright"),
-    SHIFT_LEFT_CLICK("shift_left_click", "shiftleftclick", "shift_left", "shiftleft");
+    SHIFT_LEFT_CLICK("shift_left_click", "shiftleftclick", "shift_left", "shiftleft"),
+    ANY("any", "all");
 
     private final String[] aliases;
 

@@ -1780,7 +1780,8 @@ public class NPCCommand extends CommandSystem.BaseCommand {
                     "right_click",
                     "left_click",
                     "shift_right_click",
-                    "shift_left_click"
+                    "shift_left_click",
+                    "any"
                 );
                 return types
                     .stream()

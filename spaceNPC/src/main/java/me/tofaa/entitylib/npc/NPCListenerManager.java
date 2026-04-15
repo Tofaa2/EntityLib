@@ -45,12 +45,13 @@ public class NPCListenerManager {
             public void onPacketReceive(PacketReceiveEvent event) {
                 UUID playerId = event.getUser().getUUID();
 
-                if (event.getPacketType() == PacketType.Play.Client.USE_ITEM) {
-                    WrapperPlayClientUseItem useItemPacket = new WrapperPlayClientUseItem(event);
-                    playersHoldingShift.add(playerId);
-                    handleInteraction(event, playerId, false, true);
-                    return;
-                }
+//                if (event.getPacketType() == PacketType.Play.Client.USE_ITEM) {
+//                    WrapperPlayClientUseItem useItemPacket = new WrapperPlayClientUseItem(event);
+//                    playersHoldingShift.add(playerId);
+//                    useItemPacket.get
+//                    handleInteraction(event, playerId, false, true);
+//                    return;
+//                }
 
                 if (event.getPacketType() == PacketType.Play.Client.INTERACT_ENTITY) {
                     WrapperPlayClientInteractEntity packet = new WrapperPlayClientInteractEntity(event);
@@ -64,9 +65,9 @@ public class NPCListenerManager {
                     boolean isShift = playersHoldingShift.contains(playerId);
 
                     if (isLeftClick) {
-                        handleInteraction(event, playerId, isLeftClick, isShift);
+                        handleInteraction(event, playerId, isLeftClick, isShift, npc);
                     } else {
-                        handleInteraction(event, playerId, isLeftClick, isShift);
+                        handleInteraction(event, playerId, isLeftClick, isShift, npc);
                     }
                 }
             }
@@ -90,12 +91,17 @@ public class NPCListenerManager {
         });
     }
 
-    private static void handleInteraction(PacketReceiveEvent event, UUID playerId, boolean isLeftClick, boolean isShift) {
-        WrapperPlayClientInteractEntity packet = new WrapperPlayClientInteractEntity(event);
-        int entityId = packet.getEntityId();
-
-        NPC npc = NPCRegistry.getByEntityId(entityId);
-        if (npc == null) return;
+    private static void handleInteraction(
+            PacketReceiveEvent event,
+            UUID playerId,
+            boolean isLeftClick,
+            boolean isShift,
+            NPC npc
+    ) {
+//        WrapperPlayClientInteractEntity packet = new WrapperPlayClientInteractEntity(event);
+//        int entityId = packet.getEntityId();
+//        NPC npc = NPCRegistry.getByEntityId(npcId);
+//        if (npc == null) return;
 
         InteractionType interactionType = getInteractionType(isLeftClick, isShift);
 

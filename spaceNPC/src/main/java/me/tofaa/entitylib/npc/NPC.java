@@ -178,7 +178,7 @@ public class NPC {
         }
         entity.setLocation(location);
 
-        if (entityType == com.github.retrooper.packetevents.protocol.entity.type.EntityTypes.PLAYER) {
+        if (entityType == EntityTypes.PLAYER) {
             entity.getEntityMeta().setCustomNameVisible(false);
             registerScoreboardTeam();
         } else if (options.hasDisplayName()) {
