@@ -141,9 +141,12 @@ final class LegacyHologram implements Hologram.Legacy {
     @Override
     public void teleport(Location location) {
         this.location = location;
-        // reversed order
         for (int i = lines.size() - 1; i >= 0; i--) {
             WrapperEntity line = lines.get(i);
+            if (!line.isSpawned()) {
+                line.spawn(location);
+                spawned = true;
+            }
             double y;
             if (marker) {
                 y = location.getY() + markerOffset;
@@ -154,6 +157,9 @@ final class LegacyHologram implements Hologram.Legacy {
             meta.setMarker(marker);
             Location l = new Location(location.getX(), y, location.getZ(), location.getYaw(), location.getPitch());
             line.teleport(l, false);
+        }
+        if (spawned) {
+            setParent(getEntity());
         }
     }
 
@@ -225,9 +231,11 @@ final class LegacyHologram implements Hologram.Legacy {
                 first.addPassenger(e);
             } catch (Exception ignored) {}
         }
-        try {
-            parent.addPassenger(first);
-        } catch (Exception ignored) {}
+        if (!first.getUuid().equals(parent.getUuid())) {
+            try {
+                parent.addPassenger(first);
+            } catch (Exception ignored) {}
+        }
     }
 
 }
