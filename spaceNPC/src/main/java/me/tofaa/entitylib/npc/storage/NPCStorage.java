@@ -6,9 +6,10 @@ import com.github.retrooper.packetevents.protocol.world.Location;
 import me.tofaa.entitylib.npc.NPC;
 import me.tofaa.entitylib.npc.NPCOptions;
 import me.tofaa.entitylib.npc.NPCRegistry;
+import me.tofaa.entitylib.npc.interactions.InteractionAction;
 import me.tofaa.entitylib.npc.path.NPCPath;
 import me.tofaa.entitylib.npc.skin.NPCSkin;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -45,7 +46,7 @@ public class NPCStorage {
         config.set("pitch", npc.getPosition().getPitch());
 
         NPCOptions opts = npc.getOptions();
-        config.set("options.displayName", opts.getDisplayName() != null ? GsonComponentSerializer.gson().serialize(opts.getDisplayName()) : null);
+        config.set("options.displayName", opts.getDisplayName() != null ? MiniMessage.miniMessage().serialize(opts.getDisplayName()) : null);
         config.set("options.showNameTag", opts.isShowNameTag());
         config.set("options.lookAtPlayers", opts.isLookAtPlayers());
         config.set("options.lookAtPlayersPerPlayer", opts.isLookAtPlayersPerPlayer());
@@ -56,6 +57,14 @@ public class NPCStorage {
         config.set("options.silent", opts.isSilent());
         config.set("options.permanentlyVisible", opts.isPermanentlyVisible());
         config.set("options.viewDistance", opts.getViewDistance());
+        config.set("options.sitting", opts.isSitting());
+        config.set("options.swimming", opts.isSwimming());
+        config.set("options.crouching", opts.isCrouching());
+
+        String interactionsSerialized = InteractionAction.Serializer.serializeAll(opts.getAllInteractions());
+        if (interactionsSerialized != null) {
+            config.set("options.interactions", interactionsSerialized);
+        }
 
         NPCPath path = npc.getPath();
         config.set("path.started", path.isStarted());
@@ -143,9 +152,17 @@ public class NPCStorage {
                 opts.silent(config.getBoolean("options.silent", false));
                 opts.permanentlyVisible(config.getBoolean("options.permanentlyVisible", false));
                 opts.viewDistance(config.getDouble("options.viewDistance", 128.0));
+                opts.sitting(config.getBoolean("options.sitting", false));
+                opts.swimming(config.getBoolean("options.swimming", false));
+                opts.crouching(config.getBoolean("options.crouching", false));
 
                 if (config.contains("options.displayName") && config.getString("options.displayName") != null) {
-                    opts.displayName(GsonComponentSerializer.gson().deserialize(config.getString("options.displayName")));
+                    opts.displayName(MiniMessage.miniMessage().deserialize(config.getString("options.displayName")));
+                }
+
+                if (config.contains("options.interactions")) {
+                    String interactionsStr = config.getString("options.interactions");
+                    opts.setAllInteractions(InteractionAction.Serializer.deserializeAll(interactionsStr));
                 }
             }
 

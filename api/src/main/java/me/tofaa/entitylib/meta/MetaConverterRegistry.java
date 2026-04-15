@@ -99,7 +99,6 @@ final class MetaConverterRegistry {
         put(GLOW_SQUID, GlowSquidMeta.class, GlowSquidMeta::new);
         put(GOAT, GoatMeta.class, GoatMeta::new);
         put(GUARDIAN, GuardianMeta.class, GuardianMeta::new);
-        put(HAPPY_GHAST, GhastMeta.class, GhastMeta::new); // TODO: Implement
         put(HOGLIN, HoglinMeta.class, HoglinMeta::new);
         put(HOPPER_MINECART, FurnaceMinecartMeta.class, FurnaceMinecartMeta::new);
         put(HORSE, HorseMeta.class, HorseMeta::new);
@@ -189,6 +188,11 @@ final class MetaConverterRegistry {
 
     public @NotNull BiFunction<Integer, Metadata, EntityMeta> get(EntityType entityType) {
         return converters.getOrDefault(entityType, EntityMeta::new);
+    }
+
+    public boolean isLivingEntity(EntityType type) {
+        Class<? extends EntityMeta> m = getMetaClass(type);
+        return LivingEntityMeta.class.isAssignableFrom(m);
     }
 
 }

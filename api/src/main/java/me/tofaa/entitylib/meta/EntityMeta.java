@@ -23,14 +23,18 @@ import java.util.function.BiFunction;
 
 public class EntityMeta implements EntityMetadataProvider {
 
-    private static final MetaConverterRegistry registry = new MetaConverterRegistry();
+    static final MetaConverterRegistry META_CONVERTER_REGISTRY = new MetaConverterRegistry();
 
     public static @NotNull BiFunction<Integer, Metadata, EntityMeta> getConverter(EntityType entityType) {
-        return registry.get(entityType);
+        return META_CONVERTER_REGISTRY.get(entityType);
     }
 
     public static @NotNull Class<? extends EntityMeta> getMetaClass(EntityType entityType) {
-        return registry.getMetaClass(entityType);
+        return META_CONVERTER_REGISTRY.getMetaClass(entityType);
+    }
+
+    public static boolean isLivingEntity(EntityType type) {
+        return META_CONVERTER_REGISTRY.isLivingEntity(type);
     }
 
     public static @NotNull EntityMeta createMeta(int entityId, EntityType entityType) {

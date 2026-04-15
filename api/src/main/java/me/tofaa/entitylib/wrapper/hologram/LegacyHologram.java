@@ -21,6 +21,7 @@ final class LegacyHologram implements Hologram.Legacy {
     private float lineOffset = -0.9875f;
     private float markerOffset = -0.40625f;
     private boolean marker;
+    private boolean spawned = false;
 
     LegacyHologram(@NotNull Location location) {
         this.location = location;
@@ -37,6 +38,59 @@ final class LegacyHologram implements Hologram.Legacy {
     public void addViewer(@NotNull UUID viewer) {
         for (WrapperEntity line : lines) {
             line.addViewer(viewer);
+        }
+    }
+
+    @Override
+    public boolean updateLineContent(int index, @NotNull Component line) {
+        if (index < 0 || index >= lines.size()) {
+            return false;
+        }
+        ArmorStandMeta meta = (ArmorStandMeta) lines.get(index).getEntityMeta();
+        meta.setCustomName(line);
+        return true;
+    }
+
+    @Override
+    public void setLines(List<Component> newLines) {
+        int existingCount = lines.size();
+        int newCount = newLines.size();
+
+        if (newCount == 0) {
+            for (WrapperEntity line : lines) {
+                line.remove();
+            }
+            lines.clear();
+            return;
+        }
+
+        for (int i = 0; i < Math.min(existingCount, newCount); i++) {
+            ArmorStandMeta meta = (ArmorStandMeta) lines.get(i).getEntityMeta();
+            meta.setCustomName(newLines.get(i));
+        }
+
+        for (int i = existingCount - 1; i >= newCount; i--) {
+            lines.get(i).remove();
+            lines.remove(i);
+        }
+
+        for (int i = existingCount; i < newCount; i++) {
+            WrapperEntity e = new WrapperEntity(EntityTypes.ARMOR_STAND);
+            ArmorStandMeta meta = (ArmorStandMeta) e.getEntityMeta();
+            meta.setCustomName(newLines.get(i));
+            meta.setCustomNameVisible(true);
+            meta.setInvisible(true);
+            meta.setHasNoGravity(true);
+            meta.setSmall(true);
+            meta.setMarker(marker);
+            if (spawned) {
+                e.spawn(location);
+            }
+            lines.add(e);
+        }
+
+        if (spawned) {
+            teleport(location);
         }
     }
 
@@ -73,6 +127,7 @@ final class LegacyHologram implements Hologram.Legacy {
             line.spawn(location);
         }
         teleport(location);
+        spawned = true;
     }
 
     @Override
@@ -80,6 +135,7 @@ final class LegacyHologram implements Hologram.Legacy {
         for (WrapperEntity line : lines) {
             line.despawn();
         }
+        spawned = false;
     }
 
     @Override

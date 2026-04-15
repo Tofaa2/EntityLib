@@ -5,8 +5,13 @@ import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientInteractEntity;
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientUseItem;
 import me.tofaa.entitylib.EntityLib;
+import me.tofaa.entitylib.npc.interactions.InteractionHandler;
+import me.tofaa.entitylib.npc.interactions.InteractionType;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -14,14 +19,18 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 public class NPCListenerManager {
 
     private static final List<Consumer<NPCInteractEvent>> leftClickHandlers = new ArrayList<>();
     private static final List<Consumer<NPCInteractEvent>> rightClickHandlers = new ArrayList<>();
+    private static final Set<UUID> playersHoldingShift = ConcurrentHashMap.newKeySet();
     private static boolean registered = false;
 
     private NPCListenerManager() {
@@ -34,30 +43,88 @@ public class NPCListenerManager {
         EntityLib.getApi().getPacketEvents().getEventManager().registerListener(new PacketListenerAbstract() {
             @Override
             public void onPacketReceive(PacketReceiveEvent event) {
+                UUID playerId = event.getUser().getUUID();
+
+                if (event.getPacketType() == PacketType.Play.Client.USE_ITEM) {
+                    WrapperPlayClientUseItem useItemPacket = new WrapperPlayClientUseItem(event);
+                    playersHoldingShift.add(playerId);
+                    handleInteraction(event, playerId, false, true);
+                    return;
+                }
+
                 if (event.getPacketType() == PacketType.Play.Client.INTERACT_ENTITY) {
                     WrapperPlayClientInteractEntity packet = new WrapperPlayClientInteractEntity(event);
                     int entityId = packet.getEntityId();
                     User user = event.getUser();
-                    
+
                     NPC npc = NPCRegistry.getByEntityId(entityId);
                     if (npc == null) return;
-                    
+
                     boolean isLeftClick = packet.getAction() == WrapperPlayClientInteractEntity.InteractAction.ATTACK;
-                    
-                    NPCInteractEvent interactEvent = new NPCInteractEvent(npc, user.getUUID(), isLeftClick);
-                    
+                    boolean isShift = playersHoldingShift.contains(playerId);
+
                     if (isLeftClick) {
-                        for (Consumer<NPCInteractEvent> handler : leftClickHandlers) {
-                            handler.accept(interactEvent);
-                        }
+                        handleInteraction(event, playerId, isLeftClick, isShift);
                     } else {
-                        for (Consumer<NPCInteractEvent> handler : rightClickHandlers) {
-                            handler.accept(interactEvent);
-                        }
+                        handleInteraction(event, playerId, isLeftClick, isShift);
                     }
                 }
             }
         });
+
+        EntityLib.getApi().getPacketEvents().getEventManager().registerListener(new PacketListenerAbstract() {
+            @Override
+            public void onPacketReceive(PacketReceiveEvent event) {
+                if (event.getPacketType() == PacketType.Play.Client.CHAT_MESSAGE || 
+                    event.getPacketType() == PacketType.Play.Client.CLIENT_SETTINGS ||
+                    event.getPacketType() == PacketType.Play.Client.PLAYER_ABILITIES ||
+                    event.getPacketType() == PacketType.Play.Client.PLAYER_DIGGING ||
+                    event.getPacketType() == PacketType.Play.Client.PLAYER_POSITION ||
+                    event.getPacketType() == PacketType.Play.Client.PLAYER_POSITION_AND_ROTATION ||
+                    event.getPacketType() == PacketType.Play.Client.PLAYER_ROTATION ||
+                    event.getPacketType() == PacketType.Play.Client.HELD_ITEM_CHANGE) {
+                    UUID playerId = event.getUser().getUUID();
+                    playersHoldingShift.remove(playerId);
+                }
+            }
+        });
+    }
+
+    private static void handleInteraction(PacketReceiveEvent event, UUID playerId, boolean isLeftClick, boolean isShift) {
+        WrapperPlayClientInteractEntity packet = new WrapperPlayClientInteractEntity(event);
+        int entityId = packet.getEntityId();
+
+        NPC npc = NPCRegistry.getByEntityId(entityId);
+        if (npc == null) return;
+
+        InteractionType interactionType = getInteractionType(isLeftClick, isShift);
+
+        Player player = event.getPlayer();
+        InteractionHandler.handleInteraction(npc, player, interactionType);
+
+        NPCInteractEvent interactEvent = new NPCInteractEvent(npc, playerId, isLeftClick, isShift);
+
+        if (isLeftClick) {
+            for (Consumer<NPCInteractEvent> handler : leftClickHandlers) {
+                handler.accept(interactEvent);
+            }
+        } else {
+            for (Consumer<NPCInteractEvent> handler : rightClickHandlers) {
+                handler.accept(interactEvent);
+            }
+        }
+    }
+
+    private static InteractionType getInteractionType(boolean isLeftClick, boolean isShift) {
+        if (isLeftClick && isShift) {
+            return InteractionType.SHIFT_LEFT_CLICK;
+        } else if (isLeftClick) {
+            return InteractionType.LEFT_CLICK;
+        } else if (isShift) {
+            return InteractionType.SHIFT_RIGHT_CLICK;
+        } else {
+            return InteractionType.RIGHT_CLICK;
+        }
     }
 
     public static void registerInteraction(
@@ -83,12 +150,14 @@ public class NPCListenerManager {
         private final NPC npc;
         private final UUID playerId;
         private final boolean leftClick;
+        private final boolean shift;
         private boolean cancelled = false;
 
-        public NPCInteractEvent(NPC npc, UUID playerId, boolean leftClick) {
+        public NPCInteractEvent(NPC npc, UUID playerId, boolean leftClick, boolean shift) {
             this.npc = npc;
             this.playerId = playerId;
             this.leftClick = leftClick;
+            this.shift = shift;
         }
 
         public @NotNull NPC getNPC() {
@@ -107,7 +176,11 @@ public class NPCListenerManager {
             return !leftClick;
         }
 
-        public @Nullable org.bukkit.entity.Player getPlayer() {
+        public boolean isShift() {
+            return shift;
+        }
+
+        public @Nullable Player getPlayer() {
             return org.bukkit.Bukkit.getPlayer(playerId);
         }
 

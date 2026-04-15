@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.extras.skin.SkinFetcher;
+import me.tofaa.entitylib.npc.command.CommandSystem;
 import me.tofaa.entitylib.npc.command.NPCCommand;
 import me.tofaa.entitylib.npc.storage.NPCStorage;
 import me.tofaa.entitylib.spigot.SpigotEntityLibPlatform;
@@ -45,8 +46,8 @@ public class SpaceNPC extends JavaPlugin {
         NPCMovement.init(this);
 
         NPCCommand npcCommand = new NPCCommand(storage, skinFetcher);
-        getCommand("npc").setExecutor(npcCommand);
-        getCommand("npc").setTabCompleter(npcCommand);
+        CommandSystem commandSystem = new CommandSystem(this);
+        commandSystem.register(npcCommand);
 
         getServer()
             .getPluginManager()

@@ -1,6 +1,8 @@
 plugins {
     id("java")
     entitylib.`shadow-conventions`
+
+    entitylib.`library-conventions`
     alias(libs.plugins.run.paper)
 }
 
@@ -17,7 +19,7 @@ repositories {
 
 dependencies {
     compileOnly(libs.paper)
-    implementation(libs.packetevents.spigot)
+    compileOnly(libs.packetevents.spigot)
     compileOnly(libs.adventure.api)
     implementation(project(":platforms:spigot"))
     implementation(project(":movement-engine"))
@@ -27,6 +29,12 @@ dependencies {
 tasks {
     val version = "1.21.3"
     val javaVersion = JavaLanguageVersion.of(21)
+
+//    shadowJar {
+//        relocate("io.github.retrooper", "me.tofaa.npc.thirdparty.retrooper")
+//        relocate("com.github.retrooper", "me.tofaa.npc.thirdparty.retrooper")
+//        mergeServiceFiles()
+//    }
 
     val packetEvents = runPaper.downloadPluginsSpec {
         modrinth("packetevents", "3Jr8ovul")
@@ -43,10 +51,3 @@ tasks {
         }
     }
 }
-
-//tasks {
-//    shadowJar {
-//        relocate("io.github.retrooper", "me.tofaa.npc.thirdparty.retrooper")
-//        relocate("com.github.retrooper", "me.tofaa.npc.thirdparty.retrooper")
-//    }
-//}
