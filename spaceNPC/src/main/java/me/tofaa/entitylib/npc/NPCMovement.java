@@ -215,15 +215,15 @@ public class NPCMovement {
                     double newY = current.getY();
 
                     if (npc.getOptions().isClampToGround()) {
-                        var world = npc.getWorld();
+                        World world = npc.getWorld();
                         if (world != null) {
                             int bx = (int) Math.floor(newX);
                             int bz = (int) Math.floor(newZ);
                             int feetY = (int) Math.floor(current.getY());
 
                             // Check if there's a solid block ahead at feet level (obstacle)
-                            var blockAtFeet = world.getBlockAt(bx, feetY, bz);
-                            var blockAboveFeet = world.getBlockAt(bx, feetY + 1, bz);
+                            Block blockAtFeet = world.getBlockAt(bx, feetY, bz);
+                            Block blockAboveFeet = world.getBlockAt(bx, feetY + 1, bz);
 
                             boolean obstacleAhead = !blockAtFeet.isPassable()
                                 && blockAboveFeet.isPassable();
