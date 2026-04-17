@@ -15,6 +15,7 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://maven.pvphub.me/tofaa")
     maven("https://repo.codemc.io/repository/maven-releases/")
+    maven("https://repo.viaversion.com")
 }
 
 dependencies {
@@ -24,6 +25,7 @@ dependencies {
     implementation(project(":platforms:spigot"))
     implementation(project(":movement-engine"))
     implementation(project(":platforms:movement"))
+    compileOnly("com.viaversion:viaversion-api:5.8.1") // Replace the version
 }
 
 tasks {

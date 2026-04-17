@@ -1,16 +1,24 @@
 package me.tofaa.entitylib.npc;
 
+import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.PacketEventsAPI;
+import com.github.retrooper.packetevents.netty.channel.ChannelHelper;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
+import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.github.retrooper.packetevents.protocol.player.GameMode;
+import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.protocol.player.UserProfile;
 import com.github.retrooper.packetevents.protocol.world.Location;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityHeadLook;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoRemove;
+import io.github.retrooper.packetevents.util.viaversion.ViaVersionAccessor;
+import io.github.retrooper.packetevents.util.viaversion.ViaVersionUtil;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.other.ArmorStandMeta;
@@ -348,6 +356,53 @@ public class NPC {
         }
     }
 
+    public void doStupidDogshitForOldClients(
+            Player player
+    ) {
+
+        User user = PacketEvents.getAPI().getPlayerManager().getUser(player);
+        SpaceNPC.getInstance().getServer().getScheduler().runTaskLater(SpaceNPC.getInstance(), () -> {
+            if (!checkIfStupidDogshitPlayerIsOldClient(player ) || !getEntity().isPresent()) {
+                return;
+            }
+            WrapperPlayServerPlayerInfoRemove packet = new WrapperPlayServerPlayerInfoRemove(
+                    getEntity().get().getUuid()
+            );
+            user.sendPacket(packet);
+        }, 20);
+
+    }
+
+    public boolean checkIfStupidDogshitPlayerIsOldClient(
+            Player player
+    ) {
+        ViaVersionUtil.checkIfViaIsPresent();
+        if (ViaVersionUtil.isAvailable()) {
+            int pv = ViaVersionUtil.getProtocolVersion(player);
+            if (pv < ClientVersion.V_1_18_2.getProtocolVersion()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void sendPacketSilentlySkipTranslation(User user, Object byteBuf) {
+        if (ChannelHelper.isOpen(user.getChannel())) {
+            ChannelHelper.writeAndFlushInContext(user.getChannel(), "via-encoder", byteBuf);
+        }
+        else {
+//            ((ByteBuf)byteBuf).release()
+            // W memory leak
+        }
+    }
+
+    public static void sendPacketSilentlySkipTranslation(User user, PacketWrapper<?> wrapper) {
+        wrapper.prepareForSend(user.getChannel(), true, true);
+        sendPacketSilentlySkipTranslation(user, wrapper.buffer);
+    }
+
+
     public void updateHeadRotationForViewers(Location npcLocation) {
         if (entity == null || !spawned) return;
 
@@ -399,6 +454,10 @@ public class NPC {
 
     public @NotNull Optional<Hologram> getHologram() {
         return Optional.ofNullable(hologram);
+    }
+
+    public @NotNull Optional<WrapperEntity> getSittingEntity() {
+        return Optional.ofNullable(sittingEntity);
     }
 
     public @NotNull NPCOptions getOptions() {

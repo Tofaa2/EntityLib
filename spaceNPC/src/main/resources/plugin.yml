@@ -3,3 +3,4 @@ version: 1.0.0
 main: me.tofaa.entitylib.npc.SpaceNPC
 api-version: 1.21
 depend: [packetevents]
+softdepend: [ViaVersion]
