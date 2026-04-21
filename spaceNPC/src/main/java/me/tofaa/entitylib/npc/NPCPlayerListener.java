@@ -7,6 +7,7 @@ import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfo;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoRemove;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
+import me.tofaa.entitylib.wrapper.WrapperPlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,15 +37,22 @@ public class NPCPlayerListener implements Listener {
             Location npcLoc = npc.getPosition();
             if (viewDistance > 0 && !isPlayerInRange(playerLoc, npcLoc, viewDistance)) continue;
 
-            npc.getEntity().get().addViewer(playerId);
+            boolean isSitting = npc.getSittingEntity().isPresent();
 
-            npc.getSittingEntity().ifPresent(sitting -> sitting.addViewer(playerId));
+            if (isSitting) {
+                npc.getSittingEntity().ifPresent(sitting -> sitting.addViewer(playerId));
+            }
+
+            npc.getEntity().ifPresent(entity -> {
+                entity.addViewer(playerId);
+                if (entity instanceof me.tofaa.entitylib.wrapper.WrapperPlayer) {
+                    npc.doStupidDogshitForOldClients(player);
+                }
+            });
 
             if (npc.getHologram().isPresent()) {
                 npc.getHologram().get().addViewer(playerId);
             }
-
-            npc.doStupidDogshitForOldClients(player);
         }
     }
 
@@ -56,9 +64,9 @@ public class NPCPlayerListener implements Listener {
         for (NPC npc : NPCRegistry.getAll()) {
             if (!npc.isSpawned() || !npc.getEntity().isPresent()) continue;
 
-            npc.getEntity().get().removeViewer(playerId);
-
             npc.getSittingEntity().ifPresent(sitting -> sitting.removeViewer(playerId));
+
+            npc.getEntity().ifPresent(entity -> entity.removeViewer(playerId));
 
             if (npc.getHologram().isPresent()) {
                 npc.getHologram().get().removeViewer(playerId);
@@ -85,29 +93,49 @@ public class NPCPlayerListener implements Listener {
             Location npcLoc = npc.getPosition();
             boolean inRange = viewDistance <= 0 || isPlayerInRange(playerLoc, npcLoc, viewDistance);
 
-            npc.getEntity().ifPresent(entity -> {
-                if (inRange) {
-                    if (!entity.getViewers().contains(playerId)) {
-                        entity.addViewer(playerId);
+            boolean isSitting = npc.getSittingEntity().isPresent();
+            
+            if (isSitting) {
+                npc.getSittingEntity().ifPresent(sitting -> {
+                    if (inRange) {
+                        if (!sitting.getViewers().contains(playerId)) {
+                            sitting.addViewer(playerId);
+                        }
+                        npc.getEntity().ifPresent(entity -> {
+                            if (!entity.getViewers().contains(playerId)) {
+                                entity.addViewer(playerId);
+                            }
+                            if (entity instanceof me.tofaa.entitylib.wrapper.WrapperPlayer) {
+                                npc.doStupidDogshitForOldClients(player);
+                            }
+                        });
+                    } else {
+                        if (sitting.getViewers().contains(playerId)) {
+                            sitting.removeViewer(playerId);
+                        }
+                        npc.getEntity().ifPresent(entity -> {
+                            if (entity.getViewers().contains(playerId)) {
+                                entity.removeViewer(playerId);
+                            }
+                        });
                     }
-                } else {
-                    if (entity.getViewers().contains(playerId)) {
-                        entity.removeViewer(playerId);
+                });
+            } else {
+                npc.getEntity().ifPresent(entity -> {
+                    if (inRange) {
+                        if (!entity.getViewers().contains(playerId)) {
+                            entity.addViewer(playerId);
+                        }
+                        if (entity instanceof me.tofaa.entitylib.wrapper.WrapperPlayer) {
+                            npc.doStupidDogshitForOldClients(player);
+                        }
+                    } else {
+                        if (entity.getViewers().contains(playerId)) {
+                            entity.removeViewer(playerId);
+                        }
                     }
-                }
-            });
-
-            npc.getSittingEntity().ifPresent(sitting -> {
-                if (inRange) {
-                    if (!sitting.getViewers().contains(playerId)) {
-                        sitting.addViewer(playerId);
-                    }
-                } else {
-                    if (sitting.getViewers().contains(playerId)) {
-                        sitting.removeViewer(playerId);
-                    }
-                }
-            });
+                });
+            }
 
             npc.getHologram().ifPresent(hologram -> {
                 if (inRange) {

@@ -99,6 +99,7 @@ public class NPCMovement {
 
             boolean permanentlyVisible = npc.getOptions().isPermanentlyVisible();
             double viewDistance = npc.getOptions().getViewDistance();
+            boolean isSitting = npc.getSittingEntity().isPresent();
 
             for (org.bukkit.entity.Player player : org.bukkit.Bukkit.getOnlinePlayers()) {
                 if (player.getWorld() != npcWorld) continue;
@@ -108,10 +109,19 @@ public class NPCMovement {
                 boolean shouldSee = permanentlyVisible || isPlayerInRange(player, npcLocation, viewDistance);
 
                 if (shouldSee && !isViewer) {
+                    if (isSitting) {
+                        npc.getSittingEntity().ifPresent(sitting -> sitting.addViewer(playerId));
+                    }
                     entity.addViewer(playerId);
                     npc.getHologram().ifPresent(h -> h.addViewer(playerId));
+                    if (entity instanceof me.tofaa.entitylib.wrapper.WrapperPlayer) {
+                        npc.doStupidDogshitForOldClients(player);
+                    }
                 } else if (!shouldSee && isViewer) {
                     entity.removeViewer(playerId);
+                    if (isSitting) {
+                        npc.getSittingEntity().ifPresent(sitting -> sitting.removeViewer(playerId));
+                    }
                     npc.getHologram().ifPresent(h -> h.removeViewer(playerId));
                 }
             }

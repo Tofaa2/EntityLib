@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityHeadLook;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfo;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoRemove;
 import io.github.retrooper.packetevents.util.viaversion.ViaVersionAccessor;
 import io.github.retrooper.packetevents.util.viaversion.ViaVersionUtil;
@@ -230,6 +231,9 @@ public class NPC {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.getWorld() != npcWorld) continue;
             entity.addViewer(player.getUniqueId());
+            if (entity instanceof me.tofaa.entitylib.wrapper.WrapperPlayer) {
+                doStupidDogshitForOldClients(player);
+            }
         }
 
         if (options.isSitting()) {
@@ -285,13 +289,22 @@ public class NPC {
             hologram = null;
         }
 
+        if (entity != null) {
+            for (UUID viewerId : entity.getViewers()) {
+                org.bukkit.entity.Player player = org.bukkit.Bukkit.getPlayer(viewerId);
+                if (player != null && entity instanceof me.tofaa.entitylib.wrapper.WrapperPlayer) {
+                    doStupidDogshitForOldClients(player);
+                }
+            }
+            entity.remove();
+            entity = null;
+        }
+
         if (sittingEntity != null) {
             sittingEntity.remove();
             sittingEntity = null;
         }
 
-        entity.remove();
-        entity = null;
         spawned = false;
     }
 
@@ -356,6 +369,11 @@ public class NPC {
         }
     }
 
+    /**
+     * Very important, fixes legacy garbage clients from
+     * Seeing the npc name in tab
+     * @param player
+     */
     public void doStupidDogshitForOldClients(
             Player player
     ) {
@@ -365,11 +383,23 @@ public class NPC {
             if (!checkIfStupidDogshitPlayerIsOldClient(player ) || !getEntity().isPresent()) {
                 return;
             }
-            WrapperPlayServerPlayerInfoRemove packet = new WrapperPlayServerPlayerInfoRemove(
-                    getEntity().get().getUuid()
+            WrapperPlayer p = (WrapperPlayer) getEntity().get();
+
+            PacketWrapper<?> packet = new WrapperPlayServerPlayerInfo(
+                    WrapperPlayServerPlayerInfo.Action.REMOVE_PLAYER,
+                    new WrapperPlayServerPlayerInfo.PlayerData(
+                        p.getDisplayName(),
+                           new UserProfile(p.getUuid(), p.getUsername()),
+                            p.getGameMode(),
+                            null, 0
+                    )
             );
-            user.sendPacket(packet);
-        }, 20);
+//             packet = new WrapperPlayServerPlayerInfoRemove(
+//                    getEntity().get().getUuid()
+//            );
+//            user.sendPacket(packet);
+            sendPacketSilentlySkipTranslation(user, packet);
+        }, 5);
 
     }
 
@@ -406,7 +436,7 @@ public class NPC {
     public void updateHeadRotationForViewers(Location npcLocation) {
         if (entity == null || !spawned) return;
 
-        PacketEventsAPI<?> api = me.tofaa.entitylib.EntityLib.getApi().getPacketEvents();
+        PacketEventsAPI<?> api = EntityLib.getApi().getPacketEvents();
 
         for (UUID viewerId : entity.getViewers()) {
             org.bukkit.entity.Player player = org.bukkit.Bukkit.getPlayer(
