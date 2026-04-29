@@ -9,6 +9,7 @@ public class InteractionAction {
 
     public static final String RUN_COMMAND = "RUN_COMMAND";
     public static final String MESSAGE = "MESSAGE";
+    public static final String PLAYER_CHAT = "PLAYER_CHAT";
 
     private InteractionType type;
     private String actionType;

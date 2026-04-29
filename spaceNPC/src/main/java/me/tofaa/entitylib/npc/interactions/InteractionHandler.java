@@ -48,6 +48,10 @@ public class InteractionHandler {
                 Bukkit.getScheduler().runTask(SpaceNPC.getInstance(), () -> {
                     executeCommand(player, value, npc);
                 });
+            } else if (InteractionAction.PLAYER_CHAT.equals(actionType)) {
+                Bukkit.getScheduler().runTask(SpaceNPC.getInstance(), () -> {
+                    player.chat(value.replace("%player%", player.getName()).replace("%npc%", npc.getId()));
+                });
             } else if (InteractionAction.MESSAGE.equals(actionType)) {
                 player.sendMessage(value.replace("%player%", player.getName()));
             }
@@ -63,12 +67,8 @@ public class InteractionHandler {
             finalCommand = finalCommand.substring(1);
         }
 
-        boolean isOp = player.isOp();
         try {
-            Bukkit.dispatchCommand(
-                    Bukkit.getConsoleSender(),
-                    finalCommand
-            );
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCommand);
         } catch (Exception e) {
             LOGGER.warning("[SpaceNPC] Failed to execute command '" + finalCommand + "' for player " + player.getName() + ": " + e.getMessage());
         }
