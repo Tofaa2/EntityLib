@@ -32,6 +32,7 @@ import me.tofaa.entitylib.meta.mobs.villager.WanderingTraderMeta;
 import me.tofaa.entitylib.meta.other.*;
 import me.tofaa.entitylib.meta.projectile.*;
 import me.tofaa.entitylib.meta.types.LivingEntityMeta;
+import me.tofaa.entitylib.meta.types.MannequinMeta;
 import me.tofaa.entitylib.meta.types.PlayerMeta;
 import org.jetbrains.annotations.NotNull;
 
@@ -114,6 +115,7 @@ final class MetaConverterRegistry {
         put(LLAMA, LlamaMeta.class, LlamaMeta::new);
         put(LLAMA_SPIT, LlamaSpitMeta.class, LlamaSpitMeta::new);
         put(MAGMA_CUBE, MagmaCubeMeta.class, MagmaCubeMeta::new);
+        put(MANNEQUIN, MannequinMeta.class, MannequinMeta::new);
         put(MARKER, MarkerMeta.class, MarkerMeta::new);
         put(MOOSHROOM, MooshroomMeta.class, MooshroomMeta::new);
         put(MULE, MuleMeta.class, MuleMeta::new);
