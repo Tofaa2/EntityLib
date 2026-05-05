@@ -1,4 +1,4 @@
-val fullVersion = "3.2.2"
+val fullVersion = "3.2.3"
 val snapshot = true
 
 group = "io.github.tofaa2"
