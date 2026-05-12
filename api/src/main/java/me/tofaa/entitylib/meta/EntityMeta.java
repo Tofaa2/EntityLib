@@ -288,4 +288,8 @@ public class EntityMeta implements EntityMetadataProvider {
     public Metadata getMetadata() {
         return metadata;
     }
+
+    public int getEntityId() {
+        return entityId;
+    }
 }
