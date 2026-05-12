@@ -24,7 +24,6 @@ import me.tofaa.entitylib.npc.path.NPCPath;
 import me.tofaa.entitylib.npc.skin.NPCSkin;
 import me.tofaa.entitylib.npc.storage.NPCStorage;
 import me.tofaa.entitylib.wrapper.WrapperLivingEntity;
-import me.tofaa.entitylib.wrapper.WrapperPlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

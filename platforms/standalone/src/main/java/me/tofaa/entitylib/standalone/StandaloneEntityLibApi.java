@@ -1,6 +1,5 @@
 package me.tofaa.entitylib.standalone;
 
-import com.github.retrooper.packetevents.protocol.world.Location;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.Platform;
 import me.tofaa.entitylib.common.AbstractEntityLibAPI;

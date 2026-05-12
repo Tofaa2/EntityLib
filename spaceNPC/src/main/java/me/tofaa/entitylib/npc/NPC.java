@@ -17,8 +17,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityHeadLook;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfo;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoRemove;
-import io.github.retrooper.packetevents.util.viaversion.ViaVersionAccessor;
 import io.github.retrooper.packetevents.util.viaversion.ViaVersionUtil;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.EntityMeta;

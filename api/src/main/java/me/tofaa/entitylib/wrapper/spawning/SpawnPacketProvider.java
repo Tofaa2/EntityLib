@@ -1,6 +1,5 @@
 package me.tofaa.entitylib.wrapper.spawning;
 
-import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 
