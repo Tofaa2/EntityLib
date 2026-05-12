@@ -44,7 +44,7 @@ public class TickContainer<T extends Tickable, H> {
     }
 
     /**
-     * Ticks all {@link Tickable}s in this container, this method can be overridden to provide a custom implementation.
+     * Ticks all {@link Tickable}s in this container, this method can be overriden to provide a custom implementation.
      * @param time The current time in milliseconds, incase the {@link Tickable} needs to know the current time.
      */
     public void tick(long time) {

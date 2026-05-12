@@ -151,7 +151,7 @@ EntityLib uses the new Maven Central publishing system via the Central Portal (r
 Snapshots are automatically published on pushes to the `master` branch. Stable releases are published when a GitHub release is created.
 
 ### TODO:
-Once this list is complete, I will release a stable version of the library.
+Once this list is complete, i will release a stable version of the library.
 - [ ] Implement checks for each EntityMeta to make sure the version specific data is correct.
 - [ ] Verify all the EntityMeta packets are working correctly.
 - [x] WrapperEntities must seamlessly send packet updates to viewers, currently they are not.
@@ -163,5 +163,5 @@ Once this list is complete, I will release a stable version of the library.
 
 ### Credits
 - PacketEvents for providing the API and retrooper being a cool guy in general
-- Minestom certain mappings were taken from Minestom cause I have not slept in 4 days and it was faster
+- Minestom certain mappings were taken from Minestom cause i have not slept in 4 days and it was faster
 

@@ -33,7 +33,7 @@ public class VelocityEntityLibPlatform extends AbstractPlatform<ProxyServer> {
 //                    plugin,
 //                    handle,
 //                    logger,
-//                    pe.getSettings()).
+//                    pe.getSettings().
 //        }
     }
 

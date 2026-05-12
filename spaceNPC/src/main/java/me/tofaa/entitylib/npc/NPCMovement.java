@@ -238,7 +238,7 @@ public class NPCMovement {
                             boolean obstacleAhead = !blockAtFeet.isPassable()
                                 && blockAboveFeet.isPassable();
 
-                            // If we hit a 1-block obstacle, and we're on the ground, jump
+                            // If we hit a 1-block obstacle and we're on the ground, jump
                             if (obstacleAhead && follower.isOnGround()) {
                                 follower.jump();
                             }
