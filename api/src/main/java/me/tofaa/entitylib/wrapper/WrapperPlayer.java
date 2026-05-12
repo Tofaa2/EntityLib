@@ -5,6 +5,7 @@ import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.player.GameMode;
 import com.github.retrooper.packetevents.protocol.player.TextureProperty;
 import com.github.retrooper.packetevents.protocol.player.UserProfile;
+import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerDestroyEntities;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityHeadLook;
@@ -13,6 +14,7 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPl
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnPlayer;
 import me.tofaa.entitylib.EntityLib;
+import me.tofaa.entitylib.container.EntityContainer;
 import me.tofaa.entitylib.meta.EntityMeta;
 import java.util.EnumSet;
 import java.util.List;
@@ -52,6 +54,15 @@ public class WrapperPlayer extends WrapperLivingEntity {
         packets.add(new WrapperPlayServerEntityRotation(getEntityId(), getYaw(), getPitch(), isOnGround()));
         packets.add(new WrapperPlayServerEntityHeadLook(getEntityId(), getYaw()));
         return packets;
+    }
+
+    @Override
+    public boolean spawn(Location location, EntityContainer parent) {
+        if (isSpawned()) return false;
+
+        sendPacketToViewers(tabListPacket());
+
+        return super.spawn(location, parent);
     }
 
     public WrapperPlayServerPlayerInfoUpdate tabListPacket() {
