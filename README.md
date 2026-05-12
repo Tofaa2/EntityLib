@@ -76,7 +76,7 @@ class Example {
 
         // Making a random entity using packet events raw, i strongly recommend using the EntityLib#createEntity method instead
         int entityID = 1;
-        WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(constructor args);
+        WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(/* constructor args */);
         EntityMeta meta = EntityMeta.createMeta(entityId, EntityType);
         // You can cast the meta to the correct type depending on the entity type
         PigMeta pigMeta = (PigMeta) meta;
@@ -121,7 +121,7 @@ class Example {
 
         entity.spawn(Location); // Spawns the entity at the given location
         entity.remove(); // Removes the entity from the world
-        entity.rotateHead(float yaw, float pitch); // Rotates the head of the entity
+        entity.rotateHead(/*float*/ yaw, /*float*/ pitch); // Rotates the head of the entity
         entity.teleport(Location); // Teleports the entity to the given location.
         
         // If the entityId provider for WrapperEntities is not working for you or needs changing, you can get it from EntityLib#getEntityIdProvider()
