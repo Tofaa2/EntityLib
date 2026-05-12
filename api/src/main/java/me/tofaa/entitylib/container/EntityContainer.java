@@ -7,7 +7,7 @@ import java.util.*;
 
 
 /**
- * Containers are basic iterable classes that hold entities. These containers can be extended to provide more functionality, and this allows for seperation of logic between certain entities.
+ * Containers are basic iterable classes that hold entities. These containers can be extended to provide more functionality, and this allows for separation of logic between certain entities.
  * <p>
  *     To access a specific {@link WrapperEntity}'s container you can use {@link WrapperEntity#getParentContainer()}.
  * </p>

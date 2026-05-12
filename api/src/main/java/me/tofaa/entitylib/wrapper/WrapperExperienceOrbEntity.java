@@ -38,7 +38,7 @@ public class WrapperExperienceOrbEntity extends WrapperEntity {
      * <p>
      *     For this to work, this method needs to be called every tick until the entity reaches the location.
      *     We don't have ticking or updating in this library, so you'll have to do it yourself.
-     *     This is an attempt to mimmick the vanilla behavior.
+     *     This is an attempt to mimic the vanilla behavior.
      * </p>
      */
     @Override

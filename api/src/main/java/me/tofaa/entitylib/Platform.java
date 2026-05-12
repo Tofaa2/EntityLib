@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 /**
  * A generic representation of a platform that EntityLib is running on.
- * @param <P> The platform handle, for Spigot this would be a JavaPlugin. etc etc.
+ * @param <P> The platform handle, for Spigot this would be a JavaPlugin. etc.
  */
 public interface Platform<P> {
 
