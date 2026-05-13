@@ -2,7 +2,6 @@ package me.tofaa.entitylib.wrapper.hologram;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.world.Location;
-import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.other.ArmorStandMeta;
 import me.tofaa.entitylib.utils.Check;
 import me.tofaa.entitylib.wrapper.WrapperEntity;

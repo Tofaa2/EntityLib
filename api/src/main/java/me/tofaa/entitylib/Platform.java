@@ -2,10 +2,8 @@ package me.tofaa.entitylib;
 
 import me.tofaa.entitylib.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 /**
  * A generic representation of a platform that EntityLib is running on.

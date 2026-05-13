@@ -5,8 +5,6 @@ import me.tofaa.entitylib.meta.EntityMeta;
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.types.ObjectData;
 
-import java.util.Optional;
-
 public class FishingHookMeta extends EntityMeta implements ObjectData {
 
     public static final byte OFFSET = EntityMeta.MAX_OFFSET;

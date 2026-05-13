@@ -7,8 +7,6 @@ import me.tofaa.entitylib.utils.Check;
 import me.tofaa.entitylib.wrapper.WrapperExperienceOrbEntity;
 import org.jetbrains.annotations.NotNull;
 
-import javax.naming.OperationNotSupportedException;
-import java.awt.*;
 import java.util.Optional;
 
 interface SpawnPacketProviders {

@@ -2,7 +2,6 @@ package me.tofaa.entitylib.wrapper;
 
 import com.github.retrooper.packetevents.protocol.attribute.Attribute;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerUpdateAttributes;
-import org.w3c.dom.Attr;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -3,12 +3,8 @@ package me.tofaa.entitylib.meta.mobs.golem;
 import com.github.retrooper.packetevents.protocol.color.DyeColor;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.world.Direction;
-import com.github.retrooper.packetevents.util.Vector3i;
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.types.MobMeta;
-import net.kyori.adventure.text.format.NamedTextColor;
-
-import java.util.Optional;
 
 public class ShulkerMeta extends MobMeta {
 
