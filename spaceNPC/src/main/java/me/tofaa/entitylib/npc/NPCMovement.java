@@ -94,7 +94,10 @@ public class NPCMovement {
             Location npcLocation = entity.getLocation();
 
             npc.getHologram().ifPresent(hologram -> {
-                hologram.setParent(npc.getEntity().get());
+                boolean isSittingNow = npc.getOptions().isSitting();
+                double yOff = isSittingNow ? 1.1 : 1.0;
+                Location npcLoc = npc.getEntity().get().getLocation();
+                hologram.teleport(new Location(npcLoc.getX(), npcLoc.getY() + yOff, npcLoc.getZ(), npcLoc.getYaw(), npcLoc.getPitch()));
             });
 
             boolean permanentlyVisible = npc.getOptions().isPermanentlyVisible();

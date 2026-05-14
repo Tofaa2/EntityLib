@@ -50,20 +50,21 @@ final class ModernHologram implements Hologram.Modern {
         spawned = false;
     }
 
+    private static final float LINE_SPACING = 0.28f;
+
     @Override
     public void teleport(Location location) {
         this.location = location;
         if (lines.isEmpty()) return;
-        
+
         if (parent != null) {
             return;
         }
-        
-        WrapperEntity first = lines.get(0);
-        first.teleport(location);
-        for (WrapperEntity e : lines) {
-            if (e.getUuid().equals(first.getUuid())) continue;
-            first.addPassenger(e);
+
+        for (int i = 0; i < lines.size(); i++) {
+            double y = location.getY() + (lines.size() - 1 - i) * LINE_SPACING;
+            Location lineLoc = new Location(location.getX(), y, location.getZ(), location.getYaw(), location.getPitch());
+            lines.get(i).teleport(lineLoc);
         }
     }
 
