@@ -3,6 +3,7 @@ package me.tofaa.entitylib.ve;
 
 import com.github.retrooper.packetevents.protocol.player.User;
 import me.tofaa.entitylib.EntityLib;
+import me.tofaa.entitylib.extras.collections.WeakLinkedHashSet;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +43,8 @@ public class ViewerEngine {
      */
     public ViewerEngine(Executor executor) {
         this.globalRules = new CopyOnWriteArrayList<>();
-        this.tracked = Collections.newSetFromMap(new WeakHashMap<>());
+//        this.tracked = Collections.newSetFromMap(new WeakHashMap<>()); // Breaks iteration safety due to not being linked
+        this.tracked = new WeakLinkedHashSet<>();
         this.executor = executor;
         this.listener = new ViewerEngineListener(this);
     }
