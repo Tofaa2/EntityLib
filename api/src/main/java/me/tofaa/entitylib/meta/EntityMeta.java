@@ -25,6 +25,7 @@ public class EntityMeta implements EntityMetadataProvider {
 
     static final MetaConverterRegistry META_CONVERTER_REGISTRY = new MetaConverterRegistry();
 
+
     public static @NotNull BiFunction<Integer, Metadata, EntityMeta> getConverter(EntityType entityType) {
         return META_CONVERTER_REGISTRY.get(entityType);
     }
@@ -144,16 +145,16 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     public short getAirTicks() {
-        // Food for thought later on 
-        // if (isVersionNewer(ServerVersion.V_26_1)) {
-        //     return this.metadata.getIndex((byte)1, (short)300);
-        // }
+        // Food for thought later on
+        if (isVersion(ServerVersion.V_1_21_11, VersionComparison.NEWER_THAN)) {
+            return (short)this.metadata.getIndex((byte)1, (int)300).shortValue();
+        }
         return this.metadata.getIndex((byte)1, (short) 300);
     }
 
     public void setAirTicks(short value) {
-        if (isVersionNewer(ServerVersion.V_26_1)) {
-            this.metadata.setIndex((byte)1, EntityDataTypes.INT, value);
+        if (isVersion(ServerVersion.V_1_21_11, VersionComparison.NEWER_THAN)) {
+            this.metadata.setIndex((byte)1, EntityDataTypes.INT, (int)value);
         }
         else {
             this.metadata.setIndex((byte)1, EntityDataTypes.SHORT, value);
