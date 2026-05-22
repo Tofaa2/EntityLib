@@ -144,11 +144,20 @@ public class EntityMeta implements EntityMetadataProvider {
     }
 
     public short getAirTicks() {
+        // Food for thought later on 
+        // if (isVersionNewer(ServerVersion.V_26_1)) {
+        //     return this.metadata.getIndex((byte)1, (short)300);
+        // }
         return this.metadata.getIndex((byte)1, (short) 300);
     }
 
     public void setAirTicks(short value) {
-        this.metadata.setIndex((byte)1, EntityDataTypes.SHORT, value);
+        if (isVersionNewer(ServerVersion.V_26_1)) {
+            this.metadata.setIndex((byte)1, EntityDataTypes.INT, value);
+        }
+        else {
+            this.metadata.setIndex((byte)1, EntityDataTypes.SHORT, value);
+        }
     }
 
     public Component getCustomName() {
