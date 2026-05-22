@@ -121,8 +121,19 @@ public class ViewerEngine {
      * @return true if the user passed and did not fail any rules, false otherwise
      */
     public boolean canSpawnFor(User user, WrapperEntity entity) {
-        if (!entity.getViewerRules().isEmpty() && entity.getViewerRules().stream().allMatch(rule -> rule.shouldSee(user))) return true;
-        return globalRules.stream().allMatch(rule -> rule.shouldSee(user));
+        for (ViewerRule rule : entity.getViewerRules()) {
+            if (!rule.shouldSee(user)) {
+                return false;
+            }
+        }
+
+        for (ViewerRule rule : this.globalRules) {
+            if (!rule.shouldSee(user)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
