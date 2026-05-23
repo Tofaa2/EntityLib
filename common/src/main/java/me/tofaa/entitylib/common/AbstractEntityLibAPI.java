@@ -21,13 +21,16 @@ public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
     protected final PacketEventsAPI<?> packetEvents;
     protected final APIConfig settings;
     protected final Collection<TickContainer<?, T>> tickContainers;
-    protected final EntityContainer defaultEntityContainer = EntityContainer.basic();
+    protected final EntityContainer defaultEntityContainer;
 
     protected AbstractEntityLibAPI(Platform<P> platform, APIConfig settings) {
         this.platform = platform;
         this.packetEvents = settings.getPacketEvents();
         this.settings = settings;
         this.tickContainers = settings.shouldTickTickables() ? new HashSet<>() : Collections.emptyList();
+
+        EntityContainer container = settings.getEntityContainer();
+        this.defaultEntityContainer = container == null ? EntityContainer.basic() : container;
     }
 
     @Override
