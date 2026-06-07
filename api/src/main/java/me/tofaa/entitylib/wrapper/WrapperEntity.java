@@ -446,7 +446,6 @@ public class WrapperEntity implements Tickable {
     }
 
     public WrapperPlayServerEntityVelocity getVelocityPacket() {
-        Vector3d velocity = this.velocity.multiply(8000.0f / 20.0f);
         return new WrapperPlayServerEntityVelocity(entityId, velocity);
     }
 
