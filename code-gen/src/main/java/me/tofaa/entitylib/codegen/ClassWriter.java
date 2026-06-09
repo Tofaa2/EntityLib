@@ -19,8 +19,7 @@ public class ClassWriter {
 
     public void writeClassFile(EntityNode node) {
         Set<String> imports = new TreeSet<>();
-        imports.add("me.tofaa.entitylib.meta.MetadataKey");
-        imports.add("me.tofaa.entitylib.meta.VersionedMetadataKey");
+        imports.add("me.tofaa.entitylib.meta.EntityDataKey");
         imports.add("com.github.retrooper.packetevents.protocol.player.ClientVersion");
         imports.add("com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes");
 
@@ -34,13 +33,14 @@ public class ClassWriter {
 
             bodySb.append(generateJavadoc(prop.getVersions().keySet(), "    "));
 
-            bodySb.append("    public static final VersionedMetadataKey<").append(typeString).append("> ")
+            bodySb.append("    public static final EntityDataKey<").append(typeString).append("> ")
                     .append(prop.getName())
-                    .append(" = VersionedMetadataKey.<").append(typeString).append(">builder()\n");
+                    .append(" = EntityDataKey.<").append(typeString).append(">builder(")
+                    .append(node.getClassName()).append(".class)\n");
 
             for (Map.Entry<String, FieldData> versionEntry : prop.getVersions().entrySet()) {
                 String enumVersion = "V_" + versionEntry.getKey().replace('.', '_');
-                bodySb.append("            .add(ClientVersion.").append(enumVersion)
+                bodySb.append("            .addVersion(ClientVersion.").append(enumVersion)
                         .append(", ").append(versionEntry.getValue().index())
                         .append(", EntityDataTypes.").append(prop.getTypeMapping().packetEventsDataType()).append(")\n");
             }
@@ -48,7 +48,10 @@ public class ClassWriter {
         }
 
         StringBuilder finalStr = new StringBuilder();
+
+        finalStr.append("// Auto-generated file. Do not edit manually.\n");
         finalStr.append("package me.tofaa.entitylib.meta.types;\n\n");
+
         for (String imp : imports) {
             finalStr.append("import ").append(imp).append(";\n");
         }
@@ -61,7 +64,7 @@ public class ClassWriter {
         finalStr.append(bodySb);
         finalStr.append("}\n");
 
-        try (FileWriter writer = new FileWriter(new File(outputDir, node.getClassName() + ".java"))) {
+        try (FileWriter writer = new FileWriter(new File(this.outputDir, node.getClassName() + ".java"))) {
             writer.write(finalStr.toString());
         } catch (Exception e) {
             System.err.println("Failed to write " + node.getClassName());
@@ -73,7 +76,7 @@ public class ClassWriter {
 
         List<Integer> indices = new ArrayList<>();
         for (String v : supportedVersions) {
-            int idx = allVersions.indexOf(v);
+            int idx = this.allVersions.indexOf(v);
             if (idx != -1) indices.add(idx);
         }
         Collections.sort(indices);
@@ -89,16 +92,16 @@ public class ClassWriter {
             int currIdx = endOfList ? -1 : indices.get(i);
 
             if (endOfList || currIdx != prevIdx + 1) {
-                if (startIdx == 0 && prevIdx == allVersions.size() - 1) {
+                if (startIdx == 0 && prevIdx == this.allVersions.size() - 1) {
                     ranges.add("All versions");
                 } else if (startIdx == 0) {
-                    ranges.add(allVersions.get(prevIdx) + "-");
-                } else if (prevIdx == allVersions.size() - 1) {
-                    ranges.add(allVersions.get(startIdx) + "+");
+                    ranges.add(this.allVersions.get(prevIdx) + "-");
+                } else if (prevIdx == this.allVersions.size() - 1) {
+                    ranges.add(this.allVersions.get(startIdx) + "+");
                 } else if (startIdx == prevIdx) {
-                    ranges.add(allVersions.get(startIdx));
+                    ranges.add(this.allVersions.get(startIdx));
                 } else {
-                    ranges.add(allVersions.get(startIdx) + " - " + allVersions.get(prevIdx));
+                    ranges.add(this.allVersions.get(startIdx) + " - " + this.allVersions.get(prevIdx));
                 }
 
                 if (!endOfList) {
@@ -116,5 +119,4 @@ public class ClassWriter {
         sb.append(indent).append(" */\n");
         return sb.toString();
     }
-
 }

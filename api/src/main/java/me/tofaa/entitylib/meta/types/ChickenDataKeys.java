@@ -1,10 +1,11 @@
+// Auto-generated file. Do not edit manually.
 package me.tofaa.entitylib.meta.types;
 
 import com.github.retrooper.packetevents.protocol.entity.chicken.ChickenSoundVariant;
 import com.github.retrooper.packetevents.protocol.entity.chicken.ChickenVariant;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
-import me.tofaa.entitylib.meta.VersionedMetadataKey;
+import me.tofaa.entitylib.meta.EntityDataKey;
 
 /**
  * Supported versions: All versions
@@ -14,19 +15,19 @@ public class ChickenDataKeys extends AnimalDataKeys {
     /**
      * Supported versions: 26.1+
      */
-    public static final VersionedMetadataKey<ChickenSoundVariant> SOUND_VARIANT = VersionedMetadataKey.<ChickenSoundVariant>builder()
-            .add(ClientVersion.V_26_1, 19, EntityDataTypes.CHICKEN_SOUND_VARIANT)
+    public static final EntityDataKey<ChickenSoundVariant> SOUND_VARIANT = EntityDataKey.<ChickenSoundVariant>builder(ChickenDataKeys.class)
+            .addVersion(ClientVersion.V_26_1, 19, EntityDataTypes.CHICKEN_SOUND_VARIANT)
             .build();
 
     /**
      * Supported versions: 1.21.5+
      */
-    public static final VersionedMetadataKey<ChickenVariant> VARIANT = VersionedMetadataKey.<ChickenVariant>builder()
-            .add(ClientVersion.V_1_21_5, 17, EntityDataTypes.CHICKEN_VARIANT)
-            .add(ClientVersion.V_1_21_6, 17, EntityDataTypes.CHICKEN_VARIANT)
-            .add(ClientVersion.V_1_21_9, 17, EntityDataTypes.CHICKEN_VARIANT)
-            .add(ClientVersion.V_1_21_11, 17, EntityDataTypes.CHICKEN_VARIANT)
-            .add(ClientVersion.V_26_1, 18, EntityDataTypes.CHICKEN_VARIANT)
+    public static final EntityDataKey<ChickenVariant> VARIANT = EntityDataKey.<ChickenVariant>builder(ChickenDataKeys.class)
+            .addVersion(ClientVersion.V_1_21_5, 17, EntityDataTypes.CHICKEN_VARIANT)
+            .addVersion(ClientVersion.V_1_21_6, 17, EntityDataTypes.CHICKEN_VARIANT)
+            .addVersion(ClientVersion.V_1_21_9, 17, EntityDataTypes.CHICKEN_VARIANT)
+            .addVersion(ClientVersion.V_1_21_11, 17, EntityDataTypes.CHICKEN_VARIANT)
+            .addVersion(ClientVersion.V_26_1, 18, EntityDataTypes.CHICKEN_VARIANT)
             .build();
 
 }

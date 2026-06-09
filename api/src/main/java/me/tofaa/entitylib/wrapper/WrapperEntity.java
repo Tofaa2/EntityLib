@@ -19,7 +19,7 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSp
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSystemChatMessage;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.container.EntityContainer;
-import me.tofaa.entitylib.meta.Metadata;
+import me.tofaa.entitylib.meta.WrapperEntityData;
 import me.tofaa.entitylib.meta.types.EntityDataKeys;
 import me.tofaa.entitylib.tick.Tickable;
 import me.tofaa.entitylib.utils.PacketUtil;
@@ -58,7 +58,7 @@ public class WrapperEntity implements Tickable {
     private final UUID uuid;
     private final int entityId;
     private final EntityType entityType;
-    private final Metadata meta;
+    private final WrapperEntityData meta;
     private boolean ticking;
     protected Location location;
     private Location preRidingLocation;
@@ -71,7 +71,7 @@ public class WrapperEntity implements Tickable {
     private EntityContainer parent;
     private final List<ViewerRule> viewerRules;
 
-    public WrapperEntity(int entityId, UUID uuid, EntityType entityType, Metadata meta) {
+    public WrapperEntity(int entityId, UUID uuid, EntityType entityType, WrapperEntityData meta) {
         this.entityId = entityId;
         this.uuid = uuid;
         this.entityType = entityType;
@@ -376,7 +376,7 @@ public class WrapperEntity implements Tickable {
         return entityId;
     }
 
-    public Metadata getMeta() {
+    public WrapperEntityData getMeta() {
         return meta;
     }
 

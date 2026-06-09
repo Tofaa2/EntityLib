@@ -17,11 +17,11 @@ public class EntityNode {
     }
 
     public String getClassName() {
-        return className;
+        return this.className;
     }
 
     public String getSuperClass() {
-        return superClass;
+        return this.superClass;
     }
 
     public void setSuperClass(String superClass) {
@@ -29,11 +29,11 @@ public class EntityNode {
     }
 
     public Map<String, PropertyNode> getProperties() {
-        return properties;
+        return this.properties;
     }
 
     public Set<String> getSupportedVersions() {
-        return supportedVersions;
+        return this.supportedVersions;
     }
 
 }

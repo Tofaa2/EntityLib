@@ -14,11 +14,11 @@ public class PropertyNode {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public TypeMapping getTypeMapping() {
-        return typeMapping;
+        return this.typeMapping;
     }
 
     public void setTypeMapping(TypeMapping typeMapping) {
@@ -26,7 +26,7 @@ public class PropertyNode {
     }
 
     public Map<String, FieldData> getVersions() {
-        return versions;
+        return this.versions;
     }
 
 }

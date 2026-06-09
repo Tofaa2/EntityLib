@@ -7,8 +7,7 @@ import com.github.retrooper.packetevents.protocol.potion.PotionType;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityAnimation;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerHurtAnimation;
-import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.meta.Metadata;
+import me.tofaa.entitylib.meta.WrapperEntityData;
 import me.tofaa.entitylib.utils.VersionUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,7 +21,7 @@ public class WrapperLivingEntity extends WrapperEntity {
     private final WrapperEntityAttributes attributes;
     private final WrapperEntityPotionEffect potionEffect;
 
-    public WrapperLivingEntity(int entityId, UUID uuid, EntityType entityType, Metadata entityMeta) {
+    public WrapperLivingEntity(int entityId, UUID uuid, EntityType entityType, WrapperEntityData entityMeta) {
         super(entityId, uuid, entityType, entityMeta);
 
         this.equipment = new WrapperEntityEquipment(this);

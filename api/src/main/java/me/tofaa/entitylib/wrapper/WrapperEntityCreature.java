@@ -1,8 +1,7 @@
 package me.tofaa.entitylib.wrapper;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
-import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.meta.Metadata;
+import me.tofaa.entitylib.meta.WrapperEntityData;
 import me.tofaa.entitylib.wrapper.ai.AIGroup;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,7 +24,7 @@ public class WrapperEntityCreature extends WrapperLivingEntity {
 
     private final Set<AIGroup> aiGroups;
 
-    public WrapperEntityCreature(int entityId, @NotNull UUID uuid, EntityType entityType, Metadata meta) {
+    public WrapperEntityCreature(int entityId, @NotNull UUID uuid, EntityType entityType, WrapperEntityData meta) {
         super(entityId, uuid, entityType, meta);
         this.aiGroups = new HashSet<>();
     }
