@@ -43,11 +43,9 @@ public class DataTypeMapper {
             case "Long" -> new TypeMapping(new TypeToken("Long", Long.class), "LONG");
             case "Boolean" -> new TypeMapping(new TypeToken("Boolean", Boolean.class), "BOOLEAN");
             case "String" -> new TypeMapping(new TypeToken("String", String.class), "STRING");
-            // regular UUID is not used anywhere in the regular protocol, that surprised me damn
-            case "Optional<UUID>" ->
-                    new TypeMapping(new TypeToken("Optional<UUID>", Optional.class, UUID.class), "OPTIONAL_UUID");
             case "OptionalInt" /*old mojang wtf*/, "Optional<Integer>" ->
                     new TypeMapping(new TypeToken("Optional<Integer>", Optional.class, Integer.class), "OPTIONAL_INT");
+            // regular UUID is not used anywhere in the regular protocol, that surprised me damn
 
             // adventure
             case "Component" ->
@@ -67,7 +65,8 @@ public class DataTypeMapper {
                     new TypeMapping(new TypeToken("ItemProfile", ItemProfile.class), "RESOLVABLE_PROFILE");
             case "CompoundTag" -> new TypeMapping(new TypeToken("NBTCompound", NBTCompound.class), "NBT");
             case "ItemStack" -> new TypeMapping(new TypeToken("ItemStack", ItemStack.class), "ITEMSTACK");
-            case "Optional<EntityReference<LivingEntity>>" ->
+            // Optional<UUID> is the old one Optional<EntityReference<LivingEntity>> is still represented the same in packetevents
+            case "Optional<UUID>", "Optional<EntityReference<LivingEntity>>" ->
                     new TypeMapping(new TypeToken("Optional<UUID>", Optional.class, UUID.class), "OPTIONAL_UUID");
 
             // math

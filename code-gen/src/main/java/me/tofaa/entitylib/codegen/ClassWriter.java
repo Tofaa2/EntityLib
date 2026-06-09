@@ -30,7 +30,9 @@ public class ClassWriter {
 
             prop.getTypeMapping().typeToken().appendImports(imports);
             String typeString = prop.getTypeMapping().typeToken().formatString();
+
             String canonicalRawType = lastValue(prop.getVersions()).rawDataType();
+            TypeMapping canonicalMapping = mapper.mapDataType(canonicalRawType);
 
             bodySb.append(generateJavadoc(prop.getVersions().keySet(), "    "));
 
@@ -44,14 +46,20 @@ public class ClassWriter {
                 FieldData fieldData = versionEntry.getValue();
                 String versionRawType = fieldData.rawDataType();
 
-                if (!versionRawType.equals(canonicalRawType)) {
+                TypeMapping versionMapping = mapper.mapDataType(versionRawType);
+
+                boolean typesMatch = versionRawType.equals(canonicalRawType) ||
+                        (versionMapping != null && canonicalMapping != null &&
+                                Objects.equals(versionMapping.packetEventsDataType(), canonicalMapping.packetEventsDataType()));
+
+                if (versionMapping != null && !versionMapping.isExcluded() && typesMatch) {
+                    bodySb.append("            .addVersion(ClientVersion.").append(enumVersion)
+                            .append(", ").append(fieldData.index())
+                            .append(", EntityDataTypes.").append(versionMapping.packetEventsDataType()).append(")\n");
+                } else {
                     bodySb.append("            // TODO type changed from '").append(versionRawType)
                             .append("' to '").append(canonicalRawType)
                             .append("', converter required\n");
-                } else {
-                    bodySb.append("            .addVersion(ClientVersion.").append(enumVersion)
-                            .append(", ").append(fieldData.index())
-                            .append(", EntityDataTypes.").append(prop.getTypeMapping().packetEventsDataType()).append(")\n");
                 }
             }
             bodySb.append("            .build();\n\n");

@@ -102,16 +102,16 @@ public class DisplayDataKeys extends EntityDataKeys {
      * Supported versions: 1.19.4+
      */
     public static final EntityDataKey<Quaternion4f> LEFT_ROTATION = EntityDataKey.<Quaternion4f>builder(DisplayDataKeys.class)
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
+            .addVersion(ClientVersion.V_1_19_4, 12, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_20_2, 13, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_20_3, 13, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_20_5, 13, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_21, 13, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_21_2, 13, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_21_4, 13, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_21_5, 13, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_21_6, 13, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_21_9, 13, EntityDataTypes.QUATERNION)
             .addVersion(ClientVersion.V_1_21_11, 13, EntityDataTypes.QUATERNION)
             .addVersion(ClientVersion.V_26_1, 13, EntityDataTypes.QUATERNION)
             .build();
@@ -137,16 +137,16 @@ public class DisplayDataKeys extends EntityDataKeys {
      * Supported versions: 1.19.4+
      */
     public static final EntityDataKey<Quaternion4f> RIGHT_ROTATION = EntityDataKey.<Quaternion4f>builder(DisplayDataKeys.class)
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
-            // TODO type changed from 'Quaternionf' to 'Quaternionfc', converter required
+            .addVersion(ClientVersion.V_1_19_4, 13, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_20_2, 14, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_20_3, 14, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_20_5, 14, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_21, 14, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_21_2, 14, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_21_4, 14, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_21_5, 14, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_21_6, 14, EntityDataTypes.QUATERNION)
+            .addVersion(ClientVersion.V_1_21_9, 14, EntityDataTypes.QUATERNION)
             .addVersion(ClientVersion.V_1_21_11, 14, EntityDataTypes.QUATERNION)
             .addVersion(ClientVersion.V_26_1, 14, EntityDataTypes.QUATERNION)
             .build();
@@ -155,16 +155,16 @@ public class DisplayDataKeys extends EntityDataKeys {
      * Supported versions: 1.19.4+
      */
     public static final EntityDataKey<Vector3f> SCALE = EntityDataKey.<Vector3f>builder(DisplayDataKeys.class)
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
+            .addVersion(ClientVersion.V_1_19_4, 11, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_20_2, 12, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_20_3, 12, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_20_5, 12, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_21, 12, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_21_2, 12, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_21_4, 12, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_21_5, 12, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_21_6, 12, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_21_9, 12, EntityDataTypes.VECTOR3F)
             .addVersion(ClientVersion.V_1_21_11, 12, EntityDataTypes.VECTOR3F)
             .addVersion(ClientVersion.V_26_1, 12, EntityDataTypes.VECTOR3F)
             .build();
@@ -243,16 +243,16 @@ public class DisplayDataKeys extends EntityDataKeys {
      * Supported versions: 1.19.4+
      */
     public static final EntityDataKey<Vector3f> TRANSLATION = EntityDataKey.<Vector3f>builder(DisplayDataKeys.class)
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
-            // TODO type changed from 'Vector3f' to 'Vector3fc', converter required
+            .addVersion(ClientVersion.V_1_19_4, 10, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_20_2, 11, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_20_3, 11, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_20_5, 11, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_21, 11, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_21_2, 11, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_21_4, 11, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_21_5, 11, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_21_6, 11, EntityDataTypes.VECTOR3F)
+            .addVersion(ClientVersion.V_1_21_9, 11, EntityDataTypes.VECTOR3F)
             .addVersion(ClientVersion.V_1_21_11, 11, EntityDataTypes.VECTOR3F)
             .addVersion(ClientVersion.V_26_1, 11, EntityDataTypes.VECTOR3F)
             .build();

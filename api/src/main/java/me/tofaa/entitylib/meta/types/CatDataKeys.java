@@ -112,12 +112,12 @@ public class CatDataKeys extends TamableAnimalDataKeys {
      * Supported versions: 1.19+
      */
     public static final EntityDataKey<CatVariant> VARIANT = EntityDataKey.<CatVariant>builder(CatDataKeys.class)
-            // TODO type changed from 'CatVariant' to 'Holder<CatVariant>', converter required
-            // TODO type changed from 'CatVariant' to 'Holder<CatVariant>', converter required
-            // TODO type changed from 'CatVariant' to 'Holder<CatVariant>', converter required
-            // TODO type changed from 'CatVariant' to 'Holder<CatVariant>', converter required
-            // TODO type changed from 'CatVariant' to 'Holder<CatVariant>', converter required
-            // TODO type changed from 'CatVariant' to 'Holder<CatVariant>', converter required
+            .addVersion(ClientVersion.V_1_19, 19, EntityDataTypes.TYPED_CAT_VARIANT)
+            .addVersion(ClientVersion.V_1_19_1, 19, EntityDataTypes.TYPED_CAT_VARIANT)
+            .addVersion(ClientVersion.V_1_19_3, 19, EntityDataTypes.TYPED_CAT_VARIANT)
+            .addVersion(ClientVersion.V_1_19_4, 19, EntityDataTypes.TYPED_CAT_VARIANT)
+            .addVersion(ClientVersion.V_1_20_2, 19, EntityDataTypes.TYPED_CAT_VARIANT)
+            .addVersion(ClientVersion.V_1_20_3, 19, EntityDataTypes.TYPED_CAT_VARIANT)
             .addVersion(ClientVersion.V_1_20_5, 19, EntityDataTypes.TYPED_CAT_VARIANT)
             .addVersion(ClientVersion.V_1_21, 19, EntityDataTypes.TYPED_CAT_VARIANT)
             .addVersion(ClientVersion.V_1_21_2, 19, EntityDataTypes.TYPED_CAT_VARIANT)

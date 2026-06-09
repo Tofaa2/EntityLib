@@ -38,12 +38,12 @@ public class FrogDataKeys extends AnimalDataKeys {
      * Supported versions: 1.19+
      */
     public static final EntityDataKey<FrogVariant> VARIANT = EntityDataKey.<FrogVariant>builder(FrogDataKeys.class)
-            // TODO type changed from 'FrogVariant' to 'Holder<FrogVariant>', converter required
-            // TODO type changed from 'FrogVariant' to 'Holder<FrogVariant>', converter required
-            // TODO type changed from 'FrogVariant' to 'Holder<FrogVariant>', converter required
-            // TODO type changed from 'FrogVariant' to 'Holder<FrogVariant>', converter required
-            // TODO type changed from 'FrogVariant' to 'Holder<FrogVariant>', converter required
-            // TODO type changed from 'FrogVariant' to 'Holder<FrogVariant>', converter required
+            .addVersion(ClientVersion.V_1_19, 17, EntityDataTypes.TYPED_FROG_VARIANT)
+            .addVersion(ClientVersion.V_1_19_1, 17, EntityDataTypes.TYPED_FROG_VARIANT)
+            .addVersion(ClientVersion.V_1_19_3, 17, EntityDataTypes.TYPED_FROG_VARIANT)
+            .addVersion(ClientVersion.V_1_19_4, 17, EntityDataTypes.TYPED_FROG_VARIANT)
+            .addVersion(ClientVersion.V_1_20_2, 17, EntityDataTypes.TYPED_FROG_VARIANT)
+            .addVersion(ClientVersion.V_1_20_3, 17, EntityDataTypes.TYPED_FROG_VARIANT)
             .addVersion(ClientVersion.V_1_20_5, 17, EntityDataTypes.TYPED_FROG_VARIANT)
             .addVersion(ClientVersion.V_1_21, 17, EntityDataTypes.TYPED_FROG_VARIANT)
             .addVersion(ClientVersion.V_1_21_2, 17, EntityDataTypes.TYPED_FROG_VARIANT)
