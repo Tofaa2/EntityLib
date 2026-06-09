@@ -14,7 +14,7 @@ public class SalmonDataKeys extends AbstractSchoolingFishDataKeys {
      * Supported versions: 1.21.2+
      */
     public static final EntityDataKey<Integer> TYPE = EntityDataKey.<Integer>builder(SalmonDataKeys.class)
-            .addVersion(ClientVersion.V_1_21_2, 17, EntityDataTypes.INT)
+            // TODO type changed from 'String' to 'Integer', converter required
             .addVersion(ClientVersion.V_1_21_4, 17, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_21_5, 17, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_21_6, 17, EntityDataTypes.INT)

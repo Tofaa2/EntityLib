@@ -43,21 +43,21 @@ public class FoxDataKeys extends AnimalDataKeys {
      * Supported versions: All versions
      */
     public static final EntityDataKey<Optional<UUID>> TRUSTED_0 = EntityDataKey.<Optional<UUID>>builder(FoxDataKeys.class)
-            .addVersion(ClientVersion.V_1_14_4, 17, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_15, 18, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_16, 18, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_16_2, 18, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_17, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_19, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_19_1, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_19_3, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_19_4, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_20_2, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_20_3, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_20_5, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_21, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_21_2, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_21_4, 19, EntityDataTypes.OPTIONAL_UUID)
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
             .addVersion(ClientVersion.V_1_21_5, 19, EntityDataTypes.OPTIONAL_UUID)
             .addVersion(ClientVersion.V_1_21_6, 19, EntityDataTypes.OPTIONAL_UUID)
             .addVersion(ClientVersion.V_1_21_9, 19, EntityDataTypes.OPTIONAL_UUID)
@@ -69,21 +69,21 @@ public class FoxDataKeys extends AnimalDataKeys {
      * Supported versions: All versions
      */
     public static final EntityDataKey<Optional<UUID>> TRUSTED_1 = EntityDataKey.<Optional<UUID>>builder(FoxDataKeys.class)
-            .addVersion(ClientVersion.V_1_14_4, 18, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_15, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_16, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_16_2, 19, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_17, 20, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_19, 20, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_19_1, 20, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_19_3, 20, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_19_4, 20, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_20_2, 20, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_20_3, 20, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_20_5, 20, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_21, 20, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_21_2, 20, EntityDataTypes.OPTIONAL_UUID)
-            .addVersion(ClientVersion.V_1_21_4, 20, EntityDataTypes.OPTIONAL_UUID)
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
+            // TODO type changed from 'Optional<UUID>' to 'Optional<EntityReference<LivingEntity>>', converter required
             .addVersion(ClientVersion.V_1_21_5, 20, EntityDataTypes.OPTIONAL_UUID)
             .addVersion(ClientVersion.V_1_21_6, 20, EntityDataTypes.OPTIONAL_UUID)
             .addVersion(ClientVersion.V_1_21_9, 20, EntityDataTypes.OPTIONAL_UUID)

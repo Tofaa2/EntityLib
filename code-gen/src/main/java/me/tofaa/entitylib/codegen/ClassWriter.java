@@ -17,7 +17,7 @@ public class ClassWriter {
         }
     }
 
-    public void writeClassFile(EntityNode node) {
+    public void writeClassFile(EntityNode node, DataTypeMapper mapper) {
         Set<String> imports = new TreeSet<>();
         imports.add("me.tofaa.entitylib.meta.EntityDataKey");
         imports.add("com.github.retrooper.packetevents.protocol.player.ClientVersion");
@@ -30,6 +30,7 @@ public class ClassWriter {
 
             prop.getTypeMapping().typeToken().appendImports(imports);
             String typeString = prop.getTypeMapping().typeToken().formatString();
+            String canonicalRawType = lastValue(prop.getVersions()).rawDataType();
 
             bodySb.append(generateJavadoc(prop.getVersions().keySet(), "    "));
 
@@ -40,9 +41,18 @@ public class ClassWriter {
 
             for (Map.Entry<String, FieldData> versionEntry : prop.getVersions().entrySet()) {
                 String enumVersion = "V_" + versionEntry.getKey().replace('.', '_');
-                bodySb.append("            .addVersion(ClientVersion.").append(enumVersion)
-                        .append(", ").append(versionEntry.getValue().index())
-                        .append(", EntityDataTypes.").append(prop.getTypeMapping().packetEventsDataType()).append(")\n");
+                FieldData fieldData = versionEntry.getValue();
+                String versionRawType = fieldData.rawDataType();
+
+                if (!versionRawType.equals(canonicalRawType)) {
+                    bodySb.append("            // TODO type changed from '").append(versionRawType)
+                            .append("' to '").append(canonicalRawType)
+                            .append("', converter required\n");
+                } else {
+                    bodySb.append("            .addVersion(ClientVersion.").append(enumVersion)
+                            .append(", ").append(fieldData.index())
+                            .append(", EntityDataTypes.").append(prop.getTypeMapping().packetEventsDataType()).append(")\n");
+                }
             }
             bodySb.append("            .build();\n\n");
         }
@@ -69,6 +79,15 @@ public class ClassWriter {
         } catch (Exception e) {
             System.err.println("Failed to write " + node.getClassName());
         }
+    }
+
+    private static <V> V lastValue(Map<String, V> sortedMap) {
+        Map.Entry<String, V> last = null;
+        for (Map.Entry<String, V> e : sortedMap.entrySet()) {
+            last = e;
+        }
+        if (last == null) throw new NoSuchElementException("Empty versions map");
+        return last.getValue();
     }
 
     private String generateJavadoc(Set<String> supportedVersions, String indent) {

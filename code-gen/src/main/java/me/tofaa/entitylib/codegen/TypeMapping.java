@@ -5,5 +5,4 @@ public record TypeMapping(TypeToken typeToken, String packetEventsDataType, bool
     public TypeMapping(TypeToken typeToken, String dataType) {
         this(typeToken, dataType, false);
     }
-
 }

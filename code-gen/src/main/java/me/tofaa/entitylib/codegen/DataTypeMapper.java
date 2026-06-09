@@ -1,4 +1,4 @@
-package me.tofaa.entitylib.codegen.mapping;
+package me.tofaa.entitylib.codegen;
 
 import com.github.retrooper.packetevents.protocol.component.builtin.item.ItemProfile;
 import com.github.retrooper.packetevents.protocol.entity.armadillo.ArmadilloState;
@@ -28,8 +28,6 @@ import com.github.retrooper.packetevents.protocol.world.painting.PaintingVariant
 import com.github.retrooper.packetevents.util.Quaternion4f;
 import com.github.retrooper.packetevents.util.Vector3f;
 import com.github.retrooper.packetevents.util.Vector3i;
-import me.tofaa.entitylib.codegen.TypeMapping;
-import me.tofaa.entitylib.codegen.TypeToken;
 import net.kyori.adventure.text.Component;
 
 import java.util.*;
@@ -131,5 +129,4 @@ public class DataTypeMapper {
             default -> new TypeMapping(new TypeToken("Object", Object.class), null, true);
         };
     }
-
 }

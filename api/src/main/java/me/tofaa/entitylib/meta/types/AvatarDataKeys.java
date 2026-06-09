@@ -15,7 +15,7 @@ public class AvatarDataKeys extends LivingEntityDataKeys {
      * Supported versions: 1.21.9+
      */
     public static final EntityDataKey<HumanoidArm> PLAYER_MAIN_HAND = EntityDataKey.<HumanoidArm>builder(AvatarDataKeys.class)
-            .addVersion(ClientVersion.V_1_21_9, 15, EntityDataTypes.HUMANOID_ARM)
+            // TODO type changed from 'Byte' to 'HumanoidArm', converter required
             .addVersion(ClientVersion.V_1_21_11, 15, EntityDataTypes.HUMANOID_ARM)
             .addVersion(ClientVersion.V_26_1, 15, EntityDataTypes.HUMANOID_ARM)
             .build();

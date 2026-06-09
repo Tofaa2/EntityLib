@@ -14,21 +14,21 @@ public class MushroomCowDataKeys extends CowDataKeys {
      * Supported versions: All versions
      */
     public static final EntityDataKey<Integer> TYPE = EntityDataKey.<Integer>builder(MushroomCowDataKeys.class)
-            .addVersion(ClientVersion.V_1_14_4, 15, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_15, 16, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_16, 16, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_16_2, 16, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_17, 17, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_19, 17, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_19_1, 17, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_19_3, 17, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_19_4, 17, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_20_2, 17, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_20_3, 17, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_20_5, 17, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_21, 17, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_21_2, 17, EntityDataTypes.INT)
-            .addVersion(ClientVersion.V_1_21_4, 17, EntityDataTypes.INT)
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
+            // TODO type changed from 'String' to 'Integer', converter required
             .addVersion(ClientVersion.V_1_21_5, 17, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_21_6, 17, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_21_9, 17, EntityDataTypes.INT)

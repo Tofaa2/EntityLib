@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.tofaa.entitylib.codegen.mapping.DataTypeMapper;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -86,15 +85,16 @@ public class EntityFieldsCodeGen {
                         String fieldName = props.get("fieldName").getAsString();
 
                         PropertyNode propNode = node.getProperties().computeIfAbsent(fieldName, PropertyNode::new);
+
                         propNode.setTypeMapping(mapper.mapDataType(dataType));
-                        propNode.getVersions().put(version, new FieldData(index));
+                        propNode.getVersions().put(version, new FieldData(index, dataType));
                     }
                 }
             }
 
             System.out.println("Generating class files...");
             for (EntityNode node : entities.values()) {
-                writer.writeClassFile(node);
+                writer.writeClassFile(node, mapper);
             }
 
             System.out.println("Success! All OOP entity configurations generated.");
