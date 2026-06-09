@@ -1327,7 +1327,7 @@ public class NPCCommand extends CommandSystem.BaseCommand {
                         )
                     );
                     if (npc.isSpawned() && npc.getEntity().isPresent()) {
-                        npc.getEntity().get().getEntityMeta().setSwimming(boolValue);
+                        npc.getEntity().get().getMeta().setSwimming(boolValue);
                     }
                     break;
                 }
@@ -1343,7 +1343,7 @@ public class NPCCommand extends CommandSystem.BaseCommand {
                         )
                     );
                     if (npc.isSpawned() && npc.getEntity().isPresent()) {
-                        npc.getEntity().get().getEntityMeta().setSneaking(boolValue);
+                        npc.getEntity().get().getMeta().setSneaking(boolValue);
                     }
                     break;
                 }

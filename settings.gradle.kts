@@ -17,6 +17,7 @@ include(":platforms:standalone")
 include(":movement-engine")
 include(":platforms:movement")
 include(":spaceNPC")
+include(":code-gen")
 
 if (System.getenv("PRIVATE").toBoolean()) {
     include("discord-bot")

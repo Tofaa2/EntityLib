@@ -42,7 +42,7 @@ interface SpawnPacketProviders {
         throw new RuntimeException("Not supported yet");
     };
     @NotNull SpawnPacketProvider<WrapperPlayServerSpawnPainting> LEGACY_PAINTING = (entity) -> {
-        Check.stateCondition(!(entity.getEntityMeta() instanceof PaintingMeta), "Attempted to use spawn packet provider for paintings but not using an entity with PaintingMeta.");
+        Check.stateCondition(!(entity.getMeta() instanceof PaintingMeta), "Attempted to use spawn packet provider for paintings but not using an entity with PaintingMeta.");
         PaintingMeta meta = entity.getEntityMeta(PaintingMeta.class);
         return new WrapperPlayServerSpawnPainting(
                 entity.getEntityId(),
@@ -62,7 +62,7 @@ interface SpawnPacketProviders {
                 location,
                 location.getPitch(),
                 entity.getVelocity(),
-                entity.getEntityMeta()
+                entity.getMeta()
         );
     };
 

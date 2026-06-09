@@ -20,9 +20,16 @@ fun getVersionMeta(includeHash: Boolean): String {
 
     return "$commitHash-SNAPSHOT"
 }
-version = "$fullVersion${getVersionMeta(false)}"
-ext["versionBeta"] = getVersionMeta(false)
-ext["versionNoHash"] = "$fullVersion${getVersionMeta(false)}"
+
+val computedVersionMeta = getVersionMeta(false)
+val computedVersionNoHash = "$fullVersion$computedVersionMeta"
+
+version = computedVersionNoHash
+
+allprojects {
+    ext["versionBeta"] = computedVersionMeta
+    ext["versionNoHash"] = computedVersionNoHash
+}
 
 tasks {
     fun subModuleTasks(taskName: String): List<Task> {

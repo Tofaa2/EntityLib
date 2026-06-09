@@ -8,7 +8,7 @@ import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityAnimation;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerHurtAnimation;
 import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.meta.EntityMeta;
+import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.utils.VersionUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,28 +22,12 @@ public class WrapperLivingEntity extends WrapperEntity {
     private final WrapperEntityAttributes attributes;
     private final WrapperEntityPotionEffect potionEffect;
 
-    public WrapperLivingEntity(int entityId, UUID uuid, EntityType entityType, EntityMeta entityMeta) {
+    public WrapperLivingEntity(int entityId, UUID uuid, EntityType entityType, Metadata entityMeta) {
         super(entityId, uuid, entityType, entityMeta);
 
         this.equipment = new WrapperEntityEquipment(this);
         this.attributes = new WrapperEntityAttributes(this);
         this.potionEffect = new WrapperEntityPotionEffect(this);
-    }
-
-    public WrapperLivingEntity(int entityId, UUID uuid, EntityType entityType) {
-        this(entityId, uuid, entityType, EntityMeta.createMeta(entityId, entityType));
-    }
-
-    public WrapperLivingEntity(int entityId, EntityType entityType) {
-        this(entityId, EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
-    }
-
-    public WrapperLivingEntity(UUID uuid, EntityType entityType) {
-        this(EntityLib.getPlatform().getEntityIdProvider().provide(uuid, entityType), uuid, entityType);
-    }
-
-    public WrapperLivingEntity(EntityType entityType) {
-        this(EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
     }
 
     @Override

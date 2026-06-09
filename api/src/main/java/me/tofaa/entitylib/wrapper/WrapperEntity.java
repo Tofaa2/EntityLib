@@ -1,5 +1,6 @@
 package me.tofaa.entitylib.wrapper;
 
+import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.player.User;
@@ -18,8 +19,8 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSp
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSystemChatMessage;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.container.EntityContainer;
-import me.tofaa.entitylib.meta.EntityMeta;
-import me.tofaa.entitylib.meta.types.ObjectData;
+import me.tofaa.entitylib.meta.Metadata;
+import me.tofaa.entitylib.meta.types.EntityDataKeys;
 import me.tofaa.entitylib.tick.Tickable;
 import me.tofaa.entitylib.utils.PacketUtil;
 import me.tofaa.entitylib.ve.ViewerRule;
@@ -32,7 +33,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Consumer;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -45,9 +45,9 @@ public class WrapperEntity implements Tickable {
         if (e == EntityTypes.PLAYER) {
             return WrapperPlayer.class;
         }
-        if (EntityMeta.isLivingEntity(e)) {
-            return WrapperLivingEntity.class;
-        }
+//        if (EntityMeta.isLivingEntity(e)) {
+//            return WrapperLivingEntity.class;
+//        }
         if (e == EntityTypes.EXPERIENCE_ORB) {
             return WrapperExperienceOrbEntity.class;
         }
@@ -58,7 +58,7 @@ public class WrapperEntity implements Tickable {
     private final UUID uuid;
     private final int entityId;
     private final EntityType entityType;
-    private final EntityMeta entityMeta;
+    private final Metadata meta;
     private boolean ticking;
     protected Location location;
     private Location preRidingLocation;
@@ -71,11 +71,11 @@ public class WrapperEntity implements Tickable {
     private EntityContainer parent;
     private final List<ViewerRule> viewerRules;
 
-    public WrapperEntity(int entityId, UUID uuid, EntityType entityType, EntityMeta entityMeta) {
+    public WrapperEntity(int entityId, UUID uuid, EntityType entityType, Metadata meta) {
         this.entityId = entityId;
         this.uuid = uuid;
         this.entityType = entityType;
-        this.entityMeta = entityMeta;
+        this.meta = meta;
         this.ticking = true;
         this.viewers = ConcurrentHashMap.newKeySet();
         this.passengers = ConcurrentHashMap.newKeySet();
@@ -84,21 +84,21 @@ public class WrapperEntity implements Tickable {
         this.velocity = Vector3d.zero();
     }
 
-    public WrapperEntity(int entityId, EntityType entityType) {
-        this(entityId, EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
-    }
+//    public WrapperEntity(int entityId, EntityType entityType) {
+//        this(entityId, EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
+//    }
 
-    public WrapperEntity(UUID uuid, EntityType entityType) {
-        this(EntityLib.getPlatform().getEntityIdProvider().provide(uuid, entityType), uuid, entityType);
-    }
+//    public WrapperEntity(UUID uuid, EntityType entityType) {
+//        this(EntityLib.getPlatform().getEntityIdProvider().provide(uuid, entityType), uuid, entityType);
+//    }
+//
+//    public WrapperEntity(EntityType entityType) {
+//        this(EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
+//    }
 
-    public WrapperEntity(EntityType entityType) {
-        this(EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
-    }
-
-    public WrapperEntity(int entityId, UUID uuid, EntityType entityType) {
-        this(entityId, uuid, entityType, EntityMeta.createMeta(entityId, entityType));
-    }
+//    public WrapperEntity(int entityId, UUID uuid, EntityType entityType) {
+//        this(entityId, uuid, entityType, Metadata.createMeta(entityId, entityType));
+//    }
 
     public boolean spawn(Location location, EntityContainer parent) {
         if (spawned) return false;
@@ -108,7 +108,7 @@ public class WrapperEntity implements Tickable {
 
         sendPacketsToViewers(
                 createSpawnPacket(),
-                entityMeta.createPacket()
+                meta.createPacket()
         );
 
         if (this instanceof WrapperLivingEntity) {
@@ -130,29 +130,29 @@ public class WrapperEntity implements Tickable {
         return spawn(location, EntityLib.getApi().getDefaultContainer());
     }
 
-    @ApiStatus.Internal
-    public int getObjectData() {
-        if (entityMeta instanceof ObjectData) {
-            return ((ObjectData) entityMeta).getObjectData();
-        }
-
-        return 0;
-    }
+//    @ApiStatus.Internal
+//    public int getObjectData() {
+//        if (meta instanceof ObjectData) {
+//            return ((ObjectData) meta).getObjectData();
+//        }
+//
+//        return 0;
+//    }
 
     @ApiStatus.Internal
     public Optional<Vector3d> createVeloPacket() {
         Optional<Vector3d> velocity;
         double veloX = 0, veloY = 0, veloZ = 0;
 
-        if (entityMeta instanceof ObjectData) {
-            ObjectData od = (ObjectData) entityMeta;
-            if (od.requiresVelocityPacketAtSpawn()) {
-                final WrapperPlayServerEntityVelocity veloPacket = getVelocityPacket();
-                veloX = veloPacket.getVelocity().getX();
-                veloY = veloPacket.getVelocity().getY();
-                veloZ = veloPacket.getVelocity().getZ();
-            }
-        }
+//        if (meta instanceof ObjectData) {
+//            ObjectData od = (ObjectData) meta;
+//            if (od.requiresVelocityPacketAtSpawn()) {
+//                final WrapperPlayServerEntityVelocity veloPacket = getVelocityPacket();
+//                veloX = veloPacket.getVelocity().getX();
+//                veloY = veloPacket.getVelocity().getY();
+//                veloZ = veloPacket.getVelocity().getZ();
+//            }
+//        }
 
         if (veloX == 0 && veloY == 0 && veloZ == 0) {
             velocity = Optional.of(Vector3d.zero());
@@ -232,7 +232,7 @@ public class WrapperEntity implements Tickable {
             }
 
             sendPacket(uuid, createSpawnPacket());
-            sendPacket(uuid, entityMeta.createPacket());
+            sendPacket(uuid, meta.createPacket());
             sendPacket(uuid, createPassengerPacket());
 
             if (this instanceof WrapperLivingEntity) {
@@ -267,7 +267,7 @@ public class WrapperEntity implements Tickable {
                 location.getPitch(),
                 location.getYaw(),
                 location.getYaw(),
-                getObjectData(),
+                /* getObjectData() */ 0,
                 createVeloPacket()
         );
     }
@@ -376,22 +376,26 @@ public class WrapperEntity implements Tickable {
         return entityId;
     }
 
-    public @NotNull EntityMeta getEntityMeta() {
-        return entityMeta;
+    public Metadata getMeta() {
+        return meta;
     }
 
-    public <T extends EntityMeta> T getEntityMeta(@NotNull Class<T> metaClass) {
-        return metaClass.cast(entityMeta);
-    }
+//    public @NotNull EntityMeta getMeta() {
+//        return meta;
+//    }
 
-    public <T extends EntityMeta> void consumeEntityMeta(@NotNull Class<T> metaClass, @NotNull Consumer<T> consumer) {
-        T meta = getEntityMeta(metaClass);
-        consumer.accept(meta);
-    }
+//    public <T extends EntityMeta> T getEntityMeta(@NotNull Class<T> metaClass) {
+//        return metaClass.cast(meta);
+//    }
 
-    public void consumeMeta(@NotNull Consumer<EntityMeta> consumer) {
-        consumer.accept(entityMeta);
-    }
+//    public <T extends EntityMeta> void consumeEntityMeta(@NotNull Class<T> metaClass, @NotNull Consumer<T> consumer) {
+//        T meta = getEntityMeta(metaClass);
+//        consumer.accept(meta);
+//    }
+
+//    public void consumeMeta(@NotNull Consumer<EntityMeta> consumer) {
+//        consumer.accept(meta);
+//    }
 
     public @NotNull UUID getUuid() {
         return uuid;
@@ -494,7 +498,7 @@ public class WrapperEntity implements Tickable {
     public void refresh() {
         if (!spawned) return;
 
-        sendPacketsToViewers(entityMeta.createPacket(), createPassengerPacket());
+        sendPacketsToViewers(meta.createPacket(), createPassengerPacket());
     }
 
     public void sendPacketToViewers(PacketWrapper<?> packet) {
@@ -548,11 +552,11 @@ public class WrapperEntity implements Tickable {
     }
 
     public boolean hasNoGravity() {
-        return entityMeta.hasNoGravity();
+        return Boolean.TRUE.equals(meta.get(EntityDataKeys.NO_GRAVITY.forVersion(PacketEvents.getAPI().getServerManager().getVersion().toClientVersion())));
     }
 
     public void setHasNoGravity(boolean hasNoGravity) {
-        entityMeta.setHasNoGravity(hasNoGravity);
+        meta.set(EntityDataKeys.NO_GRAVITY.forVersion(PacketEvents.getAPI().getServerManager().getVersion().toClientVersion()), hasNoGravity);
         refresh();
     }
 

@@ -42,7 +42,7 @@ public class WrapperPlayer extends WrapperLivingEntity {
                     getEntityId(),
                     profile.getUUID(),
                     getLocation(),
-                    getEntityMeta().entityData()
+                    getMeta().entityData()
             );
         }
         return super.createSpawnPacket();

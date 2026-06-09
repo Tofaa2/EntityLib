@@ -2,7 +2,7 @@ package me.tofaa.entitylib.wrapper;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.meta.EntityMeta;
+import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.wrapper.ai.AIGroup;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,24 +25,9 @@ public class WrapperEntityCreature extends WrapperLivingEntity {
 
     private final Set<AIGroup> aiGroups;
 
-    public WrapperEntityCreature(int entityId, @NotNull UUID uuid, EntityType entityType, EntityMeta meta) {
+    public WrapperEntityCreature(int entityId, @NotNull UUID uuid, EntityType entityType, Metadata meta) {
         super(entityId, uuid, entityType, meta);
         this.aiGroups = new HashSet<>();
-    }
-
-    public WrapperEntityCreature(int entityId, @NotNull UUID uuid, EntityType entityType) {
-        this(entityId, uuid, entityType, EntityMeta.createMeta(entityId, entityType));
-    }
-
-    public WrapperEntityCreature(int entityId, EntityType entityType) {
-        this(entityId, EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
-    }
-
-    public WrapperEntityCreature(UUID uuid, EntityType entityType) {
-        this(EntityLib.getPlatform().getEntityIdProvider().provide(uuid, entityType), uuid, entityType);
-    }
-    public WrapperEntityCreature(EntityType entityType) {
-        this(EntityLib.getPlatform().getEntityUuidProvider().provide(entityType), entityType);
     }
 
     @Override

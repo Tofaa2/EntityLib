@@ -1,24 +1,23 @@
 package me.tofaa.entitylib.meta;
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
-import com.github.retrooper.packetevents.protocol.entity.data.EntityDataType;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityMetadataProvider;
+import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.EntityLibAPI;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-@SuppressWarnings("unchecked")
-public class Metadata {
-
+public class Metadata implements EntityMetadataProvider {
     private final int entityId;
     private volatile boolean notifyAboutChanges = true;
-    private final HashMap<Byte, EntityData<?>> notNotifiedChanges = new HashMap<>();
-    private final ConcurrentHashMap<Byte, EntityData<?>> metadataMap = new ConcurrentHashMap<>();
+    private final Map<Integer, EntityData<?>> notNotifiedChanges = new HashMap<>();
+    private final Map<Integer, EntityData<?>> metadataMap = new ConcurrentHashMap<>();
 
     public Metadata(int entityId) {
         this.entityId = entityId;
@@ -41,31 +40,37 @@ public class Metadata {
      */
     public void clear() {
         this.metadataMap.clear();
-        this.notNotifiedChanges.clear();
+        synchronized (notNotifiedChanges) {
+            this.notNotifiedChanges.clear();
+        }
     }
 
-    public <T> T getIndex(byte index, @Nullable T defaultValue) {
-        EntityData<?> value = this.metadataMap.get(index);
-        return value != null ? (T) value.getValue() : defaultValue;
-    }
+    public <T> void set(@NotNull MetadataKey<T> key, T value) {
+        EntityData<T> data = key.createData(value);
+        metadataMap.put(key.getIndex(), data);
 
-    public <T> void setIndex(byte index, @NotNull EntityDataType<T> dataType, T value) {
-
-        final EntityData<?> entry = new EntityData<>(index, dataType, value);
-        this.metadataMap.put(index, entry);
-
-        final Optional<EntityLibAPI<?>> optionalApi = EntityLib.getOptionalApi();
-        if (!optionalApi.isPresent()) return;
-        final WrapperEntity entity = optionalApi.get().getEntity(entityId);
-        if (entity == null || !entity.isSpawned()) return; // Not EntityLib entity then, the user must send the packet manually. OR not spawned.
-        if (!this.notifyAboutChanges) {
-            synchronized (this.notNotifiedChanges) {
-                this.notNotifiedChanges.put(index, entry);
+        if (notifyAboutChanges) {
+            synchronized (notNotifiedChanges) {
+                notNotifiedChanges.put(key.getIndex(), data);
             }
         }
-        else {
-            entity.sendPacketToViewers(createPacket());
-        }
+    }
+
+    @Nullable
+    public <T> T get(@NotNull MetadataKey<T> key) {
+        EntityData<?> data = metadataMap.get(key.getIndex());
+        return key.parseData(data);
+    }
+
+    public <L, N> void setLogical(@NotNull MappedMetadataKey<L, N> key, L logicalValue) {
+        set(key, key.getSerializer().apply(logicalValue));
+    }
+
+    @Nullable
+    public <L, N> L getLogical(@NotNull MappedMetadataKey<L, N> key) {
+        EntityData<?> data = metadataMap.get(key.getIndex());
+        if (data == null) return null;
+        return key.getDeserializer().apply(key.parseData(data));
     }
 
     public void setNotifyAboutChanges(boolean notifyAboutChanges) {
@@ -84,6 +89,7 @@ public class Metadata {
                 this.notNotifiedChanges.clear();
             }
         }
+
         final WrapperEntity entity = EntityLib.getApi().getEntity(entityId);
         if (entries == null || entity == null || !entity.isSpawned()) {
             return;
@@ -95,15 +101,14 @@ public class Metadata {
 
     public void setMetaFromPacket(WrapperPlayServerEntityMetadata wrapper) {
         for (EntityData<?> data : wrapper.getEntityMetadata()) {
-            metadataMap.put((byte) data.getIndex(), data);
+            metadataMap.put(data.getIndex(), data);
         }
     }
 
-    public boolean isNotifyingChanges() {
-        return notifyAboutChanges;
-    }
+    public boolean isNotifyingChanges() { return notifyAboutChanges; }
 
-    @NotNull List<EntityData<?>> getEntries() {
+    @NotNull
+    List<EntityData<?>> getEntries() {
         return Collections.unmodifiableList(new ArrayList<>(metadataMap.values()));
     }
 
@@ -111,4 +116,15 @@ public class Metadata {
         return new WrapperPlayServerEntityMetadata(entityId, getEntries());
     }
 
+    @Override
+    public @NonNull List<EntityData<?>> entityData(@NonNull ClientVersion version) {
+        if (this.metadataMap.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<EntityData<?>> sortedData = new ArrayList<>(this.metadataMap.values());
+        sortedData.sort(Comparator.comparingInt(EntityData::getIndex));
+
+        return sortedData;
+    }
 }

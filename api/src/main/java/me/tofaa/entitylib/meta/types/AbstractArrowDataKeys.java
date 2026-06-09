@@ -1,0 +1,88 @@
+package me.tofaa.entitylib.meta.types;
+
+import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
+import com.github.retrooper.packetevents.protocol.player.ClientVersion;
+import me.tofaa.entitylib.meta.VersionedMetadataKey;
+
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * Supported versions: All versions
+ */
+public class AbstractArrowDataKeys extends EntityDataKeys {
+
+    /**
+     * Supported versions: All versions
+     */
+    public static final VersionedMetadataKey<Byte> ID_FLAGS = VersionedMetadataKey.<Byte>builder()
+            .add(ClientVersion.V_1_14_4, 7, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_15, 7, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_16, 7, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_16_2, 7, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_17, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_19, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_19_1, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_19_3, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_19_4, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_20_2, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_20_3, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_20_5, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21_2, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21_4, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21_5, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21_6, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21_9, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21_11, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_26_1, 8, EntityDataTypes.BYTE)
+            .build();
+
+    /**
+     * Supported versions: 1.21.2+
+     */
+    public static final VersionedMetadataKey<Boolean> IN_GROUND = VersionedMetadataKey.<Boolean>builder()
+            .add(ClientVersion.V_1_21_2, 10, EntityDataTypes.BOOLEAN)
+            .add(ClientVersion.V_1_21_4, 10, EntityDataTypes.BOOLEAN)
+            .add(ClientVersion.V_1_21_5, 10, EntityDataTypes.BOOLEAN)
+            .add(ClientVersion.V_1_21_6, 10, EntityDataTypes.BOOLEAN)
+            .add(ClientVersion.V_1_21_9, 10, EntityDataTypes.BOOLEAN)
+            .add(ClientVersion.V_1_21_11, 10, EntityDataTypes.BOOLEAN)
+            .add(ClientVersion.V_26_1, 10, EntityDataTypes.BOOLEAN)
+            .build();
+
+    /**
+     * Supported versions: 1.15-
+     */
+    public static final VersionedMetadataKey<Optional<UUID>> OWNERUUID = VersionedMetadataKey.<Optional<UUID>>builder()
+            .add(ClientVersion.V_1_14_4, 8, EntityDataTypes.OPTIONAL_UUID)
+            .add(ClientVersion.V_1_15, 8, EntityDataTypes.OPTIONAL_UUID)
+            .build();
+
+    /**
+     * Supported versions: All versions
+     */
+    public static final VersionedMetadataKey<Byte> PIERCE_LEVEL = VersionedMetadataKey.<Byte>builder()
+            .add(ClientVersion.V_1_14_4, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_15, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_16, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_16_2, 8, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_17, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_19, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_19_1, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_19_3, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_19_4, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_20_2, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_20_3, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_20_5, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21_2, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21_4, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21_5, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21_6, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21_9, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_1_21_11, 9, EntityDataTypes.BYTE)
+            .add(ClientVersion.V_26_1, 9, EntityDataTypes.BYTE)
+            .build();
+
+}

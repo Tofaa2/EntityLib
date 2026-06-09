@@ -5,7 +5,7 @@ plugins {
 }
 
 group = rootProject.group
-version = rootProject.version
+version = (rootProject.findProperty("versionNoHash") ?: rootProject.version).toString()
 description = project.description
 
 repositories {
@@ -65,7 +65,7 @@ publishing {
         create<MavenPublication>("EntityLib") {
             groupId = project.group as String
             artifactId = project.name
-            version = rootProject.ext["versionNoHash"].toString()
+            version = project.findProperty("versionNoHash")?.toString() ?: project.version.toString()
             from(components["java"])
 
             pom {
@@ -103,8 +103,11 @@ configurations.all {
     resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS)
 }
 
-val taskNames = gradle.startParameter.taskNames
-if (taskNames.any { it.contains("build") }
-    && taskNames.any { it.contains("publish") }) {
-    throw IllegalStateException("Cannot build and publish at the same time.")
+// Safely run this only after all projects have finished mapping their structures
+gradle.projectsEvaluated {
+    val taskNames = gradle.startParameter.taskNames
+    if (taskNames.any { it.contains("build") }
+        && taskNames.any { it.contains("publish") }) {
+        throw IllegalStateException("Cannot build and publish at the same time.")
+    }
 }

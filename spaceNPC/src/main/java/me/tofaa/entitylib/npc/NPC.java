@@ -186,20 +186,20 @@ public class NPC {
         entity.setLocation(location);
 
         if (entityType == EntityTypes.PLAYER) {
-            entity.getEntityMeta().setCustomNameVisible(false);
+            entity.getMeta().setCustomNameVisible(false);
             registerScoreboardTeam();
         } else if (options.hasDisplayName()) {
-            entity.getEntityMeta().setCustomName(options.getDisplayName());
-            entity.getEntityMeta().setCustomNameVisible(true);
+            entity.getMeta().setCustomName(options.getDisplayName());
+            entity.getMeta().setCustomNameVisible(true);
         }
 
         entity.spawn(location);
 
         if (options.isSwimming()) {
-            entity.getEntityMeta().setSwimming(true);
+            entity.getMeta().setSwimming(true);
         }
         if (options.isCrouching()) {
-            entity.getEntityMeta().setSneaking(true);
+            entity.getMeta().setSneaking(true);
         }
 
         World npcWorld = getWorld();
@@ -216,7 +216,7 @@ public class NPC {
             sittingEntity.setLocation(sittingLoc);
             sittingEntity.spawn(sittingLoc);
 
-            ArmorStandMeta meta = (ArmorStandMeta) sittingEntity.getEntityMeta();
+            ArmorStandMeta meta = (ArmorStandMeta) sittingEntity.getMeta();
             meta.setSmall(true);
             meta.setInvisible(true);
 

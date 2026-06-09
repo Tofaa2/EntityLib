@@ -3,7 +3,6 @@ package me.tofaa.entitylib.packetconversion;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
-import me.tofaa.entitylib.meta.types.ObjectData;
 import me.tofaa.entitylib.utils.VersionUtil;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 
@@ -26,7 +25,8 @@ final class ModernSpawningMethods {
                     entity.getLocation().getPitch(),
                     entity.getLocation().getYaw(),
                     entity.getLocation().getYaw(),
-                    entity.getEntityMeta() instanceof ObjectData ? (((ObjectData) entity.getEntityMeta()).getObjectData()) : 0,
+                    //entity.getMeta() instanceof ObjectData ? (((ObjectData) entity.getMeta()).getObjectData()) : 0,
+                    0,
                     entity.createVeloPacket()
             );
         }

@@ -89,7 +89,7 @@ final class ModernHologram implements Hologram.Modern {
         if (index < 0 || index >= lines.size()) {
             return false;
         }
-        TextDisplayMeta meta = (TextDisplayMeta) lines.get(index).getEntityMeta();
+        TextDisplayMeta meta = (TextDisplayMeta) lines.get(index).getMeta();
         meta.setText(line);
         return true;
     }
@@ -108,7 +108,7 @@ final class ModernHologram implements Hologram.Modern {
         }
 
         for (int i = 0; i < Math.min(existingCount, newCount); i++) {
-            TextDisplayMeta meta = (TextDisplayMeta) lines.get(i).getEntityMeta();
+            TextDisplayMeta meta = (TextDisplayMeta) lines.get(i).getMeta();
             meta.setText(newLines.get(i));
         }
 
@@ -119,7 +119,7 @@ final class ModernHologram implements Hologram.Modern {
 
         for (int i = existingCount; i < newCount; i++) {
             WrapperEntity e = new WrapperEntity(EntityTypes.TEXT_DISPLAY);
-            TextDisplayMeta meta = (TextDisplayMeta) e.getEntityMeta();
+            TextDisplayMeta meta = (TextDisplayMeta) e.getMeta();
             meta.setInvisible(true);
             meta.setHasNoGravity(true);
             meta.setText(newLines.get(i));
@@ -143,7 +143,7 @@ final class ModernHologram implements Hologram.Modern {
         if (index < 0 || index >= lines.size()) {
             return null;
         }
-        TextDisplayMeta meta = (TextDisplayMeta) lines.get(index).getEntityMeta();
+        TextDisplayMeta meta = (TextDisplayMeta) lines.get(index).getMeta();
         return meta.getText();
     }
 
@@ -151,7 +151,7 @@ final class ModernHologram implements Hologram.Modern {
     public void setLine(int index, @Nullable Component line) {
         WrapperEntity e = new WrapperEntity(EntityTypes.TEXT_DISPLAY);
         e.spawn(location);
-        TextDisplayMeta meta = (TextDisplayMeta) e.getEntityMeta();
+        TextDisplayMeta meta = (TextDisplayMeta) e.getMeta();
         meta.setInvisible(true);
         meta.setHasNoGravity(true);
         meta.setText(line);
