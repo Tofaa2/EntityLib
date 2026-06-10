@@ -59,7 +59,7 @@ public class EntityFieldsCodeGen {
 
                 for (Map.Entry<String, JsonElement> entityEntry : jsonEntities.entrySet()) {
                     String rawName = entityEntry.getKey();
-                    String className = cleanClassName(rawName) + "DataKeys";
+                    String className = cleanClassName(rawName) + "MetaProperties";
 
                     EntityNode node = entities.computeIfAbsent(className, EntityNode::new);
                     node.getSupportedVersions().add(version);
@@ -70,7 +70,7 @@ public class EntityFieldsCodeGen {
                     if (node.getSuperClass() == null) {
                         if (body.has("superClass") && !body.get("superClass").isJsonNull()) {
                             String rawSuper = body.get("superClass").getAsString();
-                            node.setSuperClass(cleanClassName(rawSuper) + "DataKeys");
+                            node.setSuperClass(cleanClassName(rawSuper) + "MetaProperties");
                         }
                     }
 

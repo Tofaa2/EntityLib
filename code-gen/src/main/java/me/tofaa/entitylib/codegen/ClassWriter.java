@@ -19,7 +19,6 @@ public class ClassWriter {
 
     public void writeClassFile(EntityNode node, DataTypeMapper mapper) {
         Set<String> imports = new TreeSet<>();
-        imports.add("me.tofaa.entitylib.meta.EntityDataKey");
         imports.add("com.github.retrooper.packetevents.protocol.player.ClientVersion");
         imports.add("com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes");
 
@@ -28,18 +27,39 @@ public class ClassWriter {
         for (PropertyNode prop : node.getProperties().values()) {
             if (prop.getTypeMapping() == null || prop.getTypeMapping().isExcluded()) continue;
 
+            imports.add("me.tofaa.entitylib.meta.property.MetadataProperty");
+
             prop.getTypeMapping().typeToken().appendImports(imports);
             String typeString = prop.getTypeMapping().typeToken().formatString();
 
             String canonicalRawType = lastValue(prop.getVersions()).rawDataType();
             TypeMapping canonicalMapping = mapper.mapDataType(canonicalRawType);
 
+            String fullyQualifiedAccessor = mapper.getAccessorClass(node.getClassName(), prop.getName());
+            String accessorName = null;
+
+            if (fullyQualifiedAccessor != null) {
+                accessorName = fullyQualifiedAccessor.substring(fullyQualifiedAccessor.lastIndexOf('.') + 1);
+
+                imports.add("me.tofaa.entitylib.meta.property.WrapperProperty");
+                imports.add(fullyQualifiedAccessor);
+            } else {
+                imports.add("me.tofaa.entitylib.meta.property.SimpleProperty");
+            }
+
             bodySb.append(generateJavadoc(prop.getVersions().keySet(), "    "));
 
-            bodySb.append("    public static final EntityDataKey<").append(typeString).append("> ")
-                    .append(prop.getName())
-                    .append(" = EntityDataKey.<").append(typeString).append(">builder(")
-                    .append(node.getClassName()).append(".class)\n");
+            if (accessorName != null) {
+                bodySb.append("    public static final WrapperProperty<").append(typeString).append(", ").append(accessorName).append("> ")
+                        .append(prop.getName())
+                        .append(" = MetadataProperty.<").append(typeString).append(">builder(")
+                        .append(node.getClassName()).append(".class)\n");
+            } else {
+                bodySb.append("    public static final SimpleProperty<").append(typeString).append("> ")
+                        .append(prop.getName())
+                        .append(" = MetadataProperty.<").append(typeString).append(">builder(")
+                        .append(node.getClassName()).append(".class)\n");
+            }
 
             for (Map.Entry<String, FieldData> versionEntry : prop.getVersions().entrySet()) {
                 String enumVersion = "V_" + versionEntry.getKey().replace('.', '_');
@@ -62,13 +82,24 @@ public class ClassWriter {
                             .append("', converter required\n");
                 }
             }
+            if (accessorName != null) {
+                bodySb.append("            .wrapped(").append(accessorName).append("::new)\n");
+            }
             bodySb.append("            .build();\n\n");
         }
 
         StringBuilder finalStr = new StringBuilder();
 
         finalStr.append("// Auto-generated file. Do not edit manually.\n");
-        finalStr.append("package me.tofaa.entitylib.meta.types;\n\n");
+        finalStr.append("package me.tofaa.entitylib.meta.types;\n\n");;
+
+        String hierarchyClause;
+        if (node.getSuperClass() != null) {
+            hierarchyClause = " extends " + node.getSuperClass();
+        } else {
+            imports.add("me.tofaa.entitylib.meta.property.IMetaProperties");
+            hierarchyClause = " implements IMetaProperties";
+        }
 
         for (String imp : imports) {
             finalStr.append("import ").append(imp).append(";\n");
@@ -77,8 +108,7 @@ public class ClassWriter {
 
         finalStr.append(generateJavadoc(node.getSupportedVersions(), ""));
 
-        String extendsClause = node.getSuperClass() != null ? " extends " + node.getSuperClass() : "";
-        finalStr.append("public class ").append(node.getClassName()).append(extendsClause).append(" {\n\n");
+        finalStr.append("public class ").append(node.getClassName()).append(hierarchyClause).append(" {\n\n");
         finalStr.append(bodySb);
         finalStr.append("}\n");
 

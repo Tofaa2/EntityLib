@@ -29,6 +29,7 @@ import com.github.retrooper.packetevents.util.Quaternion4f;
 import com.github.retrooper.packetevents.util.Vector3f;
 import com.github.retrooper.packetevents.util.Vector3i;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -127,5 +128,16 @@ public class DataTypeMapper {
 
             default -> new TypeMapping(new TypeToken("Object", Object.class), null, true);
         };
+    }
+
+    private record FieldTarget(String entityClass, String property) {}
+
+    private static final Map<FieldTarget, String> ACCESSOR_MAP = Map.ofEntries(
+            Map.entry(new FieldTarget("EntityMetaProperties", "SHARED_FLAGS"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperSharedFlagsValue"),
+            Map.entry(new FieldTarget("DisplayMetaProperties", "BILLBOARD_RENDER_CONSTRAINTS"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperBillboardValue")
+    );
+
+    public @Nullable String getAccessorClass(String entityClassName, String propertyName) {
+        return ACCESSOR_MAP.get(new FieldTarget(entityClassName, propertyName));
     }
 }

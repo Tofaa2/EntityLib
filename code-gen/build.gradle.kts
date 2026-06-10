@@ -9,6 +9,7 @@ tasks.withType<JavaCompile> {
 }
 
 dependencies {
+    //implementation(project(":api"))
     implementation(libs.packetevents.api)
     implementation(libs.adventure.api)
     implementation(libs.gson)
