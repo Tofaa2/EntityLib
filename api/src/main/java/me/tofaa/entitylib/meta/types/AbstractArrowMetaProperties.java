@@ -5,6 +5,8 @@ import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import me.tofaa.entitylib.meta.property.MetadataProperty;
 import me.tofaa.entitylib.meta.property.SimpleProperty;
+import me.tofaa.entitylib.meta.property.WrapperProperty;
+import me.tofaa.entitylib.meta.wrapper.impl.WrapperAbstractArrowIdFlags;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -17,7 +19,7 @@ public class AbstractArrowMetaProperties extends EntityMetaProperties {
     /**
      * Supported versions: All versions
      */
-    public static final SimpleProperty<Byte> ID_FLAGS = MetadataProperty.<Byte>builder(AbstractArrowMetaProperties.class)
+    public static final WrapperProperty<Byte, WrapperAbstractArrowIdFlags> ID_FLAGS = MetadataProperty.<Byte>builder(AbstractArrowMetaProperties.class)
             .addVersion(ClientVersion.V_1_14_4, 7, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_15, 7, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_16, 7, EntityDataTypes.BYTE)
@@ -38,6 +40,7 @@ public class AbstractArrowMetaProperties extends EntityMetaProperties {
             .addVersion(ClientVersion.V_1_21_9, 8, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_21_11, 8, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_26_1, 8, EntityDataTypes.BYTE)
+            .wrapped(WrapperAbstractArrowIdFlags::new)
             .build();
 
     /**

@@ -5,6 +5,8 @@ import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import me.tofaa.entitylib.meta.property.MetadataProperty;
 import me.tofaa.entitylib.meta.property.SimpleProperty;
+import me.tofaa.entitylib.meta.property.WrapperProperty;
+import me.tofaa.entitylib.meta.wrapper.impl.WrapperAxolotlVariant;
 
 /**
  * Supported versions: 1.17+
@@ -58,7 +60,7 @@ public class AxolotlMetaProperties extends AnimalMetaProperties {
     /**
      * Supported versions: 1.17+
      */
-    public static final SimpleProperty<Integer> VARIANT = MetadataProperty.<Integer>builder(AxolotlMetaProperties.class)
+    public static final WrapperProperty<Integer, WrapperAxolotlVariant> VARIANT = MetadataProperty.<Integer>builder(AxolotlMetaProperties.class)
             .addVersion(ClientVersion.V_1_17, 17, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_19, 17, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_19_1, 17, EntityDataTypes.INT)
@@ -75,6 +77,7 @@ public class AxolotlMetaProperties extends AnimalMetaProperties {
             .addVersion(ClientVersion.V_1_21_9, 17, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_21_11, 17, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_26_1, 18, EntityDataTypes.INT)
+            .wrapped(WrapperAxolotlVariant::new)
             .build();
 
 }

@@ -133,8 +133,18 @@ public class DataTypeMapper {
     private record FieldTarget(String entityClass, String property) {}
 
     private static final Map<FieldTarget, String> ACCESSOR_MAP = Map.ofEntries(
-            Map.entry(new FieldTarget("EntityMetaProperties", "SHARED_FLAGS"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperSharedFlagsValue"),
-            Map.entry(new FieldTarget("DisplayMetaProperties", "BILLBOARD_RENDER_CONSTRAINTS"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperBillboardValue")
+            Map.entry(new FieldTarget("EntityMetaProperties", "SHARED_FLAGS"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperEntitySharedFlags"),
+            Map.entry(new FieldTarget("DisplayMetaProperties", "BILLBOARD_RENDER_CONSTRAINTS"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperDisplayBillboard"),
+            Map.entry(new FieldTarget("AbstractArrowMetaProperties", "ID_FLAGS"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperAbstractArrowIdFlags"),
+            Map.entry(new FieldTarget("AbstractHorseMetaProperties", "FLAGS"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperAbstractHorseFlags"),
+            Map.entry(new FieldTarget("ArmorStandMetaProperties", "CLIENT_FLAGS"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperArmorStandClientFlags"),
+            Map.entry(new FieldTarget("AvatarMetaProperties", "PLAYER_MODE_CUSTOMISATION"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperAvatarPlayerModeCustomizationFlags"),
+            Map.entry(new FieldTarget("AxolotlMetaProperties", "VARIANT"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperAxolotlVariant"),
+            Map.entry(new FieldTarget("BatMetaProperties", "FLAGS"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperBatFlags"),
+            Map.entry(new FieldTarget("BeeMetaProperties", "FLAGS"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperBeeFlags"),
+            Map.entry(new FieldTarget("BlazeMetaProperties", "FLAGS"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperBlazeFlags"),
+            Map.entry(new FieldTarget("CreeperMetaProperties", "SWELL_DIR"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperCreeperSwellState"),
+            Map.entry(new FieldTarget("EnderDragonMetaProperties", "PHASE"), "me.tofaa.entitylib.meta.wrapper.impl.WrapperEnderDragonPhase")
     );
 
     public @Nullable String getAccessorClass(String entityClassName, String propertyName) {

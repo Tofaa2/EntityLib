@@ -4,7 +4,8 @@ package me.tofaa.entitylib.meta.types;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import me.tofaa.entitylib.meta.property.MetadataProperty;
-import me.tofaa.entitylib.meta.property.SimpleProperty;
+import me.tofaa.entitylib.meta.property.WrapperProperty;
+import me.tofaa.entitylib.meta.wrapper.impl.WrapperBatFlags;
 
 /**
  * Supported versions: All versions
@@ -14,7 +15,7 @@ public class BatMetaProperties extends AmbientCreatureMetaProperties {
     /**
      * Supported versions: All versions
      */
-    public static final SimpleProperty<Byte> FLAGS = MetadataProperty.<Byte>builder(BatMetaProperties.class)
+    public static final WrapperProperty<Byte, WrapperBatFlags> FLAGS = MetadataProperty.<Byte>builder(BatMetaProperties.class)
             .addVersion(ClientVersion.V_1_14_4, 14, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_15, 15, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_16, 15, EntityDataTypes.BYTE)
@@ -35,6 +36,7 @@ public class BatMetaProperties extends AmbientCreatureMetaProperties {
             .addVersion(ClientVersion.V_1_21_9, 16, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_21_11, 16, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_26_1, 16, EntityDataTypes.BYTE)
+            .wrapped(WrapperBatFlags::new)
             .build();
 
 }

@@ -2,26 +2,25 @@ package me.tofaa.entitylib.meta.wrapper.impl;
 
 import me.tofaa.entitylib.meta.EntityMetadata;
 import me.tofaa.entitylib.meta.types.EntityMetaProperties;
-import me.tofaa.entitylib.meta.wrapper.WrapperBitmaskValue;
+import me.tofaa.entitylib.meta.wrapper.WrapperBitmask;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents {@link EntityMetaProperties#SHARED_FLAGS}
  */
-public class WrapperSharedFlagsValue extends WrapperBitmaskValue {
+public class WrapperEntitySharedFlags extends WrapperBitmask {
 
-    // Bit positions as documented in the Minecraft protocol wiki.
     // https://minecraft.wiki/w/Java_Edition_protocol/Entity_metadata#Entity
-    private static final int BIT_ON_FIRE = 0;
-    private static final int BIT_SNEAKING = 1;
-    // bit 2 is unused/reserved
-    private static final int BIT_SPRINTING = 3;
-    private static final int BIT_SWIMMING = 4;
-    private static final int BIT_INVISIBLE = 5;
-    private static final int BIT_GLOWING = 6;
-    private static final int BIT_FALL_FLYING = 7;
+    private static final int MASK_ON_FIRE = 0x01;
+    private static final int MASK_SNEAKING = 0x02;
+    // 0x04 is unused/reserved (irrelevant to 1.14.4+)
+    private static final int MASK_SPRINTING = 0x08;
+    private static final int MASK_SWIMMING = 0x10;
+    private static final int MASK_INVISIBLE = 0x20;
+    private static final int MASK_GLOWING = 0x40;
+    private static final int MASK_FALL_FLYING = 0x80;
 
-    public WrapperSharedFlagsValue(@NotNull EntityMetadata store) {
+    public WrapperEntitySharedFlags(@NotNull EntityMetadata store) {
         super(store, EntityMetaProperties.SHARED_FLAGS);
     }
 
@@ -29,14 +28,14 @@ public class WrapperSharedFlagsValue extends WrapperBitmaskValue {
      * Returns {@code true} if the entity is on fire.
      */
     public boolean isOnFire() {
-        return getFlag(BIT_ON_FIRE);
+        return hasMask(MASK_ON_FIRE);
     }
 
     /**
      * Sets whether the entity is on fire.
      */
-    public WrapperSharedFlagsValue setOnFire(boolean value) {
-        setFlag(BIT_ON_FIRE, value);
+    public WrapperEntitySharedFlags setOnFire(boolean value) {
+        setMask(MASK_ON_FIRE, value);
         return this;
     }
 
@@ -44,14 +43,14 @@ public class WrapperSharedFlagsValue extends WrapperBitmaskValue {
      * Returns {@code true} if the entity is sneaking/crouching.
      */
     public boolean isSneaking() {
-        return getFlag(BIT_SNEAKING);
+        return hasMask(MASK_SNEAKING);
     }
 
     /**
      * Sets whether the entity is sneaking/crouching.
      */
-    public WrapperSharedFlagsValue setSneaking(boolean value) {
-        setFlag(BIT_SNEAKING, value);
+    public WrapperEntitySharedFlags setSneaking(boolean value) {
+        setMask(MASK_SNEAKING, value);
         return this;
     }
 
@@ -59,14 +58,14 @@ public class WrapperSharedFlagsValue extends WrapperBitmaskValue {
      * Returns {@code true} if the entity is sprinting.
      */
     public boolean isSprinting() {
-        return getFlag(BIT_SPRINTING);
+        return hasMask(MASK_SPRINTING);
     }
 
     /**
      * Sets whether the entity is sprinting.
      */
-    public WrapperSharedFlagsValue setSprinting(boolean value) {
-        setFlag(BIT_SPRINTING, value);
+    public WrapperEntitySharedFlags setSprinting(boolean value) {
+        setMask(MASK_SPRINTING, value);
         return this;
     }
 
@@ -74,14 +73,14 @@ public class WrapperSharedFlagsValue extends WrapperBitmaskValue {
      * Returns {@code true} if the entity is swimming.
      */
     public boolean isSwimming() {
-        return getFlag(BIT_SWIMMING);
+        return hasMask(MASK_SWIMMING);
     }
 
     /**
      * Sets whether the entity is swimming.
      */
-    public WrapperSharedFlagsValue setSwimming(boolean value) {
-        setFlag(BIT_SWIMMING, value);
+    public WrapperEntitySharedFlags setSwimming(boolean value) {
+        setMask(MASK_SWIMMING, value);
         return this;
     }
 
@@ -89,14 +88,14 @@ public class WrapperSharedFlagsValue extends WrapperBitmaskValue {
      * Returns {@code true} if the entity is invisible.
      */
     public boolean isInvisible() {
-        return getFlag(BIT_INVISIBLE);
+        return hasMask(MASK_INVISIBLE);
     }
 
     /**
      * Sets whether the entity is invisible.
      */
-    public WrapperSharedFlagsValue setInvisible(boolean value) {
-        setFlag(BIT_INVISIBLE, value);
+    public WrapperEntitySharedFlags setInvisible(boolean value) {
+        setMask(MASK_INVISIBLE, value);
         return this;
     }
 
@@ -104,14 +103,14 @@ public class WrapperSharedFlagsValue extends WrapperBitmaskValue {
      * Returns {@code true} if the entity has the glowing effect.
      */
     public boolean isGlowing() {
-        return getFlag(BIT_GLOWING);
+        return hasMask(MASK_GLOWING);
     }
 
     /**
      * Sets whether the entity has the glowing effect.
      */
-    public WrapperSharedFlagsValue setGlowing(boolean value) {
-        setFlag(BIT_GLOWING, value);
+    public WrapperEntitySharedFlags setGlowing(boolean value) {
+        setMask(MASK_GLOWING, value);
         return this;
     }
 
@@ -119,14 +118,15 @@ public class WrapperSharedFlagsValue extends WrapperBitmaskValue {
      * Returns {@code true} if the entity is elytra flying (fall flying).
      */
     public boolean isFallFlying() {
-        return getFlag(BIT_FALL_FLYING);
+        return hasMask(MASK_FALL_FLYING);
     }
 
     /**
      * Sets whether the entity is elytra flying (fall flying).
      */
-    public WrapperSharedFlagsValue setFallFlying(boolean value) {
-        setFlag(BIT_FALL_FLYING, value);
+    public WrapperEntitySharedFlags setFallFlying(boolean value) {
+        setMask(MASK_FALL_FLYING, value);
         return this;
     }
+
 }

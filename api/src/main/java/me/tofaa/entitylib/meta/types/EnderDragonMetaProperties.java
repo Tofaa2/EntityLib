@@ -4,7 +4,8 @@ package me.tofaa.entitylib.meta.types;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import me.tofaa.entitylib.meta.property.MetadataProperty;
-import me.tofaa.entitylib.meta.property.SimpleProperty;
+import me.tofaa.entitylib.meta.property.WrapperProperty;
+import me.tofaa.entitylib.meta.wrapper.impl.WrapperEnderDragonPhase;
 
 /**
  * Supported versions: All versions
@@ -14,7 +15,7 @@ public class EnderDragonMetaProperties extends MobMetaProperties {
     /**
      * Supported versions: All versions
      */
-    public static final SimpleProperty<Integer> PHASE = MetadataProperty.<Integer>builder(EnderDragonMetaProperties.class)
+    public static final WrapperProperty<Integer, WrapperEnderDragonPhase> PHASE = MetadataProperty.<Integer>builder(EnderDragonMetaProperties.class)
             .addVersion(ClientVersion.V_1_14_4, 14, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_15, 15, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_16, 15, EntityDataTypes.INT)
@@ -35,6 +36,7 @@ public class EnderDragonMetaProperties extends MobMetaProperties {
             .addVersion(ClientVersion.V_1_21_9, 16, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_21_11, 16, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_26_1, 16, EntityDataTypes.INT)
+            .wrapped(WrapperEnderDragonPhase::new)
             .build();
 
 }

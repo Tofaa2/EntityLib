@@ -5,6 +5,8 @@ import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import me.tofaa.entitylib.meta.property.MetadataProperty;
 import me.tofaa.entitylib.meta.property.SimpleProperty;
+import me.tofaa.entitylib.meta.property.WrapperProperty;
+import me.tofaa.entitylib.meta.wrapper.impl.WrapperAbstractHorseFlags;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -17,7 +19,7 @@ public class AbstractHorseMetaProperties extends AnimalMetaProperties {
     /**
      * Supported versions: All versions
      */
-    public static final SimpleProperty<Byte> FLAGS = MetadataProperty.<Byte>builder(AbstractHorseMetaProperties.class)
+    public static final WrapperProperty<Byte, WrapperAbstractHorseFlags> FLAGS = MetadataProperty.<Byte>builder(AbstractHorseMetaProperties.class)
             .addVersion(ClientVersion.V_1_14_4, 15, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_15, 16, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_16, 16, EntityDataTypes.BYTE)
@@ -38,6 +40,7 @@ public class AbstractHorseMetaProperties extends AnimalMetaProperties {
             .addVersion(ClientVersion.V_1_21_9, 17, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_21_11, 17, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_26_1, 18, EntityDataTypes.BYTE)
+            .wrapped(WrapperAbstractHorseFlags::new)
             .build();
 
     /**

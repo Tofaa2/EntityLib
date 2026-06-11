@@ -5,6 +5,8 @@ import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import me.tofaa.entitylib.meta.property.MetadataProperty;
 import me.tofaa.entitylib.meta.property.SimpleProperty;
+import me.tofaa.entitylib.meta.property.WrapperProperty;
+import me.tofaa.entitylib.meta.wrapper.impl.WrapperCreeperSwellState;
 
 /**
  * Supported versions: All versions
@@ -66,7 +68,7 @@ public class CreeperMetaProperties extends MonsterMetaProperties {
     /**
      * Supported versions: All versions
      */
-    public static final SimpleProperty<Integer> SWELL_DIR = MetadataProperty.<Integer>builder(CreeperMetaProperties.class)
+    public static final WrapperProperty<Integer, WrapperCreeperSwellState> SWELL_DIR = MetadataProperty.<Integer>builder(CreeperMetaProperties.class)
             .addVersion(ClientVersion.V_1_14_4, 14, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_15, 15, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_16, 15, EntityDataTypes.INT)
@@ -87,6 +89,7 @@ public class CreeperMetaProperties extends MonsterMetaProperties {
             .addVersion(ClientVersion.V_1_21_9, 16, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_1_21_11, 16, EntityDataTypes.INT)
             .addVersion(ClientVersion.V_26_1, 16, EntityDataTypes.INT)
+            .wrapped(WrapperCreeperSwellState::new)
             .build();
 
 }

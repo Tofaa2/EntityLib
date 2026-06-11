@@ -8,7 +8,7 @@ import com.github.retrooper.packetevents.util.Vector3f;
 import me.tofaa.entitylib.meta.property.MetadataProperty;
 import me.tofaa.entitylib.meta.property.SimpleProperty;
 import me.tofaa.entitylib.meta.property.WrapperProperty;
-import me.tofaa.entitylib.meta.wrapper.impl.WrapperBillboardValue;
+import me.tofaa.entitylib.meta.wrapper.impl.WrapperDisplayBillboard;
 
 /**
  * Supported versions: 1.19.4+
@@ -18,7 +18,7 @@ public class DisplayMetaProperties extends EntityMetaProperties {
     /**
      * Supported versions: 1.19.4+
      */
-    public static final WrapperProperty<Byte, WrapperBillboardValue> BILLBOARD_RENDER_CONSTRAINTS = MetadataProperty.<Byte>builder(DisplayMetaProperties.class)
+    public static final WrapperProperty<Byte, WrapperDisplayBillboard> BILLBOARD_RENDER_CONSTRAINTS = MetadataProperty.<Byte>builder(DisplayMetaProperties.class)
             .addVersion(ClientVersion.V_1_19_4, 14, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_20_2, 15, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_20_3, 15, EntityDataTypes.BYTE)
@@ -31,7 +31,7 @@ public class DisplayMetaProperties extends EntityMetaProperties {
             .addVersion(ClientVersion.V_1_21_9, 15, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_21_11, 15, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_26_1, 15, EntityDataTypes.BYTE)
-            .wrapped(WrapperBillboardValue::new)
+            .wrapped(WrapperDisplayBillboard::new)
             .build();
 
     /**

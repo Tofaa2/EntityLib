@@ -8,7 +8,7 @@ import me.tofaa.entitylib.meta.property.IMetaProperties;
 import me.tofaa.entitylib.meta.property.MetadataProperty;
 import me.tofaa.entitylib.meta.property.SimpleProperty;
 import me.tofaa.entitylib.meta.property.WrapperProperty;
-import me.tofaa.entitylib.meta.wrapper.impl.WrapperSharedFlagsValue;
+import me.tofaa.entitylib.meta.wrapper.impl.WrapperEntitySharedFlags;
 import net.kyori.adventure.text.Component;
 
 import java.util.Optional;
@@ -151,7 +151,7 @@ public class EntityMetaProperties implements IMetaProperties {
     /**
      * Supported versions: All versions
      */
-    public static final WrapperProperty<Byte, WrapperSharedFlagsValue> SHARED_FLAGS = MetadataProperty.<Byte>builder(EntityMetaProperties.class)
+    public static final WrapperProperty<Byte, WrapperEntitySharedFlags> SHARED_FLAGS = MetadataProperty.<Byte>builder(EntityMetaProperties.class)
             .addVersion(ClientVersion.V_1_14_4, 0, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_15, 0, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_16, 0, EntityDataTypes.BYTE)
@@ -172,7 +172,7 @@ public class EntityMetaProperties implements IMetaProperties {
             .addVersion(ClientVersion.V_1_21_9, 0, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_21_11, 0, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_26_1, 0, EntityDataTypes.BYTE)
-            .wrapped(WrapperSharedFlagsValue::new)
+            .wrapped(WrapperEntitySharedFlags::new)
             .build();
 
     /**

@@ -39,4 +39,5 @@ public abstract class WrapperMetadataValue<R> {
     protected final @NotNull WrapperProperty<R, ? extends WrapperMetadataValue<R>> property() {
         return this.property;
     }
+
 }

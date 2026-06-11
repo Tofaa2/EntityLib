@@ -6,6 +6,8 @@ import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.github.retrooper.packetevents.util.Vector3f;
 import me.tofaa.entitylib.meta.property.MetadataProperty;
 import me.tofaa.entitylib.meta.property.SimpleProperty;
+import me.tofaa.entitylib.meta.property.WrapperProperty;
+import me.tofaa.entitylib.meta.wrapper.impl.WrapperArmorStandClientFlags;
 
 /**
  * Supported versions: All versions
@@ -41,7 +43,7 @@ public class ArmorStandMetaProperties extends LivingEntityMetaProperties {
     /**
      * Supported versions: All versions
      */
-    public static final SimpleProperty<Byte> CLIENT_FLAGS = MetadataProperty.<Byte>builder(ArmorStandMetaProperties.class)
+    public static final WrapperProperty<Byte, WrapperArmorStandClientFlags> CLIENT_FLAGS = MetadataProperty.<Byte>builder(ArmorStandMetaProperties.class)
             .addVersion(ClientVersion.V_1_14_4, 13, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_15, 14, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_16, 14, EntityDataTypes.BYTE)
@@ -62,6 +64,7 @@ public class ArmorStandMetaProperties extends LivingEntityMetaProperties {
             .addVersion(ClientVersion.V_1_21_9, 15, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_1_21_11, 15, EntityDataTypes.BYTE)
             .addVersion(ClientVersion.V_26_1, 15, EntityDataTypes.BYTE)
+            .wrapped(WrapperArmorStandClientFlags::new)
             .build();
 
     /**
