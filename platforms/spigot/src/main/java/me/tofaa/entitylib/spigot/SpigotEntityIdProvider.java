@@ -63,7 +63,14 @@ public final class SpigotEntityIdProvider implements EntityIdProvider {
         final ServerVersion serverVersion = platform.getAPI().getPacketEvents().getServerManager().getVersion();
 
         if (isPaper() && serverVersion.isNewerThanOrEquals(ServerVersion.V_1_16)) {
-            return Bukkit.getUnsafe()::nextEntityId; // Paper API
+            // Paper removed UnsafeValues.nextEntityId() in API 26.2+.
+            // Verify the method exists via reflection to avoid NoSuchMethodError.
+            try {
+                UnsafeValues.class.getMethod("nextEntityId");
+                return Bukkit.getUnsafe()::nextEntityId; // Paper API (pre-26.x)
+            } catch (final NoSuchMethodException ignored) {
+                // Method removed — fall through to AtomicInteger reflection path
+            }
         }
 
         final Class<?> entityClass = getEntityClass();
@@ -79,7 +86,7 @@ public final class SpigotEntityIdProvider implements EntityIdProvider {
 
     private Supplier<Integer> resolveAtomicSupplier(final Class<?> entityClass) {
         final Field entityAtomicField = getStaticFieldOfType(entityClass, AtomicInteger.class,
-                "entityCount", "d", "c", "counter", "nextEntityId");
+                "entityCount", "d", "c", "counter", "nextEntityId", "ENTITY_COUNTER");
         if (entityAtomicField == null) {
             return null;
         }
@@ -97,9 +104,13 @@ public final class SpigotEntityIdProvider implements EntityIdProvider {
     }
 
     private Supplier<Integer> resolveLegacySupplier(final Class<?> entityClass) {
-        final Field entityLegacyField = getStaticFieldOfType(entityClass, Integer.TYPE, "entityCount", "b");
+        // Search for a non-final static int field (entity counters are never final).
+        final Field entityLegacyField = findMutableStaticIntField(entityClass);
         if (entityLegacyField == null) {
-            throw new IllegalStateException("Could not find legacy entity counter field");
+            // Last resort: local high-offset counter. Entity ID collision is unlikely
+            // since the server allocates from 1 upward.
+            final AtomicInteger fallback = new AtomicInteger(Integer.MAX_VALUE - 100000);
+            return fallback::incrementAndGet;
         }
         entityLegacyField.setAccessible(true);
         return () -> {
@@ -114,6 +125,32 @@ public final class SpigotEntityIdProvider implements EntityIdProvider {
     }
 
     /**
+     * Finds a mutable (non-final) static int field in the given class to use as
+     * a legacy entity counter. Tries known field names first, then falls back to
+     * any non-final static int field.
+     */
+    private static Field findMutableStaticIntField(final Class<?> clazz) {
+        for (final String name : new String[]{"entityCount", "b", "c"}) {
+            final Field field = getField(clazz, name);
+            if (field != null
+                    && field.getType() == Integer.TYPE
+                    && Modifier.isStatic(field.getModifiers())
+                    && !Modifier.isFinal(field.getModifiers())) {
+                return field;
+            }
+        }
+        // Wildcard fallback: any non-final static int field
+        for (final Field field : clazz.getDeclaredFields()) {
+            if (Modifier.isStatic(field.getModifiers())
+                    && field.getType() == Integer.TYPE
+                    && !Modifier.isFinal(field.getModifiers())) {
+                return field;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Resolves server's internal `Entity` class, handling version-specific packages.
      * In Minecraft versions 1.17 and later, the `Entity` class resides in `net.minecraft.world.entity.Entity`.
      * Prior to 1.17, it is located in `net.minecraft.server.[version].Entity`.
@@ -125,11 +162,19 @@ public final class SpigotEntityIdProvider implements EntityIdProvider {
         final ServerVersion serverVersion = platform.getAPI().getPacketEvents().getServerManager().getVersion();
         final boolean isFlattened = serverVersion.isNewerThanOrEquals(ServerVersion.V_1_17);
 
-        final String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-        final String packagePath = isFlattened ? "net.minecraft.world.entity" : "net.minecraft.server." + version;
+        if (isFlattened) {
+            try {
+                return Class.forName("net.minecraft.world.entity.Entity");
+            } catch (final ClassNotFoundException exception) {
+                throw new IllegalStateException("Could not find Entity class", exception);
+            }
+        }
 
+        // Pre-1.17: versioned package (e.g. net.minecraft.server.v1_16_R3.Entity)
+        final String[] parts = Bukkit.getServer().getClass().getPackage().getName().split("\\.");
+        final String ver = parts.length > 3 ? parts[3] : "";
         try {
-            return Class.forName(packagePath + ".Entity");
+            return Class.forName("net.minecraft.server." + ver + ".Entity");
         } catch (final ClassNotFoundException exception) {
             throw new IllegalStateException("Could not find Entity class", exception);
         }
