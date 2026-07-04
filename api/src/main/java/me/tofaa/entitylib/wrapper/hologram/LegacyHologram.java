@@ -162,6 +162,7 @@ final class LegacyHologram implements Hologram.Legacy {
             Location l = new Location(location.getX(), y, location.getZ(), location.getYaw(), location.getPitch());
             line.teleport(l, false);
         }
+
     }
 
     @Override

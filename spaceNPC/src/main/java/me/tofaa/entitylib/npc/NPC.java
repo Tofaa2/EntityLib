@@ -29,6 +29,7 @@ import me.tofaa.entitylib.wrapper.WrapperLivingEntity;
 import me.tofaa.entitylib.wrapper.WrapperPlayer;
 import me.tofaa.entitylib.wrapper.hologram.Hologram;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -319,9 +320,32 @@ public class NPC {
         NPCRegistry.unregister(this);
     }
 
+    /**
+     * Splits a Component into multiple lines on {@code <br>} tags.
+     * MiniMessage keeps {@code <br>} as a tag token through serialize/deserialize round-trips,
+     * so we serialize back to a MiniMessage string and split on the literal {@code <br>} token
+     * before re-deserializing each fragment into its own Component. This allows multi-line NPC
+     * name tags to be rendered as separate hologram line entities, since armor stands and text
+     * displays do not visually break a single component on newlines.
+     */
+    private List<Component> splitDisplayNameLines(Component component) {
+        MiniMessage mm = MiniMessage.miniMessage();
+        String serialized = mm.serialize(component);
+        // MiniMessage round-trips <br> as the literal tag string "<br>"
+        String[] parts = serialized.split("(?i)<br>", -1);
+        if (parts.length == 1) {
+            return Collections.singletonList(component);
+        }
+        List<Component> lines = new ArrayList<>(parts.length);
+        for (String part : parts) {
+            lines.add(mm.deserialize(part));
+        }
+        return lines;
+    }
+
     private void createHologram() {
         Location loc = getPosition();
-        double yOffset = options.isSitting() ? 2.76 : 2.26;
+        double yOffset = options.isSitting() ? 1.1 : 1.0;
         Location hologramLoc = new Location(
             loc.getX(),
             loc.getY() + yOffset,
@@ -330,24 +354,15 @@ public class NPC {
             loc.getPitch()
         );
 
-        int protocolVersion = EntityLib.getApi()
-            .getPacketEvents()
-            .getServerManager()
-            .getVersion()
-            .getProtocolVersion();
+        Hologram.Legacy hologram = Hologram.legacy(hologramLoc);
+        hologram.setLineOffset(-0.28f);
 
-        Hologram hologram;
-        if (protocolVersion >= 760) {
-            hologram = Hologram.modern(hologramLoc);
-        } else {
-            hologram = Hologram.legacy(hologramLoc);
+        Component displayName = options.getDisplayName() != null
+            ? options.getDisplayName()
+            : Component.text(name);
+        for (Component line : splitDisplayNameLines(displayName)) {
+            hologram.addLine(line);
         }
-
-        hologram.addLine(
-            options.getDisplayName() != null
-                ? options.getDisplayName()
-                : Component.text(name)
-        );
         hologram.show();
 //        if (hologram.getEntity().getEntityMeta() instanceof AbstractDisplayMeta displayMeta) {
 ////            displayMeta.setTranslation(new Vector3f(0, 0.5f, 0));
@@ -358,12 +373,10 @@ public class NPC {
 
     private void updateHologram() {
         if (hologram != null) {
-            hologram.setLine(
-                0,
-                options.getDisplayName() != null
-                    ? options.getDisplayName()
-                    : Component.text(name)
-            );
+            Component displayName = options.getDisplayName() != null
+                ? options.getDisplayName()
+                : Component.text(name);
+            hologram.setLines(splitDisplayNameLines(displayName));
         }
     }
 
