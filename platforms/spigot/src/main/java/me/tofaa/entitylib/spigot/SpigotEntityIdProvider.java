@@ -1,6 +1,8 @@
 package me.tofaa.entitylib.spigot;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -9,6 +11,7 @@ import java.util.stream.Stream;
 
 import org.bukkit.Bukkit;
 import org.bukkit.UnsafeValues;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +52,8 @@ public final class SpigotEntityIdProvider implements EntityIdProvider {
      * and platform.
      * Logic:
      * <ul>
-     *   <li>Paper (1.16+): Use `{@link UnsafeValues#nextEntityId()}`. (Paper API)</li>
+     *   <li>Paper (1.16 until 26.1): Use `{@link UnsafeValues#nextEntityId()}`. (Paper API)</li>
+     *   <li>Paper 26.2 and ab ove: Uses the updated signature of `{@link UnsafeValues#nextEntityId()}` with the first World in `{@link Bukkit#getWorlds()}` which should be overworld </li>
      *   <li>1.14+: Access `AtomicInteger` field ("entityCount", "d", "c").</li>
      *   <li>1.8+: Access legacy `int` field "entityCount".</li>
      * </ul>
@@ -62,9 +66,35 @@ public final class SpigotEntityIdProvider implements EntityIdProvider {
 
         final ServerVersion serverVersion = platform.getAPI().getPacketEvents().getServerManager().getVersion();
 
-        if (isPaper() && serverVersion.isNewerThanOrEquals(ServerVersion.V_1_16)) {
-            return Bukkit.getUnsafe()::nextEntityId; // Paper API
+        if (isPaper()) {
+            if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_16)) {
+                if (serverVersion.isOlderThanOrEquals(ServerVersion.V_26_1)) {
+                    return Bukkit.getUnsafe()::nextEntityId; // Paper API Before unsafe values change
+                }
+                else {
+                    // Please do not look at this branch
+                    Class<UnsafeValues> unsafeValuesClass = UnsafeValues.class;
+                    try {
+                        Method method = unsafeValuesClass.getMethod("nextEntityId", World.class);
+                        UnsafeValues unsafe = Bukkit.getUnsafe();
+                        return () -> {
+                            try {
+                                World overworld = Bukkit.getWorlds().get(0); // There is a chance the server has no worlds but at that point we have bigger issues to worry about
+                                return (Integer) method.invoke(unsafe, overworld);
+                            } catch (IllegalAccessException | InvocationTargetException e) {
+                                throw new RuntimeException(e);
+                            }
+                        };
+                    } catch (NoSuchMethodException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
         }
+
+//        if (isPaper() && serverVersion.isNewerThanOrEquals(ServerVersion.V_1_16)) {
+//            return Bukkit.getUnsafe()::nextEntityId; // Paper API
+//        }
 
         final Class<?> entityClass = getEntityClass();
         if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_14)) {

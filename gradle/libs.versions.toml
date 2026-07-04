@@ -2,7 +2,7 @@
 adventure = "4.25.0"
 jetbrains-annotations = "26.0.2"
 gson = "2.13.1"
-packetevents = "2.11.0"
+packetevents = "2.13.0"
 paper = "1.21-R0.1-SNAPSHOT"
 velocity = "3.4.0-SNAPSHOT"
 run-paper = "3.0.2"

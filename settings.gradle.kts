@@ -18,7 +18,7 @@ include(":movement-engine")
 include(":platforms:movement")
 include(":spaceNPC")
 
-if (System.getenv("PRIVATE").toBoolean()) {
+if (System.getenv("ENTITYLIB_PRIVATE").toBoolean()) {
     include("discord-bot")
     include(":code-gen")
     include(":test-plugin")
