@@ -3,6 +3,7 @@ package me.tofaa.entitylib.ve;
 
 import com.github.retrooper.packetevents.protocol.player.User;
 import me.tofaa.entitylib.EntityLib;
+import me.tofaa.entitylib.extras.collections.WeakLinkedHashSet;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +43,8 @@ public class ViewerEngine {
      */
     public ViewerEngine(Executor executor) {
         this.globalRules = new CopyOnWriteArrayList<>();
-        this.tracked = Collections.newSetFromMap(new WeakHashMap<>());
+//        this.tracked = Collections.newSetFromMap(new WeakHashMap<>()); // Breaks iteration safety due to not being linked
+        this.tracked = new WeakLinkedHashSet<>();
         this.executor = executor;
         this.listener = new ViewerEngineListener(this);
     }
@@ -121,8 +123,19 @@ public class ViewerEngine {
      * @return true if the user passed and did not fail any rules, false otherwise
      */
     public boolean canSpawnFor(User user, WrapperEntity entity) {
-        if (!entity.getViewerRules().isEmpty() && entity.getViewerRules().stream().allMatch(rule -> rule.shouldSee(user))) return true;
-        return globalRules.stream().allMatch(rule -> rule.shouldSee(user));
+        for (ViewerRule rule : entity.getViewerRules()) {
+            if (!rule.shouldSee(user)) {
+                return false;
+            }
+        }
+
+        for (ViewerRule rule : this.globalRules) {
+            if (!rule.shouldSee(user)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

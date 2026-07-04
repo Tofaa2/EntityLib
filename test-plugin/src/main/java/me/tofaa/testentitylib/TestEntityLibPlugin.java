@@ -15,7 +15,6 @@ public class TestEntityLibPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        DateFormat.getDateTimeInstance().format(new java.util.Date(timestamp));
 
         SpigotEntityLibPlatform platform = new SpigotEntityLibPlatform(this);
         APIConfig settings = new APIConfig(PacketEvents.getAPI())

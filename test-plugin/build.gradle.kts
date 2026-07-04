@@ -5,7 +5,6 @@ plugins {
 }
 
 repositories {
-    maven("https://maven.evokegames.gg/snapshots")
     maven("https://repo.papermc.io/repository/maven-public/")
 }
 
@@ -13,12 +12,11 @@ dependencies {
     compileOnly(libs.paper)
     compileOnly(libs.packetevents.spigot)
     implementation(project(":platforms:spigot"))
-//    implementation(project(":platforms:spigot"))
-}
+2}
 
 tasks {
-    val version = "1.21.3"
-    val javaVersion = JavaLanguageVersion.of(21)
+    val version = "26.2"
+    val javaVersion = JavaLanguageVersion.of(25)
 
     val jvmArgsExternal = listOf(
         "-Dcom.mojang.eula.agree=true"

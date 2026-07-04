@@ -1,6 +1,7 @@
 package me.tofaa.entitylib.wrapper;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.util.Vector3d;
@@ -39,6 +40,21 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnmodifiableView;
 
 public class WrapperEntity implements Tickable {
+    
+    public static Class<? extends WrapperEntity> getWrapperClassFromType(EntityType e) {
+        if (e == EntityTypes.PLAYER) {
+            return WrapperPlayer.class;
+        }
+        if (EntityMeta.isLivingEntity(e)) {
+            return WrapperLivingEntity.class;
+        }
+        if (e == EntityTypes.EXPERIENCE_ORB) {
+            return WrapperExperienceOrbEntity.class;
+        }
+        return WrapperEntity.class;
+    }
+
+
     private final UUID uuid;
     private final int entityId;
     private final EntityType entityType;
@@ -430,7 +446,6 @@ public class WrapperEntity implements Tickable {
     }
 
     public WrapperPlayServerEntityVelocity getVelocityPacket() {
-        Vector3d velocity = this.velocity.multiply(8000.0f / 20.0f);
         return new WrapperPlayServerEntityVelocity(entityId, velocity);
     }
 

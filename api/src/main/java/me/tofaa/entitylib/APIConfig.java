@@ -2,7 +2,9 @@ package me.tofaa.entitylib;
 
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
+import me.tofaa.entitylib.container.EntityContainer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class APIConfig {
 
@@ -13,6 +15,7 @@ public final class APIConfig {
     private boolean platformLogger = false;
     private boolean bstats = true;
     private boolean forceBundle = false;
+    private EntityContainer entityContainer;
 
     public APIConfig(PacketEventsAPI<?> packetEvents) {
         this.packetEvents = packetEvents;
@@ -53,6 +56,11 @@ public final class APIConfig {
         return this;
     }
 
+    public @NotNull APIConfig entityContainer(EntityContainer container) {
+        this.entityContainer = container;
+        return this;
+    }
+
     public boolean isDebugMode() {
         return debugMode;
     }
@@ -81,6 +89,11 @@ public final class APIConfig {
         return this.forceBundle
                 && EntityLib.getOptionalApi().isPresent()
                 && EntityLib.getOptionalApi().get().getPacketEvents().getServerManager().getVersion().isNewerThanOrEquals(ServerVersion.V_1_19_4);
+    }
+
+    @Nullable
+    public EntityContainer getEntityContainer() {
+        return this.entityContainer;
     }
 
 }
