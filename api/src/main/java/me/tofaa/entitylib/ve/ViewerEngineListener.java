@@ -85,17 +85,19 @@ final class ViewerEngineListener extends PacketListenerAbstract {
 
     @Override
     public void onUserDisconnect(final UserDisconnectEvent event) {
-        final UUID uniqueId = event.getUser().getUUID();
+        engine.getExecutor().execute(() -> {
+            final UUID uniqueId = event.getUser().getUUID();
 
-        // Note from Chubbyduck1: While this says it's non-null, it can actually be null in this case. Not sure why. When run without this, it would spam NPEs for me.
-        if (uniqueId == null) {
-            return;
-        }
-
-        engine.getTracked0().forEach(entity -> {
-            if (entity.hasViewer(uniqueId)) {
-                entity.removeViewer(uniqueId);
+            // Note from Chubbyduck1: While this says it's non-null, it can actually be null in this case. Not sure why. When run without this, it would spam NPEs for me.
+            if (uniqueId == null) {
+                return;
             }
+
+            engine.getTracked0().forEach(entity -> {
+                if (entity.hasViewer(uniqueId)) {
+                    entity.removeViewerSilently(uniqueId);
+                }
+            });
         });
     }
 
