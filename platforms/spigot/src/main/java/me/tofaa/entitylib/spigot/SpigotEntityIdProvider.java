@@ -68,7 +68,7 @@ public final class SpigotEntityIdProvider implements EntityIdProvider {
 
         if (isPaper()) {
             if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_16)) {
-                if (serverVersion.isOlderThanOrEquals(ServerVersion.V_26_1)) {
+                if (serverVersion.isOlderThan(ServerVersion.V_26_2)) {
                     return Bukkit.getUnsafe()::nextEntityId; // Paper API Before unsafe values change
                 }
                 else {
