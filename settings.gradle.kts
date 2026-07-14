@@ -1,26 +1,21 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
+        maven("https://repo.papermc.io/repository/maven-public/")
     }
 }
 
-plugins {
-    id("org.gradle.toolchains.foojay-resolver") version "1.0.0"
+@Suppress("UnstableApiUsage")
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven("https://repo.papermc.io/repository/maven-public/")
+        maven("https://repo.codemc.io/repository/maven-releases/")
+        maven("https://repo.codemc.io/repository/maven-snapshots/")
+    }
 }
 
 rootProject.name = "EntityLib"
-include(":common")
 include(":api")
-include(":platforms:spigot")
-include(":platforms:velocity")
-include(":platforms:standalone")
-include(":movement-engine")
-include(":platforms:movement")
-include(":spaceNPC")
-
-if (System.getenv("PRIVATE").toBoolean()) {
-    include("discord-bot")
-    include(":code-gen")
-    include(":test-plugin")
-    include(":block-bench-addon")
-}
+include(":codegen")

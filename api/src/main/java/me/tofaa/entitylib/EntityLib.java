@@ -1,39 +1,29 @@
 package me.tofaa.entitylib;
 
-import com.github.retrooper.packetevents.util.PEVersion;
-import me.tofaa.entitylib.utils.ELVersions;
-import me.tofaa.entitylib.utils.GithubUpdater;
-
-import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public final class EntityLib {
 
-    private EntityLib() {}
+    private static EntityLib instance;
+    private final APIConfig config;
 
-    private static Platform platform;
-    private static EntityLibAPI api;
-
-    public static void init(Platform<?> platform, APIConfig settings) {
-        EntityLib.platform = platform;
-        platform.setupApi(settings);
-        api = platform.getAPI();
-
-        new GithubUpdater("Tofaa2", "EntityLib");
+    private EntityLib(@NotNull APIConfig config) {
+        this.config = config;
     }
 
-    public static Optional<EntityLibAPI<?>> getOptionalApi() {
-        return Optional.ofNullable(api);
+    public static void init(@NotNull APIConfig config) {
+        instance = new EntityLib(config);
     }
 
-    public static <T> EntityLibAPI<T> getApi() {
-        return api;
+    public static @NotNull EntityLib get() {
+        if (instance == null) {
+            throw new IllegalStateException("EntityLib not initialized");
+        }
+        return instance;
     }
 
-    public static Platform<?> getPlatform() {
-        return platform;
+    public @NotNull APIConfig getConfig() {
+        return config;
     }
 
-    public static PEVersion getVersion() {
-        return ELVersions.CURRENT;
-    }
 }
