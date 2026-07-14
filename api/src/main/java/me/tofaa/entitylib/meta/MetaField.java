@@ -1,13 +1,10 @@
 package me.tofaa.entitylib.meta;
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataType;
-import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public final class MetaField<T> {
 
@@ -27,21 +24,32 @@ public final class MetaField<T> {
         return name;
     }
 
-    public T defaultValue() {
+    public @Nullable T defaultValue() {
         return defaultValue;
     }
 
-    public @NotNull VersionedField<T> forVersion(int protocolVersion) {
+    @SuppressWarnings("rawtypes")
+    public @NotNull VersionedField<?> forVersion(int protocolVersion) {
         for (VersionMapping<T> mapping : mappings) {
             if (protocolVersion >= mapping.minProtocol && protocolVersion <= mapping.maxProtocol) {
                 return mapping.resolved;
             }
         }
-        VersionMapping<T> fallback = mappings.get(mappings.size() - 1);
-        return fallback.resolved;
+        return mappings.get(mappings.size() - 1).resolved;
     }
 
-    public @NotNull VersionedField<T> forVersion(int protocolVersion, @NotNull VersionedField<T> fallback) {
+    @SuppressWarnings("rawtypes")
+    public @Nullable VersionedField<?> forVersionOrNull(int protocolVersion) {
+        for (VersionMapping<T> mapping : mappings) {
+            if (protocolVersion >= mapping.minProtocol && protocolVersion <= mapping.maxProtocol) {
+                return mapping.resolved;
+            }
+        }
+        return null;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public @NotNull VersionedField<?> forVersion(int protocolVersion, @NotNull VersionedField<?> fallback) {
         for (VersionMapping<T> mapping : mappings) {
             if (protocolVersion >= mapping.minProtocol && protocolVersion <= mapping.maxProtocol) {
                 return mapping.resolved;
@@ -95,11 +103,7 @@ public final class MetaField<T> {
         return "MetaField{name='" + name + "', mappings=" + mappings + "}";
     }
 
-    // -- version mapping record -- //
-
     record VersionMapping<T>(int minProtocol, int maxProtocol, VersionedField<T> resolved) {}
-
-    // -- builder -- //
 
     public static final class Builder<T> {
 
@@ -117,36 +121,20 @@ public final class MetaField<T> {
         }
 
         @SuppressWarnings("unchecked")
-    public @NotNull Builder<T> versionRange(
+        public @NotNull Builder<T> versionRange(
                 int minProtocol,
                 int maxProtocol,
                 int index,
                 @NotNull EntityDataType<?> wireType
         ) {
-            return versionRange(minProtocol, maxProtocol, index, wireType,
-                    (Function<T, Object>) Function.identity(),
-                    (Function<Object, T>) Function.identity());
-        }
-
-        @SuppressWarnings("unchecked")
-        public @NotNull Builder<T> versionRange(
-                int minProtocol,
-                int maxProtocol,
-                int index,
-                @NotNull EntityDataType<?> wireType,
-                @NotNull Function<T, Object> encoder,
-                @NotNull Function<Object, T> decoder
-        ) {
-            VersionedField<T> resolved = new VersionedField<>(
-                    index, wireType, defaultValue, encoder, decoder
-            );
+            VersionedField<T> resolved = new VersionedField<>(index, (EntityDataType<T>) wireType);
             mappings.add(new VersionMapping<>(minProtocol, maxProtocol, resolved));
             return this;
         }
 
         public @NotNull MetaField<T> build() {
             mappings.sort(Comparator.comparingInt(a -> a.minProtocol));
-            return new MetaField<>(name, defaultValue, mappings);
+            return new MetaField<>(name, defaultValue, List.copyOf(mappings));
         }
     }
 }

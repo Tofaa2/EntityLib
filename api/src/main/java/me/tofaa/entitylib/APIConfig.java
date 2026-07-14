@@ -8,6 +8,7 @@ public final class APIConfig {
     private final PacketEventsAPI<?> packetEvents;
     private final EntityLibPlatform platform;
     private boolean debugMode;
+    private boolean strictVersionCheck;
 
     public APIConfig(@NotNull PacketEventsAPI<?> packetEvents, @NotNull EntityLibPlatform platform) {
         this.packetEvents = packetEvents;
@@ -16,6 +17,11 @@ public final class APIConfig {
 
     public @NotNull APIConfig debugMode() {
         this.debugMode = true;
+        return this;
+    }
+
+    public @NotNull APIConfig strictVersionCheck() {
+        this.strictVersionCheck = true;
         return this;
     }
 
@@ -29,6 +35,10 @@ public final class APIConfig {
 
     public boolean isDebugMode() {
         return debugMode;
+    }
+
+    public boolean isStrictVersionCheck() {
+        return strictVersionCheck;
     }
 
 }

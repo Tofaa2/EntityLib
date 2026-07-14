@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public final class Generator {
 
-    private static final String BASE_PACKAGE = "me.tofaa.entitylib.meta.generated";
+    private static final String BASE_PACKAGE = "me.tofaa.entitylib.meta";
     private static final ClassName EDT = ClassName.get(EntityDataTypes.class);
 
     private final Path outputDir;
@@ -26,29 +26,86 @@ public final class Generator {
     }
 
     public void generate(List<CrossVersionField> fields, List<VersionData> versions) throws IOException {
-        Map<String, List<CrossVersionField>> byEntity = new LinkedHashMap<>();
+        Map<String, List<CrossVersionField>> ownFields = new LinkedHashMap<>();
         for (CrossVersionField field : fields) {
-            byEntity.computeIfAbsent(field.entityName(), k -> new ArrayList<>()).add(field);
+            ownFields.computeIfAbsent(field.entityName(), k -> new ArrayList<>()).add(field);
         }
 
-        for (Map.Entry<String, List<CrossVersionField>> entry : byEntity.entrySet()) {
-            String entityName = entry.getKey();
-            List<CrossVersionField> entityFields = entry.getValue();
-            if (entityFields.isEmpty()) continue;
+        Map<String, String> superClass = buildHierarchy(versions);
 
-            generateEntityClass(entityName, entityFields);
+        TypeSpec.Builder metaFields = TypeSpec.classBuilder("MetaFields")
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addJavadoc("Generated meta field constants organized by entity type.\n");
+
+        for (String entityName : ownFields.keySet()) {
+            List<CrossVersionField> allFields = resolveAllFields(entityName, ownFields, superClass);
+            if (allFields.isEmpty()) continue;
+            metaFields.addType(generateEntityClass(entityName, allFields));
         }
+
+        metaFields.addMethod(MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PRIVATE)
+                .build());
+
+        JavaFile.builder(BASE_PACKAGE, metaFields.build())
+                .indent("    ")
+                .skipJavaLangImports(true)
+                .build()
+                .writeTo(outputDir);
     }
 
-    private void generateEntityClass(
+    private Map<String, String> buildHierarchy(List<VersionData> versions) {
+        if (versions.isEmpty()) return Map.of();
+        VersionData latest = versions.get(versions.size() - 1);
+        Map<String, String> hierarchy = new HashMap<>();
+        for (Map.Entry<String, EntitySchema> e : latest.entities().entrySet()) {
+            String sc = e.getValue().superClass();
+            if (sc != null && !sc.isEmpty()) {
+                hierarchy.put(e.getKey(), sc);
+            }
+        }
+        return hierarchy;
+    }
+
+    private List<CrossVersionField> resolveAllFields(
             String entityName,
-            List<CrossVersionField> fields
-    ) throws IOException {
-        String className = sanitizeClassName(entityName) + "MetaFields";
+            Map<String, List<CrossVersionField>> ownFields,
+            Map<String, String> superClass
+    ) {
+        Set<String> seen = new LinkedHashSet<>();
+        List<CrossVersionField> result = new ArrayList<>();
+
+        List<CrossVersionField> own = ownFields.get(entityName);
+        if (own != null) {
+            for (CrossVersionField f : own) {
+                seen.add(f.fieldName());
+                result.add(f);
+            }
+        }
+
+        String current = entityName;
+        while (superClass.containsKey(current)) {
+            current = superClass.get(current);
+            List<CrossVersionField> inherited = ownFields.get(current);
+            if (inherited != null) {
+                for (CrossVersionField f : inherited) {
+                    if (!seen.contains(f.fieldName())) {
+                        seen.add(f.fieldName());
+                        result.add(f);
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private TypeSpec generateEntityClass(String entityName, List<CrossVersionField> fields) {
+        String className = sanitizeClassName(entityName);
 
         TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className)
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .addJavadoc("Generated meta field constants for $L.\n", entityName);
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                .addJavadoc("Meta field constants for $L.\n", entityName);
 
         for (CrossVersionField field : fields) {
             classBuilder.addField(generateField(field));
@@ -58,81 +115,48 @@ public final class Generator {
                 .addModifiers(Modifier.PRIVATE)
                 .build());
 
-        TypeSpec typeSpec = classBuilder.build();
-        JavaFile javaFile = JavaFile.builder(BASE_PACKAGE, typeSpec)
-                .indent("    ")
-                .skipJavaLangImports(true)
-                .build();
-
-        javaFile.writeTo(outputDir);
+        return classBuilder.build();
     }
 
     private FieldSpec generateField(CrossVersionField field) {
-        TypeName effectiveType = determineFieldType(field.ranges());
-        TypeInfo firstTypeInfo = typeMapper.map(firstType(field.ranges()));
+        TypeName canonicalType = determineCanonicalType(field.ranges());
+        String builderMethod = builderMethodFor(canonicalType);
 
-        TypeName metaFieldType = ParameterizedTypeName.get(
-                ClassName.get(MetaField.class),
-                effectiveType
-        );
-
-        String builderMethod = builderMethodForType(effectiveType);
         CodeBlock.Builder init = CodeBlock.builder()
                 .add("$L(\"$L\")", builderMethod, field.fieldName());
 
-        String defaultValue = sanitizeDefaultValue(firstType(field.ranges()));
-        if (defaultValue != null && isWellKnownType(effectiveType)) {
+        String defaultValue = sanitizeDefaultValue(field.ranges().get(field.ranges().size() - 1).dataType());
+        if (defaultValue != null) {
             init.add("\n.defaultValue($L)", defaultValue);
         }
 
         for (VersionRange range : field.ranges()) {
             TypeInfo rangeType = typeMapper.map(range.dataType());
             init.add("\n.versionRange($L, $L, $L, $T.$L)",
-                    range.minProtocol(),
-                    range.maxProtocol(),
-                    range.index(),
-                    EDT,
-                    rangeType.dataTypeField());
+                    range.minProtocol(), range.maxProtocol(), range.index(),
+                    EDT, rangeType.dataTypeField());
         }
 
         init.add("\n.build()");
 
-        return FieldSpec.builder(metaFieldType, field.fieldName(), Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+        TypeName fieldType = ParameterizedTypeName.get(ClassName.get(MetaField.class), canonicalType);
+        return FieldSpec.builder(fieldType, field.fieldName(), Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                 .initializer(init.build())
                 .build();
     }
 
-    private TypeName determineFieldType(List<VersionRange> ranges) {
-        Set<TypeName> types = ranges.stream()
-                .map(r -> typeMapper.map(r.dataType()).javaType())
-                .collect(Collectors.toSet());
-        if (types.size() == 1) {
-            return types.iterator().next();
-        }
-        return TypeName.OBJECT;
+    private TypeName determineCanonicalType(List<VersionRange> ranges) {
+        return typeMapper.map(ranges.get(ranges.size() - 1).dataType()).javaType();
     }
 
-    private boolean isWellKnownType(TypeName type) {
-        return type.equals(ClassName.get(Byte.class))
-                || type.equals(ClassName.get(Integer.class))
-                || type.equals(ClassName.get(Boolean.class))
-                || type.equals(ClassName.get(Float.class))
-                || type.equals(ClassName.get(String.class))
-                || type.equals(ClassName.get(Long.class));
-    }
-
-    private String builderMethodForType(TypeName type) {
+    private String builderMethodFor(TypeName type) {
         if (type.equals(ClassName.get(Byte.class))) return "MetaField.byteBuilder";
         if (type.equals(ClassName.get(Integer.class))) return "MetaField.intBuilder";
         if (type.equals(ClassName.get(Boolean.class))) return "MetaField.booleanBuilder";
         if (type.equals(ClassName.get(Float.class))) return "MetaField.floatBuilder";
-        if (type.equals(ClassName.get(String.class))) return "MetaField.stringBuilder";
         if (type.equals(ClassName.get(Long.class))) return "MetaField.longBuilder";
+        if (type.equals(ClassName.get(String.class))) return "MetaField.stringBuilder";
         return "MetaField.builder";
-    }
-
-    private String firstType(List<VersionRange> ranges) {
-        return ranges.iterator().next().dataType();
     }
 
     private String sanitizeDefaultValue(String dataType) {

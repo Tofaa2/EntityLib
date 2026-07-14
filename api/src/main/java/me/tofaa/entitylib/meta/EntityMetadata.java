@@ -1,7 +1,6 @@
 package me.tofaa.entitylib.meta;
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
-import com.github.retrooper.packetevents.protocol.entity.data.EntityDataType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,14 +23,18 @@ public final class EntityMetadata {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public @NotNull WrapperPlayServerEntityMetadata createPacket(int protocolVersion) {
+        return createPacket(protocolVersion, false);
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public @NotNull WrapperPlayServerEntityMetadata createPacket(int protocolVersion, boolean strict) {
         List<EntityData<?>> entries = new ArrayList<>();
         for (Map.Entry<MetaField<?>, Object> entry : values.entrySet()) {
             MetaField field = entry.getKey();
             Object value = entry.getValue();
-            VersionedField resolved = field.forVersion(protocolVersion);
-            EntityDataType rawType = resolved.wireType();
-            Object encoded = resolved.encoder.apply(value);
-            entries.add(new EntityData((byte) resolved.index(), rawType, encoded));
+            VersionedField resolved = strict ? field.forVersionOrNull(protocolVersion) : field.forVersion(protocolVersion);
+            if (resolved == null) continue;
+            entries.add(new EntityData((byte) resolved.index(), resolved.wireType(), value));
         }
         return new WrapperPlayServerEntityMetadata(entityId, entries);
     }

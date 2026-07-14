@@ -129,8 +129,9 @@ public abstract class WrapperEntity {
 
     protected void sendMetadata(@NotNull UUID user) {
         int proto = EntityLib.get().getConfig().getPlatform().getProtocolVersion(user);
+        boolean strict = EntityLib.get().getConfig().isStrictVersionCheck();
         var meta = metadataBuilder.build();
-        var packet = meta.createPacket(proto);
+        var packet = meta.createPacket(proto, strict);
         sendPacket(user, packet);
     }
 
