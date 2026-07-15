@@ -1,6 +1,7 @@
 package me.tofaa.entitylib.wrapper;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+import com.github.retrooper.packetevents.protocol.world.Direction;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
@@ -8,11 +9,15 @@ import com.github.retrooper.packetevents.wrapper.play.server.*;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.EntityMetadata;
 import me.tofaa.entitylib.meta.MetaField;
+import me.tofaa.entitylib.spawn.SpawnPacketProvider;
+import me.tofaa.entitylib.spawn.SpawnPacketProviders;
+import me.tofaa.entitylib.ve.ViewerRule;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class WrapperEntity {
 
@@ -21,6 +26,8 @@ public abstract class WrapperEntity {
     protected final EntityType entityType;
     protected final Set<UUID> viewers;
     protected final EntityMetadata.Builder metadataBuilder;
+    protected final List<ViewerRule> viewerRules;
+    protected final EntityTriggers triggers;
     protected Location location;
     protected boolean spawned;
     protected Vector3d velocity;
@@ -31,6 +38,8 @@ public abstract class WrapperEntity {
         this.entityType = entityType;
         this.location = location;
         this.viewers = ConcurrentHashMap.newKeySet();
+        this.viewerRules = new CopyOnWriteArrayList<>();
+        this.triggers = new EntityTriggers();
         this.velocity = new Vector3d();
         this.metadataBuilder = EntityMetadata.builder(entityId);
     }
@@ -78,12 +87,38 @@ public abstract class WrapperEntity {
         }
     }
 
+    public int getSpawnData() {
+        return 0;
+    }
+
+    public @NotNull Direction getDirection() {
+        float yaw = location.getYaw();
+        if (yaw < 0) yaw += 360;
+        if (yaw < 45 || yaw >= 315) return Direction.SOUTH;
+        if (yaw < 135) return Direction.WEST;
+        if (yaw < 225) return Direction.NORTH;
+        return Direction.EAST;
+    }
+
+    public @NotNull EntityTriggers getTriggers() {
+        return triggers;
+    }
+
+    public @NotNull List<ViewerRule> getViewerRules() {
+        return viewerRules;
+    }
+
+    public boolean hasViewer(@NotNull UUID user) {
+        return viewers.contains(user);
+    }
+
     public @NotNull Set<UUID> getViewers() {
         return Collections.unmodifiableSet(viewers);
     }
 
     public boolean addViewer(@NotNull UUID user) {
         if (viewers.add(user)) {
+            triggers.fireViewerAdd(user);
             sendSpawnPackets(user);
             return true;
         }
@@ -95,6 +130,7 @@ public abstract class WrapperEntity {
             if (spawned) {
                 sendPacket(user, new WrapperPlayServerDestroyEntities(entityId));
             }
+            triggers.fireViewerRemove(user);
             return true;
         }
         return false;
@@ -104,6 +140,7 @@ public abstract class WrapperEntity {
         this.location = location;
         this.spawned = true;
         broadcastSpawnPackets();
+        triggers.fireSpawn(this);
     }
 
     public void remove() {
@@ -112,6 +149,7 @@ public abstract class WrapperEntity {
         var packet = new WrapperPlayServerDestroyEntities(entityId);
         sendPacketToViewers(packet);
         viewers.clear();
+        triggers.fireRemove(this);
     }
 
     public <T> void setMetadata(@NotNull MetaField<T> field, @Nullable T value) {
@@ -142,12 +180,16 @@ public abstract class WrapperEntity {
     }
 
     protected void sendSpawnPackets(@NotNull UUID user) {
-        sendPacket(user, createSpawnPacket());
+        int proto = EntityLib.get().getConfig().getPlatform().getProtocolVersion(user);
+        var packet = getSpawnProvider().provide(this, proto);
+        sendPacket(user, packet);
         sendPacket(user, new WrapperPlayServerEntityHeadLook(entityId, location.getYaw()));
         sendMetadata(user);
     }
 
-    protected abstract @NotNull WrapperPlayServerSpawnEntity createSpawnPacket();
+    protected @NotNull SpawnPacketProvider getSpawnProvider() {
+        return SpawnPacketProviders.forEntity(entityType);
+    }
 
     protected void sendPacketToViewers(@NotNull PacketWrapper<?> packet) {
         var platform = EntityLib.get().getConfig().getPlatform();

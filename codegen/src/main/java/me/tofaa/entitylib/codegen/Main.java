@@ -14,7 +14,7 @@ public final class Main {
         Path cacheDir = Path.of("codegen", "build", "schema-cache");
         Path outputDir = Path.of("api", "src", "main", "java");
 
-        System.out.println("=== EntityLib v4 MetaField Codegen ===");
+        System.out.println("--- EntityLib v4 MetaField Codegen ---");
         System.out.println("Cache: " + cacheDir.toAbsolutePath());
         System.out.println("Output: " + outputDir.toAbsolutePath());
 
