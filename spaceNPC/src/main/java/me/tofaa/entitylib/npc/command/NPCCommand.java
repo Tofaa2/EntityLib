@@ -1559,7 +1559,7 @@ public class NPCCommand extends CommandSystem.BaseCommand {
                         )
                     );
                     sender.sendMessage(
-                        mm("<gray>Actions: <white>run_command, message")
+                        mm("<gray>Actions: <white>run_command, run_command_player, player_chat, message")
                     );
                     sender.sendMessage(
                         mm(
@@ -1607,6 +1607,67 @@ public class NPCCommand extends CommandSystem.BaseCommand {
                         )
                     );
                 } else if (
+                    actionTypeStr.equals("run_command_player") ||
+                    actionTypeStr.equals("player_cmd") ||
+                    actionTypeStr.equals("player_command")
+                ) {
+                    InteractionAction action = new InteractionAction(
+                        interactionType,
+                        InteractionAction.RUN_COMMAND_PLAYER,
+                        valueWithoutSlash
+                    );
+                    opts.addInteraction(interactionType, action);
+                    storage.saveNPC(npc);
+                    List<InteractionAction> actions = opts.getInteractions(
+                        interactionType
+                    );
+                    sender.sendMessage(
+                        mm(
+                            "<green>Added player command to <yellow>" +
+                                interactionType.name().toLowerCase() +
+                                "<green>: <white>/" +
+                                valueWithoutSlash
+                        )
+                    );
+                    sender.sendMessage(
+                        mm(
+                            "<gray>Total actions for " +
+                                interactionType.name().toLowerCase() +
+                                ": <white>" +
+                                actions.size()
+                        )
+                    );
+                } else if (
+                    actionTypeStr.equals("player_chat") ||
+                    actionTypeStr.equals("chat")
+                ) {
+                    InteractionAction action = new InteractionAction(
+                        interactionType,
+                        InteractionAction.PLAYER_CHAT,
+                        value
+                    );
+                    opts.addInteraction(interactionType, action);
+                    storage.saveNPC(npc);
+                    List<InteractionAction> actions = opts.getInteractions(
+                        interactionType
+                    );
+                    sender.sendMessage(
+                        mm(
+                            "<green>Added player chat to <yellow>" +
+                                interactionType.name().toLowerCase() +
+                                "<green>: <white>" +
+                                value
+                        )
+                    );
+                    sender.sendMessage(
+                        mm(
+                            "<gray>Total actions for " +
+                                interactionType.name().toLowerCase() +
+                                ": <white>" +
+                                actions.size()
+                        )
+                    );
+                } else if (
                     actionTypeStr.equals("message") ||
                     actionTypeStr.equals("msg") ||
                     actionTypeStr.equals("say")
@@ -1642,7 +1703,7 @@ public class NPCCommand extends CommandSystem.BaseCommand {
                         mm("<red>Unknown action type: <yellow>" + actionTypeStr)
                     );
                     sender.sendMessage(
-                        mm("<gray>Actions: <white>run_command, message")
+                        mm("<gray>Actions: <white>run_command, run_command_player, player_chat, message")
                     );
                 }
                 return true;
@@ -1791,6 +1852,8 @@ public class NPCCommand extends CommandSystem.BaseCommand {
                 if (action.equals("add")) {
                     List<String> actionTypes = Lists.newArrayList(
                         "run_command",
+                        "run_command_player",
+                        "player_chat",
                         "message"
                     );
                     return actionTypes
