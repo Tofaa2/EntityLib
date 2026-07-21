@@ -26,6 +26,7 @@ import me.tofaa.entitylib.npc.storage.NPCStorage;
 import me.tofaa.entitylib.wrapper.WrapperLivingEntity;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class NPCCommand extends CommandSystem.BaseCommand {
 
@@ -2059,97 +2060,29 @@ public class NPCCommand extends CommandSystem.BaseCommand {
                 );
                 return true;
             }
-            WrapperLivingEntity entity = (WrapperLivingEntity) entityOpt.get();
-
-            String slotLower = slotStr.toLowerCase();
-            org.bukkit.inventory.ItemStack bukkitItem = null;
-            if (false) {
-                switch (slotLower) {
-                    case "helmet":
-                    case "head":
-                    case "hat":
-                        bukkitItem = player.getInventory().getHelmet();
-                        break;
-                    case "chestplate":
-                    case "chest":
-                    case "body":
-                        bukkitItem = player.getInventory().getChestplate();
-                        break;
-                    case "leggings":
-                    case "legs":
-                        bukkitItem = player.getInventory().getLeggings();
-                        break;
-                    case "boots":
-                    case "feet":
-                        bukkitItem = player.getInventory().getBoots();
-                        break;
-                    case "main":
-                    case "mainhand":
-                    case "hand":
-                        bukkitItem = player.getInventory().getItemInMainHand();
-                        break;
-                    case "off":
-                    case "offhand":
-                    case "off_hand":
-                        bukkitItem = player.getInventory().getItemInOffHand();
-                        break;
-                    default:
-                        sender.sendMessage(
-                                mm("<red>Invalid slot: <yellow>" + slotStr)
-                        );
-                        sender.sendMessage(
-                                mm(
-                                        "<gray>Valid slots: <white>helmet, chestplate, leggings, boots, main, off"
-                                )
-                        );
-                        return true;
-                }
-            }
-            else {
-                bukkitItem = player.getInventory().getItemInMainHand();
-            }
-
-            if (bukkitItem == null || bukkitItem.getType().isAir()) {
+            String canonicalSlot = canonicalSlot(slotStr.toLowerCase());
+            if (canonicalSlot == null) {
                 sender.sendMessage(
-                    mm("<red>You don't have an item in that slot")
+                    mm("<red>Invalid slot: <yellow>" + slotStr)
+                );
+                sender.sendMessage(
+                    mm(
+                        "<gray>Valid slots: <white>helmet, chestplate, leggings, boots, main, off"
+                    )
                 );
                 return true;
             }
 
-            com.github.retrooper.packetevents.protocol.item.ItemStack itemStack =
-                SpigotConversionUtil.fromBukkitItemStack(bukkitItem);
+            ItemStack bukkitItem = player.getInventory().getItemInMainHand();
 
-            switch (slotLower) {
-                case "helmet":
-                case "head":
-                case "hat":
-                    entity.getEquipment().setHelmet(itemStack);
-                    break;
-                case "chestplate":
-                case "chest":
-                case "body":
-                    entity.getEquipment().setChestplate(itemStack);
-                    break;
-                case "leggings":
-                case "legs":
-                    entity.getEquipment().setLeggings(itemStack);
-                    break;
-                case "boots":
-                case "feet":
-                    entity.getEquipment().setBoots(itemStack);
-                    break;
-                case "main":
-                case "mainhand":
-                case "hand":
-                    entity.getEquipment().setMainHand(itemStack);
-                    break;
-                case "off":
-                case "offhand":
-                case "off_hand":
-                    entity.getEquipment().setOffhand(itemStack);
-                    break;
+            if (bukkitItem == null || bukkitItem.getType().isAir()) {
+                sender.sendMessage(
+                    mm("<red>You don't have an item in your main hand")
+                );
+                return true;
             }
 
+            npc.setEquipment(canonicalSlot, bukkitItem);
             storage.saveNPC(npc);
             sender.sendMessage(
                 mm(
@@ -2194,6 +2127,35 @@ public class NPCCommand extends CommandSystem.BaseCommand {
                     .collect(Collectors.toList());
             }
             return Collections.emptyList();
+        }
+
+        private String canonicalSlot(String slot) {
+            switch (slot) {
+                case "helmet":
+                case "head":
+                case "hat":
+                    return "helmet";
+                case "chestplate":
+                case "chest":
+                case "body":
+                    return "chestplate";
+                case "leggings":
+                case "legs":
+                    return "leggings";
+                case "boots":
+                case "feet":
+                    return "boots";
+                case "main":
+                case "mainhand":
+                case "hand":
+                    return "mainhand";
+                case "off":
+                case "offhand":
+                case "off_hand":
+                    return "offhand";
+                default:
+                    return null;
+            }
         }
 
         @Override
