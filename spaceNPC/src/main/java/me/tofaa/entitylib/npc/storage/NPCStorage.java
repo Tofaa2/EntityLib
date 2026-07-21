@@ -10,11 +10,14 @@ import me.tofaa.entitylib.npc.interactions.InteractionAction;
 import me.tofaa.entitylib.npc.path.NPCPath;
 import me.tofaa.entitylib.npc.skin.NPCSkin;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 public class NPCStorage {
 
@@ -64,6 +67,10 @@ public class NPCStorage {
         String interactionsSerialized = InteractionAction.Serializer.serializeAll(opts.getAllInteractions());
         if (interactionsSerialized != null) {
             config.set("options.interactions", interactionsSerialized);
+        }
+
+        for (Map.Entry<String, ItemStack> entry : npc.getEquipment().entrySet()) {
+            config.set("equipment." + entry.getKey(), entry.getValue());
         }
 
         NPCPath path = npc.getPath();
@@ -163,6 +170,18 @@ public class NPCStorage {
                 if (config.contains("options.interactions")) {
                     String interactionsStr = config.getString("options.interactions");
                     opts.setAllInteractions(InteractionAction.Serializer.deserializeAll(interactionsStr));
+                }
+            }
+
+            if (config.contains("equipment")) {
+                ConfigurationSection equipmentSection = config.getConfigurationSection("equipment");
+                if (equipmentSection != null) {
+                    for (String slot : equipmentSection.getKeys(false)) {
+                        ItemStack item = equipmentSection.getItemStack(slot);
+                        if (item != null) {
+                            npc.getEquipment().put(slot, item);
+                        }
+                    }
                 }
             }
 

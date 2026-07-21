@@ -6,6 +6,7 @@ import com.github.retrooper.packetevents.netty.channel.ChannelHelper;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
+import com.github.retrooper.packetevents.protocol.player.EquipmentSlot;
 import com.github.retrooper.packetevents.protocol.player.GameMode;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.protocol.player.UserProfile;
@@ -17,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityHeadLook;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfo;
+import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import io.github.retrooper.packetevents.util.viaversion.ViaVersionUtil;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.meta.EntityMeta;
@@ -25,6 +27,7 @@ import me.tofaa.entitylib.meta.types.PlayerMeta;
 import me.tofaa.entitylib.npc.path.NPCPath;
 import me.tofaa.entitylib.npc.skin.NPCSkin;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
+import me.tofaa.entitylib.wrapper.WrapperEntityEquipment;
 import me.tofaa.entitylib.wrapper.WrapperLivingEntity;
 import me.tofaa.entitylib.wrapper.WrapperPlayer;
 import me.tofaa.entitylib.wrapper.hologram.Hologram;
@@ -33,6 +36,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +50,7 @@ public class NPC {
     private final Map<UUID, PerPlayerData> perPlayerData;
     private final NPCOptions options;
     private final NPCPath path;
+    private final Map<String, ItemStack> equipment = new LinkedHashMap<>();
     private WrapperEntity entity;
     private WrapperEntity sittingEntity;
     private Hologram hologram;
@@ -98,6 +103,52 @@ public class NPC {
 
     public @Nullable NPCSkin getSkin() {
         return skin;
+    }
+
+    /**
+     * Slot keys: helmet, chestplate, leggings, boots, mainhand, offhand.
+     */
+    public @NotNull Map<String, ItemStack> getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(@NotNull String slot, @Nullable ItemStack item) {
+        if (item == null || item.getType().isAir()) {
+            equipment.remove(slot);
+        } else {
+            equipment.put(slot, item.clone());
+        }
+        applyEquipment();
+    }
+
+    public void applyEquipment() {
+        if (!(entity instanceof WrapperLivingEntity)) return;
+        WrapperEntityEquipment eq = ((WrapperLivingEntity) entity).getEquipment();
+        for (Map.Entry<String, ItemStack> entry : equipment.entrySet()) {
+            EquipmentSlot slot = equipmentSlot(entry.getKey());
+            if (slot != null) {
+                eq.setItem(slot, SpigotConversionUtil.fromBukkitItemStack(entry.getValue()));
+            }
+        }
+    }
+
+    private static @Nullable EquipmentSlot equipmentSlot(String slot) {
+        switch (slot) {
+            case "helmet":
+                return EquipmentSlot.HELMET;
+            case "chestplate":
+                return EquipmentSlot.CHEST_PLATE;
+            case "leggings":
+                return EquipmentSlot.LEGGINGS;
+            case "boots":
+                return EquipmentSlot.BOOTS;
+            case "mainhand":
+                return EquipmentSlot.MAIN_HAND;
+            case "offhand":
+                return EquipmentSlot.OFF_HAND;
+            default:
+                return null;
+        }
     }
 
     public void setPosition(@NotNull Location location) {
@@ -195,6 +246,8 @@ public class NPC {
         }
 
         entity.spawn(location);
+
+        applyEquipment();
 
         if (options.isSwimming()) {
             entity.getEntityMeta().setSwimming(true);
