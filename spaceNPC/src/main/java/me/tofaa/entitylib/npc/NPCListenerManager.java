@@ -3,6 +3,7 @@ package me.tofaa.entitylib.npc;
 import com.github.retrooper.packetevents.event.PacketListenerAbstract;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
+import com.github.retrooper.packetevents.protocol.player.InteractionHand;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientInteractEntity;
 import me.tofaa.entitylib.EntityLib;
@@ -57,14 +58,17 @@ public class NPCListenerManager {
                     NPC npc = NPCRegistry.getByEntityId(entityId);
                     if (npc == null) return;
 
-                    boolean isLeftClick = packet.getAction() == WrapperPlayClientInteractEntity.InteractAction.ATTACK;
+                    // A single right click sends INTERACT and INTERACT_AT for both hands;
+                    // only handle the main-hand INTERACT so the action runs once.
+                    WrapperPlayClientInteractEntity.InteractAction action = packet.getAction();
+                    if (action == WrapperPlayClientInteractEntity.InteractAction.INTERACT_AT) return;
+                    if (action == WrapperPlayClientInteractEntity.InteractAction.INTERACT
+                            && packet.getHand() != InteractionHand.MAIN_HAND) return;
+
+                    boolean isLeftClick = action == WrapperPlayClientInteractEntity.InteractAction.ATTACK;
                     boolean isShift = playersHoldingShift.contains(playerId);
 
-                    if (isLeftClick) {
-                        handleInteraction(event, playerId, isLeftClick, isShift, npc);
-                    } else {
-                        handleInteraction(event, playerId, isLeftClick, isShift, npc);
-                    }
+                    handleInteraction(event, playerId, isLeftClick, isShift, npc);
                 }
             }
         });
