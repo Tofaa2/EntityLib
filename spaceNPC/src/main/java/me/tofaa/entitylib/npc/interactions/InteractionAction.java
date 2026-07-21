@@ -8,6 +8,7 @@ import java.util.Map;
 public class InteractionAction {
 
     public static final String RUN_COMMAND = "RUN_COMMAND";
+    public static final String RUN_COMMAND_PLAYER = "RUN_COMMAND_PLAYER";
     public static final String MESSAGE = "MESSAGE";
     public static final String PLAYER_CHAT = "PLAYER_CHAT";
 
@@ -50,6 +51,10 @@ public class InteractionAction {
 
     public boolean isRunCommand() {
         return RUN_COMMAND.equals(actionType);
+    }
+
+    public boolean isRunCommandPlayer() {
+        return RUN_COMMAND_PLAYER.equals(actionType);
     }
 
     public boolean isMessage() {
