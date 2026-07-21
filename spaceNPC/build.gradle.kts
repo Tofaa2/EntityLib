@@ -16,6 +16,7 @@ repositories {
     maven("https://maven.pvphub.me/tofaa")
     maven("https://repo.codemc.io/repository/maven-releases/")
     maven("https://repo.viaversion.com")
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
 }
 
 dependencies {
@@ -26,6 +27,7 @@ dependencies {
     implementation(project(":movement-engine"))
     implementation(project(":platforms:movement"))
     compileOnly("com.viaversion:viaversion-api:5.8.1") // Replace the version
+    compileOnly("me.clip:placeholderapi:2.11.6")
 }
 
 tasks {

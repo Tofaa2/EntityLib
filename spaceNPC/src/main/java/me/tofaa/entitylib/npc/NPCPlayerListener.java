@@ -1,6 +1,7 @@
 package me.tofaa.entitylib.npc;
 
 import com.github.retrooper.packetevents.protocol.world.Location;
+import me.tofaa.entitylib.npc.placeholder.PlaceholderAPIHook;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,6 +43,10 @@ public class NPCPlayerListener implements Listener {
                     npc.doStupidDogshitForOldClients(player);
                 }
             });
+
+            if (PlaceholderAPIHook.isAvailable()) {
+                npc.updateHologram(player);
+            }
 
             if (npc.getHologram().isPresent()) {
                 npc.getHologram().get().addViewer(playerId);
@@ -133,6 +138,9 @@ public class NPCPlayerListener implements Listener {
             npc.getHologram().ifPresent(hologram -> {
                 if (inRange) {
                     if (!hologram.getEntity().getViewers().contains(playerId)) {
+                        if (PlaceholderAPIHook.isAvailable()) {
+                            npc.updateHologram(player);
+                        }
                         hologram.addViewer(playerId);
                     }
                 } else {

@@ -8,8 +8,10 @@ import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.extras.skin.SkinFetcher;
 import me.tofaa.entitylib.npc.command.CommandSystem;
 import me.tofaa.entitylib.npc.command.NPCCommand;
+import me.tofaa.entitylib.npc.placeholder.PlaceholderAPIHook;
 import me.tofaa.entitylib.npc.storage.NPCStorage;
 import me.tofaa.entitylib.spigot.SpigotEntityLibPlatform;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,6 +58,17 @@ public class SpaceNPC extends JavaPlugin {
         NPCListenerManager.register(this);
 
         storage.loadAllNPCs();
+
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            if (PlaceholderAPIHook.isAvailable()) {
+                for (NPC npc : NPCRegistry.getAll()) {
+                    if (npc.isSpawned()) {
+                        npc.updateHologram();
+                    }
+                }
+                getLogger().info("Re-parsed PlaceholderAPI placeholders for all NPCs");
+            }
+        }, 40L);
 
         getLogger().info("SpaceNPC enabled!");
     }

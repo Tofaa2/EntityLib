@@ -45,8 +45,10 @@ final class LegacyHologram implements Hologram.Legacy {
         if (index < 0 || index >= lines.size()) {
             return false;
         }
-        ArmorStandMeta meta = (ArmorStandMeta) lines.get(index).getEntityMeta();
+        WrapperEntity entity = lines.get(index);
+        ArmorStandMeta meta = (ArmorStandMeta) entity.getEntityMeta();
         meta.setCustomName(line);
+        entity.sendPacketToViewers(entity.getEntityMeta().createPacket());
         return true;
     }
 
@@ -66,6 +68,7 @@ final class LegacyHologram implements Hologram.Legacy {
         for (int i = 0; i < Math.min(existingCount, newCount); i++) {
             ArmorStandMeta meta = (ArmorStandMeta) lines.get(i).getEntityMeta();
             meta.setCustomName(newLines.get(i));
+            lines.get(i).sendPacketToViewers(lines.get(i).getEntityMeta().createPacket());
         }
 
         for (int i = existingCount - 1; i >= newCount; i--) {
@@ -176,8 +179,10 @@ final class LegacyHologram implements Hologram.Legacy {
     @Override
     public void setLine(int index, @Nullable Component line) {
         if (index >= 0 && index < lines.size()) {
-            ArmorStandMeta meta = (ArmorStandMeta) lines.get(index).getEntityMeta();
+            WrapperEntity entity = lines.get(index);
+            ArmorStandMeta meta = (ArmorStandMeta) entity.getEntityMeta();
             meta.setCustomName(line);
+            entity.sendPacketToViewers(entity.getEntityMeta().createPacket());
             return;
         }
         WrapperEntity e = new WrapperEntity(EntityTypes.ARMOR_STAND);

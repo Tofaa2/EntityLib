@@ -90,8 +90,10 @@ final class ModernHologram implements Hologram.Modern {
         if (index < 0 || index >= lines.size()) {
             return false;
         }
-        TextDisplayMeta meta = (TextDisplayMeta) lines.get(index).getEntityMeta();
+        WrapperEntity entity = lines.get(index);
+        TextDisplayMeta meta = (TextDisplayMeta) entity.getEntityMeta();
         meta.setText(line);
+        entity.sendPacketToViewers(entity.getEntityMeta().createPacket());
         return true;
     }
 
@@ -111,6 +113,7 @@ final class ModernHologram implements Hologram.Modern {
         for (int i = 0; i < Math.min(existingCount, newCount); i++) {
             TextDisplayMeta meta = (TextDisplayMeta) lines.get(i).getEntityMeta();
             meta.setText(newLines.get(i));
+            lines.get(i).sendPacketToViewers(lines.get(i).getEntityMeta().createPacket());
         }
 
         for (int i = existingCount - 1; i >= newCount; i--) {

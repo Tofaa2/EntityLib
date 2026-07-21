@@ -27,6 +27,7 @@ import me.tofaa.entitylib.npc.skin.NPCSkin;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import me.tofaa.entitylib.wrapper.WrapperLivingEntity;
 import me.tofaa.entitylib.wrapper.WrapperPlayer;
+import me.tofaa.entitylib.npc.placeholder.PlaceholderAPIHook;
 import me.tofaa.entitylib.wrapper.hologram.Hologram;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -190,7 +191,9 @@ public class NPC {
             entity.getEntityMeta().setCustomNameVisible(false);
             registerScoreboardTeam();
         } else if (options.hasDisplayName()) {
-            entity.getEntityMeta().setCustomName(options.getDisplayName());
+            String raw = MiniMessage.miniMessage().serialize(options.getDisplayName());
+            String parsed = PlaceholderAPIHook.setPlaceholders(raw);
+            entity.getEntityMeta().setCustomName(MiniMessage.miniMessage().deserialize(parsed));
             entity.getEntityMeta().setCustomNameVisible(true);
         }
 
@@ -357,26 +360,31 @@ public class NPC {
         Hologram.Legacy hologram = Hologram.legacy(hologramLoc);
         hologram.setLineOffset(-0.28f);
 
-        Component displayName = options.getDisplayName() != null
-            ? options.getDisplayName()
-            : Component.text(name);
-        for (Component line : splitDisplayNameLines(displayName)) {
+        String raw = options.getDisplayName() != null
+            ? MiniMessage.miniMessage().serialize(options.getDisplayName())
+            : name;
+        String parsed = PlaceholderAPIHook.setPlaceholders(raw);
+        Component displayComponent = MiniMessage.miniMessage().deserialize(parsed);
+        for (Component line : splitDisplayNameLines(displayComponent)) {
             hologram.addLine(line);
         }
         hologram.show();
-//        if (hologram.getEntity().getEntityMeta() instanceof AbstractDisplayMeta displayMeta) {
-////            displayMeta.setTranslation(new Vector3f(0, 0.5f, 0));
-//        }
 
         this.hologram = hologram;
     }
 
-    private void updateHologram() {
+    public void updateHologram() {
+        updateHologram(null);
+    }
+
+    public void updateHologram(@Nullable Player viewer) {
         if (hologram != null) {
-            Component displayName = options.getDisplayName() != null
-                ? options.getDisplayName()
-                : Component.text(name);
-            hologram.setLines(splitDisplayNameLines(displayName));
+            String raw = options.getDisplayName() != null
+                ? MiniMessage.miniMessage().serialize(options.getDisplayName())
+                : name;
+            String parsed = PlaceholderAPIHook.setPlaceholders(viewer, raw);
+            Component displayComponent = MiniMessage.miniMessage().deserialize(parsed);
+            hologram.setLines(splitDisplayNameLines(displayComponent));
         }
     }
 
