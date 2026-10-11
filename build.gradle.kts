@@ -1,3 +1,3 @@
 group = "io.github.tofaa2"
-version = "4.0.0-alpha.1"
+version = "4.0.0-alpha.2"
 description = rootProject.name
