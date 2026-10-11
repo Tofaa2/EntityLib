@@ -50,6 +50,9 @@ public final class Checker {
                     String fieldWhere = where + "." + field.name;
                     checkRange(fieldWhere, field.since, field.removed);
                     schema.type(field.type);
+                    if (field.enumName != null && !schema.enums().containsKey(field.enumName)) {
+                        problems.add(fieldWhere + ": unknown enum " + field.enumName + " (not listed in enums.yml)");
+                    }
                     if (!field.name.matches("[A-Z][A-Z0-9_]*")) {
                         problems.add(fieldWhere + ": field names must be UPPER_SNAKE_CASE");
                     }

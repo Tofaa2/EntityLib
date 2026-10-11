@@ -3,6 +3,6 @@ since: "1.17"
 extends: Animal
 entities: [axolotl]
 fields:
-  - {name: VARIANT, type: int}
+  - {name: VARIANT, type: int, enum: AxolotlVariant}
   - {name: PLAYING_DEAD, type: boolean}
   - {name: FROM_BUCKET, type: boolean}

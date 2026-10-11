@@ -3,4 +3,4 @@ since: "1.13"
 extends: AbstractFish
 entities: [pufferfish]
 fields:
-  - {name: PUFF_STATE, type: int}
+  - {name: PUFF_STATE, type: int, enum: PufferfishState}

@@ -29,6 +29,7 @@ public final class Importer {
         this.existing = existing;
         this.versions = existing.versions();
         this.result = new Schema(existing.versions(), existing.types());
+        existing.enums().forEach(result::addEnum);
     }
 
     public Schema run(List<Snapshot> snapshots) {
@@ -78,6 +79,7 @@ public final class Importer {
                 copy.since = field.since;
                 copy.index = field.index;
                 copy.convert = field.convert;
+                copy.enumName = field.enumName;
                 for (SchemaFlag flag : field.flags) {
                     copy.flags.add(flag.copy());
                 }
@@ -221,6 +223,21 @@ public final class Importer {
             SchemaClass old = existing.get(schemaClass.name);
             if (old != null && schemaClass.entities.isEmpty()) {
                 schemaClass.entities.addAll(old.entities);
+            }
+        }
+        Map<String, String> enumNames = new HashMap<>();
+        for (SchemaClass schemaClass : existing.classes()) {
+            for (SchemaField field : schemaClass.fields) {
+                if (field.enumName != null) {
+                    enumNames.put(schemaClass.name + "." + field.name, field.enumName);
+                }
+            }
+        }
+        for (SchemaClass schemaClass : result.classes()) {
+            for (SchemaField field : schemaClass.fields) {
+                if (field.enumName == null) {
+                    field.enumName = enumNames.get(schemaClass.name + "." + field.name);
+                }
             }
         }
         Map<String, SchemaField> known = new HashMap<>();

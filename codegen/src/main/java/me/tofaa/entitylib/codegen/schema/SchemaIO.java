@@ -62,6 +62,22 @@ public final class SchemaIO {
             Map<String, Object> conversion = map(entry);
             schema.addConversion(string(conversion, "value"), string(conversion, "wire"), string(conversion, "convert"));
         }
+        Path enumsFile = schemaDir.resolve("enums.yml");
+        if (Files.exists(enumsFile)) {
+            for (Map.Entry<String, Object> entry : map(map(load(enumsFile)).get("enums")).entrySet()) {
+                Map<String, Integer> constants = new LinkedHashMap<>();
+                if (entry.getValue() instanceof List<?> names) {
+                    for (Object name : names) {
+                        constants.put(String.valueOf(name), constants.size());
+                    }
+                } else {
+                    for (Map.Entry<String, Object> constant : map(entry.getValue()).entrySet()) {
+                        constants.put(constant.getKey(), Integer.decode(String.valueOf(constant.getValue())));
+                    }
+                }
+                schema.addEnum(entry.getKey(), constants);
+            }
+        }
         return schema;
     }
 
@@ -105,6 +121,7 @@ public final class SchemaIO {
                 String index = optional(raw, "index");
                 field.index = index == null ? null : Integer.decode(index);
                 field.convert = optional(raw, "convert");
+                field.enumName = optional(raw, "enum");
                 for (Object flagEntry : list(raw.get("flags"))) {
                     Map<String, Object> rawFlag = map(flagEntry);
                     SchemaFlag flag = new SchemaFlag();
@@ -259,6 +276,9 @@ public final class SchemaIO {
             }
             if (field.convert != null) {
                 attributes.append(", convert: ").append(field.convert);
+            }
+            if (field.enumName != null) {
+                attributes.append(", enum: ").append(field.enumName);
             }
             if (field.flags.isEmpty()) {
                 out.append("  - {").append(attributes).append("}\n");

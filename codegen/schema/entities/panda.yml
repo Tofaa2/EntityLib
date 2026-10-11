@@ -6,8 +6,8 @@ fields:
   - {name: UNHAPPY_COUNTER, type: int}
   - {name: SNEEZE_COUNTER, type: int}
   - {name: EAT_COUNTER, type: int}
-  - {name: MAIN_GENE, type: byte}
-  - {name: HIDDEN_GENE, type: byte}
+  - {name: MAIN_GENE, type: byte, enum: PandaGene}
+  - {name: HIDDEN_GENE, type: byte, enum: PandaGene}
   - name: FLAGS
     type: byte
     flags:

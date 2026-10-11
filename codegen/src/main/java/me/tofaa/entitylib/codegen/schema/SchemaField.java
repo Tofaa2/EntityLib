@@ -11,6 +11,7 @@ public final class SchemaField {
     public String removed;
     public Integer index;
     public String convert;
+    public String enumName;
     public List<SchemaFlag> flags = new ArrayList<>();
 
     @Override

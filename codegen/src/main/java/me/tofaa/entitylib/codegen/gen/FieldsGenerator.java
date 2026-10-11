@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 public final class FieldsGenerator {
 
@@ -96,6 +97,39 @@ public final class FieldsGenerator {
                 .addStatement("return metaClass(entityType, LATEST_PROTOCOL)")
                 .build());
 
+        for (Map.Entry<String, Map<String, Integer>> entry : schema.enums().entrySet()) {
+            ClassName enumName = ClassName.get(Names.ENUMS_PACKAGE, entry.getKey());
+            TypeSpec.Builder enumType = TypeSpec.enumBuilder(enumName)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addField(int.class, "id", Modifier.PRIVATE, Modifier.FINAL)
+                    .addMethod(MethodSpec.constructorBuilder().addParameter(int.class, "id").addStatement("this.id = id").build())
+                    .addMethod(MethodSpec.methodBuilder("id").addModifiers(Modifier.PUBLIC).returns(int.class).addStatement("return id").build());
+            String first = null;
+            for (Map.Entry<String, Integer> constant : entry.getValue().entrySet()) {
+                if (first == null) {
+                    first = constant.getKey();
+                }
+                enumType.addEnumConstant(constant.getKey(), TypeSpec.anonymousClassBuilder("$L", constant.getValue()).build());
+            }
+            enumType.addMethod(MethodSpec.methodBuilder("byId")
+                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                    .addAnnotation(Names.NOT_NULL)
+                    .returns(enumName)
+                    .addParameter(int.class, "id")
+                    .beginControlFlow("for ($T value : values())", enumName)
+                    .beginControlFlow("if (value.id == id)")
+                    .addStatement("return value")
+                    .endControlFlow()
+                    .endControlFlow()
+                    .addStatement("return $L", first)
+                    .build());
+            JavaFile.builder(Names.ENUMS_PACKAGE, enumType.build())
+                    .indent("    ")
+                    .skipJavaLangImports(true)
+                    .build()
+                    .writeTo(outputDir);
+        }
+
         JavaFile.builder(Names.META_PACKAGE, root.build())
                 .indent("    ")
                 .skipJavaLangImports(true)
@@ -114,13 +148,18 @@ public final class FieldsGenerator {
 
         List<Model.Field> fields = model.fields(schemaClass);
         for (Model.Field field : fields) {
-            TypeName valueType = Names.type(field.valueType().java());
+            TypeName valueType = Names.valueType(field);
             CodeBlock.Builder init = CodeBlock.builder()
                     .add("$T.<$T>builder($S, $S)\n$>$>", Names.META_FIELD, valueType, schemaClass.name, field.name());
             for (Model.Binding binding : field.bindings()) {
                 init.add(".bind($L, $L, $L, $T.$L", binding.from().protocol(), protocol(binding.toProtocol()),
                         binding.index(), Names.DATA_TYPES, binding.type().wire());
-                if (binding.convert() != null) {
+                if (binding.enumConverter() != null) {
+                    init.add(", $T.$L($T::id, $T::byId)", Names.META_CONVERTERS, binding.enumConverter(), valueType, valueType);
+                    if (binding.convert() != null) {
+                        init.add(".then($T.$L)", Names.META_CONVERTERS, binding.convert());
+                    }
+                } else if (binding.convert() != null) {
                     init.add(", $T.$L", Names.META_CONVERTERS, binding.convert());
                 }
                 init.add(")\n");

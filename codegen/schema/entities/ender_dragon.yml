@@ -3,4 +3,4 @@ since: "1.9"
 extends: Mob
 entities: [ender_dragon]
 fields:
-  - {name: PHASE, type: int}
+  - {name: PHASE, type: int, enum: EnderDragonPhase}

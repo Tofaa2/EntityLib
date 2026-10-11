@@ -10,7 +10,7 @@ fields:
   - {name: SCALE, type: vector3f}
   - {name: LEFT_ROTATION, type: quaternion}
   - {name: RIGHT_ROTATION, type: quaternion}
-  - {name: BILLBOARD_RENDER_CONSTRAINTS, type: byte}
+  - {name: BILLBOARD_RENDER_CONSTRAINTS, type: byte, enum: BillboardConstraints}
   - {name: BRIGHTNESS_OVERRIDE, type: int}
   - {name: VIEW_RANGE, type: float}
   - {name: SHADOW_RADIUS, type: float}

@@ -5,4 +5,4 @@ extends:
   - {class: SpellcasterIllager, since: "1.12"}
 entities: [evoker]
 fields:
-  - {name: SPELL_CASTING, type: byte, removed: "1.12"}
+  - {name: SPELL_CASTING, type: byte, removed: "1.12", enum: IllagerSpell}

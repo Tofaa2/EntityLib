@@ -7,10 +7,24 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.IntFunction;
+import java.util.function.ToIntFunction;
 
 public final class MetaConverters {
 
     private MetaConverters() {
+    }
+
+    public static <E> MetaConverter<E, Byte> enumByte(ToIntFunction<E> id, IntFunction<E> byId) {
+        return MetaConverter.of(value -> (byte) id.applyAsInt(value), wire -> byId.apply(wire));
+    }
+
+    public static <E> MetaConverter<E, Short> enumShort(ToIntFunction<E> id, IntFunction<E> byId) {
+        return MetaConverter.of(value -> (short) id.applyAsInt(value), wire -> byId.apply(wire));
+    }
+
+    public static <E> MetaConverter<E, Integer> enumInt(ToIntFunction<E> id, IntFunction<E> byId) {
+        return MetaConverter.of(id::applyAsInt, byId::apply);
     }
 
     public static final MetaConverter<HumanoidArm, Byte> HUMANOID_ARM_BYTE = MetaConverter.of(

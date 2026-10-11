@@ -6,4 +6,4 @@ extends:
   - {class: AbstractIllager, since: "1.14.4"}
 entities: [abstract_evo_illu_illager]
 fields:
-  - {name: SPELL_CASTING, type: byte}
+  - {name: SPELL_CASTING, type: byte, enum: IllagerSpell}

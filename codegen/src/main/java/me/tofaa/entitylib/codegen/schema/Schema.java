@@ -12,6 +12,7 @@ public final class Schema {
     private final Map<String, TypeDef> types;
     private final Map<String, SchemaClass> classes = new LinkedHashMap<>();
     private final Map<String, String> conversions = new LinkedHashMap<>();
+    private final Map<String, Map<String, Integer>> enums = new LinkedHashMap<>();
 
     public Schema(Versions versions, Map<String, TypeDef> types) {
         this.versions = versions;
@@ -57,6 +58,14 @@ public final class Schema {
 
     public String conversion(String valueType, String wireType) {
         return conversions.get(valueType + "<-" + wireType);
+    }
+
+    public void addEnum(String name, Map<String, Integer> constants) {
+        enums.put(name, constants);
+    }
+
+    public Map<String, Map<String, Integer>> enums() {
+        return enums;
     }
 
     public void add(SchemaClass schemaClass) {

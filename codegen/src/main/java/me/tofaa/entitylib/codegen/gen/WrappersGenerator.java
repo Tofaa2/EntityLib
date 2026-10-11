@@ -149,7 +149,7 @@ public final class WrappersGenerator {
             if (!field.aliveIn(version)) {
                 continue;
             }
-            TypeName valueType = Names.type(field.valueType().java());
+            TypeName valueType = Names.valueType(field);
             String accessor = names.get(schemaClass.name + "." + field.name());
             type.addMethod(MethodSpec.methodBuilder("get" + accessor)
                     .addModifiers(Modifier.PUBLIC)

@@ -5,5 +5,5 @@ extends:
   - {class: AbstractCow, since: "1.21.5"}
 entities: [mooshroom]
 fields:
-  - {name: TYPE, type: int, since: "1.21.5"}
-  - {name: TYPE, type: string, since: "1.14", removed: "1.21.5", convert: MOOSHROOM_TYPE_NAME}
+  - {name: TYPE, type: int, since: "1.21.5", enum: MooshroomVariant}
+  - {name: TYPE, type: string, since: "1.14", removed: "1.21.5", convert: MOOSHROOM_TYPE_NAME, enum: MooshroomVariant}

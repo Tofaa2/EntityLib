@@ -319,6 +319,17 @@ public class WrapperEntity {
         }
     }
 
+    public void setMetaFromPacket(@NotNull WrapperPlayServerEntityMetadata packet) {
+        setMetaFromPacket(packet, packet.getServerVersion().getProtocolVersion());
+    }
+
+    public void setMetaFromPacket(@NotNull WrapperPlayServerEntityMetadata packet, int protocolVersion) {
+        metadata.setMetaFromPacket(packet, entityType, protocolVersion);
+        if (spawned) {
+            broadcastMetadata();
+        }
+    }
+
     private boolean checkOwnership(MetaField<?> field) {
         OwnershipCheck check = EntityLib.get().getConfig().getOwnershipCheck();
         if (check == OwnershipCheck.OFF || MetaFields.owns(entityType, field)) {

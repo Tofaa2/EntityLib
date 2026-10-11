@@ -5,5 +5,5 @@ extends:
   - {class: AbstractSchoolingFish, since: "1.14.4"}
 entities: [salmon]
 fields:
-  - {name: TYPE, type: int, since: "1.21.4"}
-  - {name: TYPE, type: string, since: "1.21.2", removed: "1.21.4", convert: SALMON_TYPE_NAME}
+  - {name: TYPE, type: int, since: "1.21.4", enum: SalmonVariant}
+  - {name: TYPE, type: string, since: "1.21.2", removed: "1.21.4", convert: SALMON_TYPE_NAME, enum: SalmonVariant}

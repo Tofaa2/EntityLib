@@ -1,6 +1,7 @@
 package me.tofaa.entitylib.meta;
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
+import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -136,6 +137,24 @@ public final class Metadata {
     public @NotNull WrapperPlayServerEntityMetadata createPacket(int entityId, int protocolVersion,
                                                                  @NotNull MissingPolicy missingPolicy) {
         return new WrapperPlayServerEntityMetadata(entityId, encode(protocolVersion, missingPolicy));
+    }
+
+    public @NotNull Metadata setMetaFromPacket(@NotNull WrapperPlayServerEntityMetadata packet, @NotNull MetaClass metaClass,
+                                               int protocolVersion) {
+        return decode(metaClass, protocolVersion, packet.getEntityMetadata());
+    }
+
+    public @NotNull Metadata setMetaFromPacket(@NotNull WrapperPlayServerEntityMetadata packet, @NotNull EntityType entityType,
+                                               int protocolVersion) {
+        MetaClass metaClass = MetaFields.metaClass(entityType, protocolVersion);
+        if (metaClass != null) {
+            decode(metaClass, protocolVersion, packet.getEntityMetadata());
+        }
+        return this;
+    }
+
+    public @NotNull Metadata setMetaFromPacket(@NotNull WrapperPlayServerEntityMetadata packet, @NotNull EntityType entityType) {
+        return setMetaFromPacket(packet, entityType, packet.getServerVersion().getProtocolVersion());
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})

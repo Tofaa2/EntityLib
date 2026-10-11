@@ -24,6 +24,12 @@ final class Names {
             ClassName.get("com.github.retrooper.packetevents.protocol.entity.type", "EntityType");
     static final ClassName ENTITY_TYPES =
             ClassName.get("com.github.retrooper.packetevents.protocol.entity.type", "EntityTypes");
+    static final String ENUMS_PACKAGE = META_PACKAGE + ".enums";
+
+    static TypeName valueType(Model.Field field) {
+        return field.enumName() != null ? ClassName.get(ENUMS_PACKAGE, field.enumName()) : type(field.valueType().java());
+    }
+
     static final ClassName NOT_NULL = ClassName.get("org.jetbrains.annotations", "NotNull");
     static final ClassName NULLABLE = ClassName.get("org.jetbrains.annotations", "Nullable");
 

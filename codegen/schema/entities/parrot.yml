@@ -5,4 +5,4 @@ extends:
   - {class: ShoulderRidingEntity, since: "1.14.4"}
 entities: [parrot]
 fields:
-  - {name: VARIANT, type: int}
+  - {name: VARIANT, type: int, enum: ParrotVariant}

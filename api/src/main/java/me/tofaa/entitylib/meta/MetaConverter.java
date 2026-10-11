@@ -10,6 +10,11 @@ public interface MetaConverter<T, W> {
 
     T fromWire(W wire);
 
+    default <V> @NotNull MetaConverter<T, V> then(@NotNull MetaConverter<W, V> next) {
+        MetaConverter<T, W> first = this;
+        return of(value -> next.toWire(first.toWire(value)), wire -> first.fromWire(next.fromWire(wire)));
+    }
+
     @SuppressWarnings("unchecked")
     static <T> @NotNull MetaConverter<T, T> identity() {
         return (MetaConverter<T, T>) Identity.INSTANCE;

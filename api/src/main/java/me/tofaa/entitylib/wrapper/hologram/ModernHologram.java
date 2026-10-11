@@ -4,6 +4,7 @@ import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import me.tofaa.entitylib.meta.MetaFields;
 import me.tofaa.entitylib.meta.Metadata;
+import me.tofaa.entitylib.meta.enums.BillboardConstraints;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
@@ -12,8 +13,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 
 final class ModernHologram extends AbstractHologram implements Hologram.Modern {
-
-    private static final byte BILLBOARD_CENTER = 3;
 
     private Consumer<Metadata> modifier;
     private WrapperEntity parent;
@@ -29,7 +28,7 @@ final class ModernHologram extends AbstractHologram implements Hologram.Modern {
         metadata.setFlag(MetaFields.Entity.INVISIBLE, true);
         metadata.set(MetaFields.Entity.NO_GRAVITY, true);
         metadata.set(MetaFields.TextDisplay.TEXT, line);
-        metadata.set(MetaFields.Display.BILLBOARD_RENDER_CONSTRAINTS, BILLBOARD_CENTER);
+        metadata.set(MetaFields.Display.BILLBOARD_RENDER_CONSTRAINTS, BillboardConstraints.CENTER);
         if (modifier != null) {
             modifier.accept(metadata);
         }

@@ -17,7 +17,7 @@ import java.util.Objects;
 
 public final class Model {
 
-    public record Binding(Versions.Version from, int toProtocol, int index, TypeDef type, String convert) {
+    public record Binding(Versions.Version from, int toProtocol, int index, TypeDef type, String convert, String enumConverter) {
     }
 
     public record FlagRange(Versions.Version from, int toProtocol, int mask) {
@@ -30,7 +30,7 @@ public final class Model {
         }
     }
 
-    public record Field(SchemaClass owner, String name, TypeDef valueType, List<Binding> bindings, List<Flag> flags) {
+    public record Field(SchemaClass owner, String name, TypeDef valueType, String enumName, List<Binding> bindings, List<Flag> flags) {
         public boolean aliveIn(Versions.Version version) {
             return bindings.stream().anyMatch(binding -> version.protocol() >= binding.from().protocol()
                     && version.protocol() < binding.toProtocol());
@@ -82,6 +82,12 @@ public final class Model {
                 }
             }
             TypeDef valueType = schema.type(newest.type);
+            String enumName = null;
+            for (SchemaField entry : logical.getValue()) {
+                if (entry.enumName != null) {
+                    enumName = entry.enumName;
+                }
+            }
 
             List<Binding> bindings = new ArrayList<>();
             Map<String, List<FlagRange>> flagRanges = new LinkedHashMap<>();
@@ -99,16 +105,39 @@ public final class Model {
                 if (slot != null && (previous == null || !sameBinding(previous, slot))) {
                     TypeDef type = schema.type(slot.field().type);
                     String convert = slot.field().convert;
-                    if (convert == null && !type.java().equals(valueType.java())) {
+                    String enumConverter = null;
+                    if (enumName != null) {
+                        switch (type.java()) {
+                            case "java.lang.Byte" -> {
+                                enumConverter = "enumByte";
+                                convert = null;
+                            }
+                            case "java.lang.Short" -> {
+                                enumConverter = "enumShort";
+                                convert = null;
+                            }
+                            case "java.lang.Integer" -> {
+                                enumConverter = "enumInt";
+                                convert = null;
+                            }
+                            default -> {
+                                enumConverter = "enumInt";
+                                if (convert == null) {
+                                    problems.add(schemaClass.name + "." + name + ": enum field has a " + type.name()
+                                            + " entry; it needs 'convert:' naming a converter from Integer");
+                                }
+                            }
+                        }
+                    } else if (convert == null && !type.java().equals(valueType.java())) {
                         convert = schema.conversion(valueType.name(), type.name());
                     }
-                    if (!type.java().equals(valueType.java()) && convert == null) {
+                    if (enumName == null && !type.java().equals(valueType.java()) && convert == null) {
                         problems.add(schemaClass.name + "." + name + ": is " + valueType.name() + " in its newest version but "
                                 + type.name() + " since " + slot.field().since + "; add 'convert: <constant in MetaConverters>'"
                                 + " to the " + type.name() + " entry, a default under 'conversions' in types.yml,"
                                 + " or give the entries different names");
                     }
-                    bindings.add(new Binding(version, Integer.MAX_VALUE, slot.index(), type, convert));
+                    bindings.add(new Binding(version, Integer.MAX_VALUE, slot.index(), type, convert, enumConverter));
                 }
                 collectFlags(flagRanges, slot, version);
                 previous = slot;
@@ -125,7 +154,7 @@ public final class Model {
                 constants.add(constant);
                 flags.add(new Flag(flag.getKey(), constant, flag.getValue()));
             }
-            result.add(new Field(schemaClass, name, valueType, bindings, flags));
+            result.add(new Field(schemaClass, name, valueType, enumName, bindings, flags));
         }
         return result;
     }
@@ -139,7 +168,7 @@ public final class Model {
         Binding last = bindings.get(bindings.size() - 1);
         if (last.toProtocol() == Integer.MAX_VALUE) {
             bindings.set(bindings.size() - 1,
-                    new Binding(last.from(), version.protocol(), last.index(), last.type(), last.convert()));
+                    new Binding(last.from(), version.protocol(), last.index(), last.type(), last.convert(), last.enumConverter()));
         }
     }
 
