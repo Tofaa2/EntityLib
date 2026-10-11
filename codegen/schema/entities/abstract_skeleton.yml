@@ -1,0 +1,6 @@
+class: AbstractSkeleton
+since: "1.11"
+extends: Monster
+entities: [abstract_skeleton]
+fields:
+  - {name: SWINGING_ARMS, type: boolean, removed: "1.14"}

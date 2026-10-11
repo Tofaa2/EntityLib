@@ -1,0 +1,7 @@
+class: ChestBoat
+since: "1.19"
+extends:
+  - {class: Boat, removed: "1.21.2"}
+  - {class: AbstractChestBoat, since: "1.21.2"}
+entities: [chest_boat, acacia_chest_boat, birch_chest_boat, cherry_chest_boat, dark_oak_chest_boat, jungle_chest_boat, mangrove_chest_boat, oak_chest_boat, pale_oak_chest_boat, spruce_chest_boat, poplar_chest_boat]
+fields: []

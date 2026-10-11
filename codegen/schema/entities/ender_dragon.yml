@@ -1,0 +1,6 @@
+class: EnderDragon
+since: "1.9"
+extends: Mob
+entities: [ender_dragon]
+fields:
+  - {name: PHASE, type: int}

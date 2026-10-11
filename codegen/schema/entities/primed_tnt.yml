@@ -1,0 +1,7 @@
+class: PrimedTnt
+since: "1.9"
+extends: Entity
+entities: [primed_tnt, tnt]
+fields:
+  - {name: FUSE, type: int}
+  - {name: BLOCK_STATE, type: block_state, since: "1.20.3"}

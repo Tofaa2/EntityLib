@@ -1,0 +1,11 @@
+class: Dolphin
+since: "1.13"
+extends:
+  - {class: PathfinderMob, removed: "1.14.4"}
+  - {class: WaterAnimal, since: "1.14.4", removed: "1.21.2"}
+  - {class: AgeableWaterCreature, since: "1.21.2"}
+entities: [dolphin]
+fields:
+  - {name: TREASURE_POS, type: block_position, removed: "1.21.5"}
+  - {name: GOT_FISH, type: boolean}
+  - {name: MOISTNESS_LEVEL, type: int}

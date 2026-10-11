@@ -1,0 +1,9 @@
+class: MinecartCommandBlock
+since: "1.8"
+extends: AbstractMinecart
+entities: [command_block_minecart, minecart_command]
+fields:
+  - {name: COMMAND_NAME, type: string, since: "1.9"}
+  - {name: LAST_OUTPUT, type: component, since: "1.9"}
+  - {name: COMMAND_NAME, type: string, index: 23, removed: "1.9"}
+  - {name: LAST_OUTPUT, type: string, index: 24, removed: "1.9"}

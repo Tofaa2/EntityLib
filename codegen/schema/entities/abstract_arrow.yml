@@ -1,0 +1,23 @@
+class: AbstractArrow
+since: "1.8"
+extends:
+  - {class: Entity, removed: "1.16"}
+  - {class: Projectile, since: "1.16"}
+entities: [abstract_arrow]
+fields:
+  - name: ID_FLAGS
+    type: byte
+    since: "1.9"
+    flags:
+      - {name: CRITICAL, mask: 0x01}
+      - {name: NO_PHYSICS, mask: 0x02, since: "1.13"}
+  - {name: OWNERUUID, type: optional_uuid, since: "1.13.1", removed: "1.16"}
+  - {name: PIERCE_LEVEL, type: byte, since: "1.14"}
+  - {name: IN_GROUND, type: boolean, since: "1.21.2"}
+  - name: ID_FLAGS
+    type: byte
+    index: 16
+    removed: "1.9"
+    flags:
+      - {name: CRITICAL, mask: 0x01}
+      - {name: NO_PHYSICS, mask: 0x02, since: "1.13"}

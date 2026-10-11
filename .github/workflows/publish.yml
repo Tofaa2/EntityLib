@@ -33,9 +33,9 @@ jobs:
       - name: Build
         run: ./gradlew build
 
-      - name: Publish to PvPHub Maven (push to main only)
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+      - name: Publish to PvPHub Maven (push to master or 4.0 only)
+        if: (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/4.0') && github.event_name == 'push'
         env:
           PVPHUB_MAVEN_USERNAME: ${{ secrets.PVPHUB_MAVEN_USERNAME }}
           PVPHUB_MAVEN_SECRET: ${{ secrets.PVPHUB_MAVEN_SECRET }}
-        run: ./gradlew publishEntityLibPublicationToPvphub-maven-tofaaRepository
+        run: ./gradlew publishAllPublicationsToPvphub-maven-tofaaRepository

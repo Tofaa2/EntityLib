@@ -1,0 +1,9 @@
+class: SpellcasterIllager
+since: "1.12"
+extends:
+  - {class: AbstractIllager, removed: "1.14"}
+  - {class: Raider, since: "1.14", removed: "1.14.4"}
+  - {class: AbstractIllager, since: "1.14.4"}
+entities: [abstract_evo_illu_illager]
+fields:
+  - {name: SPELL_CASTING, type: byte}

@@ -1,0 +1,5 @@
+class: MinecartTNT
+since: "1.9"
+extends: AbstractMinecart
+entities: [tnt_minecart, minecart_tnt]
+fields: []

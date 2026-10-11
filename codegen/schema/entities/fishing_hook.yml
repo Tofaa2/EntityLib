@@ -1,0 +1,9 @@
+class: FishingHook
+since: "1.9"
+extends:
+  - {class: Entity, removed: "1.16"}
+  - {class: Projectile, since: "1.16"}
+entities: [fishing_bobber]
+fields:
+  - {name: HOOKED_ENTITY, type: int}
+  - {name: BITING, type: boolean, since: "1.16"}

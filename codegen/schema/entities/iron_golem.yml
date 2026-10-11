@@ -1,0 +1,18 @@
+class: IronGolem
+since: "1.8"
+extends:
+  - {class: PathfinderMob, removed: "1.14.4"}
+  - {class: AbstractGolem, since: "1.14.4"}
+entities: [iron_golem]
+fields:
+  - name: FLAGS
+    type: byte
+    since: "1.9"
+    flags:
+      - {name: PLAYER_CREATED, mask: 0x01}
+  - name: FLAGS
+    type: byte
+    index: 16
+    removed: "1.9"
+    flags:
+      - {name: PLAYER_CREATED, mask: 0x01}

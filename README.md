@@ -61,28 +61,31 @@ Examples below show usage of the spigot module of entity lib, but the usage is t
 ### Using the EntityMeta api
 
 ```java
+import me.tofaa.entitylib.meta.v1_21_4.PigMeta;
+
 class Example {
 
     public static void main(String[] args) {
-        PacketEventsAPI api = ;// create PacketEventsAPI instance
-        SpigotEntityLibPlatform platform = new SpigotEntityLibPlatform(this);
-        APIConfig settings = new APIConfig(PacketEvents.getAPI())
-                .debugMode()
-                .tickTickables()
-                .trackPlatformEntities()
-                .usePlatformLogger();
+        EntityLibPlatform platform = ;// your EntityLibPlatform implementation
+        APIConfig settings = new APIConfig(PacketEvents.getAPI(), platform)
+                .debugMode();
 
-        EntityLib.init(platform, settings);
+        EntityLib.init(settings);
 
-        // Making a random entity using packet events raw, i strongly recommend using the EntityLib#createEntity method instead
-        int entityID = 1;
-        WrapperPlayServerSpawnEntity packet = new WrapperPlayServerSpawnEntity(constructor args);
-        EntityMeta meta = EntityMeta.createMeta(entityId, EntityType);
-        // You can cast the meta to the correct type depending on the entity type
-        PigMeta pigMeta = (PigMeta) meta;
+        // Metadata is version independent, indexes and types are resolved when it is encoded for a protocol version
+        int entityId = 1;
+        Metadata metadata = new Metadata()
+                .set(MetaFields.Entity.CUSTOM_NAME, Optional.of(Component.text("Bob")))
+                .set(MetaFields.Pig.BOOST_TIME, 20)
+                .setFlag(MetaFields.Entity.GLOWING, true);
 
-        // Once you're done modifying the meta accordingly, you can convert it to a packet, and send it to whoever you want for them  to see the changes.
-        WrapperPlayServerEntityMetadata metaPacket = meta.createPacket();
+        // Each version also has typed wrappers exposing exactly the fields of that version
+        PigMeta pigMeta = new PigMeta(metadata);
+        pigMeta.setSaddle(true);
+
+        // Once you're done modifying the meta accordingly, you can convert it to a packet for the version of whoever should see the changes.
+        int protocolVersion = User.getClientVersion().getProtocolVersion();
+        WrapperPlayServerEntityMetadata metaPacket = metadata.createPacket(entityId, protocolVersion);
         User.sendPacket(metaPacket);
     }
 
@@ -97,71 +100,32 @@ import com.github.retrooper.packetevents.protocol.world.Location;
 class Example {
 
     public static void main(String[] args) {
-        PacketEventsAPI api = ;// create PacketEventsAPI instance
-        SpigotEntityLibPlatform platform = new SpigotEntityLibPlatform(this);
-        APIConfig settings = new APIConfig(PacketEvents.getAPI())
-                .debugMode()
-                .tickTickables()
-                .trackPlatformEntities()
-                .usePlatformLogger();
+        EntityLibPlatform platform = ;// your EntityLibPlatform implementation
+        APIConfig settings = new APIConfig(PacketEvents.getAPI(), platform)
+                .debugMode();
 
-        EntityLib.init(platform, settings);
+        EntityLib.init(settings);
 
-        WrapperEntity entity = new WrapperEntity(EntityType); // optional uuid and entity id and meta 
-        // You can keep track of the entity yourself or store its entityId or uuid and fetch it using EntityLib.getApi().getEntity(UUID or entityId)
+        WrapperEntity entity = new WrapperLivingEntity(entityId, UUID, EntityTypes.PIG, Location);
 
-        // Entities also have access to the EntityMeta api, the EntityMeta api can be used seperately from wrapper entities but also can be used together
-        EntityMeta meta = entity.getEntityMeta();
-        // Depending on the entity type, you can safely cast the meta to the correct type
-        PigMeta meta1 = (PigMeta) meta; // If the entity type is EntityTypes.PIG
+        // Entities send their metadata to every viewer in the viewer's own version
+        entity.setMetadata(MetaFields.Pig.BOOST_TIME, 20);
+        entity.setFlag(MetaFields.Entity.GLOWING, true);
 
         // adding a viewer to the entity can be done before or after spawn, doesnt matter
-        entity.addViewer(User); // UUID also applicable
-        entity.removeViewer(User); // UUID also applicable
+        entity.addViewer(UUID);
+        entity.removeViewer(UUID);
 
         entity.spawn(Location); // Spawns the entity at the given location
         entity.remove(); // Removes the entity from the world
-        entity.rotateHead(float yaw, float pitch); // Rotates the head of the entity
-        entity.teleport(Location); // Teleports the entity to the given location.
-        
-        // If the entityId provider for WrapperEntities is not working for you or needs changing, you can get it from EntityLib#getEntityIdProvider()
-        // You can also set it to a custom provider if needed by calling EntityLib#setEntityIdProvider(EntityIdProvider)
-        int randomEntityId = EntityLib.getPlatform().getEntityIdProvider().provide();
     }
 
 }
 
 ```
 
-## Publishing to Maven Central
 
-EntityLib uses the new Maven Central publishing system via the Central Portal (replacing the deprecated OSSRH). To publish, set up the following GitHub secrets:
-
-- `OSSRH_USERNAME`: Your Central Portal username (usually your email).
-- `OSSRH_PASSWORD`: Your publishing token from the Central Portal.
-- `GPG_PRIVATE_KEY`: Your GPG private key (for signing artifacts).
-- `GPG_PASSPHRASE`: The passphrase for your GPG key.
-
-### Setting Up Central Portal Credentials
-1. Go to [Central Portal](https://central.sonatype.com/) and log in with your GitHub account.
-2. **Create a namespace**: In the "Namespaces" section, create a new namespace for your group ID (`io.github.tofaa2`). This is crucial for publishing to work.
-3. Generate a publishing token from the "Account Settings" > "Publishing Tokens".
-4. Use your email as the username and the token as the password.
-
-Snapshots are automatically published on pushes to the `master` branch. Stable releases are published when a GitHub release is created.
-
-### TODO:
-Once this list is complete, i will release a stable version of the library.
-- [ ] Implement checks for each EntityMeta to make sure the version specific data is correct.
-- [ ] Verify all the EntityMeta packets are working correctly.
-- [x] WrapperEntities must seamlessly send packet updates to viewers, currently they are not.
-- [x] Add support for more actions using WrapperEntities.
-- [x] More javadocs.
-- [x] Make ObjectData actually useful.
-- [ ] Multi-version support, currently only 1.18+ is stable.
-- [ ] Make class names match the protocol specified names.
 
 ### Credits
 - PacketEvents for providing the API and retrooper being a cool guy in general
 - Minestom certain mappings were taken from Minestom cause i have not slept in 4 days and it was faster
-

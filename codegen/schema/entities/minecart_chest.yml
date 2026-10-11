@@ -1,0 +1,7 @@
+class: MinecartChest
+since: "1.9"
+extends:
+  - {class: AbstractMinecart, removed: "1.14.4"}
+  - {class: AbstractMinecartContainer, since: "1.14.4"}
+entities: [minecart_chest, chest_minecart]
+fields: []

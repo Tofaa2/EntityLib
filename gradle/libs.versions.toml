@@ -2,11 +2,13 @@
 adventure = "4.25.0"
 jetbrains-annotations = "26.0.2"
 gson = "2.13.1"
-packetevents = "2.11.0"
+packetevents = "2.14.0"
 paper = "1.21-R0.1-SNAPSHOT"
 velocity = "3.4.0-SNAPSHOT"
+fabric-loader = "0.19.5"
 run-paper = "3.0.2"
 javapoet = "1.13.0"
+snakeyaml = "2.7"
 
 [libraries]
 adventure-api = { group = "net.kyori", name = "adventure-api", version.ref = "adventure" }
@@ -21,7 +23,10 @@ packetevents-spigot = { group = "com.github.retrooper", name = "packetevents-spi
 packetevents-velocity = { group = "com.github.retrooper", name = "packetevents-velocity", version.ref = "packetevents" }
 paper = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }
 velocity = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
+fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = "fabric-loader" }
 javapoet = { group = "com.squareup", name = "javapoet", version.ref = "javapoet" }
+snakeyaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeyaml" }
+shadow = { group = "com.gradleup.shadow", name = "shadow-gradle-plugin", version = "9.6.1" }
 
 [bundles]
 adventure = ["adventure-api", "adventure-text-serializer-gson", "adventure-text-serializer-legacy", "adventure-nbt"]

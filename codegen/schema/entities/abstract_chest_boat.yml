@@ -1,0 +1,4 @@
+class: AbstractChestBoat
+since: "1.21.2"
+extends: AbstractBoat
+fields: []

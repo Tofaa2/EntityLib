@@ -1,0 +1,7 @@
+class: Cod
+since: "1.13"
+extends:
+  - {class: AbstractFish, removed: "1.14.4"}
+  - {class: AbstractSchoolingFish, since: "1.14.4"}
+entities: [cod]
+fields: []

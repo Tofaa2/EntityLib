@@ -1,0 +1,6 @@
+class: Zoglin
+since: "1.16"
+extends: Monster
+entities: [zoglin]
+fields:
+  - {name: BABY, type: boolean}

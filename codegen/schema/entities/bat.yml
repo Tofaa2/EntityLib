@@ -1,0 +1,18 @@
+class: Bat
+since: "1.8"
+extends:
+  - {class: Mob, removed: "1.14.4"}
+  - {class: AmbientCreature, since: "1.14.4"}
+entities: [bat]
+fields:
+  - name: FLAGS
+    type: byte
+    since: "1.9"
+    flags:
+      - {name: RESTING, mask: 0x01}
+  - name: FLAGS
+    type: byte
+    index: 16
+    removed: "1.9"
+    flags:
+      - {name: RESTING, mask: 0x01}

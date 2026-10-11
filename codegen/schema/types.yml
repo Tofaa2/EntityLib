@@ -1,0 +1,203 @@
+types:
+  byte:
+    wire: BYTE
+    java: "java.lang.Byte"
+    upstream: ["Byte"]
+  short:
+    wire: SHORT
+    java: "java.lang.Short"
+    upstream: ["Short"]
+  int:
+    wire: INT
+    java: "java.lang.Integer"
+    upstream: ["Integer"]
+  long:
+    wire: LONG
+    java: "java.lang.Long"
+    upstream: ["Long"]
+  float:
+    wire: FLOAT
+    java: "java.lang.Float"
+    upstream: ["Float"]
+  string:
+    wire: STRING
+    java: "java.lang.String"
+    upstream: ["String"]
+  boolean:
+    wire: BOOLEAN
+    java: "java.lang.Boolean"
+    upstream: ["Boolean"]
+  component:
+    wire: ADV_COMPONENT
+    java: "net.kyori.adventure.text.Component"
+    upstream: ["Component"]
+  optional_component:
+    wire: OPTIONAL_ADV_COMPONENT
+    java: "java.util.Optional<net.kyori.adventure.text.Component>"
+    upstream: ["Optional<Component>"]
+  item_stack:
+    wire: ITEMSTACK
+    java: "com.github.retrooper.packetevents.protocol.item.ItemStack"
+    upstream: ["ItemStack"]
+    since: "1.11"
+  optional_item_stack:
+    wire: OPTIONAL_ITEMSTACK
+    java: "java.util.Optional<com.github.retrooper.packetevents.protocol.item.ItemStack>"
+    upstream: ["ItemStack"]
+    since: "1.9"
+    removed: "1.11"
+  legacy_item_stack:
+    wire: ITEMSTACK
+    java: "com.github.retrooper.packetevents.protocol.item.ItemStack"
+    upstream: ["ItemStack"]
+    removed: "1.9"
+  rotation:
+    wire: ROTATION
+    java: "com.github.retrooper.packetevents.util.Vector3f"
+    upstream: ["Rotations"]
+  block_position:
+    wire: BLOCK_POSITION
+    java: "com.github.retrooper.packetevents.util.Vector3i"
+    upstream: ["BlockPos"]
+  optional_block_position:
+    wire: OPTIONAL_BLOCK_POSITION
+    java: "java.util.Optional<com.github.retrooper.packetevents.util.Vector3i>"
+    upstream: ["Optional<BlockPos>"]
+  block_face:
+    wire: BLOCK_FACE
+    java: "com.github.retrooper.packetevents.protocol.world.BlockFace"
+    upstream: ["Direction"]
+  optional_uuid:
+    wire: OPTIONAL_UUID
+    java: "java.util.Optional<java.util.UUID>"
+    upstream: ["Optional<UUID>", "Optional<EntityReference<LivingEntity>>"]
+  block_state:
+    wire: BLOCK_STATE
+    java: "java.lang.Integer"
+    upstream: ["BlockState"]
+  optional_block_state:
+    wire: OPTIONAL_BLOCK_STATE
+    java: "java.lang.Integer"
+    upstream: ["Optional<BlockState>"]
+  nbt:
+    wire: NBT
+    java: "com.github.retrooper.packetevents.protocol.nbt.NBTCompound"
+    upstream: ["CompoundTag"]
+  particle:
+    wire: PARTICLE
+    java: "com.github.retrooper.packetevents.protocol.particle.Particle<?>"
+    upstream: ["ParticleOptions"]
+  particles:
+    wire: PARTICLES
+    java: "java.util.List<com.github.retrooper.packetevents.protocol.particle.Particle<?>>"
+    upstream: ["List<ParticleOptions>"]
+  villager_data:
+    wire: VILLAGER_DATA
+    java: "com.github.retrooper.packetevents.protocol.entity.villager.VillagerData"
+    upstream: ["VillagerData"]
+  optional_int:
+    wire: OPTIONAL_INT
+    java: "java.util.Optional<java.lang.Integer>"
+    upstream: ["OptionalInt"]
+  pose:
+    wire: ENTITY_POSE
+    java: "com.github.retrooper.packetevents.protocol.entity.pose.EntityPose"
+    upstream: ["Pose"]
+  cat_variant:
+    wire: TYPED_CAT_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.entity.cat.CatVariant"
+    upstream: ["CatVariant", "Holder<CatVariant>"]
+  cat_sound_variant:
+    wire: CAT_SOUND_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.entity.cat.CatSoundVariant"
+    upstream: ["Holder<CatSoundVariant>"]
+  frog_variant:
+    wire: TYPED_FROG_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.entity.frog.FrogVariant"
+    upstream: ["FrogVariant", "Holder<FrogVariant>"]
+  painting_variant:
+    wire: PAINTING_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.world.painting.PaintingVariant"
+    upstream: ["Holder<PaintingVariant>"]
+  wolf_variant:
+    wire: TYPED_WOLF_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.entity.wolfvariant.WolfVariant"
+    upstream: ["Holder<WolfVariant>"]
+  wolf_sound_variant:
+    wire: WOLF_SOUND_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.entity.wolfvariant.WolfSoundVariant"
+    upstream: ["Holder<WolfSoundVariant>"]
+  cow_variant:
+    wire: COW_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.entity.cow.CowVariant"
+    upstream: ["Holder<CowVariant>"]
+  cow_sound_variant:
+    wire: COW_SOUND_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.entity.cow.CowSoundVariant"
+    upstream: ["Holder<CowSoundVariant>"]
+  pig_variant:
+    wire: PIG_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.entity.pig.PigVariant"
+    upstream: ["Holder<PigVariant>"]
+  pig_sound_variant:
+    wire: PIG_SOUND_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.entity.pig.PigSoundVariant"
+    upstream: ["Holder<PigSoundVariant>"]
+  chicken_variant:
+    wire: CHICKEN_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.entity.chicken.ChickenVariant"
+    upstream: ["Holder<ChickenVariant>"]
+  chicken_sound_variant:
+    wire: CHICKEN_SOUND_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.entity.chicken.ChickenSoundVariant"
+    upstream: ["Holder<ChickenSoundVariant>"]
+  zombie_nautilus_variant:
+    wire: ZOMBIE_NAUTILUS_VARIANT
+    java: "com.github.retrooper.packetevents.protocol.entity.nautilus.ZombieNautilusVariant"
+    upstream: ["Holder<ZombieNautilusVariant>"]
+  sniffer_state:
+    wire: SNIFFER_STATE
+    java: "com.github.retrooper.packetevents.protocol.entity.sniffer.SnifferState"
+    upstream: ["Sniffer.State"]
+  armadillo_state:
+    wire: ARMADILLO_STATE
+    java: "com.github.retrooper.packetevents.protocol.entity.armadillo.ArmadilloState"
+    upstream: ["Armadillo.ArmadilloState"]
+  copper_golem_state:
+    wire: COPPER_GOLEM_STATE
+    java: "com.github.retrooper.packetevents.protocol.entity.data.struct.CopperGolemState"
+    upstream: ["CopperGolemState"]
+  weathering_copper_state:
+    wire: WEATHERING_COPPER_STATE
+    java: "com.github.retrooper.packetevents.protocol.entity.data.struct.WeatheringCopperState"
+    upstream: ["WeatheringCopper.WeatherState"]
+  vector3f:
+    wire: VECTOR3F
+    java: "com.github.retrooper.packetevents.util.Vector3f"
+    upstream: ["Vector3f", "Vector3fc"]
+  quaternion:
+    wire: QUATERNION
+    java: "com.github.retrooper.packetevents.util.Quaternion4f"
+    upstream: ["Quaternionf", "Quaternionfc"]
+  resolvable_profile:
+    wire: RESOLVABLE_PROFILE
+    java: "com.github.retrooper.packetevents.protocol.component.builtin.item.ItemProfile"
+    upstream: ["ResolvableProfile"]
+  humanoid_arm:
+    wire: HUMANOID_ARM
+    java: "com.github.retrooper.packetevents.protocol.player.HumanoidArm"
+    upstream: ["HumanoidArm"]
+  dye_color:
+    wire: DYE_COLOR
+    java: "com.github.retrooper.packetevents.protocol.color.DyeColor"
+    upstream: ["DyeColor"]
+
+conversions:
+  - {value: boolean, wire: byte, convert: BOOLEAN_BYTE}
+  - {value: int, wire: byte, convert: INT_BYTE}
+  - {value: int, wire: short, convert: INT_SHORT}
+  - {value: byte, wire: int, convert: BYTE_INT}
+  - {value: optional_uuid, wire: string, convert: OPTIONAL_UUID_STRING}
+  - {value: component, wire: string, convert: COMPONENT_LEGACY_TEXT}
+  - {value: optional_component, wire: string, convert: OPTIONAL_COMPONENT_LEGACY_TEXT}
+  - {value: item_stack, wire: optional_item_stack, convert: ITEM_STACK_OPTIONAL}

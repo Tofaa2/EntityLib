@@ -1,0 +1,7 @@
+class: Camel
+since: "1.19.3"
+extends: AbstractHorse
+entities: [camel]
+fields:
+  - {name: DASH, type: boolean}
+  - {name: LAST_POSE_CHANGE_TICK, type: long}

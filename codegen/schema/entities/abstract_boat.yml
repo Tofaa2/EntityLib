@@ -1,0 +1,7 @@
+class: AbstractBoat
+since: "1.21.2"
+extends: VehicleEntity
+fields:
+  - {name: PADDLE_LEFT, type: boolean}
+  - {name: PADDLE_RIGHT, type: boolean}
+  - {name: BUBBLE_TIME, type: int}

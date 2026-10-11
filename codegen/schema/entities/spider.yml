@@ -1,0 +1,16 @@
+class: Spider
+since: "1.8"
+extends: Monster
+entities: [spider]
+fields:
+  - name: FLAGS
+    type: byte
+    since: "1.9"
+    flags:
+      - {name: CLIMBING, mask: 0x01}
+  - name: FLAGS
+    type: byte
+    index: 16
+    removed: "1.9"
+    flags:
+      - {name: CLIMBING, mask: 0x01}

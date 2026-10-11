@@ -1,0 +1,20 @@
+class: Display
+since: "1.19.4"
+extends: Entity
+entities: [display]
+fields:
+  - {name: TRANSFORMATION_INTERPOLATION_START_DELTA_TICKS, type: int}
+  - {name: TRANSFORMATION_INTERPOLATION_DURATION, type: int}
+  - {name: POS_ROT_INTERPOLATION_DURATION, type: int, since: "1.20.2"}
+  - {name: TRANSLATION, type: vector3f}
+  - {name: SCALE, type: vector3f}
+  - {name: LEFT_ROTATION, type: quaternion}
+  - {name: RIGHT_ROTATION, type: quaternion}
+  - {name: BILLBOARD_RENDER_CONSTRAINTS, type: byte}
+  - {name: BRIGHTNESS_OVERRIDE, type: int}
+  - {name: VIEW_RANGE, type: float}
+  - {name: SHADOW_RADIUS, type: float}
+  - {name: SHADOW_STRENGTH, type: float}
+  - {name: WIDTH, type: float}
+  - {name: HEIGHT, type: float}
+  - {name: GLOW_COLOR_OVERRIDE, type: int}

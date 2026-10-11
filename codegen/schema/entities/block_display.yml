@@ -1,0 +1,6 @@
+class: BlockDisplay
+since: "1.19.4"
+extends: Display
+entities: [block_display]
+fields:
+  - {name: BLOCK_STATE, type: block_state}

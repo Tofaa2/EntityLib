@@ -1,0 +1,6 @@
+class: AbstractChestedHorse
+since: "1.11"
+extends: AbstractHorse
+entities: [chested_horse]
+fields:
+  - {name: CHEST, type: boolean}

@@ -1,0 +1,4 @@
+class: BlockAttachedEntity
+since: "1.21"
+extends: Entity
+fields: []

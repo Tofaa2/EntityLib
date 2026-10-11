@@ -1,0 +1,9 @@
+class: Witch
+since: "1.8"
+extends:
+  - {class: Monster, removed: "1.14"}
+  - {class: Raider, since: "1.14"}
+entities: [witch]
+fields:
+  - {name: USING_ITEM, type: boolean, since: "1.9"}
+  - {name: USING_ITEM, type: byte, index: 21, removed: "1.9"}

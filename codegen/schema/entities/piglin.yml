@@ -1,0 +1,11 @@
+class: Piglin
+since: "1.16"
+extends:
+  - {class: Monster, removed: "1.16.2"}
+  - {class: AbstractPiglin, since: "1.16.2"}
+entities: [piglin]
+fields:
+  - {name: BABY, type: boolean}
+  - {name: IMMUNE_TO_ZOMBIFICATION, type: boolean, removed: "1.16.2"}
+  - {name: IS_CHARGING_CROSSBOW, type: boolean}
+  - {name: IS_DANCING, type: boolean}

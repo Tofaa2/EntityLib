@@ -1,0 +1,5 @@
+class: PathfinderMob
+since: "1.8"
+extends: Mob
+entities: [abstract_creature]
+fields: []

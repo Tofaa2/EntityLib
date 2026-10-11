@@ -1,0 +1,6 @@
+class: EyeOfEnder
+since: "1.9"
+extends: Entity
+entities: [eye_of_ender, ender_signal]
+fields:
+  - {name: ITEM_STACK, type: item_stack, since: "1.14"}

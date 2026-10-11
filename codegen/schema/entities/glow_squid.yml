@@ -1,0 +1,6 @@
+class: GlowSquid
+since: "1.17"
+extends: Squid
+entities: [glow_squid]
+fields:
+  - {name: DARK_TICKS_REMAINING, type: int}

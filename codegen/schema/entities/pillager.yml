@@ -1,0 +1,8 @@
+class: Pillager
+since: "1.14"
+extends:
+  - {class: Raider, removed: "1.14.4"}
+  - {class: AbstractIllager, since: "1.14.4"}
+entities: [pillager]
+fields:
+  - {name: IS_CHARGING_CROSSBOW, type: boolean}

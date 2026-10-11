@@ -1,0 +1,9 @@
+class: ZombieVillager
+since: "1.11"
+extends: Zombie
+entities: [zombie_villager]
+fields:
+  - {name: CONVERTING, type: boolean}
+  - {name: VILLAGER_DATA, type: villager_data, since: "1.14"}
+  - {name: VILLAGER_FINALIZED, type: boolean, since: "26.1"}
+  - {name: PROFESSION, type: int, removed: "1.14"}

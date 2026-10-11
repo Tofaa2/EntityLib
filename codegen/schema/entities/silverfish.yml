@@ -1,0 +1,5 @@
+class: Silverfish
+since: "1.9"
+extends: Monster
+entities: [silverfish]
+fields: []

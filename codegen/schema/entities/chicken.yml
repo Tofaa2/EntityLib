@@ -1,0 +1,7 @@
+class: Chicken
+since: "1.9"
+extends: Animal
+entities: [chicken]
+fields:
+  - {name: VARIANT, type: chicken_variant, since: "1.21.5"}
+  - {name: SOUND_VARIANT, type: chicken_sound_variant, since: "26.1"}

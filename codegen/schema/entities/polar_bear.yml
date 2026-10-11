@@ -1,0 +1,6 @@
+class: PolarBear
+since: "1.10"
+extends: Animal
+entities: [polar_bear]
+fields:
+  - {name: STANDING, type: boolean}

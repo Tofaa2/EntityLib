@@ -1,0 +1,8 @@
+class: ItemEntity
+since: "1.8"
+extends: Entity
+entities: [item]
+fields:
+  - {name: ITEM, type: item_stack, since: "1.11"}
+  - {name: ITEM, type: optional_item_stack, since: "1.9", removed: "1.11"}
+  - {name: ITEM, type: legacy_item_stack, index: 10, removed: "1.9"}

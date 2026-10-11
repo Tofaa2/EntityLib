@@ -1,0 +1,6 @@
+class: FallingBlockEntity
+since: "1.9"
+extends: Entity
+entities: [falling_block]
+fields:
+  - {name: START_POS, type: block_position}

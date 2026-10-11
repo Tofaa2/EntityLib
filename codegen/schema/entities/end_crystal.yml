@@ -1,0 +1,8 @@
+class: EndCrystal
+since: "1.8"
+extends: Entity
+entities: [end_crystal]
+fields:
+  - {name: BEAM_TARGET, type: optional_block_position, since: "1.9"}
+  - {name: SHOW_BOTTOM, type: boolean, since: "1.9"}
+  - {name: HEALTH, type: int, index: 8, removed: "1.9"}

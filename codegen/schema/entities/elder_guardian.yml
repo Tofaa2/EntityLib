@@ -1,0 +1,5 @@
+class: ElderGuardian
+since: "1.11"
+extends: Guardian
+entities: [elder_guardian]
+fields: []

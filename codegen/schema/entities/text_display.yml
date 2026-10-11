@@ -1,0 +1,17 @@
+class: TextDisplay
+since: "1.19.4"
+extends: Display
+entities: [text_display]
+fields:
+  - {name: TEXT, type: component}
+  - {name: LINE_WIDTH, type: int}
+  - {name: BACKGROUND_COLOR, type: int}
+  - {name: TEXT_OPACITY, type: byte}
+  - name: STYLE_FLAGS
+    type: byte
+    flags:
+      - {name: SHADOW, mask: 0x01}
+      - {name: SEE_THROUGH, mask: 0x02}
+      - {name: USE_DEFAULT_BACKGROUND, mask: 0x04}
+      - {name: ALIGN_LEFT, mask: 0x08}
+      - {name: ALIGN_RIGHT, mask: 0x10}

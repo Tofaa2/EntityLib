@@ -1,0 +1,5 @@
+class: PiglinBrute
+since: "1.16.2"
+extends: AbstractPiglin
+entities: [piglin_brute]
+fields: []

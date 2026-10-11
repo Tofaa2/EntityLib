@@ -1,0 +1,10 @@
+class: Ocelot
+since: "1.8"
+extends:
+  - {class: TamableAnimal, removed: "1.14"}
+  - {class: Animal, since: "1.14"}
+entities: [ocelot]
+fields:
+  - {name: TRUSTING, type: boolean, since: "1.14"}
+  - {name: TYPE, type: int, since: "1.9", removed: "1.14"}
+  - {name: TYPE, type: byte, index: 18, removed: "1.9"}

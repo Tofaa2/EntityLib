@@ -1,0 +1,7 @@
+class: WindCharge
+since: "1.20.3"
+extends:
+  - {class: AbstractHurtingProjectile, removed: "1.20.5"}
+  - {class: AbstractWindCharge, since: "1.20.5"}
+entities: [wind_charge]
+fields: []

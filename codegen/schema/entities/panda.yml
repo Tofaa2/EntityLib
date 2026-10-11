@@ -1,0 +1,17 @@
+class: Panda
+since: "1.14"
+extends: Animal
+entities: [panda]
+fields:
+  - {name: UNHAPPY_COUNTER, type: int}
+  - {name: SNEEZE_COUNTER, type: int}
+  - {name: EAT_COUNTER, type: int}
+  - {name: MAIN_GENE, type: byte}
+  - {name: HIDDEN_GENE, type: byte}
+  - name: FLAGS
+    type: byte
+    flags:
+      - {name: SNEEZING, mask: 0x02}
+      - {name: ROLLING, mask: 0x04}
+      - {name: SITTING, mask: 0x08}
+      - {name: ON_BACK, mask: 0x10}

@@ -1,0 +1,8 @@
+class: AgeableMob
+since: "1.8"
+extends: PathfinderMob
+entities: [abstract_ageable]
+fields:
+  - {name: BABY, type: boolean, since: "1.9"}
+  - {name: AGE_LOCKED, type: boolean, since: "26.1"}
+  - {name: BABY, type: byte, index: 12, removed: "1.9", convert: BABY_AGE_BYTE}

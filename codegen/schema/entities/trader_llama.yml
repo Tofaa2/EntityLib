@@ -1,0 +1,5 @@
+class: TraderLlama
+since: "1.14"
+extends: Llama
+entities: [trader_llama]
+fields: []

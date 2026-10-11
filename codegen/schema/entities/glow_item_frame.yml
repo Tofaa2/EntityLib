@@ -1,0 +1,5 @@
+class: GlowItemFrame
+since: "1.17"
+extends: ItemFrame
+entities: [glow_item_frame]
+fields: []

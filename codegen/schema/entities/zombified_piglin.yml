@@ -1,0 +1,5 @@
+class: ZombifiedPiglin
+since: "1.9"
+extends: Zombie
+entities: [zombified_piglin]
+fields: []

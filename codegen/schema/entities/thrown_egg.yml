@@ -1,0 +1,7 @@
+class: ThrownEgg
+since: "1.9"
+extends:
+  - {class: Entity, removed: "1.14"}
+  - {class: ThrowableItemProjectile, since: "1.14"}
+entities: [egg]
+fields: []

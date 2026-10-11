@@ -1,0 +1,5 @@
+class: ShoulderRidingEntity
+since: "1.14.4"
+extends: TamableAnimal
+entities: [abstract_parrot]
+fields: []

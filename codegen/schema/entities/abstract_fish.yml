@@ -1,0 +1,8 @@
+class: AbstractFish
+since: "1.13"
+extends:
+  - {class: PathfinderMob, removed: "1.14.4"}
+  - {class: WaterAnimal, since: "1.14.4"}
+entities: [abstract_fishes]
+fields:
+  - {name: FROM_BUCKET, type: boolean}

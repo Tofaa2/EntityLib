@@ -1,0 +1,5 @@
+class: Drowned
+since: "1.13"
+extends: Zombie
+entities: [drowned]
+fields: []

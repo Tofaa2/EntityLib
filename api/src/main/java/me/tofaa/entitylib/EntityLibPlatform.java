@@ -17,4 +17,13 @@ public interface EntityLibPlatform {
 
     int getProtocolVersion(@NotNull UUID user);
 
+    int nextEntityId();
+
+    @NotNull UserLocaleProvider getUserLocaleProvider();
+
+    void setUserLocaleProvider(@NotNull UserLocaleProvider provider);
+
+    default void setup(@NotNull APIConfig config) {
+    }
+
 }

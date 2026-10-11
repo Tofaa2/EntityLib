@@ -1,0 +1,8 @@
+class: Parrot
+since: "1.12"
+extends:
+  - {class: TamableAnimal, removed: "1.14.4"}
+  - {class: ShoulderRidingEntity, since: "1.14.4"}
+entities: [parrot]
+fields:
+  - {name: VARIANT, type: int}

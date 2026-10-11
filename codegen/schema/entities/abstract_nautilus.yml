@@ -1,0 +1,6 @@
+class: AbstractNautilus
+since: "1.21.11"
+extends: TamableAnimal
+entities: [abstract_nautilus]
+fields:
+  - {name: DASH, type: boolean}

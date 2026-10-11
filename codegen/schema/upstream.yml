@@ -1,0 +1,13 @@
+ignoredVersions: ["26w14a", "26.4"]
+
+classes:
+  AgableMob: AgeableMob
+  EnderMan: Enderman
+  PigZombie: ZombifiedPiglin
+
+fields:
+  - {class: Dolphin, from: MOISNTESS_LEVEL, to: MOISTNESS_LEVEL}
+  - {class: Bee, from: ANGER_TIME, to: REMAINING_ANGER_TIME}
+  - {class: Display, from: INTERPOLATION_START_DELTA_TICKS, to: TRANSFORMATION_INTERPOLATION_START_DELTA_TICKS}
+  - {class: Display, from: INTERPOLATION_DURATION, to: TRANSFORMATION_INTERPOLATION_DURATION}
+  - {class: AreaEffectCloud, from: PARTICLE, to: PARTICLE_ID, type: Integer}

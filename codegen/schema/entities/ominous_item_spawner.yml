@@ -1,0 +1,6 @@
+class: OminousItemSpawner
+since: "1.20.5"
+extends: Entity
+entities: [ominous_item_spawner]
+fields:
+  - {name: ITEM, type: item_stack}

@@ -1,0 +1,7 @@
+class: Raider
+since: "1.14"
+extends:
+  - {class: Monster, removed: "1.14.4"}
+  - {class: PatrollingMonster, since: "1.14.4"}
+fields:
+  - {name: IS_CELEBRATING, type: boolean}

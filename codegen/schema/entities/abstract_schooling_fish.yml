@@ -1,0 +1,4 @@
+class: AbstractSchoolingFish
+since: "1.14.4"
+extends: AbstractFish
+fields: []

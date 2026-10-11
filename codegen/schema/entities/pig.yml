@@ -1,0 +1,10 @@
+class: Pig
+since: "1.8"
+extends: Animal
+entities: [pig]
+fields:
+  - {name: SADDLE, type: boolean, since: "1.9", removed: "1.21.5"}
+  - {name: BOOST_TIME, type: int, since: "1.11.1"}
+  - {name: VARIANT, type: pig_variant, since: "1.21.5"}
+  - {name: SOUND_VARIANT, type: pig_sound_variant, since: "26.1"}
+  - {name: SADDLE, type: byte, index: 16, removed: "1.9"}

@@ -1,0 +1,9 @@
+class: Vex
+since: "1.11"
+extends: Monster
+entities: [vex]
+fields:
+  - name: FLAGS
+    type: byte
+    flags:
+      - {name: CHARGING, mask: 0x01}

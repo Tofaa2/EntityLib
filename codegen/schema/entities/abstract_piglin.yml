@@ -1,0 +1,6 @@
+class: AbstractPiglin
+since: "1.16.2"
+extends: Monster
+entities: [abstract_piglin]
+fields:
+  - {name: IMMUNE_TO_ZOMBIFICATION, type: boolean}

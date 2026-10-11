@@ -1,0 +1,18 @@
+class: Fox
+since: "1.14"
+extends: Animal
+entities: [fox]
+fields:
+  - {name: TYPE, type: int}
+  - name: FLAGS
+    type: byte
+    flags:
+      - {name: SITTING, mask: 0x01}
+      - {name: CROUCHING, mask: 0x04}
+      - {name: INTERESTED, mask: 0x08}
+      - {name: POUNCING, mask: 0x10}
+      - {name: SLEEPING, mask: 0x20}
+      - {name: FACEPLANTED, mask: 0x40}
+      - {name: DEFENDING, mask: 0x80}
+  - {name: TRUSTED_0, type: optional_uuid}
+  - {name: TRUSTED_1, type: optional_uuid}

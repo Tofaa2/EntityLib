@@ -1,0 +1,17 @@
+class: Avatar
+since: "1.21.9"
+extends: LivingEntity
+entities: [avatar]
+fields:
+  - {name: PLAYER_MAIN_HAND, type: humanoid_arm, since: "1.21.11"}
+  - {name: PLAYER_MAIN_HAND, type: byte, removed: "1.21.11", convert: HUMANOID_ARM_BYTE}
+  - name: PLAYER_MODE_CUSTOMISATION
+    type: byte
+    flags:
+      - {name: CAPE, mask: 0x01}
+      - {name: JACKET, mask: 0x02}
+      - {name: LEFT_SLEEVE, mask: 0x04}
+      - {name: RIGHT_SLEEVE, mask: 0x08}
+      - {name: LEFT_PANTS_LEG, mask: 0x10}
+      - {name: RIGHT_PANTS_LEG, mask: 0x20}
+      - {name: HAT, mask: 0x40}

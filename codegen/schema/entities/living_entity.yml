@@ -1,0 +1,23 @@
+class: LivingEntity
+since: "1.8"
+extends: Entity
+entities: [livingentity]
+fields:
+  - name: LIVING_ENTITY_FLAGS
+    type: byte
+    since: "1.9"
+    flags:
+      - {name: USING_ITEM, mask: 0x01}
+      - {name: OFF_HAND, mask: 0x02}
+      - {name: SPIN_ATTACK, mask: 0x04, since: "1.13"}
+  - {name: HEALTH, type: float, since: "1.9"}
+  - {name: EFFECT_PARTICLES, type: particles, since: "1.20.5"}
+  - {name: EFFECT_COLOR, type: int, since: "1.9", removed: "1.20.5"}
+  - {name: EFFECT_AMBIENCE, type: boolean, since: "1.9"}
+  - {name: ARROW_COUNT, type: int, since: "1.9"}
+  - {name: STINGER_COUNT, type: int, since: "1.15"}
+  - {name: SLEEPING_POS, type: optional_block_position, since: "1.14"}
+  - {name: HEALTH, type: float, index: 6, removed: "1.9"}
+  - {name: EFFECT_COLOR, type: int, index: 7, removed: "1.9"}
+  - {name: EFFECT_AMBIENCE, type: byte, index: 8, removed: "1.9"}
+  - {name: ARROW_COUNT, type: byte, index: 9, removed: "1.9"}

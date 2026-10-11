@@ -1,0 +1,8 @@
+class: Mannequin
+since: "1.21.9"
+extends: Avatar
+entities: [mannequin]
+fields:
+  - {name: PROFILE, type: resolvable_profile}
+  - {name: IMMOVABLE, type: boolean}
+  - {name: DESCRIPTION, type: optional_component}

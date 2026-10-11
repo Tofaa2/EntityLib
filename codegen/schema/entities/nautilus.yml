@@ -1,0 +1,5 @@
+class: Nautilus
+since: "1.21.11"
+extends: AbstractNautilus
+entities: [nautilus]
+fields: []

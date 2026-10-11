@@ -1,0 +1,7 @@
+class: ItemDisplay
+since: "1.19.4"
+extends: Display
+entities: [item_display]
+fields:
+  - {name: ITEM_STACK, type: item_stack}
+  - {name: ITEM_DISPLAY, type: byte}

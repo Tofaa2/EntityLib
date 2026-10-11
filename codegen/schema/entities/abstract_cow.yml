@@ -1,0 +1,4 @@
+class: AbstractCow
+since: "1.21.5"
+extends: Animal
+fields: []

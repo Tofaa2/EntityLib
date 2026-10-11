@@ -1,0 +1,12 @@
+class: AreaEffectCloud
+since: "1.9"
+extends: Entity
+entities: [area_effect_cloud]
+fields:
+  - {name: RADIUS, type: float}
+  - {name: COLOR, type: int, removed: "1.20.5"}
+  - {name: WAITING, type: boolean}
+  - {name: PARTICLE, type: particle, since: "1.13"}
+  - {name: PARTICLE_ID, type: int, removed: "1.13"}
+  - {name: PARTICLE_PARAM_1, type: int, since: "1.10", removed: "1.13"}
+  - {name: PARTICLE_PARAM_2, type: int, since: "1.10", removed: "1.13"}

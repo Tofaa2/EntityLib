@@ -1,0 +1,6 @@
+class: Cushion
+since: "26.3"
+extends: BlockAttachedEntity
+entities: [cushion]
+fields:
+  - {name: COLOR, type: dye_color}

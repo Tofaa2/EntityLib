@@ -1,0 +1,7 @@
+class: AbstractHurtingProjectile
+since: "1.14.4"
+extends:
+  - {class: Entity, removed: "1.16"}
+  - {class: Projectile, since: "1.16"}
+entities: [abstract_fireball]
+fields: []

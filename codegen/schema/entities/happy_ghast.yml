@@ -1,0 +1,7 @@
+class: HappyGhast
+since: "1.21.6"
+extends: Animal
+entities: [happy_ghast]
+fields:
+  - {name: IS_LEASH_HOLDER, type: boolean}
+  - {name: STAYS_STILL, type: boolean}

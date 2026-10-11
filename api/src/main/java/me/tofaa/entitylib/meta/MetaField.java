@@ -1,140 +1,126 @@
 package me.tofaa.entitylib.meta;
 
+import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class MetaField<T> {
 
+    private final String owner;
     private final String name;
-    private final T defaultValue;
-    private final List<VersionMapping<T>> mappings;
-    private final int hash;
+    private final MetaBinding<T, ?>[] bindings;
+    private final Map<String, MetaFlag> flags;
 
-    private MetaField(String name, T defaultValue, List<VersionMapping<T>> mappings) {
+    @SuppressWarnings("unchecked")
+    private MetaField(String owner, String name, List<MetaBinding<T, ?>> bindings) {
+        this.owner = owner;
         this.name = name;
-        this.defaultValue = defaultValue;
-        this.mappings = List.copyOf(mappings);
-        this.hash = Objects.hash(name, mappings);
+        this.bindings = bindings.toArray(new MetaBinding[0]);
+        this.flags = new LinkedHashMap<>();
+    }
+
+    public @NotNull String owner() {
+        return owner;
     }
 
     public @NotNull String name() {
         return name;
     }
 
-    public @Nullable T defaultValue() {
-        return defaultValue;
-    }
-
-    @SuppressWarnings("rawtypes")
-    public @NotNull VersionedField<?> forVersion(int protocolVersion) {
-        for (VersionMapping<T> mapping : mappings) {
-            if (protocolVersion >= mapping.minProtocol && protocolVersion <= mapping.maxProtocol) {
-                return mapping.resolved;
-            }
-        }
-        return mappings.get(mappings.size() - 1).resolved;
-    }
-
-    @SuppressWarnings("rawtypes")
-    public @Nullable VersionedField<?> forVersionOrNull(int protocolVersion) {
-        for (VersionMapping<T> mapping : mappings) {
-            if (protocolVersion >= mapping.minProtocol && protocolVersion <= mapping.maxProtocol) {
-                return mapping.resolved;
+    public @Nullable MetaBinding<T, ?> resolve(int protocolVersion) {
+        for (MetaBinding<T, ?> binding : bindings) {
+            if (binding.matches(protocolVersion)) {
+                return binding;
             }
         }
         return null;
     }
 
-    @SuppressWarnings("rawtypes")
-    public @NotNull VersionedField<?> forVersion(int protocolVersion, @NotNull VersionedField<?> fallback) {
-        for (VersionMapping<T> mapping : mappings) {
-            if (protocolVersion >= mapping.minProtocol && protocolVersion <= mapping.maxProtocol) {
-                return mapping.resolved;
-            }
+    public boolean existsIn(int protocolVersion) {
+        return resolve(protocolVersion) != null;
+    }
+
+    public @NotNull List<MetaBinding<T, ?>> bindings() {
+        return Collections.unmodifiableList(java.util.Arrays.asList(bindings));
+    }
+
+    public @Nullable EntityData<?> encode(T value, int protocolVersion) {
+        MetaBinding<T, ?> binding = resolve(protocolVersion);
+        return binding == null ? null : binding.encode(value);
+    }
+
+    public @NotNull MetaFlag flag(@NotNull String flagName) {
+        MetaFlag flag = flags.get(flagName);
+        if (flag == null) {
+            throw new IllegalArgumentException("Unknown flag " + flagName + " on " + this);
         }
-        return fallback;
+        return flag;
     }
 
-    public static <T> @NotNull Builder<T> builder(@NotNull String name) {
-        return new Builder<>(name);
-    }
-
-    public static @NotNull Builder<Byte> byteBuilder(@NotNull String name) {
-        return new Builder<>(name);
-    }
-
-    public static @NotNull Builder<Integer> intBuilder(@NotNull String name) {
-        return new Builder<>(name);
-    }
-
-    public static @NotNull Builder<Boolean> booleanBuilder(@NotNull String name) {
-        return new Builder<>(name);
-    }
-
-    public static @NotNull Builder<Float> floatBuilder(@NotNull String name) {
-        return new Builder<>(name);
-    }
-
-    public static @NotNull Builder<String> stringBuilder(@NotNull String name) {
-        return new Builder<>(name);
-    }
-
-    public static @NotNull Builder<Long> longBuilder(@NotNull String name) {
-        return new Builder<>(name);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MetaField<?> metaField)) return false;
-        return name.equals(metaField.name) && mappings.equals(metaField.mappings);
-    }
-
-    @Override
-    public int hashCode() {
-        return hash;
+    public @NotNull Collection<MetaFlag> flags() {
+        return Collections.unmodifiableCollection(flags.values());
     }
 
     @Override
     public String toString() {
-        return "MetaField{name='" + name + "', mappings=" + mappings + "}";
+        return owner + "." + name;
     }
 
-    record VersionMapping<T>(int minProtocol, int maxProtocol, VersionedField<T> resolved) {}
+    public static <T> @NotNull Builder<T> builder(@NotNull String owner, @NotNull String name) {
+        return new Builder<>(owner, name);
+    }
 
     public static final class Builder<T> {
-
+        private final String owner;
         private final String name;
-        private T defaultValue;
-        private final List<VersionMapping<T>> mappings = new ArrayList<>();
+        private final List<MetaBinding<T, ?>> bindings = new ArrayList<>();
+        private final List<Object[]> flags = new ArrayList<>();
 
-        Builder(String name) {
+        Builder(String owner, String name) {
+            this.owner = owner;
             this.name = name;
         }
 
-        public @NotNull Builder<T> defaultValue(@Nullable T defaultValue) {
-            this.defaultValue = defaultValue;
+        public @NotNull Builder<T> bind(int fromProtocol, int toProtocol, int index, @NotNull EntityDataType<T> wireType) {
+            return bind(fromProtocol, toProtocol, index, wireType, MetaConverter.<T>identity());
+        }
+
+        public <W> @NotNull Builder<T> bind(int fromProtocol, int toProtocol, int index,
+                                            @NotNull EntityDataType<W> wireType, @NotNull MetaConverter<T, W> converter) {
+            if (fromProtocol >= toProtocol) {
+                throw new IllegalArgumentException("Empty protocol range for " + owner + "." + name);
+            }
+            for (MetaBinding<T, ?> other : bindings) {
+                if (fromProtocol < other.toProtocol() && other.fromProtocol() < toProtocol) {
+                    throw new IllegalArgumentException("Overlapping protocol ranges for " + owner + "." + name);
+                }
+            }
+            bindings.add(new MetaBinding<>(fromProtocol, toProtocol, index, wireType, converter));
+            return this;
+        }
+
+        public @NotNull Builder<T> flag(@NotNull String flagName, int fromProtocol, int toProtocol, int mask) {
+            flags.add(new Object[]{flagName, fromProtocol, toProtocol, mask});
             return this;
         }
 
         @SuppressWarnings("unchecked")
-        public @NotNull Builder<T> versionRange(
-                int minProtocol,
-                int maxProtocol,
-                int index,
-                @NotNull EntityDataType<?> wireType
-        ) {
-            VersionedField<T> resolved = new VersionedField<>(index, (EntityDataType<T>) wireType);
-            mappings.add(new VersionMapping<>(minProtocol, maxProtocol, resolved));
-            return this;
-        }
-
         public @NotNull MetaField<T> build() {
-            mappings.sort(Comparator.comparingInt(a -> a.minProtocol));
-            return new MetaField<>(name, defaultValue, List.copyOf(mappings));
+            bindings.sort((a, b) -> Integer.compare(a.fromProtocol(), b.fromProtocol()));
+            MetaField<T> field = new MetaField<>(owner, name, bindings);
+            for (Object[] flag : flags) {
+                field.flags.computeIfAbsent((String) flag[0], n -> new MetaFlag((MetaField<Byte>) field, n))
+                        .addRange((Integer) flag[1], (Integer) flag[2], (Integer) flag[3]);
+            }
+            return field;
         }
     }
 }

@@ -1,0 +1,16 @@
+class: Sheep
+since: "1.8"
+extends: Animal
+entities: [sheep]
+fields:
+  - name: WOOL
+    type: byte
+    since: "1.9"
+    flags:
+      - {name: SHEARED, mask: 0x10}
+  - name: WOOL
+    type: byte
+    index: 16
+    removed: "1.9"
+    flags:
+      - {name: SHEARED, mask: 0x10}

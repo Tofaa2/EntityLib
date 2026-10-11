@@ -1,0 +1,10 @@
+class: Ghast
+since: "1.8"
+extends:
+  - {class: Mob, removed: "1.14.4"}
+  - {class: FlyingMob, since: "1.14.4", removed: "1.21.6"}
+  - {class: Mob, since: "1.21.6"}
+entities: [ghast]
+fields:
+  - {name: IS_CHARGING, type: boolean, since: "1.9"}
+  - {name: IS_CHARGING, type: byte, index: 16, removed: "1.9"}

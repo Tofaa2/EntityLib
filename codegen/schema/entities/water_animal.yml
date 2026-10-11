@@ -1,0 +1,5 @@
+class: WaterAnimal
+since: "1.14.4"
+extends: PathfinderMob
+entities: [abstract_watermob]
+fields: []

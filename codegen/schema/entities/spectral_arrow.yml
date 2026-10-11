@@ -1,0 +1,5 @@
+class: SpectralArrow
+since: "1.9"
+extends: AbstractArrow
+entities: [spectral_arrow]
+fields: []

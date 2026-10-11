@@ -1,0 +1,9 @@
+class: WitherSkull
+since: "1.8"
+extends:
+  - {class: Entity, removed: "1.14.4"}
+  - {class: AbstractHurtingProjectile, since: "1.14.4"}
+entities: [wither_skull]
+fields:
+  - {name: DANGEROUS, type: boolean, since: "1.9"}
+  - {name: DANGEROUS, type: byte, index: 10, removed: "1.9"}

@@ -1,0 +1,13 @@
+class: Zombie
+since: "1.8"
+extends: Monster
+entities: [zombie]
+fields:
+  - {name: BABY, type: boolean, since: "1.9"}
+  - {name: SPECIAL_TYPE, type: int, since: "1.9"}
+  - {name: CONVERTING, type: boolean, since: "1.9", removed: "1.11"}
+  - {name: ARMS_RAISED, type: boolean, since: "1.9", removed: "1.14"}
+  - {name: DROWNED_CONVERSION, type: boolean, since: "1.13"}
+  - {name: BABY, type: byte, index: 12, removed: "1.9"}
+  - {name: SPECIAL_TYPE, type: byte, index: 13, removed: "1.9"}
+  - {name: CONVERTING, type: byte, index: 14, removed: "1.9"}

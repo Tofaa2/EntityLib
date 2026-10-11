@@ -1,0 +1,5 @@
+class: Breeze
+since: "1.20.3"
+extends: Monster
+entities: [breeze]
+fields: []

@@ -1,0 +1,11 @@
+class: Villager
+since: "1.8"
+extends:
+  - {class: AgeableMob, removed: "1.14.1"}
+  - {class: AbstractVillager, since: "1.14.1"}
+entities: [villager]
+fields:
+  - {name: VILLAGER_DATA, type: villager_data, since: "1.14"}
+  - {name: VILLAGER_FINALIZED, type: boolean, since: "26.1"}
+  - {name: PROFESSION, type: int, since: "1.9", removed: "1.14"}
+  - {name: PROFESSION, type: int, index: 16, removed: "1.9"}

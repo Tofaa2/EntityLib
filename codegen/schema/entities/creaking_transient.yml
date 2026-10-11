@@ -1,0 +1,6 @@
+class: CreakingTransient
+since: "1.21.2"
+removed: "1.21.4"
+extends: Creaking
+entities: [creaking_transient]
+fields: []

@@ -1,0 +1,5 @@
+class: CaveSpider
+since: "1.9"
+extends: Spider
+entities: [cave_spider]
+fields: []

@@ -1,0 +1,5 @@
+class: Giant
+since: "1.9"
+extends: Monster
+entities: [giant]
+fields: []

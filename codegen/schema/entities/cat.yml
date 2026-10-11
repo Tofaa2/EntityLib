@@ -1,0 +1,11 @@
+class: Cat
+since: "1.14"
+extends: TamableAnimal
+entities: [cat]
+fields:
+  - {name: VARIANT, type: cat_variant, since: "1.19"}
+  - {name: TYPE, type: int, removed: "1.19"}
+  - {name: IS_LYING, type: boolean}
+  - {name: RELAX_STATE_ONE, type: boolean}
+  - {name: COLLAR_COLOR, type: int}
+  - {name: SOUND_VARIANT, type: cat_sound_variant, since: "26.1"}

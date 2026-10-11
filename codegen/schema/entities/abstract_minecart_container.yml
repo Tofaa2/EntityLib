@@ -1,0 +1,5 @@
+class: AbstractMinecartContainer
+since: "1.14.4"
+extends: AbstractMinecart
+entities: [chested_minecart_abstract]
+fields: []

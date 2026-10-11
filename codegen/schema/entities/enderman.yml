@@ -1,0 +1,11 @@
+class: Enderman
+since: "1.8"
+extends: Monster
+entities: [enderman]
+fields:
+  - {name: CARRY_STATE, type: optional_block_state, since: "1.9"}
+  - {name: CREEPY, type: boolean, since: "1.9"}
+  - {name: STARED_AT, type: boolean, since: "1.15"}
+  - {name: CARRIED_BLOCK_ID, type: short, index: 16, removed: "1.9"}
+  - {name: CARRIED_BLOCK_DATA, type: byte, index: 17, removed: "1.9"}
+  - {name: CREEPY, type: byte, index: 18, removed: "1.9"}

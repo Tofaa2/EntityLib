@@ -1,0 +1,41 @@
+class: Entity
+since: "1.8"
+entities: [entity]
+fields:
+  - name: SHARED_FLAGS
+    type: byte
+    since: "1.9"
+    flags:
+      - {name: ON_FIRE, mask: 0x01}
+      - {name: CROUCHING, mask: 0x02}
+      - {name: SPRINTING, mask: 0x08}
+      - {name: LEGACY_USING_ITEM, mask: 0x10, removed: "1.9"}
+      - {name: SWIMMING, mask: 0x10, since: "1.13"}
+      - {name: INVISIBLE, mask: 0x20}
+      - {name: GLOWING, mask: 0x40, since: "1.9"}
+      - {name: FALL_FLYING, mask: 0x80, since: "1.9"}
+  - {name: AIR_SUPPLY, type: int, since: "1.9"}
+  - {name: CUSTOM_NAME, type: optional_component, since: "1.13"}
+  - {name: CUSTOM_NAME, type: string, since: "1.9", removed: "1.13"}
+  - {name: CUSTOM_NAME_VISIBLE, type: boolean, since: "1.9"}
+  - {name: SILENT, type: boolean, since: "1.9"}
+  - {name: NO_GRAVITY, type: boolean, since: "1.10"}
+  - {name: POSE, type: pose, since: "1.14"}
+  - {name: TICKS_FROZEN, type: int, since: "1.17"}
+  - name: SHARED_FLAGS
+    type: byte
+    index: 0
+    removed: "1.9"
+    flags:
+      - {name: ON_FIRE, mask: 0x01}
+      - {name: CROUCHING, mask: 0x02}
+      - {name: SPRINTING, mask: 0x08}
+      - {name: LEGACY_USING_ITEM, mask: 0x10, removed: "1.9"}
+      - {name: SWIMMING, mask: 0x10, since: "1.13"}
+      - {name: INVISIBLE, mask: 0x20}
+      - {name: GLOWING, mask: 0x40, since: "1.9"}
+      - {name: FALL_FLYING, mask: 0x80, since: "1.9"}
+  - {name: AIR_SUPPLY, type: short, index: 1, removed: "1.9"}
+  - {name: CUSTOM_NAME, type: string, index: 2, removed: "1.9"}
+  - {name: CUSTOM_NAME_VISIBLE, type: byte, index: 3, removed: "1.9"}
+  - {name: SILENT, type: byte, index: 4, removed: "1.9"}

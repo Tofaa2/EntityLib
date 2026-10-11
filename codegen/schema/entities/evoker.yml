@@ -1,0 +1,8 @@
+class: Evoker
+since: "1.11"
+extends:
+  - {class: Monster, removed: "1.12"}
+  - {class: SpellcasterIllager, since: "1.12"}
+entities: [evoker]
+fields:
+  - {name: SPELL_CASTING, type: byte, removed: "1.12"}

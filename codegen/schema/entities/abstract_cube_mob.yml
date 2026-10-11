@@ -1,0 +1,5 @@
+class: AbstractCubeMob
+since: "26.2"
+extends: AgeableMob
+fields:
+  - {name: ID_SIZE, type: int}

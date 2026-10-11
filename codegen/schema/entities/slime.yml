@@ -1,0 +1,9 @@
+class: Slime
+since: "1.8"
+extends:
+  - {class: Mob, removed: "26.2"}
+  - {class: AbstractCubeMob, since: "26.2"}
+entities: [slime]
+fields:
+  - {name: ID_SIZE, type: int, since: "1.9", removed: "26.2"}
+  - {name: ID_SIZE, type: byte, index: 16, removed: "1.9"}

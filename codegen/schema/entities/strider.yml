@@ -1,0 +1,8 @@
+class: Strider
+since: "1.16"
+extends: Animal
+entities: [strider]
+fields:
+  - {name: BOOST_TIME, type: int}
+  - {name: SUFFOCATING, type: boolean}
+  - {name: SADDLE, type: boolean, removed: "1.21.5"}

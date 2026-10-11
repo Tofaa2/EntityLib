@@ -1,0 +1,6 @@
+class: Hoglin
+since: "1.16"
+extends: Animal
+entities: [hoglin]
+fields:
+  - {name: IMMUNE_TO_ZOMBIFICATION, type: boolean}

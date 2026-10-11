@@ -1,0 +1,8 @@
+class: Painting
+since: "1.9"
+extends:
+  - {class: Entity, removed: "1.14.4"}
+  - {class: HangingEntity, since: "1.14.4"}
+entities: [painting]
+fields:
+  - {name: PAINTING_VARIANT, type: painting_variant, since: "1.19"}

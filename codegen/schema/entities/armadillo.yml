@@ -1,0 +1,6 @@
+class: Armadillo
+since: "1.20.5"
+extends: Animal
+entities: [armadillo]
+fields:
+  - {name: ARMADILLO_STATE, type: armadillo_state}

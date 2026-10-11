@@ -1,0 +1,6 @@
+class: Warden
+since: "1.19"
+extends: Monster
+entities: [warden]
+fields:
+  - {name: CLIENT_ANGER_LEVEL, type: int}

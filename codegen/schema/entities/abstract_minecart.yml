@@ -1,0 +1,20 @@
+class: AbstractMinecart
+since: "1.8"
+extends:
+  - {class: Entity, removed: "1.20.3"}
+  - {class: VehicleEntity, since: "1.20.3"}
+entities: [minecart_abstract]
+fields:
+  - {name: CUSTOM_DISPLAY_BLOCK, type: optional_block_state, since: "1.21.5"}
+  - {name: HURT, type: int, since: "1.9", removed: "1.20.3"}
+  - {name: HURTDIR, type: int, since: "1.9", removed: "1.20.3"}
+  - {name: DAMAGE, type: float, since: "1.9", removed: "1.20.3"}
+  - {name: DISPLAY_BLOCK, type: int, since: "1.9", removed: "1.21.5"}
+  - {name: DISPLAY_OFFSET, type: int, since: "1.9"}
+  - {name: CUSTOM_DISPLAY, type: boolean, since: "1.9", removed: "1.21.5"}
+  - {name: HURT, type: int, index: 17, removed: "1.9"}
+  - {name: HURTDIR, type: int, index: 18, removed: "1.9"}
+  - {name: DAMAGE, type: float, index: 19, removed: "1.9"}
+  - {name: DISPLAY_BLOCK, type: int, index: 20, removed: "1.9"}
+  - {name: DISPLAY_OFFSET, type: int, index: 21, removed: "1.9"}
+  - {name: CUSTOM_DISPLAY, type: byte, index: 22, removed: "1.9"}

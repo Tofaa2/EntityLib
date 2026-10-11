@@ -1,0 +1,34 @@
+class: ArmorStand
+since: "1.8"
+extends: LivingEntity
+entities: [armor_stand]
+fields:
+  - name: CLIENT_FLAGS
+    type: byte
+    since: "1.9"
+    flags:
+      - {name: SMALL, mask: 0x01}
+      - {name: SHOW_ARMS, mask: 0x04}
+      - {name: NO_BASEPLATE, mask: 0x08}
+      - {name: MARKER, mask: 0x10}
+  - {name: HEAD_POSE, type: rotation, since: "1.9"}
+  - {name: BODY_POSE, type: rotation, since: "1.9"}
+  - {name: LEFT_ARM_POSE, type: rotation, since: "1.9"}
+  - {name: RIGHT_ARM_POSE, type: rotation, since: "1.9"}
+  - {name: LEFT_LEG_POSE, type: rotation, since: "1.9"}
+  - {name: RIGHT_LEG_POSE, type: rotation, since: "1.9"}
+  - name: CLIENT_FLAGS
+    type: byte
+    index: 10
+    removed: "1.9"
+    flags:
+      - {name: SMALL, mask: 0x01}
+      - {name: SHOW_ARMS, mask: 0x04}
+      - {name: NO_BASEPLATE, mask: 0x08}
+      - {name: MARKER, mask: 0x10}
+  - {name: HEAD_POSE, type: rotation, index: 11, removed: "1.9"}
+  - {name: BODY_POSE, type: rotation, index: 12, removed: "1.9"}
+  - {name: LEFT_ARM_POSE, type: rotation, index: 13, removed: "1.9"}
+  - {name: RIGHT_ARM_POSE, type: rotation, index: 14, removed: "1.9"}
+  - {name: LEFT_LEG_POSE, type: rotation, index: 15, removed: "1.9"}
+  - {name: RIGHT_LEG_POSE, type: rotation, index: 16, removed: "1.9"}

@@ -1,0 +1,8 @@
+class: LeashFenceKnotEntity
+since: "1.9"
+extends:
+  - {class: Entity, removed: "1.14.4"}
+  - {class: HangingEntity, since: "1.14.4", removed: "1.21"}
+  - {class: BlockAttachedEntity, since: "1.21"}
+entities: [leash_knot]
+fields: []

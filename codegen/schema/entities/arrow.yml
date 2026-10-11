@@ -1,0 +1,6 @@
+class: Arrow
+since: "1.9"
+extends: AbstractArrow
+entities: [arrow]
+fields:
+  - {name: ID_EFFECT_COLOR, type: int}

@@ -1,0 +1,9 @@
+class: Creaking
+since: "1.21.2"
+extends: Monster
+entities: [creaking]
+fields:
+  - {name: CAN_MOVE, type: boolean}
+  - {name: IS_ACTIVE, type: boolean}
+  - {name: IS_TEARING_DOWN, type: boolean, since: "1.21.4"}
+  - {name: HOME_POS, type: optional_block_position, since: "1.21.4"}

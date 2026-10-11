@@ -1,0 +1,7 @@
+class: WanderingTrader
+since: "1.14"
+extends:
+  - {class: AgeableMob, removed: "1.14.1"}
+  - {class: AbstractVillager, since: "1.14.1"}
+entities: [wandering_trader]
+fields: []

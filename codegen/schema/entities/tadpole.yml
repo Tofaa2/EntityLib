@@ -1,0 +1,6 @@
+class: Tadpole
+since: "1.19"
+extends: AbstractFish
+entities: [tadpole]
+fields:
+  - {name: AGE_LOCKED, type: boolean, since: "26.1"}

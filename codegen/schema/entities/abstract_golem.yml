@@ -1,0 +1,5 @@
+class: AbstractGolem
+since: "1.14.4"
+extends: PathfinderMob
+entities: [abstract_golem]
+fields: []

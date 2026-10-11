@@ -1,0 +1,9 @@
+class: Squid
+since: "1.9"
+extends:
+  - {class: Mob, removed: "1.13"}
+  - {class: PathfinderMob, since: "1.13", removed: "1.14.4"}
+  - {class: WaterAnimal, since: "1.14.4", removed: "1.21.2"}
+  - {class: AgeableWaterCreature, since: "1.21.2"}
+entities: [squid]
+fields: []

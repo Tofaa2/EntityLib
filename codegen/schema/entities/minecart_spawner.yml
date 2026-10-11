@@ -1,0 +1,5 @@
+class: MinecartSpawner
+since: "1.9"
+extends: AbstractMinecart
+entities: [spawner_minecart, minecart_mob_spawner]
+fields: []

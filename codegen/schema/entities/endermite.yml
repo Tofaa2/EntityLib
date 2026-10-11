@@ -1,0 +1,5 @@
+class: Endermite
+since: "1.9"
+extends: Monster
+entities: [endermite]
+fields: []

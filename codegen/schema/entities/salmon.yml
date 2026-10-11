@@ -1,0 +1,9 @@
+class: Salmon
+since: "1.13"
+extends:
+  - {class: AbstractFish, removed: "1.14.4"}
+  - {class: AbstractSchoolingFish, since: "1.14.4"}
+entities: [salmon]
+fields:
+  - {name: TYPE, type: int, since: "1.21.4"}
+  - {name: TYPE, type: string, since: "1.21.2", removed: "1.21.4", convert: SALMON_TYPE_NAME}

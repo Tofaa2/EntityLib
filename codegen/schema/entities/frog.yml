@@ -1,0 +1,7 @@
+class: Frog
+since: "1.19"
+extends: Animal
+entities: [frog]
+fields:
+  - {name: VARIANT, type: frog_variant}
+  - {name: TONGUE_TARGET, type: optional_int}

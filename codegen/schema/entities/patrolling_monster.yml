@@ -1,0 +1,4 @@
+class: PatrollingMonster
+since: "1.14.4"
+extends: Monster
+fields: []

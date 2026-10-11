@@ -1,0 +1,41 @@
+class: Player
+since: "1.8"
+extends:
+  - {class: LivingEntity, removed: "1.21.9"}
+  - {class: Avatar, since: "1.21.9"}
+entities: [player]
+fields:
+  - {name: PLAYER_ABSORPTION, type: float, since: "1.9"}
+  - {name: SCORE, type: int, since: "1.9"}
+  - {name: SHOULDER_PARROT_LEFT, type: optional_int, since: "1.21.9"}
+  - {name: SHOULDER_PARROT_RIGHT, type: optional_int, since: "1.21.9"}
+  - name: PLAYER_MODE_CUSTOMISATION
+    type: byte
+    since: "1.9"
+    removed: "1.21.9"
+    flags:
+      - {name: CAPE, mask: 0x01}
+      - {name: JACKET, mask: 0x02}
+      - {name: LEFT_SLEEVE, mask: 0x04}
+      - {name: RIGHT_SLEEVE, mask: 0x08}
+      - {name: LEFT_PANTS_LEG, mask: 0x10}
+      - {name: RIGHT_PANTS_LEG, mask: 0x20}
+      - {name: HAT, mask: 0x40}
+  - {name: PLAYER_MAIN_HAND, type: byte, since: "1.9", removed: "1.21.9"}
+  - {name: SHOULDER_LEFT, type: nbt, since: "1.12", removed: "1.21.9"}
+  - {name: SHOULDER_RIGHT, type: nbt, since: "1.12", removed: "1.21.9"}
+  - name: PLAYER_MODE_CUSTOMISATION
+    type: byte
+    index: 10
+    removed: "1.9"
+    flags:
+      - {name: CAPE, mask: 0x01}
+      - {name: JACKET, mask: 0x02}
+      - {name: LEFT_SLEEVE, mask: 0x04}
+      - {name: RIGHT_SLEEVE, mask: 0x08}
+      - {name: LEFT_PANTS_LEG, mask: 0x10}
+      - {name: RIGHT_PANTS_LEG, mask: 0x20}
+      - {name: HAT, mask: 0x40}
+  - {name: LEGACY_UNUSED, type: byte, index: 16, removed: "1.9"}
+  - {name: PLAYER_ABSORPTION, type: float, index: 17, removed: "1.9"}
+  - {name: SCORE, type: int, index: 18, removed: "1.9"}

@@ -1,0 +1,6 @@
+class: ExperienceOrb
+since: "1.9"
+extends: Entity
+entities: [experience_orb]
+fields:
+  - {name: VALUE, type: int, since: "1.21.5"}

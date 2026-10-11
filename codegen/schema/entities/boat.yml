@@ -1,0 +1,18 @@
+class: Boat
+since: "1.8"
+extends:
+  - {class: Entity, removed: "1.20.3"}
+  - {class: VehicleEntity, since: "1.20.3", removed: "1.21.2"}
+  - {class: AbstractBoat, since: "1.21.2"}
+entities: [boat, acacia_boat, birch_boat, cherry_boat, dark_oak_boat, jungle_boat, mangrove_boat, oak_boat, pale_oak_boat, spruce_boat, poplar_boat]
+fields:
+  - {name: HURT, type: int, since: "1.9", removed: "1.20.3"}
+  - {name: HURTDIR, type: int, since: "1.9", removed: "1.20.3"}
+  - {name: DAMAGE, type: float, since: "1.9", removed: "1.20.3"}
+  - {name: TYPE, type: int, since: "1.9", removed: "1.21.2"}
+  - {name: PADDLE_LEFT, type: boolean, since: "1.9", removed: "1.21.2"}
+  - {name: PADDLE_RIGHT, type: boolean, since: "1.9", removed: "1.21.2"}
+  - {name: BUBBLE_TIME, type: int, since: "1.13", removed: "1.21.2"}
+  - {name: HURT, type: int, index: 17, removed: "1.9"}
+  - {name: HURTDIR, type: int, index: 18, removed: "1.9"}
+  - {name: DAMAGE, type: float, index: 19, removed: "1.9"}

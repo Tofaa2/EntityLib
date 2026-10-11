@@ -1,0 +1,8 @@
+class: Goat
+since: "1.17"
+extends: Animal
+entities: [goat]
+fields:
+  - {name: IS_SCREAMING_GOAT, type: boolean}
+  - {name: HAS_LEFT_HORN, type: boolean, since: "1.19"}
+  - {name: HAS_RIGHT_HORN, type: boolean, since: "1.19"}

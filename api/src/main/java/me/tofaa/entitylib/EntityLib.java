@@ -1,5 +1,7 @@
 package me.tofaa.entitylib;
 
+import com.github.retrooper.packetevents.util.PEVersion;
+import me.tofaa.entitylib.utils.ELVersions;
 import org.jetbrains.annotations.NotNull;
 
 public final class EntityLib {
@@ -13,6 +15,7 @@ public final class EntityLib {
 
     public static void init(@NotNull APIConfig config) {
         instance = new EntityLib(config);
+        config.getPlatform().setup(config);
     }
 
     public static @NotNull EntityLib get() {
@@ -24,6 +27,14 @@ public final class EntityLib {
 
     public @NotNull APIConfig getConfig() {
         return config;
+    }
+
+    public @NotNull EntityLibPlatform getPlatform() {
+        return config.getPlatform();
+    }
+
+    public static @NotNull PEVersion getVersion() {
+        return ELVersions.CURRENT;
     }
 
 }

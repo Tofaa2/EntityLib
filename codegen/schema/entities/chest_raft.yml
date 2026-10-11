@@ -1,0 +1,5 @@
+class: ChestRaft
+since: "1.21.2"
+extends: AbstractChestBoat
+entities: [bamboo_chest_raft]
+fields: []

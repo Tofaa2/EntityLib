@@ -1,0 +1,12 @@
+class: AbstractIllager
+since: "1.12"
+extends:
+  - {class: Monster, removed: "1.14.4"}
+  - {class: Raider, since: "1.14.4"}
+entities: [abstract_illager_base]
+fields:
+  - name: FLAGS
+    type: byte
+    removed: "1.14"
+    flags:
+      - {name: AGGRESSIVE, mask: 0x01}

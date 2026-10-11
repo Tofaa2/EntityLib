@@ -1,0 +1,4 @@
+class: AgeableWaterCreature
+since: "1.21.2"
+extends: AgeableMob
+fields: []

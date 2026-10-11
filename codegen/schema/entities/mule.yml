@@ -1,0 +1,5 @@
+class: Mule
+since: "1.11"
+extends: AbstractChestedHorse
+entities: [mule]
+fields: []

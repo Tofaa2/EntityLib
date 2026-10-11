@@ -1,0 +1,5 @@
+class: Marker
+since: "1.17"
+extends: Entity
+entities: [marker]
+fields: []

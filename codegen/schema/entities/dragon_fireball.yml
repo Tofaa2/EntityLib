@@ -1,0 +1,7 @@
+class: DragonFireball
+since: "1.9"
+extends:
+  - {class: Entity, removed: "1.14.4"}
+  - {class: AbstractHurtingProjectile, since: "1.14.4"}
+entities: [dragon_fireball]
+fields: []

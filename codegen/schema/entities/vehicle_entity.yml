@@ -1,0 +1,7 @@
+class: VehicleEntity
+since: "1.20.3"
+extends: Entity
+fields:
+  - {name: HURT, type: int}
+  - {name: HURTDIR, type: int}
+  - {name: DAMAGE, type: float}

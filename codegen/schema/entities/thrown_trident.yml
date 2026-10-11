@@ -1,0 +1,7 @@
+class: ThrownTrident
+since: "1.13"
+extends: AbstractArrow
+entities: [trident]
+fields:
+  - {name: ID_LOYALTY, type: byte}
+  - {name: ID_FOIL, type: boolean, since: "1.15"}

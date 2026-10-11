@@ -1,0 +1,7 @@
+class: Allay
+since: "1.19"
+extends: PathfinderMob
+entities: [allay]
+fields:
+  - {name: DANCING, type: boolean, since: "1.19.1"}
+  - {name: CAN_DUPLICATE, type: boolean, since: "1.19.1"}

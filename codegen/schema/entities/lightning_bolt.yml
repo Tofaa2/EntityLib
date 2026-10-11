@@ -1,0 +1,5 @@
+class: LightningBolt
+since: "1.13"
+extends: Entity
+entities: [lightning_bolt, abstract_lightning]
+fields: []

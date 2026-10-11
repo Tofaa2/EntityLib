@@ -1,0 +1,12 @@
+class: ItemFrame
+since: "1.8"
+extends:
+  - {class: Entity, removed: "1.14.4"}
+  - {class: HangingEntity, since: "1.14.4"}
+entities: [item_frame]
+fields:
+  - {name: ITEM, type: item_stack, since: "1.11"}
+  - {name: ITEM, type: optional_item_stack, since: "1.9", removed: "1.11"}
+  - {name: ROTATION, type: int, since: "1.9"}
+  - {name: ITEM, type: legacy_item_stack, index: 8, removed: "1.9"}
+  - {name: ROTATION, type: byte, index: 9, removed: "1.9"}

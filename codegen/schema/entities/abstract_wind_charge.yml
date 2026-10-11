@@ -1,0 +1,5 @@
+class: AbstractWindCharge
+since: "1.20.5"
+extends: AbstractHurtingProjectile
+entities: [abstract_wind_charge]
+fields: []

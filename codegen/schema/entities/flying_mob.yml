@@ -1,0 +1,6 @@
+class: FlyingMob
+since: "1.14.4"
+removed: "1.21.6"
+extends: Mob
+entities: [abstract_flying]
+fields: []

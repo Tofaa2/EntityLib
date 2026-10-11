@@ -1,0 +1,22 @@
+class: TamableAnimal
+since: "1.8"
+extends: Animal
+entities: [abstract_tameable_animal]
+fields:
+  - name: FLAGS
+    type: byte
+    since: "1.9"
+    flags:
+      - {name: SITTING, mask: 0x01}
+      - {name: ANGRY, mask: 0x02, removed: "1.16"}
+      - {name: TAME, mask: 0x04}
+  - {name: OWNERUUID, type: optional_uuid, since: "1.9"}
+  - name: FLAGS
+    type: byte
+    index: 16
+    removed: "1.9"
+    flags:
+      - {name: SITTING, mask: 0x01}
+      - {name: ANGRY, mask: 0x02, removed: "1.16"}
+      - {name: TAME, mask: 0x04}
+  - {name: OWNERUUID, type: string, index: 17, removed: "1.9"}

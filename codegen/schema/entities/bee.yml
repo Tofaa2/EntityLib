@@ -1,0 +1,13 @@
+class: Bee
+since: "1.15"
+extends: Animal
+entities: [bee]
+fields:
+  - name: FLAGS
+    type: byte
+    flags:
+      - {name: ROLLING, mask: 0x02}
+      - {name: HAS_STUNG, mask: 0x04}
+      - {name: HAS_NECTAR, mask: 0x08}
+  - {name: ANGER_END_TIME, type: long, since: "1.21.11"}
+  - {name: REMAINING_ANGER_TIME, type: int, removed: "1.21.11"}

@@ -1,0 +1,5 @@
+class: AmbientCreature
+since: "1.14.4"
+extends: Mob
+entities: [abstract_ambient]
+fields: []

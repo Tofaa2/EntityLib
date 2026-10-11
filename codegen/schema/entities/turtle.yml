@@ -1,0 +1,11 @@
+class: Turtle
+since: "1.13"
+extends: Animal
+entities: [turtle]
+fields:
+  - {name: HOME_POS, type: block_position, removed: "1.21.5"}
+  - {name: HAS_EGG, type: boolean}
+  - {name: LAYING_EGG, type: boolean}
+  - {name: TRAVEL_POS, type: block_position, removed: "1.21.5"}
+  - {name: GOING_HOME, type: boolean, removed: "1.21.5"}
+  - {name: TRAVELLING, type: boolean, removed: "1.21.5"}

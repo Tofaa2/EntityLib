@@ -1,0 +1,5 @@
+class: CamelHusk
+since: "1.21.11"
+extends: Camel
+entities: [camel_husk]
+fields: []

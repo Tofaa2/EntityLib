@@ -1,0 +1,5 @@
+class: EvokerFangs
+since: "1.11"
+extends: Entity
+entities: [evoker_fangs]
+fields: []

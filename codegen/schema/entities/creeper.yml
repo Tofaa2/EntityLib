@@ -1,0 +1,11 @@
+class: Creeper
+since: "1.8"
+extends: Monster
+entities: [creeper]
+fields:
+  - {name: SWELL_DIR, type: int, since: "1.9"}
+  - {name: IS_POWERED, type: boolean, since: "1.9"}
+  - {name: IS_IGNITED, type: boolean, since: "1.9"}
+  - {name: SWELL_DIR, type: byte, index: 16, removed: "1.9"}
+  - {name: IS_POWERED, type: byte, index: 17, removed: "1.9"}
+  - {name: IS_IGNITED, type: byte, index: 18, removed: "1.9"}

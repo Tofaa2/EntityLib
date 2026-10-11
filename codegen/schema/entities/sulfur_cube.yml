@@ -1,0 +1,7 @@
+class: SulfurCube
+since: "26.2"
+extends: AbstractCubeMob
+entities: [sulfur_cube]
+fields:
+  - {name: MAX_FUSE, type: int}
+  - {name: FROM_BUCKET, type: boolean}

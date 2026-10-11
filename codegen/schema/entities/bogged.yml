@@ -1,0 +1,6 @@
+class: Bogged
+since: "1.20.5"
+extends: AbstractSkeleton
+entities: [bogged]
+fields:
+  - {name: SHEARED, type: boolean}

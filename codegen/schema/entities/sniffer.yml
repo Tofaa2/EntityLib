@@ -1,0 +1,7 @@
+class: Sniffer
+since: "1.19.4"
+extends: Animal
+entities: [sniffer]
+fields:
+  - {name: STATE, type: sniffer_state}
+  - {name: DROP_SEED_AT_TICK, type: int}

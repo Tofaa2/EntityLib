@@ -1,0 +1,8 @@
+class: Llama
+since: "1.11"
+extends: AbstractChestedHorse
+entities: [llama]
+fields:
+  - {name: STRENGTH, type: int}
+  - {name: SWAG, type: int, removed: "1.20.5"}
+  - {name: VARIANT, type: int}

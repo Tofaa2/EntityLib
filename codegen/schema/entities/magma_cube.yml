@@ -1,0 +1,7 @@
+class: MagmaCube
+since: "1.9"
+extends:
+  - {class: Slime, removed: "26.2"}
+  - {class: AbstractCubeMob, since: "26.2"}
+entities: [magma_cube]
+fields: []

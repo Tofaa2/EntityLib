@@ -1,0 +1,11 @@
+class: Skeleton
+since: "1.8"
+extends:
+  - {class: Monster, removed: "1.11"}
+  - {class: AbstractSkeleton, since: "1.11"}
+entities: [skeleton]
+fields:
+  - {name: STRAY_CONVERSION, type: boolean, since: "1.17"}
+  - {name: SKELETON_TYPE, type: int, since: "1.9", removed: "1.11"}
+  - {name: SWINGING_ARMS, type: boolean, since: "1.9", removed: "1.11"}
+  - {name: SKELETON_TYPE, type: byte, index: 13, removed: "1.9"}

@@ -1,0 +1,5 @@
+class: AbstractVillager
+since: "1.14.1"
+extends: AgeableMob
+fields:
+  - {name: UNHAPPY_COUNTER, type: int}

@@ -1,0 +1,5 @@
+class: Minecart
+since: "1.9"
+extends: AbstractMinecart
+entities: [minecart, minecart_rideable]
+fields: []

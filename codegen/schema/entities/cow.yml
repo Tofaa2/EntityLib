@@ -1,0 +1,9 @@
+class: Cow
+since: "1.9"
+extends:
+  - {class: Animal, removed: "1.21.5"}
+  - {class: AbstractCow, since: "1.21.5"}
+entities: [cow]
+fields:
+  - {name: VARIANT, type: cow_variant, since: "1.21.5"}
+  - {name: SOUND_VARIANT, type: cow_sound_variant, since: "26.1"}

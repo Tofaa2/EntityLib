@@ -1,0 +1,28 @@
+class: Horse
+since: "1.8"
+extends:
+  - {class: Animal, removed: "1.11"}
+  - {class: AbstractHorse, since: "1.11"}
+entities: [horse]
+fields:
+  - name: FLAGS
+    type: byte
+    since: "1.9"
+    removed: "1.11"
+    flags:
+      - {name: TAME, mask: 0x02}
+      - {name: SADDLED, mask: 0x04}
+      - {name: CHESTED, mask: 0x08}
+      - {name: BRED, mask: 0x10}
+      - {name: EATING, mask: 0x20}
+      - {name: STANDING, mask: 0x40}
+      - {name: OPEN_MOUTH, mask: 0x80}
+  - {name: HORSE_TYPE, type: int, since: "1.9", removed: "1.11"}
+  - {name: TYPE_VARIANT, type: int, since: "1.9"}
+  - {name: OWNER_UUID, type: optional_uuid, since: "1.9", removed: "1.11"}
+  - {name: ARMOR_TYPE, type: int, since: "1.9", removed: "1.14"}
+  - {name: FLAGS, type: int, index: 16, removed: "1.9"}
+  - {name: HORSE_TYPE, type: byte, index: 19, removed: "1.9"}
+  - {name: TYPE_VARIANT, type: int, index: 20, removed: "1.9"}
+  - {name: OWNER_UUID, type: string, index: 21, removed: "1.9"}
+  - {name: ARMOR_TYPE, type: int, index: 22, removed: "1.9"}

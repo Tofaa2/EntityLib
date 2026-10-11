@@ -1,0 +1,5 @@
+class: Illusioner
+since: "1.12"
+extends: SpellcasterIllager
+entities: [illusioner]
+fields: []

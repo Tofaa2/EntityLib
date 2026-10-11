@@ -1,0 +1,4 @@
+class: AbstractThrownPotion
+since: "1.21.5"
+extends: ThrowableItemProjectile
+fields: []

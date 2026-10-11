@@ -1,0 +1,16 @@
+class: Guardian
+since: "1.8"
+extends: Monster
+entities: [guardian]
+fields:
+  - {name: MOVING, type: boolean, since: "1.11"}
+  - name: FLAGS
+    type: byte
+    since: "1.9"
+    removed: "1.11"
+    flags:
+      - {name: MOVING, mask: 0x02}
+      - {name: ELDER, mask: 0x04}
+  - {name: ATTACK_TARGET, type: int, since: "1.9"}
+  - {name: FLAGS, type: int, index: 16, removed: "1.9"}
+  - {name: ATTACK_TARGET, type: int, index: 17, removed: "1.9"}

@@ -1,0 +1,7 @@
+class: CopperGolem
+since: "1.21.9"
+extends: AbstractGolem
+entities: [copper_golem]
+fields:
+  - {name: WEATHER_STATE, type: weathering_copper_state}
+  - {name: COPPER_GOLEM_STATE, type: copper_golem_state}

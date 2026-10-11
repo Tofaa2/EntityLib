@@ -1,0 +1,5 @@
+class: BreezeWindCharge
+since: "1.20.5"
+extends: AbstractWindCharge
+entities: [breeze_wind_charge]
+fields: []

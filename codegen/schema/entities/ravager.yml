@@ -1,0 +1,5 @@
+class: Ravager
+since: "1.14"
+extends: Raider
+entities: [ravager]
+fields: []

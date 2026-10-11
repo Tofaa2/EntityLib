@@ -1,0 +1,11 @@
+class: SnowGolem
+since: "1.9"
+extends:
+  - {class: PathfinderMob, removed: "1.14.4"}
+  - {class: AbstractGolem, since: "1.14.4"}
+entities: [snow_golem]
+fields:
+  - name: PUMPKIN
+    type: byte
+    flags:
+      - {name: HAS_PUMPKIN, mask: 0x10}

@@ -1,0 +1,6 @@
+class: ZombieNautilus
+since: "1.21.11"
+extends: AbstractNautilus
+entities: [zombie_nautilus]
+fields:
+  - {name: VARIANT, type: zombie_nautilus_variant}

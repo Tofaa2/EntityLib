@@ -1,0 +1,8 @@
+class: TropicalFish
+since: "1.13"
+extends:
+  - {class: AbstractFish, removed: "1.14.4"}
+  - {class: AbstractSchoolingFish, since: "1.14.4"}
+entities: [tropical_fish]
+fields:
+  - {name: TYPE_VARIANT, type: int}

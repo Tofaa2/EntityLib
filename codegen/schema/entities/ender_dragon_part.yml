@@ -1,0 +1,4 @@
+class: EnderDragonPart
+since: "1.14.4"
+extends: Entity
+fields: []

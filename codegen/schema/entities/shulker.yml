@@ -1,0 +1,11 @@
+class: Shulker
+since: "1.9"
+extends:
+  - {class: PathfinderMob, removed: "1.14.4"}
+  - {class: AbstractGolem, since: "1.14.4"}
+entities: [shulker]
+fields:
+  - {name: ATTACH_FACE, type: block_face}
+  - {name: ATTACH_POS, type: optional_block_position, removed: "1.17"}
+  - {name: PEEK, type: byte}
+  - {name: COLOR, type: byte, since: "1.11"}

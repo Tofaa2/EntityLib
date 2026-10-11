@@ -1,0 +1,5 @@
+class: Animal
+since: "1.8"
+extends: AgeableMob
+entities: [abstract_animal]
+fields: []

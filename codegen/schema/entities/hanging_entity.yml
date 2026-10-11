@@ -1,0 +1,8 @@
+class: HangingEntity
+since: "1.14.4"
+extends:
+  - {class: Entity, removed: "1.21"}
+  - {class: BlockAttachedEntity, since: "1.21"}
+entities: [abstract_hanging]
+fields:
+  - {name: DIRECTION, type: block_face, since: "1.21.6"}
