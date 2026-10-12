@@ -9,6 +9,12 @@ import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import com.github.retrooper.packetevents.wrapper.play.server.*;
 import me.tofaa.entitylib.EntityLib;
+import me.tofaa.entitylib.event.EntityLibEvent;
+import me.tofaa.entitylib.event.EventNode;
+import me.tofaa.entitylib.event.entity.EntityRemoveEvent;
+import me.tofaa.entitylib.event.entity.EntitySpawnEvent;
+import me.tofaa.entitylib.event.entity.EntityViewerAddEvent;
+import me.tofaa.entitylib.event.entity.EntityViewerRemoveEvent;
 import me.tofaa.entitylib.meta.Metadata;
 import me.tofaa.entitylib.meta.MissingPolicy;
 import me.tofaa.entitylib.meta.MetaField;
@@ -27,8 +33,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 
 public class WrapperEntity {
+
+    public static final int BUNDLE_PROTOCOL = 762;
+    public static final int NO_LEASH = -1;
+
+    private static final double MAX_RELATIVE_MOVE = 7.9;
 
     private static final Set<String> OWNERSHIP_WARNINGS = ConcurrentHashMap.newKeySet();
 
@@ -40,13 +52,18 @@ public class WrapperEntity {
     protected final List<ViewerRule> viewerRules;
     protected final EntityTriggers triggers;
     protected final Set<Integer> passengers;
-    protected Location location;
-    protected boolean spawned;
-    protected boolean onGround;
-    protected Vector3d velocity;
-    protected int spawnData;
-    private WrapperEntity riding;
-    private Location preRidingLocation;
+    protected final Object lock = new Object();
+    private final Map<UUID, Metadata> viewerMetadata = new ConcurrentHashMap<>();
+    protected volatile Location location;
+    protected volatile boolean spawned;
+    protected volatile boolean onGround;
+    protected volatile boolean notifyAboutChanges = true;
+    protected volatile Vector3d velocity;
+    protected volatile int spawnData;
+    private volatile WrapperEntity riding;
+    private volatile Location preRidingLocation;
+    private volatile String world;
+    private volatile int leashHolder = NO_LEASH;
 
     public WrapperEntity(int entityId, @NotNull UUID uuid, @NotNull EntityType entityType, @NotNull Location location) {
         this.entityId = entityId;
@@ -128,6 +145,139 @@ public class WrapperEntity {
 
     public void teleport(@NotNull Location location) {
         teleport(location, onGround);
+    }
+
+    public void teleport(@NotNull Location location, int interpolationTicks) {
+        if (MetaFields.owns(entityType, MetaFields.Display.POS_ROT_INTERPOLATION_DURATION)) {
+            setMetadata(MetaFields.Display.POS_ROT_INTERPOLATION_DURATION, interpolationTicks);
+        }
+        teleport(location, onGround);
+    }
+
+    public void move(@NotNull Location target) {
+        move(target, onGround);
+    }
+
+    public void move(@NotNull Location target, boolean onGround) {
+        Location previous = this.location;
+        double dx = target.getX() - previous.getX();
+        double dy = target.getY() - previous.getY();
+        double dz = target.getZ() - previous.getZ();
+        if (Math.abs(dx) > MAX_RELATIVE_MOVE || Math.abs(dy) > MAX_RELATIVE_MOVE || Math.abs(dz) > MAX_RELATIVE_MOVE) {
+            teleport(target, onGround);
+            return;
+        }
+        this.location = target;
+        this.onGround = onGround;
+        if (!spawned) {
+            return;
+        }
+        boolean rotated = target.getYaw() != previous.getYaw() || target.getPitch() != previous.getPitch();
+        if (rotated) {
+            sendPacketsToViewers(
+                new WrapperPlayServerEntityRelativeMoveAndRotation(entityId, dx, dy, dz, target.getYaw(), target.getPitch(), onGround),
+                new WrapperPlayServerEntityHeadLook(entityId, target.getYaw())
+            );
+        } else {
+            sendPacketToViewers(new WrapperPlayServerEntityRelativeMove(entityId, dx, dy, dz, onGround));
+        }
+    }
+
+    public void move(@NotNull Vector3d delta) {
+        Location current = this.location;
+        move(new Location(current.getX() + delta.getX(), current.getY() + delta.getY(), current.getZ() + delta.getZ(),
+            current.getYaw(), current.getPitch()));
+    }
+
+    public void setHeadYaw(float yaw) {
+        sendPacketToViewersIfSpawned(new WrapperPlayServerEntityHeadLook(entityId, yaw));
+    }
+
+    public void setBodyRotation(float yaw, float pitch) {
+        this.location = new Location(location.getPosition(), yaw, pitch);
+        sendPacketToViewersIfSpawned(new WrapperPlayServerEntityRotation(entityId, yaw, pitch, onGround));
+    }
+
+    public @Nullable String getWorld() {
+        return world;
+    }
+
+    public void setWorld(@Nullable String world) {
+        this.world = world;
+    }
+
+    public void sendStatus(int status) {
+        sendPacketToViewersIfSpawned(new WrapperPlayServerEntityStatus(entityId, status));
+    }
+
+    public int getLeashHolder() {
+        return leashHolder;
+    }
+
+    public void setLeashHolder(int holderEntityId) {
+        this.leashHolder = holderEntityId;
+        sendPacketToViewersIfSpawned(new WrapperPlayServerAttachEntity(entityId, holderEntityId, true));
+    }
+
+    public void setLeashHolder(@NotNull WrapperEntity holder) {
+        setLeashHolder(holder.getEntityId());
+    }
+
+    public void removeLeash() {
+        setLeashHolder(NO_LEASH);
+    }
+
+    public <T> void setViewerMetadata(@NotNull UUID viewer, @NotNull MetaField<T> field, @Nullable T value) {
+        if (!checkOwnership(field)) {
+            return;
+        }
+        Metadata overlay = viewerMetadata.computeIfAbsent(viewer, key -> new Metadata());
+        overlay.set(field, value);
+        overlay.takeDirty();
+        sendFields(viewer, Collections.singleton(field));
+    }
+
+    public @Nullable Metadata getViewerMetadata(@NotNull UUID viewer) {
+        return viewerMetadata.get(viewer);
+    }
+
+    public void clearViewerMetadata(@NotNull UUID viewer) {
+        Metadata removed = viewerMetadata.remove(viewer);
+        if (removed != null) {
+            sendFields(viewer, new ArrayList<>(removed.fields()));
+        }
+    }
+
+    private void sendFields(UUID viewer, Collection<MetaField<?>> fields) {
+        if (!spawned || !viewers.contains(viewer)) {
+            return;
+        }
+        int proto = EntityLib.get().getPlatform().getProtocolVersion(viewer);
+        List<EntityData<?>> entries = encodeFor(viewer, proto, fields);
+        if (!entries.isEmpty()) {
+            render(viewer, entries);
+            sendPacket(viewer, new WrapperPlayServerEntityMetadata(entityId, entries));
+        }
+    }
+
+    private List<EntityData<?>> encodeFor(UUID viewer, int protocolVersion, @Nullable Collection<MetaField<?>> fields) {
+        MissingPolicy policy = EntityLib.get().getConfig().isStrictVersionCheck() ? MissingPolicy.THROW : MissingPolicy.SKIP;
+        List<EntityData<?>> entries = fields == null
+            ? metadata.encode(protocolVersion, policy)
+            : metadata.encode(protocolVersion, policy, fields);
+        Metadata overlay = viewerMetadata.get(viewer);
+        if (overlay == null) {
+            return entries;
+        }
+        List<EntityData<?>> overrides = fields == null
+            ? overlay.encode(protocolVersion, policy)
+            : overlay.encode(protocolVersion, policy, fields);
+        for (EntityData<?> override : overrides) {
+            entries.removeIf(entry -> entry.getIndex() == override.getIndex());
+            entries.add(override);
+        }
+        entries.sort((a, b) -> Integer.compare(a.getIndex(), b.getIndex()));
+        return entries;
     }
 
     public void rotateHead(float yaw, float pitch) {
@@ -240,29 +390,58 @@ public class WrapperEntity {
     }
 
     public boolean addViewer(@NotNull UUID user) {
-        if (viewers.add(user)) {
-            triggers.fireViewerAdd(user);
+        if (viewers.contains(user)) {
+            return false;
+        }
+        EventNode<EntityLibEvent> bus = EntityLib.get().getEventNode();
+        if (bus.hasListener(EntityViewerAddEvent.class) && bus.call(new EntityViewerAddEvent(this, user)).isCancelled()) {
+            return false;
+        }
+        synchronized (lock) {
+            if (!viewers.add(user)) {
+                return false;
+            }
+            EntityLib.get().registerEntity(this);
             if (spawned) {
                 sendSpawnPackets(user);
             }
-            return true;
         }
-        return false;
+        triggers.fireViewerAdd(user);
+        return true;
     }
 
     public boolean addViewerSilently(@NotNull UUID user) {
+        EntityLib.get().registerEntity(this);
         return viewers.add(user);
     }
 
-    public boolean removeViewer(@NotNull UUID user) {
+    public void handleViewerDisconnect(@NotNull UUID user) {
+        viewerMetadata.remove(user);
         if (viewers.remove(user)) {
+            triggers.fireViewerRemove(user);
+            fireViewerRemove(user, true);
+        }
+    }
+
+    private void fireViewerRemove(UUID user, boolean disconnected) {
+        EventNode<EntityLibEvent> bus = EntityLib.get().getEventNode();
+        if (bus.hasListener(EntityViewerRemoveEvent.class)) {
+            bus.call(new EntityViewerRemoveEvent(this, user, disconnected));
+        }
+    }
+
+    public boolean removeViewer(@NotNull UUID user) {
+        synchronized (lock) {
+            if (!viewers.remove(user)) {
+                return false;
+            }
             if (spawned) {
                 sendDespawnPackets(user);
             }
-            triggers.fireViewerRemove(user);
-            return true;
         }
-        return false;
+        triggers.fireViewerRemove(user);
+        fireViewerRemove(user, false);
+        return true;
     }
 
     public boolean removeViewerSilently(@NotNull UUID user) {
@@ -270,25 +449,39 @@ public class WrapperEntity {
     }
 
     public void spawn(@NotNull Location location) {
-        this.location = location;
-        this.spawned = true;
-        broadcastSpawnPackets();
+        synchronized (lock) {
+            this.location = location;
+            this.spawned = true;
+            EntityLib.get().registerEntity(this);
+            broadcastSpawnPackets();
+        }
         triggers.fireSpawn(this);
+        EventNode<EntityLibEvent> spawnBus = EntityLib.get().getEventNode();
+        if (spawnBus.hasListener(EntitySpawnEvent.class)) {
+            spawnBus.call(new EntitySpawnEvent(this));
+        }
     }
 
     public void despawn() {
-        if (!spawned) return;
-        this.spawned = false;
-        for (UUID viewer : viewers) {
-            sendDespawnPackets(viewer);
+        synchronized (lock) {
+            if (!spawned) return;
+            this.spawned = false;
+            for (UUID viewer : viewers) {
+                sendDespawnPackets(viewer);
+            }
         }
     }
 
     public void remove() {
-        if (!spawned) return;
         despawn();
         viewers.clear();
+        viewerMetadata.clear();
+        EntityLib.get().unregisterEntity(this);
         triggers.fireRemove(this);
+        EventNode<EntityLibEvent> removeBus = EntityLib.get().getEventNode();
+        if (removeBus.hasListener(EntityRemoveEvent.class)) {
+            removeBus.call(new EntityRemoveEvent(this));
+        }
     }
 
     public void refresh() {
@@ -304,8 +497,8 @@ public class WrapperEntity {
             return;
         }
         metadata.set(field, value);
-        if (spawned) {
-            broadcastMetadata();
+        if (notifyAboutChanges) {
+            flushMetadata();
         }
     }
 
@@ -314,8 +507,8 @@ public class WrapperEntity {
             return;
         }
         metadata.setFlag(flag, value);
-        if (spawned) {
-            broadcastMetadata();
+        if (notifyAboutChanges) {
+            flushMetadata();
         }
     }
 
@@ -325,8 +518,8 @@ public class WrapperEntity {
 
     public void setMetaFromPacket(@NotNull WrapperPlayServerEntityMetadata packet, int protocolVersion) {
         metadata.setMetaFromPacket(packet, entityType, protocolVersion);
-        if (spawned) {
-            broadcastMetadata();
+        if (notifyAboutChanges) {
+            flushMetadata();
         }
     }
 
@@ -429,7 +622,42 @@ public class WrapperEntity {
         return new WrapperPlayServerSetPassengers(entityId, passengers.stream().mapToInt(Integer::intValue).toArray());
     }
 
+    public boolean isNotifyingChanges() {
+        return notifyAboutChanges;
+    }
+
+    public void setNotifyAboutChanges(boolean notifyAboutChanges) {
+        this.notifyAboutChanges = notifyAboutChanges;
+        if (notifyAboutChanges) {
+            flushMetadata();
+        }
+    }
+
+    public void consumeMetadata(@NotNull Consumer<Metadata> consumer) {
+        consumer.accept(metadata);
+        if (notifyAboutChanges) {
+            flushMetadata();
+        }
+    }
+
+    public void flushMetadata() {
+        if (!spawned || !metadata.hasDirty()) {
+            return;
+        }
+        Set<MetaField<?>> changed = metadata.takeDirty();
+        for (UUID viewer : viewers) {
+            int proto = EntityLib.get().getPlatform().getProtocolVersion(viewer);
+            List<EntityData<?>> entries = encodeFor(viewer, proto, changed);
+            if (entries.isEmpty()) {
+                continue;
+            }
+            render(viewer, entries);
+            sendPacket(viewer, new WrapperPlayServerEntityMetadata(entityId, entries));
+        }
+    }
+
     protected void broadcastMetadata() {
+        metadata.takeDirty();
         for (UUID viewer : viewers) {
             sendMetadata(viewer);
         }
@@ -437,13 +665,19 @@ public class WrapperEntity {
 
     protected void sendMetadata(@NotNull UUID user) {
         int proto = EntityLib.get().getConfig().getPlatform().getProtocolVersion(user);
-        boolean strict = EntityLib.get().getConfig().isStrictVersionCheck();
-        List<EntityData<?>> entries = metadata.encode(proto, strict ? MissingPolicy.THROW : MissingPolicy.SKIP);
+        PacketWrapper<?> packet = createMetadataPacket(user, proto);
+        if (packet != null) {
+            sendPacket(user, packet);
+        }
+    }
+
+    protected @Nullable PacketWrapper<?> createMetadataPacket(@NotNull UUID user, int protocolVersion) {
+        List<EntityData<?>> entries = encodeFor(user, protocolVersion, null);
         if (entries.isEmpty()) {
-            return;
+            return null;
         }
         render(user, entries);
-        sendPacket(user, new WrapperPlayServerEntityMetadata(entityId, entries));
+        return new WrapperPlayServerEntityMetadata(entityId, entries);
     }
 
     @SuppressWarnings("unchecked")
@@ -465,6 +699,7 @@ public class WrapperEntity {
     }
 
     protected void broadcastSpawnPackets() {
+        metadata.takeDirty();
         for (UUID viewer : viewers) {
             sendSpawnPackets(viewer);
         }
@@ -472,20 +707,53 @@ public class WrapperEntity {
 
     protected void sendSpawnPackets(@NotNull UUID user) {
         int proto = EntityLib.get().getConfig().getPlatform().getProtocolVersion(user);
-        var packet = getSpawnProvider().provide(this, proto);
-        sendPacket(user, packet);
-        sendPacket(user, new WrapperPlayServerEntityHeadLook(entityId, location.getYaw()));
-        sendMetadata(user);
-        if (!passengers.isEmpty()) {
-            sendPacket(user, createPassengerPacket());
+        List<PacketWrapper<?>> packets = new ArrayList<>();
+        collectSpawnPackets(user, proto, packets);
+        sendBundled(user, proto, packets);
+    }
+
+    protected void collectSpawnPackets(@NotNull UUID user, int protocolVersion, @NotNull List<PacketWrapper<?>> packets) {
+        packets.add(getSpawnProvider().provide(this, protocolVersion));
+        packets.add(new WrapperPlayServerEntityHeadLook(entityId, location.getYaw()));
+        PacketWrapper<?> metadataPacket = createMetadataPacket(user, protocolVersion);
+        if (metadataPacket != null) {
+            packets.add(metadataPacket);
         }
-        if (riding != null && riding.isSpawned() && riding.hasViewer(user)) {
-            sendPacket(user, riding.createPassengerPacket());
+        if (!passengers.isEmpty()) {
+            packets.add(createPassengerPacket());
+        }
+        WrapperEntity vehicle = riding;
+        if (vehicle != null && vehicle.isSpawned() && vehicle.hasViewer(user)) {
+            packets.add(vehicle.createPassengerPacket());
+        }
+        if (leashHolder != NO_LEASH) {
+            packets.add(new WrapperPlayServerAttachEntity(entityId, leashHolder, true));
         }
     }
 
     protected void sendDespawnPackets(@NotNull UUID user) {
-        sendPacket(user, new WrapperPlayServerDestroyEntities(entityId));
+        int proto = EntityLib.get().getConfig().getPlatform().getProtocolVersion(user);
+        List<PacketWrapper<?>> packets = new ArrayList<>();
+        collectDespawnPackets(user, proto, packets);
+        sendBundled(user, proto, packets);
+    }
+
+    protected void collectDespawnPackets(@NotNull UUID user, int protocolVersion, @NotNull List<PacketWrapper<?>> packets) {
+        packets.add(new WrapperPlayServerDestroyEntities(entityId));
+    }
+
+    protected void sendBundled(@NotNull UUID user, int protocolVersion, @NotNull List<PacketWrapper<?>> packets) {
+        boolean bundle = packets.size() > 1 && protocolVersion >= BUNDLE_PROTOCOL
+            && EntityLib.get().getConfig().shouldBundlePackets();
+        if (bundle) {
+            sendPacket(user, new WrapperPlayServerBundle());
+        }
+        for (PacketWrapper<?> packet : packets) {
+            sendPacket(user, packet);
+        }
+        if (bundle) {
+            sendPacket(user, new WrapperPlayServerBundle());
+        }
     }
 
     protected @NotNull SpawnPacketProvider getSpawnProvider() {

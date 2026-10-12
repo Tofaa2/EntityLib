@@ -140,21 +140,21 @@ public class BBModelEntity {
         return Collections.unmodifiableSet(viewers);
     }
 
-    public void addViewer(@NotNull UUID viewer) {
+    public synchronized void addViewer(@NotNull UUID viewer) {
         viewers.add(viewer);
         for (WrapperEntity entity : entities) {
             entity.addViewer(viewer);
         }
     }
 
-    public void removeViewer(@NotNull UUID viewer) {
+    public synchronized void removeViewer(@NotNull UUID viewer) {
         viewers.remove(viewer);
         for (WrapperEntity entity : entities) {
             entity.removeViewer(viewer);
         }
     }
 
-    public void spawn(@NotNull Location location) {
+    public synchronized void spawn(@NotNull Location location) {
         this.location = location;
         applyTransforms(false);
         Location anchor = anchor();
@@ -164,14 +164,14 @@ public class BBModelEntity {
         spawned = true;
     }
 
-    public void despawn() {
+    public synchronized void despawn() {
         for (WrapperEntity entity : entities) {
             entity.despawn();
         }
         spawned = false;
     }
 
-    public void remove() {
+    public synchronized void remove() {
         for (WrapperEntity entity : entities) {
             entity.remove();
         }
@@ -179,7 +179,7 @@ public class BBModelEntity {
         spawned = false;
     }
 
-    public void teleport(@NotNull Location location) {
+    public synchronized void teleport(@NotNull Location location) {
         boolean rotated = location.getYaw() != this.location.getYaw();
         this.location = location;
         if (!spawned) {
@@ -198,7 +198,7 @@ public class BBModelEntity {
         return scale;
     }
 
-    public void setScale(float scale) {
+    public synchronized void setScale(float scale) {
         this.scale = scale;
         update();
     }
@@ -207,11 +207,11 @@ public class BBModelEntity {
         return interpolationTicks;
     }
 
-    public void setInterpolationTicks(int interpolationTicks) {
+    public synchronized void setInterpolationTicks(int interpolationTicks) {
         this.interpolationTicks = Math.max(0, interpolationTicks);
     }
 
-    public void setBonePose(@NotNull UUID bone, @Nullable BonePose pose) {
+    public synchronized void setBonePose(@NotNull UUID bone, @Nullable BonePose pose) {
         if (pose == null) {
             poses.remove(bone);
         } else {
@@ -219,12 +219,12 @@ public class BBModelEntity {
         }
     }
 
-    public void resetPose() {
+    public synchronized void resetPose() {
         poses.clear();
         update();
     }
 
-    public void setPose(@NotNull BBAnimation animation, double seconds) {
+    public synchronized void setPose(@NotNull BBAnimation animation, double seconds) {
         double time = animation.resolveTime(seconds);
         poses.clear();
         for (Map.Entry<UUID, BBAnimator> entry : animation.animators().entrySet()) {
@@ -240,7 +240,7 @@ public class BBModelEntity {
         update();
     }
 
-    public void update() {
+    public synchronized void update() {
         applyTransforms(spawned);
     }
 
@@ -290,10 +290,13 @@ public class BBModelEntity {
                 new Vector3f((float) (size.x() * unit), (float) (size.y() * unit), (float) (size.z() * unit)));
             metadata.set(MetaFields.Display.LEFT_ROTATION,
                 new Quaternion4f((float) leftRotation.x(), (float) leftRotation.y(), (float) leftRotation.z(), (float) leftRotation.w()));
-            metadata.set(MetaFields.Display.TRANSFORMATION_INTERPOLATION_START_DELTA_TICKS, 0);
             metadata.set(MetaFields.Display.TRANSFORMATION_INTERPOLATION_DURATION, interpolationTicks);
+            if (metadata.hasDirty()) {
+                metadata.set(MetaFields.Display.TRANSFORMATION_INTERPOLATION_START_DELTA_TICKS, 0);
+                metadata.markDirty(MetaFields.Display.TRANSFORMATION_INTERPOLATION_START_DELTA_TICKS);
+            }
             if (broadcast) {
-                part.entity.refresh();
+                part.entity.flushMetadata();
             }
         }
     }

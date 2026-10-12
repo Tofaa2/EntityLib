@@ -10,9 +10,37 @@ public interface MetaConverter<T, W> {
 
     T fromWire(W wire);
 
+    default W toWire(T value, int protocolVersion) {
+        return toWire(value);
+    }
+
+    default T fromWire(W wire, int protocolVersion) {
+        return fromWire(wire);
+    }
+
     default <V> @NotNull MetaConverter<T, V> then(@NotNull MetaConverter<W, V> next) {
         MetaConverter<T, W> first = this;
-        return of(value -> next.toWire(first.toWire(value)), wire -> first.fromWire(next.fromWire(wire)));
+        return new MetaConverter<T, V>() {
+            @Override
+            public V toWire(T value) {
+                return next.toWire(first.toWire(value));
+            }
+
+            @Override
+            public T fromWire(V wire) {
+                return first.fromWire(next.fromWire(wire));
+            }
+
+            @Override
+            public V toWire(T value, int protocolVersion) {
+                return next.toWire(first.toWire(value, protocolVersion), protocolVersion);
+            }
+
+            @Override
+            public T fromWire(V wire, int protocolVersion) {
+                return first.fromWire(next.fromWire(wire, protocolVersion), protocolVersion);
+            }
+        };
     }
 
     @SuppressWarnings("unchecked")

@@ -54,7 +54,7 @@ public final class MetaField<T> {
 
     public @Nullable EntityData<?> encode(T value, int protocolVersion) {
         MetaBinding<T, ?> binding = resolve(protocolVersion);
-        return binding == null ? null : binding.encode(value);
+        return binding == null ? null : binding.encode(value, protocolVersion);
     }
 
     public @NotNull MetaFlag flag(@NotNull String flagName) {

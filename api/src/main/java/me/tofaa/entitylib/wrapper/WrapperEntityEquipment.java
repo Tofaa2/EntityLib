@@ -25,52 +25,52 @@ public class WrapperEntityEquipment {
         Arrays.fill(equipment, ItemStack.EMPTY);
     }
 
-    public void clearSlot(@NotNull EquipmentSlot slot) {
+    public synchronized void clearSlot(@NotNull EquipmentSlot slot) {
         equipment[slot.ordinal()] = ItemStack.EMPTY;
         refresh();
     }
 
-    public void clearAll() {
+    public synchronized void clearAll() {
         Arrays.fill(equipment, ItemStack.EMPTY);
         refresh();
     }
 
-    public void setHelmet(@Nullable ItemStack itemStack) {
+    public synchronized void setHelmet(@Nullable ItemStack itemStack) {
         equipment[5] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public void setChestplate(@Nullable ItemStack itemStack) {
+    public synchronized void setChestplate(@Nullable ItemStack itemStack) {
         equipment[4] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public void setLeggings(@Nullable ItemStack itemStack) {
+    public synchronized void setLeggings(@Nullable ItemStack itemStack) {
         equipment[3] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public void setBoots(@Nullable ItemStack itemStack) {
+    public synchronized void setBoots(@Nullable ItemStack itemStack) {
         equipment[2] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public void setMainHand(@Nullable ItemStack itemStack) {
+    public synchronized void setMainHand(@Nullable ItemStack itemStack) {
         equipment[0] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public void setOffhand(@Nullable ItemStack itemStack) {
+    public synchronized void setOffhand(@Nullable ItemStack itemStack) {
         equipment[1] = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public void setItem(@NotNull EquipmentSlot slot, @Nullable ItemStack itemStack) {
+    public synchronized void setItem(@NotNull EquipmentSlot slot, @Nullable ItemStack itemStack) {
         equipment[slot.ordinal()]  = itemStack == null ? ItemStack.EMPTY : itemStack;
         refresh();
     }
 
-    public @NotNull ItemStack getItem(@NotNull EquipmentSlot slot) {
+    public synchronized @NotNull ItemStack getItem(@NotNull EquipmentSlot slot) {
         ItemStack itemStack = equipment[slot.ordinal()];
         if (itemStack == null) {
             return ItemStack.EMPTY;
@@ -102,7 +102,7 @@ public class WrapperEntityEquipment {
         return getItem(EquipmentSlot.OFF_HAND);
     }
 
-    public boolean isEmpty() {
+    public synchronized boolean isEmpty() {
         for (ItemStack itemStack : equipment) {
             if (itemStack != null && !itemStack.isEmpty()) {
                 return false;
@@ -111,7 +111,7 @@ public class WrapperEntityEquipment {
         return true;
     }
 
-    public WrapperPlayServerEntityEquipment createPacket() {
+    public synchronized WrapperPlayServerEntityEquipment createPacket() {
         List<Equipment> equipment = new ArrayList<>();
         for (int i = 0; i < this.equipment.length; i++) {
             ItemStack itemStack = this.equipment[i];
@@ -123,7 +123,7 @@ public class WrapperEntityEquipment {
         );
     }
 
-    public void refresh() {
+    public synchronized void refresh() {
         if (notifyChanges) {
             this.entity.sendPacketToViewersIfSpawned(createPacket());
         }
@@ -133,7 +133,7 @@ public class WrapperEntityEquipment {
         return notifyChanges;
     }
 
-    public void setNotifyChanges(boolean notifyChanges) {
+    public synchronized void setNotifyChanges(boolean notifyChanges) {
         this.notifyChanges = notifyChanges;
         refresh();
     }

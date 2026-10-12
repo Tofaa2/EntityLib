@@ -68,6 +68,12 @@ public class SpigotEntityLibPlatform extends PacketEventsPlatform {
     }
 
     @Override
+    public String getWorld(@NotNull UUID user) {
+        Player player = Bukkit.getPlayer(user);
+        return player == null ? null : player.getWorld().getName();
+    }
+
+    @Override
     public int getProtocolVersion(@NotNull UUID user) {
         return getServerProtocolVersion();
     }
@@ -93,6 +99,7 @@ public class SpigotEntityLibPlatform extends PacketEventsPlatform {
             wrapper = new WrapperEntity(id, entity.getUniqueId(), type, location);
         }
 
+        wrapper.setWorld(entity.getWorld().getName());
         int protocolVersion = getServerProtocolVersion();
         MetaClass metaClass = MetaFields.metaClass(type, protocolVersion);
         if (metaClass != null) {

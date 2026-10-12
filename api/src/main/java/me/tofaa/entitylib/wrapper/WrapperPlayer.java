@@ -146,18 +146,16 @@ public class WrapperPlayer extends WrapperLivingEntity {
     }
 
     @Override
-    protected void sendSpawnPackets(@NotNull UUID user) {
-        int proto = EntityLib.get().getPlatform().getProtocolVersion(user);
-        sendPacket(user, tabListPacket(proto));
-        super.sendSpawnPackets(user);
-        sendPacket(user, new WrapperPlayServerEntityRotation(getEntityId(), getYaw(), getPitch(), isOnGround()));
+    protected void collectSpawnPackets(@NotNull UUID user, int protocolVersion, @NotNull List<PacketWrapper<?>> packets) {
+        packets.add(tabListPacket(protocolVersion));
+        super.collectSpawnPackets(user, protocolVersion, packets);
+        packets.add(new WrapperPlayServerEntityRotation(getEntityId(), getYaw(), getPitch(), isOnGround()));
     }
 
     @Override
-    protected void sendDespawnPackets(@NotNull UUID user) {
-        int proto = EntityLib.get().getPlatform().getProtocolVersion(user);
-        sendPacket(user, tabListRemovePacket(proto));
-        super.sendDespawnPackets(user);
+    protected void collectDespawnPackets(@NotNull UUID user, int protocolVersion, @NotNull List<PacketWrapper<?>> packets) {
+        packets.add(tabListRemovePacket(protocolVersion));
+        super.collectDespawnPackets(user, protocolVersion, packets);
     }
 
     @Override

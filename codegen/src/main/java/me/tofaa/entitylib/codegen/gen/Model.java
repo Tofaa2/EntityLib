@@ -128,10 +128,16 @@ public final class Model {
                                 }
                             }
                         }
-                    } else if (convert == null && !type.java().equals(valueType.java())) {
-                        convert = schema.conversion(valueType.name(), type.name());
+                    } else {
+                        if (convert == null && type.value() != null) {
+                            convert = type.convert();
+                        }
+                        if (convert == null && !type.valueJava().equals(valueType.valueJava())) {
+                            convert = schema.conversion(valueType.name(), type.name());
+                        }
                     }
-                    if (enumName == null && !type.java().equals(valueType.java()) && convert == null) {
+                    if (enumName == null && convert == null
+                            && (!type.valueJava().equals(valueType.valueJava()) || type.value() != null)) {
                         problems.add(schemaClass.name + "." + name + ": is " + valueType.name() + " in its newest version but "
                                 + type.name() + " since " + slot.field().since + "; add 'convert: <constant in MetaConverters>'"
                                 + " to the " + type.name() + " entry, a default under 'conversions' in types.yml,"

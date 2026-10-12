@@ -58,6 +58,10 @@ public interface Hologram {
 
     void addLine(@Nullable Component line);
 
+    void setLine(@NotNull UUID viewer, int index, @Nullable Component line);
+
+    void resetLines(@NotNull UUID viewer);
+
     void addViewer(@NotNull UUID viewer);
 
     default void addViewer(@NotNull User user) {

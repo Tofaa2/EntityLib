@@ -7,6 +7,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -18,6 +20,7 @@ public final class Metadata {
 
     private final Map<MetaField<?>, Object> values = new ConcurrentHashMap<>();
     private final Map<MetaFlag, Boolean> flags = new ConcurrentHashMap<>();
+    private final Set<MetaField<?>> dirty = ConcurrentHashMap.newKeySet();
 
     public Metadata() {
     }
@@ -33,10 +36,9 @@ public final class Metadata {
     }
 
     public <T> @NotNull Metadata set(@NotNull MetaField<T> field, @Nullable T value) {
-        if (value == null) {
-            values.remove(field);
-        } else {
-            values.put(field, value);
+        Object previous = value == null ? values.remove(field) : values.put(field, value);
+        if (!Objects.equals(previous, value)) {
+            dirty.add(field);
         }
         return this;
     }
@@ -61,7 +63,10 @@ public final class Metadata {
     }
 
     public @NotNull Metadata setFlag(@NotNull MetaFlag flag, boolean value) {
-        flags.put(flag, value);
+        Boolean previous = flags.put(flag, value);
+        if (previous == null || previous != value) {
+            dirty.add(flag.field());
+        }
         return this;
     }
 
@@ -95,6 +100,30 @@ public final class Metadata {
         for (MetaFlag flag : flags.keySet()) {
             fields.add(flag.field());
         }
+        return encode(protocolVersion, missingPolicy, fields);
+    }
+
+    public void markDirty(@NotNull MetaField<?> field) {
+        dirty.add(field);
+    }
+
+    public boolean hasDirty() {
+        return !dirty.isEmpty();
+    }
+
+    public @NotNull Set<MetaField<?>> takeDirty() {
+        Set<MetaField<?>> taken = new LinkedHashSet<>();
+        for (MetaField<?> field : dirty) {
+            if (dirty.remove(field)) {
+                taken.add(field);
+            }
+        }
+        return taken;
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public @NotNull List<EntityData<?>> encode(int protocolVersion, @NotNull MissingPolicy missingPolicy,
+                                              @NotNull Collection<MetaField<?>> fields) {
         List<EntityData<?>> entries = new ArrayList<>(fields.size());
         for (MetaField field : fields) {
             Object value = values.get(field);
@@ -165,7 +194,7 @@ public final class Metadata {
                 continue;
             }
             MetaBinding binding = field.resolve(protocolVersion);
-            Object value = binding.decode(data.getValue());
+            Object value = binding.decode(data.getValue(), protocolVersion);
             set(field, value);
             if (value instanceof Byte) {
                 for (Object flag : field.flags()) {

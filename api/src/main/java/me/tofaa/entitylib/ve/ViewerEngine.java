@@ -1,11 +1,9 @@
 package me.tofaa.entitylib.ve;
 
-import com.github.retrooper.packetevents.event.PacketListenerAbstract;
-import com.github.retrooper.packetevents.event.PacketSendEvent;
-import com.github.retrooper.packetevents.protocol.packettype.PacketType;
-import com.github.retrooper.packetevents.protocol.packettype.PacketTypeCommon;
 import com.github.retrooper.packetevents.protocol.player.User;
-import com.github.retrooper.packetevents.wrapper.play.server.*;
+import com.github.retrooper.packetevents.protocol.world.Location;
+import me.tofaa.entitylib.EntityLib;
+import me.tofaa.entitylib.extras.collections.WeakLinkedHashSet;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -13,100 +11,136 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 @ApiStatus.Experimental
 public class ViewerEngine {
-
-    private final List<ViewerRule> globalRules = new CopyOnWriteArrayList<>();
-    private final Map<Integer, WrapperEntity> tracked = new ConcurrentHashMap<>();
-    private final PacketListener listener = new PacketListener();
-    private Executor executor;
-    private boolean enabled = false;
+    private final List<ViewerRule> globalRules;
+    private final Set<WrapperEntity> tracked;
+    private final ViewerEngineListener listener;
+    private volatile Executor executor;
+    private volatile boolean enabled = false;
 
     public ViewerEngine() {
         this(Executors.newSingleThreadExecutor());
     }
 
-    public ViewerEngine(@NotNull Executor executor) {
+    public ViewerEngine(Executor executor) {
+        this.globalRules = new CopyOnWriteArrayList<>();
+        this.tracked = new WeakLinkedHashSet<>();
         this.executor = executor;
+        this.listener = new ViewerEngineListener(this);
     }
 
     public void enable() {
-        if (enabled) return;
+        if (enabled) {
+            return;
+        }
         enabled = true;
+        EntityLib.get().getConfig().getPacketEvents().getEventManager().registerListener(listener);
     }
 
     public void disable() {
-        if (!enabled) return;
+        if (!enabled) {
+            return;
+        }
         enabled = false;
+        EntityLib.get().getConfig().getPacketEvents().getEventManager().unregisterListener(listener);
     }
 
     public void refresh() {
-        for (WrapperEntity entity : tracked.values()) {
+        getTracked0().forEach(entity -> {
             for (UUID viewer : entity.getViewers()) {
                 if (!canSpawnFor(viewer, entity)) {
                     entity.removeViewer(viewer);
                 }
             }
-        }
+        });
     }
 
-    public @NotNull Executor getExecutor() {
+    public Executor getExecutor() {
         return executor;
     }
 
-    public void setExecutor(@NotNull Executor executor) {
+    public void setExecutor(Executor executor) {
         this.executor = executor;
     }
 
     public void track(@NotNull WrapperEntity entity) {
-        tracked.put(entity.getEntityId(), entity);
+        synchronized (tracked) {
+            tracked.add(entity);
+        }
     }
 
     public void untrack(@NotNull WrapperEntity entity) {
-        tracked.remove(entity.getEntityId());
+        synchronized (tracked) {
+            tracked.remove(entity);
+        }
     }
 
     public void clearTracked() {
-        tracked.clear();
+        synchronized (tracked) {
+            tracked.clear();
+        }
     }
 
-    public boolean canSpawnFor(@NotNull User user, @NotNull WrapperEntity entity) {
-        return entity.getViewerRules().stream().allMatch(r -> r.shouldSee(user))
-            && globalRules.stream().allMatch(r -> r.shouldSee(user));
+    public boolean canSpawnFor(User user, WrapperEntity entity) {
+        String world = entity.getWorld();
+        if (world != null && user.getUUID() != null) {
+            String userWorld = EntityLib.get().getPlatform().getWorld(user.getUUID());
+            if (userWorld != null && !world.equals(userWorld)) {
+                return false;
+            }
+        }
+        for (ViewerRule rule : entity.getViewerRules()) {
+            if (!rule.shouldSee(user)) {
+                return false;
+            }
+        }
+
+        for (ViewerRule rule : this.globalRules) {
+            if (!rule.shouldSee(user)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    public boolean canSpawnFor(@NotNull UUID userId, @NotNull WrapperEntity entity) {
-        return entity.getViewerRules().stream().allMatch(r -> true)
-            && globalRules.stream().allMatch(r -> true);
+    public boolean canSpawnFor(UUID userId, WrapperEntity entity) {
+        User user = EntityLib.get().getConfig().getPacketEvents().getProtocolManager().getUser(
+                EntityLib.get().getConfig().getPacketEvents().getProtocolManager().getChannel(userId)
+        );
+        if (user == null) return false;
+        return canSpawnFor(user, entity);
     }
 
     public @UnmodifiableView Collection<WrapperEntity> getTracked() {
-        return Collections.unmodifiableCollection(tracked.values());
+        return Collections.unmodifiableCollection(getTracked0());
     }
 
-    Map<Integer, WrapperEntity> getTracked0() {
-        return tracked;
+    List<WrapperEntity> getTracked0() {
+        synchronized (tracked) {
+            return new ArrayList<>(tracked);
+        }
     }
 
     public void addViewerRule(@NotNull ViewerRule rule) {
-        globalRules.add(rule);
+        this.globalRules.add(rule);
     }
 
     public void removeViewerRule(@NotNull ViewerRule rule) {
-        globalRules.remove(rule);
+        this.globalRules.remove(rule);
     }
 
     public void removeViewerRule(int index) {
-        globalRules.remove(index);
+        this.globalRules.remove(index);
     }
 
     public void clearViewerRules() {
-        globalRules.clear();
+        this.globalRules.clear();
     }
 
     public @UnmodifiableView Collection<ViewerRule> getViewerRules() {
@@ -114,52 +148,8 @@ public class ViewerEngine {
     }
 
     public @Nullable ViewerRule getViewerRule(int index) {
-        if (index < 0 || index >= globalRules.size()) return null;
+        if (index < 0 || index >= this.globalRules.size()) return null;
         return globalRules.get(index);
-    }
-
-    private final class PacketListener extends PacketListenerAbstract {
-
-        @Override
-        public void onPacketSend(PacketSendEvent event) {
-            PacketTypeCommon type = event.getPacketType();
-            if (type == PacketType.Play.Server.UNLOAD_CHUNK) {
-                exec(event, e -> {
-                    var packet = new WrapperPlayServerUnloadChunk(e);
-                    int cx = packet.getChunkX();
-                    int cz = packet.getChunkZ();
-                    for (WrapperEntity entity : tracked.values()) {
-                        if (inChunk(entity.getLocation(), cx, cz)) {
-                            entity.removeViewer(e.getUser().getUUID());
-                        }
-                    }
-                });
-            } else if (type == PacketType.Play.Server.CHUNK_DATA) {
-                exec(event, e -> {
-                    var packet = new WrapperPlayServerChunkData(e);
-                    int cx = packet.getColumn().getX();
-                    int cz = packet.getColumn().getZ();
-                    for (WrapperEntity entity : tracked.values()) {
-                        if (!inChunk(entity.getLocation(), cx, cz)) continue;
-                        if (entity.hasViewer(e.getUser().getUUID())) continue;
-                        entity.addViewer(e.getUser().getUUID());
-                    }
-                });
-            }
-        }
-
-        private void exec(PacketSendEvent event, java.util.function.Consumer<PacketSendEvent> runnable) {
-            PacketSendEvent copy = event.clone();
-            executor.execute(() -> {
-                runnable.accept(copy);
-                copy.cleanUp();
-            });
-        }
-
-        private boolean inChunk(com.github.retrooper.packetevents.protocol.world.Location loc, int chunkX, int chunkZ) {
-            return ((int) Math.floor(loc.getX())) >> 4 == chunkX
-                && ((int) Math.floor(loc.getZ())) >> 4 == chunkZ;
-        }
     }
 
 }

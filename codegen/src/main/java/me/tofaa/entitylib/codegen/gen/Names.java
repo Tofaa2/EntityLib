@@ -27,7 +27,7 @@ final class Names {
     static final String ENUMS_PACKAGE = META_PACKAGE + ".enums";
 
     static TypeName valueType(Model.Field field) {
-        return field.enumName() != null ? ClassName.get(ENUMS_PACKAGE, field.enumName()) : type(field.valueType().java());
+        return field.enumName() != null ? ClassName.get(ENUMS_PACKAGE, field.enumName()) : type(field.valueType().valueJava());
     }
 
     static final ClassName NOT_NULL = ClassName.get("org.jetbrains.annotations", "NotNull");

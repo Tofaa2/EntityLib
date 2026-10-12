@@ -1,11 +1,15 @@
 package me.tofaa.entitylib.meta;
 
 import com.github.retrooper.packetevents.protocol.item.ItemStack;
+import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.github.retrooper.packetevents.protocol.player.HumanoidArm;
+import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.UUID;
 import java.util.function.IntFunction;
 import java.util.function.ToIntFunction;
@@ -14,6 +18,48 @@ public final class MetaConverters {
 
     private MetaConverters() {
     }
+
+    public static final MetaConverter<WrappedBlockState, Integer> BLOCK_STATE_ID = new MetaConverter<WrappedBlockState, Integer>() {
+
+        private final Map<Integer, Map<WrappedBlockState, Integer>> cache = new ConcurrentHashMap<>();
+
+        @Override
+        public Integer toWire(WrappedBlockState value) {
+            return value.getGlobalId();
+        }
+
+        @Override
+        public WrappedBlockState fromWire(Integer wire) {
+            return WrappedBlockState.getByGlobalId(wire);
+        }
+
+        @Override
+        public Integer toWire(WrappedBlockState value, int protocolVersion) {
+            return cache.computeIfAbsent(protocolVersion, protocol -> new ConcurrentHashMap<>())
+                .computeIfAbsent(value, state -> resolve(state, protocolVersion));
+        }
+
+        @Override
+        public WrappedBlockState fromWire(Integer wire, int protocolVersion) {
+            ClientVersion version = ClientVersion.getById(protocolVersion);
+            if (version == null || version.getProtocolVersion() != protocolVersion) {
+                return WrappedBlockState.getByGlobalId(wire);
+            }
+            return WrappedBlockState.getByGlobalId(version, wire);
+        }
+
+        private Integer resolve(WrappedBlockState state, int protocolVersion) {
+            ClientVersion version = ClientVersion.getById(protocolVersion);
+            if (version == null || version.getProtocolVersion() != protocolVersion) {
+                return state.getGlobalId();
+            }
+            try {
+                return WrappedBlockState.getByString(version, state.toString()).getGlobalId();
+            } catch (RuntimeException unknownState) {
+                return WrappedBlockState.getDefaultState(version, state.getType()).getGlobalId();
+            }
+        }
+    };
 
     public static <E> MetaConverter<E, Byte> enumByte(ToIntFunction<E> id, IntFunction<E> byId) {
         return MetaConverter.of(value -> (byte) id.applyAsInt(value), wire -> byId.apply(wire));

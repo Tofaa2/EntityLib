@@ -11,6 +11,7 @@ public final class APIConfig {
     private boolean debugMode;
     private boolean strictVersionCheck;
     private boolean useBstats = true;
+    private boolean bundlePackets = true;
     private OwnershipCheck ownershipCheck = OwnershipCheck.WARN;
 
     public APIConfig(@NotNull PacketEventsAPI<?> packetEvents, @NotNull EntityLibPlatform platform) {
@@ -35,6 +36,15 @@ public final class APIConfig {
 
     public @NotNull OwnershipCheck getOwnershipCheck() {
         return ownershipCheck;
+    }
+
+    public @NotNull APIConfig bundlePackets(boolean bundlePackets) {
+        this.bundlePackets = bundlePackets;
+        return this;
+    }
+
+    public boolean shouldBundlePackets() {
+        return bundlePackets;
     }
 
     public @NotNull APIConfig useBstats() {

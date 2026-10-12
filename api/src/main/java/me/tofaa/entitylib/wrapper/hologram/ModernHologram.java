@@ -10,6 +10,7 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 
 final class ModernHologram extends AbstractHologram implements Hologram.Modern {
@@ -46,6 +47,11 @@ final class ModernHologram extends AbstractHologram implements Hologram.Modern {
     }
 
     @Override
+    protected void setViewerText(@NotNull WrapperEntity entity, @NotNull UUID viewer, @NotNull Component line) {
+        entity.setViewerMetadata(viewer, MetaFields.TextDisplay.TEXT, line);
+    }
+
+    @Override
     protected void layout() {
         if (lines.isEmpty()) {
             return;
@@ -60,7 +66,7 @@ final class ModernHologram extends AbstractHologram implements Hologram.Modern {
     }
 
     @Override
-    public void setParent(@NotNull WrapperEntity parent) {
+    public synchronized void setParent(@NotNull WrapperEntity parent) {
         this.parent = parent;
         if (lines.isEmpty()) {
             return;
@@ -73,7 +79,7 @@ final class ModernHologram extends AbstractHologram implements Hologram.Modern {
     }
 
     @Override
-    public void setModifier(@NotNull Consumer<Metadata> consumer) {
+    public synchronized void setModifier(@NotNull Consumer<Metadata> consumer) {
         this.modifier = consumer;
     }
 

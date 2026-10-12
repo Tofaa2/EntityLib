@@ -44,13 +44,13 @@ public final class MetaBinding<T, W> {
         return converter;
     }
 
-    public @NotNull EntityData<W> encode(T value) {
-        return new EntityData<>(index, wireType, converter.toWire(value));
+    public @NotNull EntityData<W> encode(T value, int protocolVersion) {
+        return new EntityData<>(index, wireType, converter.toWire(value, protocolVersion));
     }
 
     @SuppressWarnings("unchecked")
-    public T decode(Object wireValue) {
-        return converter.fromWire((W) wireValue);
+    public T decode(Object wireValue, int protocolVersion) {
+        return converter.fromWire((W) wireValue, protocolVersion);
     }
 
     @Override

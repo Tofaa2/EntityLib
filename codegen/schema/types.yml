@@ -74,10 +74,14 @@ types:
   block_state:
     wire: BLOCK_STATE
     java: "java.lang.Integer"
+    value: "com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState"
+    convert: BLOCK_STATE_ID
     upstream: ["BlockState"]
   optional_block_state:
     wire: OPTIONAL_BLOCK_STATE
     java: "java.lang.Integer"
+    value: "com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState"
+    convert: BLOCK_STATE_ID
     upstream: ["Optional<BlockState>"]
   nbt:
     wire: NBT

@@ -31,8 +31,10 @@ abstract class AbstractHologram implements Hologram {
 
     protected abstract void layout();
 
+    protected abstract void setViewerText(@NotNull WrapperEntity entity, @NotNull UUID viewer, @NotNull Component line);
+
     @Override
-    public void show() {
+    public synchronized void show() {
         spawned = true;
         for (WrapperEntity line : lines) {
             if (!line.isSpawned()) {
@@ -43,7 +45,7 @@ abstract class AbstractHologram implements Hologram {
     }
 
     @Override
-    public void hide() {
+    public synchronized void hide() {
         for (WrapperEntity line : lines) {
             line.despawn();
         }
@@ -51,7 +53,7 @@ abstract class AbstractHologram implements Hologram {
     }
 
     @Override
-    public void teleport(@NotNull Location location) {
+    public synchronized void teleport(@NotNull Location location) {
         this.location = location;
         if (spawned) {
             layout();
@@ -59,7 +61,7 @@ abstract class AbstractHologram implements Hologram {
     }
 
     @Override
-    public @Nullable Component getLine(int index) {
+    public synchronized @Nullable Component getLine(int index) {
         if (index < 0 || index >= lines.size()) {
             return null;
         }
@@ -67,7 +69,7 @@ abstract class AbstractHologram implements Hologram {
     }
 
     @Override
-    public boolean updateLineContent(int index, @NotNull Component line) {
+    public synchronized boolean updateLineContent(int index, @NotNull Component line) {
         if (index < 0 || index >= lines.size()) {
             return false;
         }
@@ -76,7 +78,7 @@ abstract class AbstractHologram implements Hologram {
     }
 
     @Override
-    public void setLines(@NotNull List<Component> newLines) {
+    public synchronized void setLines(@NotNull List<Component> newLines) {
         for (int i = lines.size() - 1; i >= newLines.size(); i--) {
             lines.remove(i).remove();
         }
@@ -94,12 +96,12 @@ abstract class AbstractHologram implements Hologram {
     }
 
     @Override
-    public int length() {
+    public synchronized int length() {
         return lines.size();
     }
 
     @Override
-    public void setLine(int index, @Nullable Component line) {
+    public synchronized void setLine(int index, @Nullable Component line) {
         Component text = line == null ? Component.empty() : line;
         if (index >= 0 && index < lines.size()) {
             setText(lines.get(index), text);
@@ -112,7 +114,7 @@ abstract class AbstractHologram implements Hologram {
     }
 
     @Override
-    public void removeLine(int index) {
+    public synchronized void removeLine(int index) {
         if (index < 0 || index >= lines.size()) {
             return;
         }
@@ -123,12 +125,27 @@ abstract class AbstractHologram implements Hologram {
     }
 
     @Override
-    public void addLine(@Nullable Component line) {
+    public synchronized void addLine(@Nullable Component line) {
         setLine(lines.size(), line);
     }
 
     @Override
-    public void addViewer(@NotNull UUID viewer) {
+    public synchronized void setLine(@NotNull UUID viewer, int index, @Nullable Component line) {
+        if (index < 0 || index >= lines.size()) {
+            return;
+        }
+        setViewerText(lines.get(index), viewer, line == null ? Component.empty() : line);
+    }
+
+    @Override
+    public synchronized void resetLines(@NotNull UUID viewer) {
+        for (WrapperEntity line : lines) {
+            line.clearViewerMetadata(viewer);
+        }
+    }
+
+    @Override
+    public synchronized void addViewer(@NotNull UUID viewer) {
         viewers.add(viewer);
         for (WrapperEntity line : lines) {
             line.addViewer(viewer);
@@ -136,7 +153,7 @@ abstract class AbstractHologram implements Hologram {
     }
 
     @Override
-    public void removeViewer(@NotNull UUID viewer) {
+    public synchronized void removeViewer(@NotNull UUID viewer) {
         viewers.remove(viewer);
         for (WrapperEntity line : lines) {
             line.removeViewer(viewer);
@@ -144,12 +161,12 @@ abstract class AbstractHologram implements Hologram {
     }
 
     @Override
-    public @NotNull Location getLocation() {
+    public synchronized @NotNull Location getLocation() {
         return location;
     }
 
     @Override
-    public @Nullable WrapperEntity getEntity() {
+    public synchronized @Nullable WrapperEntity getEntity() {
         return lines.isEmpty() ? null : lines.get(0);
     }
 

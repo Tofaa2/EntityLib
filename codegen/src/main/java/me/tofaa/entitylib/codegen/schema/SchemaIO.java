@@ -52,7 +52,7 @@ public final class SchemaIO {
                 upstream.add(String.valueOf(name));
             }
             TypeDef def = new TypeDef(entry.getKey(), string(type, "wire"), string(type, "java"), upstream,
-                    optional(type, "since"), optional(type, "removed"));
+                    optional(type, "since"), optional(type, "removed"), optional(type, "value"), optional(type, "convert"));
             if (def.since() != null) versions.get(def.since());
             if (def.removed() != null) versions.get(def.removed());
             types.put(entry.getKey(), def);

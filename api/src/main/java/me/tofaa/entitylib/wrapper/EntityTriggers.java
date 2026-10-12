@@ -8,10 +8,10 @@ import java.util.function.Consumer;
 
 public class EntityTriggers {
 
-    private Consumer<WrapperEntity> onSpawn = e -> {};
-    private Consumer<WrapperEntity> onRemove = e -> {};
-    private Consumer<UUID> onViewerAdd = u -> {};
-    private Consumer<UUID> onViewerRemove = u -> {};
+    private volatile Consumer<WrapperEntity> onSpawn = e -> {};
+    private volatile Consumer<WrapperEntity> onRemove = e -> {};
+    private volatile Consumer<UUID> onViewerAdd = u -> {};
+    private volatile Consumer<UUID> onViewerRemove = u -> {};
 
     public void onSpawn(@NotNull Consumer<WrapperEntity> callback) {
         this.onSpawn = callback;

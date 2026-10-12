@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import java.util.UUID;
 
 final class LegacyHologram extends AbstractHologram implements Hologram.Legacy {
 
@@ -46,6 +47,11 @@ final class LegacyHologram extends AbstractHologram implements Hologram.Legacy {
     }
 
     @Override
+    protected void setViewerText(@NotNull WrapperEntity entity, @NotNull UUID viewer, @NotNull Component line) {
+        entity.setViewerMetadata(viewer, MetaFields.Entity.CUSTOM_NAME, Optional.of(line));
+    }
+
+    @Override
     protected void layout() {
         float offset = marker ? markerOffset : lineOffset;
         for (int i = 0; i < lines.size(); i++) {
@@ -55,12 +61,12 @@ final class LegacyHologram extends AbstractHologram implements Hologram.Legacy {
     }
 
     @Override
-    public boolean isMarker() {
+    public synchronized boolean isMarker() {
         return marker;
     }
 
     @Override
-    public void setMarker(boolean marker) {
+    public synchronized void setMarker(boolean marker) {
         this.marker = marker;
         for (WrapperEntity line : lines) {
             line.setFlag(MetaFields.ArmorStand.MARKER, marker);
@@ -71,12 +77,12 @@ final class LegacyHologram extends AbstractHologram implements Hologram.Legacy {
     }
 
     @Override
-    public float getLineOffset(boolean marker) {
+    public synchronized float getLineOffset(boolean marker) {
         return marker ? markerOffset : lineOffset;
     }
 
     @Override
-    public void setLineOffset(boolean marker, float value) {
+    public synchronized void setLineOffset(boolean marker, float value) {
         if (marker) {
             markerOffset = value;
         } else {
@@ -85,7 +91,7 @@ final class LegacyHologram extends AbstractHologram implements Hologram.Legacy {
     }
 
     @Override
-    public void setParent(@NotNull WrapperEntity parent) {
+    public synchronized void setParent(@NotNull WrapperEntity parent) {
         if (lines.isEmpty()) {
             return;
         }

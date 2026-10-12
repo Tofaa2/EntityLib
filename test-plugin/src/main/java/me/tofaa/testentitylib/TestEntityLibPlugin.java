@@ -34,4 +34,9 @@ public class TestEntityLibPlugin extends JavaPlugin {
         }
     }
 
+    @Override
+    public void onDisable() {
+        EntityLib.shutdown();
+    }
+
 }

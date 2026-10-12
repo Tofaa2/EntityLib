@@ -3,6 +3,7 @@ package me.tofaa.entitylib;
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -22,6 +23,10 @@ public interface EntityLibPlatform {
     @NotNull UserLocaleProvider getUserLocaleProvider();
 
     void setUserLocaleProvider(@NotNull UserLocaleProvider provider);
+
+    default @Nullable String getWorld(@NotNull UUID user) {
+        return null;
+    }
 
     default void setup(@NotNull APIConfig config) {
     }

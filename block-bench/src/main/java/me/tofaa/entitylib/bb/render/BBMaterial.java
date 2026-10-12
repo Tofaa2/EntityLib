@@ -2,10 +2,8 @@ package me.tofaa.entitylib.bb.render;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.protocol.item.ItemStack;
-import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
 import com.github.retrooper.packetevents.protocol.world.states.type.StateType;
-import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.bb.math.Vec3;
 import me.tofaa.entitylib.bb.model.BBCube;
 import me.tofaa.entitylib.bb.model.BBModel;
@@ -37,16 +35,16 @@ public final class BBMaterial {
     }
 
     public static @NotNull BBMaterial block(@NotNull StateType type) {
-        return new BBMaterial((model, cube) -> blockDisplay(stateId(type)), false, 1, Vec3.ZERO);
+        return new BBMaterial((model, cube) -> blockDisplay(WrappedBlockState.getDefaultState(type)), false, 1, Vec3.ZERO);
     }
 
     public static @NotNull BBMaterial block(@NotNull WrappedBlockState state) {
-        return new BBMaterial((model, cube) -> blockDisplay(state.getGlobalId()), false, 1, Vec3.ZERO);
+        return new BBMaterial((model, cube) -> blockDisplay(state), false, 1, Vec3.ZERO);
     }
 
     public static @NotNull BBMaterial palette(@NotNull BlockPalette palette) {
         return new BBMaterial((model, cube) ->
-            blockDisplay(stateId(cube == null ? palette.fallback() : palette.typeFor(model, cube))), false, 1, Vec3.ZERO);
+            blockDisplay(WrappedBlockState.getDefaultState(cube == null ? palette.fallback() : palette.typeFor(model, cube))), false, 1, Vec3.ZERO);
     }
 
     public static @NotNull BBMaterial item(@NotNull ItemStack item) {
@@ -89,15 +87,10 @@ public final class BBMaterial {
         return offset;
     }
 
-    private static WrapperEntity blockDisplay(int state) {
+    private static WrapperEntity blockDisplay(WrappedBlockState state) {
         WrapperEntity entity = new WrapperEntity(EntityTypes.BLOCK_DISPLAY);
         entity.getMetadata().set(MetaFields.BlockDisplay.BLOCK_STATE, state);
         return entity;
-    }
-
-    private static int stateId(StateType type) {
-        ClientVersion version = EntityLib.get().getConfig().getPacketEvents().getServerManager().getVersion().toClientVersion();
-        return WrappedBlockState.getDefaultState(version, type).getGlobalId();
     }
 
 }
