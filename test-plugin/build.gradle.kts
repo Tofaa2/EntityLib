@@ -9,7 +9,11 @@ dependencies {
     compileOnly(libs.packetevents.spigot)
     implementation(project(":platforms:spigot"))
     implementation(project(":meta-versions"))
-    implementation(project(":block-bench"))
+    implementation(project(":addons:block-bench"))
+    implementation(project(":addons:display"))
+    implementation(project(":addons:shapes"))
+    implementation(project(":addons:structures"))
+    implementation(project(":addons:gui"))
 }
 
 tasks {

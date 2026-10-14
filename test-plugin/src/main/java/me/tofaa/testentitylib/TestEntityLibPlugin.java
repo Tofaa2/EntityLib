@@ -29,6 +29,9 @@ public class TestEntityLibPlugin extends JavaPlugin {
             commandMap.register("testmassivepig", new TestMassivePigCommand());
             commandMap.register("testclone", new TestCloneCommand(platform));
             commandMap.register("testbb", new TestBlockBenchCommand(this));
+            commandMap.register("testshape", new TestShapeCommand(this));
+            commandMap.register("teststructure", new TestStructureCommand(this));
+            commandMap.register("testgui", new TestGuiCommand());
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }

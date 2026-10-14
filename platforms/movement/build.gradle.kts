@@ -5,7 +5,7 @@ plugins {
 description = "EntityLib Movement Platform - Spigot implementation"
 
 dependencies {
-    api(project(":movement-engine"))
+    api(project(":addons:movement-engine"))
     compileOnly(libs.paper)
     compileOnly(libs.packetevents.spigot)
 }

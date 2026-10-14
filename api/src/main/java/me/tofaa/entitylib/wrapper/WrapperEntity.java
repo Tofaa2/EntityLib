@@ -24,6 +24,7 @@ import me.tofaa.entitylib.meta.MetaOwnershipException;
 import me.tofaa.entitylib.meta.OwnershipCheck;
 import me.tofaa.entitylib.spawn.SpawnPacketProvider;
 import me.tofaa.entitylib.spawn.SpawnPacketProviders;
+import me.tofaa.entitylib.utils.PacketBundles;
 import me.tofaa.entitylib.ve.ViewerRule;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.translation.GlobalTranslator;
@@ -37,7 +38,7 @@ import java.util.function.Consumer;
 
 public class WrapperEntity {
 
-    public static final int BUNDLE_PROTOCOL = 762;
+    public static final int BUNDLE_PROTOCOL = PacketBundles.BUNDLE_PROTOCOL;
     public static final int NO_LEASH = -1;
 
     private static final double MAX_RELATIVE_MOVE = 7.9;
@@ -136,6 +137,10 @@ public class WrapperEntity {
             var packet = new WrapperPlayServerEntityTeleport(entityId, location, isOnGround());
             sendPacketToViewers(packet);
         }
+    }
+
+    public void setLocationSilently(@NotNull Location location) {
+        this.location = location;
     }
 
     public void teleport(@NotNull Location location, boolean onGround) {
@@ -246,6 +251,16 @@ public class WrapperEntity {
         if (removed != null) {
             sendFields(viewer, new ArrayList<>(removed.fields()));
         }
+    }
+
+    public @Nullable PacketWrapper<?> createMetadataPacket(@NotNull UUID viewer, @NotNull Collection<MetaField<?>> fields) {
+        int proto = EntityLib.get().getPlatform().getProtocolVersion(viewer);
+        List<EntityData<?>> entries = encodeFor(viewer, proto, fields);
+        if (entries.isEmpty()) {
+            return null;
+        }
+        render(viewer, entries);
+        return new WrapperPlayServerEntityMetadata(entityId, entries);
     }
 
     private void sendFields(UUID viewer, Collection<MetaField<?>> fields) {
@@ -743,17 +758,7 @@ public class WrapperEntity {
     }
 
     protected void sendBundled(@NotNull UUID user, int protocolVersion, @NotNull List<PacketWrapper<?>> packets) {
-        boolean bundle = packets.size() > 1 && protocolVersion >= BUNDLE_PROTOCOL
-            && EntityLib.get().getConfig().shouldBundlePackets();
-        if (bundle) {
-            sendPacket(user, new WrapperPlayServerBundle());
-        }
-        for (PacketWrapper<?> packet : packets) {
-            sendPacket(user, packet);
-        }
-        if (bundle) {
-            sendPacket(user, new WrapperPlayServerBundle());
-        }
+        PacketBundles.send(user, protocolVersion, packets);
     }
 
     protected @NotNull SpawnPacketProvider getSpawnProvider() {
