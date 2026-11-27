@@ -133,12 +133,15 @@ public final class SpigotEntityIdProvider implements EntityIdProvider {
         }
         entityLegacyField.setAccessible(true);
         return () -> {
-            try {
-                final int entityId = entityLegacyField.getInt(null);
-                entityLegacyField.setInt(null, entityId + 1);
-                return entityId;
-            } catch (final IllegalAccessException exception) {
-                throw new IllegalStateException("Failed to modify entity counter", exception);
+            // Every shaded copy of EntityLib locks the same server class, so none of them reuses an id.
+            synchronized (entityClass) {
+                try {
+                    final int entityId = entityLegacyField.getInt(null);
+                    entityLegacyField.setInt(null, entityId + 1);
+                    return entityId;
+                } catch (final IllegalAccessException exception) {
+                    throw new IllegalStateException("Failed to modify entity counter", exception);
+                }
             }
         };
     }
